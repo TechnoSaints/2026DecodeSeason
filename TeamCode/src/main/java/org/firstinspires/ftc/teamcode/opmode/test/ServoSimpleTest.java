@@ -6,31 +6,31 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.IntakeSwivelPositions;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.IntakeWristPositions;
-import org.firstinspires.ftc.teamcode.common.servos.ServoSpeedLimited;
+import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.HandlerGrabberPositions;
+import org.firstinspires.ftc.teamcode.common.servos.ServoSimple;
 
 @Config
-@TeleOp(name = "ServoSpeedLimitedTest", group = "Test")
+@TeleOp(name = "ServoTest", group = "Test")
 @Disabled
+public class ServoSimpleTest extends LinearOpMode {
 
-public class ServoSpeedLimitedTest extends LinearOpMode {
-
-    private ServoSpeedLimited servo = new ServoSpeedLimited(hardwareMap, telemetry, "handlerArmServo");
+    private ServoSimple servo;
 
     @Override
     public void runOpMode() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
+        servo = new ServoSimple(hardwareMap, telemetry, "extendo");
+//        servo = hardwareMap.get(Servo.class,"handlerGrabber");
+
         waitForStart();
 
         while (opModeIsActive() && !isStopRequested()) {
             if (gamepad1.right_bumper) {
-                servo.goToPositionTicks(1.0, 5);
+                servo.setPositionTicks(HandlerGrabberPositions.OPEN.getValue(), 0);
             } else if (gamepad1.left_bumper) {
-                servo.goToPositionTicks(-1.0, 50);
+                servo.setPositionTicks(HandlerGrabberPositions.CLOSED_LOOSE.getValue(), 0);
             }
         }
     }
