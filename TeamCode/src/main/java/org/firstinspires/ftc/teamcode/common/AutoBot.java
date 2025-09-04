@@ -41,7 +41,7 @@ public class AutoBot extends Bot {
         Pose targetPose = new Pose(getFollower().getPose().getX() - axial, getFollower().getPose().getY() - strafe, getFollower().getPose().getHeading() + Math.toRadians(heading));
 
         PathChain targetPath = follower.pathBuilder()
-                .addPath(new BezierLine(getFollower().getPose(), targetPose)
+                .addPath(new BezierLine(getFollower().getPose(), targetPose))
                 .setLinearHeadingInterpolation(getFollower().getPose().getHeading(), targetPose.getHeading())
                 .build();
 
