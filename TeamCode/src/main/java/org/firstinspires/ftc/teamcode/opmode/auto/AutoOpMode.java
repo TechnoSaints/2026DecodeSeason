@@ -32,7 +32,7 @@ public abstract class AutoOpMode extends OpMode {
      **/
     @Override
     public void init_loop() {
-        bot.update();
+        //bot.update();
     }
 
     @Override
@@ -46,7 +46,7 @@ public abstract class AutoOpMode extends OpMode {
     @Override
     public void loop() {
         // These loop the movements of the robot
-        bot.update();
+        //bot.update();
         autonomousPathUpdate();
         try {
             Thread.sleep(10);

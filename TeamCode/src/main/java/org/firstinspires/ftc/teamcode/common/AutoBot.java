@@ -47,18 +47,4 @@ public class AutoBot extends Bot {
 
         followPath(targetPath, true);
     }
-
-    protected void logIsBusy() {
-        telemetry.addData("lift: ", liftIsBusy());
-        telemetry.addData("wrist: ", handlerWristIsBusy());
-        telemetry.addData("arm: ", handlerArmIsBusy());
-        telemetry.addData("grabber: ", handlerGrabberIsBusy());
-        telemetry.update();
-    }
-
-    public void update() {
-        super.update();
-        follower.update();
-//        logIsBusy();
-    }
 }
