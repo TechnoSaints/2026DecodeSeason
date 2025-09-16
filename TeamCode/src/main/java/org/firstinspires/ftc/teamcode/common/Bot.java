@@ -9,9 +9,11 @@ public abstract class Bot extends Component {
     private Modes currentMode;
     private int currentPhase;
     private boolean onHold = false;
+    //private final ControlledMotorSingle intake;
 
     public Bot(OpMode opMode, Telemetry telemetry) {
         super(telemetry);
+        //intake = new ControlledMotorSingle(opMode.hardwareMap, telemetry, "intake", false);
     }
 
     // Phases are used to divide mode actions into sequential section, with entry criteria
