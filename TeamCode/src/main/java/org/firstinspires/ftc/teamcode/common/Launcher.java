@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.ExtendoD
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.ExtendoPositions;
 import org.firstinspires.ftc.teamcode.common.servos.ServoAngular;
 
-public class Extendo extends Component {
+public class Launcher extends Component {
     private ServoAngular servo;
     private ElapsedTime controlTimer;
 
@@ -24,7 +24,7 @@ public class Extendo extends Component {
 
     private boolean fast = false;
 
-    public Extendo(HardwareMap hardwareMap, Telemetry telemetry, String extendoName) {
+    public Launcher(HardwareMap hardwareMap, Telemetry telemetry, String extendoName) {
         super(telemetry);
         double angleAtMinLength, angleAtMaxLength;
         angleAtMinLength = lengthToAngle(extendoData.minLengthInches);

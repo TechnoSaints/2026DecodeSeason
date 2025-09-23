@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.MotorDat
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.LiftPositions;
 
 // Modified from LiftSingle to be used for continuous motor movement that doesn't require limits
-public class ControlledMotorSingle extends Component {
+public class ControlledMotor extends Component {
     private final DcMotorEx motor;
     private final double maxVelocity;
     private final double maxMovePower;
@@ -27,7 +27,7 @@ public class ControlledMotorSingle extends Component {
 
     private final LiftData liftData = new LiftData();
 
-    public ControlledMotorSingle(HardwareMap hardwareMap, Telemetry telemetry, String motorName, boolean reverseMotor) {
+    public ControlledMotor(HardwareMap hardwareMap, Telemetry telemetry, String motorName, boolean reverseMotor) {
         super(telemetry);
         maxVelocity = motorData.maxTicksPerSec;
         maxMovePower = liftData.maxMovePower;

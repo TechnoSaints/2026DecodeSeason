@@ -1,12 +1,12 @@
 package org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data;
 
 public abstract class MotorData {
-    public double ticksPerMotorRev;
-    public double gearRatio;
-    public double ticksPerGearboxRev;
-    public double maxMotorRpm;
-    public double maxMotorRps;
-    public double maxTicksPerSec;
+    public static double ticksPerMotorRev;
+    public static double gearRatio;
+    public static double ticksPerGearboxRev;
+    public static double maxMotorRpm;
+    public static double maxMotorRps;
+    public static double maxTicksPerSec;
 }
 
 
