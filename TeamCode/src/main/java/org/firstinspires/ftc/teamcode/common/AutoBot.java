@@ -47,4 +47,11 @@ public class AutoBot extends Bot {
 
         followPath(targetPath, true);
     }
+
+
+
+    public void update() {
+        follower.update();
+//        logIsBusy();
+    }
 }
