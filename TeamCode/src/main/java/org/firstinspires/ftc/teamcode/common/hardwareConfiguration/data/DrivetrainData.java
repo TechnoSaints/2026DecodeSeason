@@ -13,8 +13,8 @@ public class DrivetrainData {
     public String leftRearMotorName = "leftRearDrive";
     public String rightFrontMotorName = "rightFrontDrive";
     public String rightRearMotorName = "rightRearDrive";
-    public DcMotorSimple.Direction leftFrontMotorDirection = DcMotorSimple.Direction.REVERSE;
+    public DcMotorSimple.Direction leftFrontMotorDirection = DcMotorSimple.Direction.FORWARD;
     public DcMotorSimple.Direction leftRearMotorDirection = DcMotorSimple.Direction.REVERSE;
-    public DcMotorSimple.Direction rightFrontMotorDirection = DcMotorSimple.Direction.FORWARD;
+    public DcMotorSimple.Direction rightFrontMotorDirection = DcMotorSimple.Direction.REVERSE;
     public DcMotorSimple.Direction rightRearMotorDirection = DcMotorSimple.Direction.FORWARD;
 }

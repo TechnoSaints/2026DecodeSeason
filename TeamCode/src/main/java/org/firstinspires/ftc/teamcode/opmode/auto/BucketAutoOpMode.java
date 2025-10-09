@@ -9,7 +9,7 @@ public abstract class BucketAutoOpMode extends AutoOpMode {
      **/
     @Override
     public void init() {
-        FieldLocations.startPose = FieldLocations.sampleStartPose;
+        FieldLocations.startPose = FieldLocations.testStartPose;
         super.init();
         Paths.buildSamplePaths(bot.getFollower());
     }

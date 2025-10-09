@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmode.auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.common.Modes;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.ExtendoPositions;
@@ -15,9 +16,10 @@ import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
 import org.firstinspires.ftc.teamcode.opmode.Paths;
 
 @Autonomous(name = "\uD83E\uDEA3 Bucket x 4 + Park", group = "Bucket")
-public class Bucketx4plusPark extends BucketAutoOpMode {
+@Disabled
+public abstract class Bucketx4plusPark extends BucketAutoOpMode {
 
-    protected void autonomousPathUpdate() {
+    /*protected void autonomousPathUpdate() {
         switch (pathState) {
             // Go to high bucket scoring config and pose
             case 0:
@@ -235,5 +237,5 @@ public class Bucketx4plusPark extends BucketAutoOpMode {
                 }
                 break;
         }
-    }
+    }*/
 }
