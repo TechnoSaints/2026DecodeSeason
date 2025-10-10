@@ -22,7 +22,6 @@ public class TeleopNoOdoSimple extends LinearOpMode {
     double launcherTicksPerSecond;
     ElapsedTime aimerTimer = new ElapsedTime();
     private final static double ADJUSTMENT_DELAY = 50;
-    final static double INCREASE_CONSTANT = .83;
     boolean pressed;
 
     @Override
@@ -43,6 +42,12 @@ public class TeleopNoOdoSimple extends LinearOpMode {
             bot.processDrivetrainInput(gamepad1);
             // Launcher
             if (gamepad1.right_trigger >= .2)
+            {
+                launchTest1.setPower(0);
+                launchTest2.setPower(0);
+            }
+
+            if (gamepad1.left_trigger >= .2)
             {
                 launchTest1.setPower(.7);
                 launchTest2.setPower(.7);
@@ -66,10 +71,10 @@ public class TeleopNoOdoSimple extends LinearOpMode {
             // Pusher (temp)
             double pushPosition = pusher.getPosition();
             if (gamepad1.right_bumper){
-                pusher.setPosition(pushPosition+INCREASE_CONSTANT);
+                pusher.setPosition(.5);
             }
             else if (gamepad1.left_bumper){
-                pusher.setPosition(pushPosition-INCREASE_CONSTANT);
+                pusher.setPosition(0);
             }
 
             telemetry.addData("Left Motor RPM", launchTest1.getVelocity()/launcherTicksPerSecond);
