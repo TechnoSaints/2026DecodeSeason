@@ -48,9 +48,9 @@ public class Drivetrain extends Component {
 
     protected void moveDirection(double axial, double strafe, double yaw) {
         // Calculate wheel powers.
-        double leftFrontPower = axial + strafe + yaw;
+        double leftFrontPower = axial - strafe + yaw;
         double rightFrontPower = axial - strafe - yaw;
-        double leftBackPower = axial - strafe + yaw;
+        double leftBackPower = axial + strafe + yaw;
         double rightBackPower = axial + strafe - yaw;
 
         // Normalize wheel powers to be less than 1.0

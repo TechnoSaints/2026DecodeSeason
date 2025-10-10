@@ -18,7 +18,7 @@ import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda6
 public class TeleopNoOdoSimple extends LinearOpMode {
     private TeleopBotSimple bot;
     DcMotorEx intake, launchTest1, launchTest2;
-    Servo pusher;
+    Servo pusher, launchServo;
     double launcherTicksPerSecond;
     ElapsedTime aimerTimer = new ElapsedTime();
     private final static double ADJUSTMENT_DELAY = 50;
@@ -49,8 +49,8 @@ public class TeleopNoOdoSimple extends LinearOpMode {
 
             if (gamepad1.left_trigger >= .2)
             {
-                launchTest1.setPower(.7);
-                launchTest2.setPower(.7);
+                launchTest1.setPower(-.7);
+                launchTest2.setPower(-.7);
             }
 
             // Aimer
@@ -70,11 +70,11 @@ public class TeleopNoOdoSimple extends LinearOpMode {
 
             // Pusher (temp)
             double pushPosition = pusher.getPosition();
-            if (gamepad1.right_bumper){
-                pusher.setPosition(.5);
-            }
-            else if (gamepad1.left_bumper){
+            if (gamepad1.left_bumper){
                 pusher.setPosition(0);
+            }
+            if (gamepad1.right_bumper){
+                pusher.setPosition(1);
             }
 
             telemetry.addData("Left Motor RPM", launchTest1.getVelocity()/launcherTicksPerSecond);
