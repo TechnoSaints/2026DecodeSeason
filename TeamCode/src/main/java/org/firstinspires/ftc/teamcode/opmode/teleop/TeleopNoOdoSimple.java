@@ -5,24 +5,76 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.common.Modes;
-import org.firstinspires.ftc.teamcode.common.TeleopBot;
 import org.firstinspires.ftc.teamcode.common.TeleopBotSimple;
+import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda6000DcMotorData;
 
 @Config
 @TeleOp(name = "Teleop - No Odo Simple", group = "Linear OpMode")
 public class TeleopNoOdoSimple extends LinearOpMode {
     private TeleopBotSimple bot;
+    DcMotorEx intake, launchTest1, launchTest2;
+    Servo pusher;
+    double launcherTicksPerSecond;
+    ElapsedTime aimerTimer = new ElapsedTime();
+    private final static double ADJUSTMENT_DELAY = 50;
+    final static double INCREASE_CONSTANT = 0.05;
+    boolean pressed;
 
     @Override
     public void runOpMode() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         bot = new TeleopBotSimple(this, telemetry);
+        intake = hardwareMap.get(DcMotorEx.class, "intake");
+        launchTest1 = hardwareMap.get(DcMotorEx.class, "launchTest1");
+        launchTest2 = hardwareMap.get(DcMotorEx.class, "launchtest2");
+        pusher = hardwareMap.get(Servo.class, "pusher");
+        launcherTicksPerSecond = GoBilda6000DcMotorData.ticksPerGearboxRev;
+        launchTest1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        LaunchTest2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         waitForStart();
+        aimerTimer.reset();
         while (opModeIsActive() && !isStopRequested()) {
             bot.processDrivetrainInput(gamepad1);
+            // Launcher
+            if (gamepad1.right_trigger)
+            {
+                launchTest1.setPower(.7);
+                launchTest2.setPower(.7);
+            }
+
+            // Aimer
+
+
+
+            // Intake
+            if (gamepad1.a){
+                intake.setPower(-1);
+            }
+            else if (gamepad1.x){
+                intake.setPower(1);
+            }
+            else if (gamepad1.b){
+                intake.setPower(0);
+            }
+
+            // Pusher (temp)
+            double pushPosition = pusher.getPosition();
+            if (gamepad2.right_bumper){
+                pusher.setPosition(pushPosition+INCREASE_CONSTANT);
+            }
+            else if (gamepad2.left_bumper){
+                pusher.setPosition(pushPosition-INCREASE_CONSTANT);
+            }
+
+            telemetry.addData("Left Motor RPM", leftLauncher.getVelocity()/launcherTicksPerSecond);
+            telemetry.addData("Right Motor RPM", rightLauncher.getVelocity()/launcherTicksPerSecond);
+            telemetry.update();
         }
     }
 }
