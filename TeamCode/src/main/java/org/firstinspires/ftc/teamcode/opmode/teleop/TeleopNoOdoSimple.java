@@ -22,7 +22,7 @@ public class TeleopNoOdoSimple extends LinearOpMode {
     double launcherTicksPerSecond;
     ElapsedTime aimerTimer = new ElapsedTime();
     private final static double ADJUSTMENT_DELAY = 50;
-    final static double INCREASE_CONSTANT = 0.05;
+    final static double INCREASE_CONSTANT = .83;
     boolean pressed;
 
     @Override
@@ -35,14 +35,14 @@ public class TeleopNoOdoSimple extends LinearOpMode {
         pusher = hardwareMap.get(Servo.class, "pusher");
         launcherTicksPerSecond = GoBilda6000DcMotorData.ticksPerGearboxRev;
         launchTest1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        LaunchTest2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        launchTest2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         waitForStart();
         aimerTimer.reset();
         while (opModeIsActive() && !isStopRequested()) {
             bot.processDrivetrainInput(gamepad1);
             // Launcher
-            if (gamepad1.right_trigger)
+            if (gamepad1.right_trigger >= .2)
             {
                 launchTest1.setPower(.7);
                 launchTest2.setPower(.7);
@@ -65,15 +65,15 @@ public class TeleopNoOdoSimple extends LinearOpMode {
 
             // Pusher (temp)
             double pushPosition = pusher.getPosition();
-            if (gamepad2.right_bumper){
+            if (gamepad1.right_bumper){
                 pusher.setPosition(pushPosition+INCREASE_CONSTANT);
             }
-            else if (gamepad2.left_bumper){
+            else if (gamepad1.left_bumper){
                 pusher.setPosition(pushPosition-INCREASE_CONSTANT);
             }
 
-            telemetry.addData("Left Motor RPM", leftLauncher.getVelocity()/launcherTicksPerSecond);
-            telemetry.addData("Right Motor RPM", rightLauncher.getVelocity()/launcherTicksPerSecond);
+            telemetry.addData("Left Motor RPM", launchTest1.getVelocity()/launcherTicksPerSecond);
+            telemetry.addData("Right Motor RPM", launchTest2.getVelocity()/launcherTicksPerSecond);
             telemetry.update();
         }
     }
