@@ -32,9 +32,8 @@ public class TeleopNoOdoSimple extends LinearOpMode {
         launchTest1 = hardwareMap.get(DcMotorEx.class, "launchTest1");
         launchTest2 = hardwareMap.get(DcMotorEx.class, "launchtest2");
         pusher = hardwareMap.get(Servo.class, "pusher");
-        launcherTicksPerSecond = GoBilda6000DcMotorData.ticksPerGearboxRev;
-        launchTest1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        launchTest2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        double constantAdd = .3;
+        double currentPosition = 0;
 
         waitForStart();
         aimerTimer.reset();
@@ -47,10 +46,11 @@ public class TeleopNoOdoSimple extends LinearOpMode {
                 launchTest2.setPower(0);
             }
 
+
             if (gamepad1.left_trigger >= .2)
             {
-                launchTest1.setPower(-.7);
-                launchTest2.setPower(-.7);
+                launchTest1.setPower(-.6);
+                launchTest2.setPower(-.6);
             }
 
             // Aimer
@@ -58,11 +58,8 @@ public class TeleopNoOdoSimple extends LinearOpMode {
 
 
             // Intake
-            if (gamepad1.a){
-                intake.setPower(-1);
-            }
             else if (gamepad1.x){
-                intake.setPower(1);
+                intake.setPower(-1);
             }
             else if (gamepad1.b){
                 intake.setPower(0);
@@ -70,15 +67,16 @@ public class TeleopNoOdoSimple extends LinearOpMode {
 
             // Pusher (temp)
             double pushPosition = pusher.getPosition();
+            boolean pressedOnce = false;
+            if (gamepad1.right_bumper){
+                pusher.setPosition(.65);
+            }
             if (gamepad1.left_bumper){
                 pusher.setPosition(0);
-            }
-            if (gamepad1.right_bumper){
-                pusher.setPosition(1);
+                currentPosition = 0;
+
             }
 
-            telemetry.addData("Left Motor RPM", launchTest1.getVelocity()/launcherTicksPerSecond);
-            telemetry.addData("Right Motor RPM", launchTest2.getVelocity()/launcherTicksPerSecond);
             telemetry.update();
         }
     }
