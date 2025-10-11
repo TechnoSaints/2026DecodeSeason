@@ -64,6 +64,104 @@ public class Paths {
                 .build();
     }
 
+    public static PathChain redS1B1Pickup, redS1B1Shoot, redS1B2Pickup, redS1B2Shoot, redS1B3Pickup, redS1B3Shoot, redS2B1Pickup, redS2B1Shoot, redS2B2Pickup, redS2B2Shoot, redS2B3Pickup, redS2B3Shoot, redS3B1Pickup, redS3B1Shoot, redS3B2Pickup, redS3B2Shoot, redS3B3Pickup, redS3B3Shoot;
+    public static PathChain redPark;
+
+
+    public static void buildRedFarStartPaths(Follower follower){
+        redS3B1Pickup = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.redBaseStartPose, FieldLocations.redS3B1))
+                .setLinearHeadingInterpolation(FieldLocations.redBaseStartPose.getHeading(), FieldLocations.redS3B1.getHeading())
+                .build();
+
+        redS3B1Shoot = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.redS3B1, FieldLocations.redNearShoot))
+                .setLinearHeadingInterpolation(FieldLocations.redS3B1.getHeading(), FieldLocations.redNearShoot.getHeading())
+                .build();
+
+        redS3B2Pickup = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.redNearShoot, FieldLocations.redS3B2))
+                .setLinearHeadingInterpolation(FieldLocations.redNearShoot.getHeading(), FieldLocations.redS3B2.getHeading())
+                .build();
+
+        redS3B2Shoot = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.redS3B2, FieldLocations.redNearShoot))
+                .setLinearHeadingInterpolation(FieldLocations.redS3B2.getHeading(), FieldLocations.redNearShoot.getHeading())
+                .build();
+
+
+        redS3B3Pickup = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.redNearShoot, FieldLocations.redS3B3))
+                .setLinearHeadingInterpolation(FieldLocations.redNearShoot.getHeading(), FieldLocations.redS3B3.getHeading())
+                .build();
+
+        redS3B3Shoot = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.redS3B3, FieldLocations.redNearShoot))
+                .setLinearHeadingInterpolation(FieldLocations.redS3B3.getHeading(), FieldLocations.redNearShoot.getHeading())
+                .build();
+
+        redS2B1Pickup = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.redNearShoot, FieldLocations.redS2B1))
+                .setLinearHeadingInterpolation(FieldLocations.redNearShoot.getHeading(), FieldLocations.redS2B1.getHeading())
+                .build();
+
+        redS2B1Shoot = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.redS1B1, FieldLocations.redNearShoot))
+                .setLinearHeadingInterpolation(FieldLocations.redS1B1.getHeading(), FieldLocations.redNearShoot.getHeading())
+                .build();
+
+        redS2B2Pickup = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.redNearShoot, FieldLocations.redS2B2))
+                .setLinearHeadingInterpolation(FieldLocations.redNearShoot.getHeading(), FieldLocations.redS2B2.getHeading())
+                .build();
+
+        redS2B2Shoot = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.redS2B2, FieldLocations.redNearShoot))
+                .setLinearHeadingInterpolation(FieldLocations.redS2B2.getHeading(), FieldLocations.redNearShoot.getHeading())
+                .build();
+
+        redS2B3Pickup = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.redNearShoot, FieldLocations.redS2B3))
+                .setLinearHeadingInterpolation(FieldLocations.redNearShoot.getHeading(), FieldLocations.redS2B3.getHeading())
+                .build();
+
+        redS2B3Shoot = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.redS2B3, FieldLocations.redNearShoot))
+                .setLinearHeadingInterpolation(FieldLocations.redS2B3.getHeading(), FieldLocations.redNearShoot.getHeading())
+                .build();
+
+        redS1B1Pickup = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.redNearShoot, FieldLocations.redS1B1))
+                .setLinearHeadingInterpolation(FieldLocations.redNearShoot.getHeading(), FieldLocations.redS1B1.getHeading())
+                .build();
+
+        redS1B1Shoot = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.redS1B1, FieldLocations.redFarShoot))
+                .setLinearHeadingInterpolation(FieldLocations.redS1B1.getHeading(), FieldLocations.redFarShoot.getHeading())
+                .build();
+
+        redS1B2Pickup = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.redFarShoot, FieldLocations.redS1B2))
+                .setLinearHeadingInterpolation(FieldLocations.redFarShoot.getHeading(), FieldLocations.redS1B2.getHeading())
+                .build();
+
+        redS1B2Shoot = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.redS1B2, FieldLocations.redFarShoot))
+                .setLinearHeadingInterpolation(FieldLocations.redS1B2.getHeading(), FieldLocations.redFarShoot.getHeading())
+                .build();
+
+        redS1B3Pickup = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.redFarShoot, FieldLocations.redS1B3))
+                .setLinearHeadingInterpolation(FieldLocations.redFarShoot.getHeading(), FieldLocations.redS1B3.getHeading())
+                .build();
+
+        redS1B3Shoot = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.redS1B3, FieldLocations.redFarShoot))
+                .setLinearHeadingInterpolation(FieldLocations.redS1B3.getHeading(), FieldLocations.redFarShoot.getHeading())
+                .build();
+
+    }
+
     public static boolean currentLocWithinTolerance(
             Pose target, Pose current, double toleranceX, double toleranceY) {
         return ((Math.abs(target.getX() - current.getX()) < toleranceX) &&

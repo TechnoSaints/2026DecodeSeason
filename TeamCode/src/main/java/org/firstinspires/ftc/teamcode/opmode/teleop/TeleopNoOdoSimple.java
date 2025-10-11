@@ -19,8 +19,9 @@ public class TeleopNoOdoSimple extends LinearOpMode {
     private TeleopBotSimple bot;
     DcMotorEx intake, leftLauncher, rightLauncher;
     Servo leftAimer, rightAimer, pusher;
-    double launcherTicksPerSecond;
+    double launcherTicksPerSecond, maxRPM;
     ElapsedTime aimerTimer = new ElapsedTime();
+    ElapsedTime pusherTimer = new ElapsedTime();
     private final static double ADJUSTMENT_DELAY = 50;
     final static double INCREASE_CONSTANT = 0.05;
     boolean pressed;
@@ -36,13 +37,16 @@ public class TeleopNoOdoSimple extends LinearOpMode {
         rightAimer = hardwareMap.get(Servo.class, "rightAimer");
         pusher = hardwareMap.get(Servo.class, "pusher");
         launcherTicksPerSecond = GoBilda6000DcMotorData.ticksPerGearboxRev;
+        maxRPM = GoBilda6000DcMotorData.maxMotorRpm;
+
         leftLauncher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightLauncher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftAimer.setPosition(0);
+        rightAimer.setPosition(0);
 
         waitForStart();
         aimerTimer.reset();
-        leftAimer.setPosition(0);
-        rightAimer.setPosition(0);
+        pusherTimer.reset();
         while (opModeIsActive() && !isStopRequested()) {
             bot.processDrivetrainInput(gamepad1);
             // Launcher
@@ -83,18 +87,28 @@ public class TeleopNoOdoSimple extends LinearOpMode {
             }
 
             // Pusher (temp)
-            double pushPosition = pusher.getPosition();
-            if (gamepad2.right_bumper){
-                pusher.setPosition(pushPosition+INCREASE_CONSTANT);
-            }
-            else if (gamepad2.left_bumper){
-                pusher.setPosition(pushPosition-INCREASE_CONSTANT);
+            if (gamepad1.y){
+
+                pusher.setPosition(0.1);
+                pusherTimer.reset();
+                while (pusherTimer.milliseconds() < 500){
+
+                }
+                pusher.setPosition(0.72);
+
             }
 
             telemetry.addData("Left Motor RPM", leftLauncher.getVelocity()/launcherTicksPerSecond);
             telemetry.addData("Right Motor RPM", rightLauncher.getVelocity()/launcherTicksPerSecond);
+            if (leftLauncher.getVelocity()/launcherTicksPerSecond == maxRPM && rightLauncher.getVelocity()/launcherTicksPerSecond == maxRPM){
+                telemetry.addLine("Launcher is Ready");
+            }
+            else {
+                telemetry.addLine("Launcher is not Ready");
+            }
             telemetry.addData("Left Aimer Position", leftAimer.getPosition());
             telemetry.addData("Right Aimer Position", rightAimer.getPosition());
+            telemetry.addData("Pusher Position", pusher.getPosition());
             telemetry.update();
         }
     }
