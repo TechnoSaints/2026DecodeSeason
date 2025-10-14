@@ -32,7 +32,7 @@ public class TeleopNoOdoSimple extends LinearOpMode {
         launchTest2 = hardwareMap.get(DcMotorEx.class, "launchtest2");
         double constantAdd = .3;
         double currentPosition = 0;
-        double position = .5;
+        double position;
 
         waitForStart();
         aimerTimer.reset();
@@ -57,12 +57,11 @@ public class TeleopNoOdoSimple extends LinearOpMode {
             if (gamepad1.a)
             {
                 launchServo.setPosition(.5);
-                position = .5;
             }
 
             if (gamepad1.b)
             {
-                launchServo.setPosition(position + .05);
+                launchServo.setPosition(launchServo.getPosition() + 0.05);
             }
 
 
