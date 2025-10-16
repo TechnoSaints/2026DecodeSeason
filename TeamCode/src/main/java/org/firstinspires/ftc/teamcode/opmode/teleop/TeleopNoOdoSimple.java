@@ -17,8 +17,8 @@ import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda6
 @TeleOp(name = "Teleop - No Odo Simple", group = "Linear OpMode")
 public class TeleopNoOdoSimple extends LinearOpMode {
     private TeleopBotSimple bot;
-    DcMotorEx intake, launchTest1, launchTest2;
-    Servo pusher, launchServo;
+    DcMotorEx launchTest1, launchTest2;
+    Servo launchServo;
     double launcherTicksPerSecond;
     ElapsedTime aimerTimer = new ElapsedTime();
     private final static double ADJUSTMENT_DELAY = 50;
@@ -28,12 +28,11 @@ public class TeleopNoOdoSimple extends LinearOpMode {
     public void runOpMode() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         bot = new TeleopBotSimple(this, telemetry);
-        intake = hardwareMap.get(DcMotorEx.class, "intake");
         launchTest1 = hardwareMap.get(DcMotorEx.class, "launchTest1");
         launchTest2 = hardwareMap.get(DcMotorEx.class, "launchtest2");
-        pusher = hardwareMap.get(Servo.class, "pusher");
         double constantAdd = .3;
         double currentPosition = 0;
+        double position;
 
         waitForStart();
         aimerTimer.reset();
@@ -55,27 +54,21 @@ public class TeleopNoOdoSimple extends LinearOpMode {
 
             // Aimer
 
+            if (gamepad1.a)
+            {
+                launchServo.setPosition(.5);
+            }
+
+            if (gamepad1.b)
+            {
+                launchServo.setPosition(launchServo.getPosition() + 0.05);
+            }
 
 
             // Intake
-            else if (gamepad1.x){
-                intake.setPower(-1);
-            }
-            else if (gamepad1.b){
-                intake.setPower(0);
-            }
 
             // Pusher (temp)
-            double pushPosition = pusher.getPosition();
             boolean pressedOnce = false;
-            if (gamepad1.right_bumper){
-                pusher.setPosition(.65);
-            }
-            if (gamepad1.left_bumper){
-                pusher.setPosition(0);
-                currentPosition = 0;
-
-            }
 
             telemetry.update();
         }
