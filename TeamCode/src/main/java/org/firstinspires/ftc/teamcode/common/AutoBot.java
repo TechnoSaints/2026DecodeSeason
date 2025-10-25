@@ -15,10 +15,10 @@ public class AutoBot extends Bot {
     private final Follower follower;
 
     public AutoBot(OpMode opMode, Telemetry telemetry) {
-        super(opMode, telemetry);
+        super(telemetry);
         follower = Constants.createFollower(opMode.hardwareMap);
         follower.setStartingPose(FieldLocations.startPose);
-        setMode(Modes.AUTO_START_POS);
+//        setMode(Modes.AUTO_START_POS);
     }
 
     public void followPath(PathChain path, boolean holdEnd) {
@@ -49,15 +49,15 @@ public class AutoBot extends Bot {
     }
 
     protected void logIsBusy() {
-        telemetry.addData("lift: ", liftIsBusy());
-        telemetry.addData("wrist: ", handlerWristIsBusy());
-        telemetry.addData("arm: ", handlerArmIsBusy());
-        telemetry.addData("grabber: ", handlerGrabberIsBusy());
+//        telemetry.addData("lift: ", liftIsBusy());
+//        telemetry.addData("wrist: ", handlerWristIsBusy());
+//        telemetry.addData("arm: ", handlerArmIsBusy());
+//        telemetry.addData("grabber: ", handlerGrabberIsBusy());
         telemetry.update();
     }
 
     public void update() {
-        super.update();
+//        super.update();
         follower.update();
 //        logIsBusy();
     }

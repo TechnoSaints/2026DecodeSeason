@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.common.Bot;
 import org.firstinspires.ftc.teamcode.common.TeleopBotSimple;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda6000DcMotorData;
 
@@ -17,8 +18,9 @@ import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda6
 @TeleOp(name = "Teleop - No Odo Simple", group = "Linear OpMode")
 public class TeleopNoOdoSimple extends LinearOpMode {
     private TeleopBotSimple bot;
-    DcMotorEx launchTest1, launchTest2;
-    Servo launchServo;
+
+    private Bot b;
+
     double launcherTicksPerSecond;
     ElapsedTime aimerTimer = new ElapsedTime();
     private final static double ADJUSTMENT_DELAY = 50;
@@ -28,8 +30,9 @@ public class TeleopNoOdoSimple extends LinearOpMode {
     public void runOpMode() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         bot = new TeleopBotSimple(this, telemetry);
-        launchTest1 = hardwareMap.get(DcMotorEx.class, "launchTest1");
-        launchTest2 = hardwareMap.get(DcMotorEx.class, "launchtest2");
+         b=new Bot(telemetry);
+         b.init(this);
+
         double constantAdd = .3;
         double currentPosition = 0;
         double position;
@@ -38,35 +41,26 @@ public class TeleopNoOdoSimple extends LinearOpMode {
         aimerTimer.reset();
         while (opModeIsActive() && !isStopRequested()) {
             bot.processDrivetrainInput(gamepad1);
+
             // Launcher
             if (gamepad1.right_trigger >= .2)
             {
-                launchTest1.setPower(0);
-                launchTest2.setPower(0);
+                b.launchMotor1Stop();
+                b.launchMotor2Stop();
             }
 
 
             if (gamepad1.left_trigger >= .2)
             {
-                launchTest1.setPower(-.6);
-                launchTest2.setPower(-.6);
+               b.launchMotor1Start();
+               b.launchMotor2Start();
             }
 
-            // Aimer
 
             if (gamepad1.a)
             {
-                launchServo.setPosition(.5);
+                b.intakeMotorStart();
             }
-
-            if (gamepad1.b)
-            {
-                launchServo.setPosition(launchServo.getPosition() + 0.05);
-            }
-
-
-            // Intake
-
             // Pusher (temp)
             boolean pressedOnce = false;
 

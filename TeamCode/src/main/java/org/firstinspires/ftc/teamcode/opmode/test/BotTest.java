@@ -25,9 +25,9 @@ public class BotTest extends LinearOpMode {
 
         waitForStart();
 
-        while (opModeIsActive() && !isStopRequested()) {
-            bot.processSpecimenInput(gamepad1);
-            bot.update();
-        }
+//        while (opModeIsActive() && !isStopRequested()) {
+//            bot.processSpecimenInput(gamepad1);
+//            bot.update();
+//        }
     }
 }
