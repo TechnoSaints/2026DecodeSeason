@@ -61,6 +61,11 @@ public class TeleopNoOdoSimple extends LinearOpMode {
             {
                 b.intakeMotorStart();
             }
+
+            if (gamepad1.b)
+            {
+                b.intakeMotorStop();
+            }
             // Pusher (temp)
             boolean pressedOnce = false;
 
