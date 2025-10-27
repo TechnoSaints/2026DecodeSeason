@@ -1,8 +1,9 @@
 package org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions;
 
 public enum PusherPositions {
-    LOAD_POSITION(.1),
-    FIRE_POSITION(.8);
+    FIRE(.1),
+    OPEN(.72),
+    DELAY(500);
     private double value;
 
     PusherPositions(double value){

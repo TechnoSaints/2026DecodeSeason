@@ -9,7 +9,7 @@ public class FieldLocations {
     private static final int feet = 24;
     // x+ = forward
     // y+ = left
-    public final static Pose redBaseStartPose = new Pose(55.2,8.3,90);
+    public final static Pose redBaseStartPose = new Pose(55.2,8,90);
     // Spike 1 Pickup (counted from furthest from goal)
     public final static Pose redS1B1 = new Pose(40, 36, 180);
     public final static Pose redS1B2 = new Pose(36, 36, 180);
@@ -34,7 +34,31 @@ public class FieldLocations {
     public final static Pose redPark = new Pose(38.7, 33.2, 90);
 
 
-    public final static Pose blueBaseStartPose = new Pose(36*feet,0,0);
+    // Blue Positions:
+    public final static Pose blueBaseStartPose = new Pose(55.2,8,90);
+    // Spike 1 Pickup (counted from furthest from goal)
+    public final static Pose blueS1B1 = new Pose(104, 36, 0);
+    public final static Pose blueS1B2 = new Pose(144-36, 36, 0);
+    public final static Pose blueS1B3 = new Pose(144-30, 36, 0);
+
+    // Spike 2 Pickup
+    public final static Pose blueS2B1 = new Pose(144-40, 60, 0);
+    public final static Pose blueS2B2 = new Pose(144-36, 60, 0);
+    public final static Pose blueS2B3 = new Pose(144-30, 60, 0);
+
+    // Spike 3 Pickup
+    public final static Pose blueS3B1 = new Pose(144-40, 84, 0);
+    public final static Pose blueS3B2 = new Pose(144-36, 84, 0);
+    public final static Pose blueS3B3 = new Pose(144-30, 84, 0);
+
+
+    // Shoot Positions
+    public final static Pose blueFarShoot = new Pose(72, 24,120);
+    public final static Pose blueNearShoot = new Pose(72, 72, 135);
+
+    // Park
+    public final static Pose bluePark = new Pose(105.4, 33.2, 90);
+
 
     public final static Pose redGoalStartPose = new Pose(5.5*feet,0.5*feet,0);
     public final static Pose blueGoalStartPose = new Pose(5.5*feet,5.5*feet,0);

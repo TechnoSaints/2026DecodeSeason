@@ -17,9 +17,9 @@ import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.Drivetra
 public class Constants {
     private static DrivetrainData drivetrainData = new DrivetrainData();
     public static FollowerConstants followerConstants = new FollowerConstants()
-            .mass(11.35)
-            .forwardZeroPowerAcceleration(-33)
-            .lateralZeroPowerAcceleration(-65)
+            .mass(8)
+            .forwardZeroPowerAcceleration(-27.93)
+            .lateralZeroPowerAcceleration(-65.156)
             .useSecondaryTranslationalPIDF(false)
             .useSecondaryHeadingPIDF(false)
             .useSecondaryDrivePIDF(false)
@@ -31,6 +31,7 @@ public class Constants {
             );
 
     public static MecanumConstants driveConstants = new MecanumConstants()
+            .maxPower(1)
             .leftFrontMotorName(drivetrainData.leftFrontMotorName)
             .leftRearMotorName(drivetrainData.leftRearMotorName)
             .rightFrontMotorName(drivetrainData.rightFrontMotorName)
@@ -39,18 +40,17 @@ public class Constants {
             .leftRearMotorDirection(drivetrainData.leftRearMotorDirection)
             .rightFrontMotorDirection(drivetrainData.rightFrontMotorDirection)
             .rightRearMotorDirection(drivetrainData.rightRearMotorDirection)
-            .xVelocity(75)
-            .yVelocity(62)
+            .xVelocity(79)
+            .yVelocity(61.398)
             .useBrakeModeInTeleOp(true)
             .nominalVoltage(12.5)
             .useVoltageCompensation(true);
 
     public static PinpointConstants localizerConstants = new PinpointConstants()
-            .forwardPodY(4.25)
-            .strafePodX(-3)
+            .forwardPodY(-3.5)
+            .strafePodX(-3.7)
             .distanceUnit(DistanceUnit.INCH)
             .hardwareMapName("pinpoint")
-            .yawScalar(1.0)
             .encoderResolution(
                     GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD
             )

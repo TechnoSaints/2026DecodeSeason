@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions;
 
 public enum AimerPositions {
+    INIT_POSITION(0),
     CORNER_SHOT(0.6),
     FAR_SHOT(0.45);
     private double value;

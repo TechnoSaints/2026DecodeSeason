@@ -3,21 +3,9 @@ package org.firstinspires.ftc.teamcode.opmode.auto;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
-import org.firstinspires.ftc.teamcode.common.Modes;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.ExtendoPositions;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.HandlerArmPositions;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.HandlerGrabberPositions;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.HandlerWristPositions;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.IntakeGrabberPositions;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.IntakeSwivelPositions;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.IntakeWristPositions;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.LiftPositions;
-import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
-import org.firstinspires.ftc.teamcode.opmode.Paths;
-
 @Autonomous(name = "\uD83E\uDEA3 Bucket x 4 + Park", group = "Bucket")
 @Disabled
-public abstract class Bucketx4plusPark extends BucketAutoOpMode {
+public abstract class Bucketx4plusPark extends BlueAutoOpMode {
 
     /*protected void autonomousPathUpdate() {
         switch (pathState) {
