@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda312DcMotorData;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.MotorData;
@@ -16,29 +17,46 @@ import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.MotorDat
 public class OneMotorEncoderDriveVelocity extends LinearOpMode {
 
     private DcMotorEx motor;
-    private final MotorData motorData = new GoBilda312DcMotorData();
-    private final double maxMotorRPM = motorData.maxMotorRpm;
-    private final double maxTicksPerSec = motorData.maxTicksPerSec;
-    private double targetTicksPerSec =0.0, targetMotorRPM = 0.0;
-    private double incrementRPM = 250.0;
+
+    // Data for GoBilda 312 RPM motor
+    private final double maxMotorRPM = 6000;
+    private final double gearRatio = 19.2;
+    private final double ticksPerMotorRev = 28;
+    private final double maxTicksPerSec = maxMotorRPM * ticksPerMotorRev * gearRatio;
+    private double targetTicksPerSec = 0.0;
+    private double ticksPerSecondIncrement = 100.0;
 
     @Override
     public void runOpMode() {
         motor = hardwareMap.get(DcMotorEx.class, "motor");
+        motor.setDirection(DcMotorSimple.Direction.FORWARD);
         motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motor.setVelocity(targetTicksPerSec);
+        telemetry.addData("maxTicksPerSec: ", maxTicksPerSec);
+        telemetry.update();
         waitForStart();
 
         while (opModeIsActive() && !isStopRequested()) {
             if (gamepad1.y) {
-                targetMotorRPM += incrementRPM;
+                if (targetTicksPerSec >= maxTicksPerSec) {
+                    targetTicksPerSec = maxTicksPerSec;
+                } else
+                {
+                    targetTicksPerSec += ticksPerSecondIncrement;
+                }
             } else if (gamepad1.a) {
-                targetMotorRPM -= incrementRPM;
+                if (targetTicksPerSec <= maxTicksPerSec) {
+                    targetTicksPerSec = -maxTicksPerSec;
+                } else
+                {
+                    targetTicksPerSec -= ticksPerSecondIncrement;
+                }
             }
-            motor.setVelocity(targetMotorRPM/maxMotorRPM*maxTicksPerSec);
-            telemetry.addData("Target RPM: ",  " %7d :%7d", targetMotorRPM);
-            telemetry.addData("Current RPM",  " at %7d :%7d", motor.getVelocity()/maxTicksPerSec*maxMotorRPM);
+            motor.setVelocity(targetTicksPerSec);
+            telemetry.addData("Target Ticks Per Second: ",  targetTicksPerSec);
+            telemetry.addData("Current Ticks Per Second: ", motor.getVelocity());
             telemetry.update();
+            sleep(50);
         }
     }
 }
