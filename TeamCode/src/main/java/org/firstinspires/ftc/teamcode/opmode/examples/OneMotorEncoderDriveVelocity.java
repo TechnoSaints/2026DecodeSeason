@@ -12,14 +12,14 @@ import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.MotorDat
 
 @Config
 @TeleOp(name = "OneMotorEncoderDriveVelocity", group = "Examples")
-@Disabled
+
 public class OneMotorEncoderDriveVelocity extends LinearOpMode {
 
     private DcMotorEx motor;
     private final MotorData motorData = new GoBilda312DcMotorData();
     private final double maxMotorRPM = motorData.maxMotorRpm;
     private final double maxTicksPerSec = motorData.maxTicksPerSec;
-    private double targetTicksPerSec, targetMotorRPM = 0.0;
+    private double targetTicksPerSec =0.0, targetMotorRPM = 0.0;
     private double incrementRPM = 250.0;
 
     @Override
@@ -36,6 +36,9 @@ public class OneMotorEncoderDriveVelocity extends LinearOpMode {
                 targetMotorRPM -= incrementRPM;
             }
             motor.setVelocity(targetMotorRPM/maxMotorRPM*maxTicksPerSec);
+            telemetry.addData("Target RPM: ",  " %7d :%7d", targetMotorRPM);
+            telemetry.addData("Current RPM",  " at %7d :%7d", motor.getVelocity()/maxTicksPerSec*maxMotorRPM);
+            telemetry.update();
         }
     }
 }
