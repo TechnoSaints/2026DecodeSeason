@@ -22,7 +22,6 @@ buildscript {
     dependencies {
         classpath "dev.frozenmilk:Load:0.2.4"
     }
-
 }
 
 
