@@ -19,12 +19,11 @@ public class OneMotorEncoderDriveVelocity extends LinearOpMode {
     private DcMotorEx motor;
 
     // Data for GoBilda 312 RPM motor
-    private final double maxMotorRPM = 6000;
-    private final double gearRatio = 19.2;
-    private final double ticksPerMotorRev = 28;
-    private final double maxTicksPerSec = maxMotorRPM * ticksPerMotorRev * gearRatio;
-    private double targetTicksPerSec = 0.0;
-    private double ticksPerSecondIncrement = 100.0;
+    private final int maxMotorRPM = 6000;
+    private final int ticksPerMotorRev = 28;
+    private final int maxTicksPerSec = Math.round((maxMotorRPM * ticksPerMotorRev)/60.0f);
+    private int targetTicksPerSec = 0;
+    private int ticksPerSecondIncrement = 100;
 
     @Override
     public void runOpMode() {
@@ -45,7 +44,7 @@ public class OneMotorEncoderDriveVelocity extends LinearOpMode {
                     targetTicksPerSec += ticksPerSecondIncrement;
                 }
             } else if (gamepad1.a) {
-                if (targetTicksPerSec <= maxTicksPerSec) {
+                if (targetTicksPerSec <= -maxTicksPerSec) {
                     targetTicksPerSec = -maxTicksPerSec;
                 } else
                 {
