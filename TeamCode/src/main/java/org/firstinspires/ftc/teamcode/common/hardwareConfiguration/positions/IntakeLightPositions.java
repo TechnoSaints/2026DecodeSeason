@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints;
+package org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions;
 
 public enum IntakeLightPositions {
     OFF(0.0),

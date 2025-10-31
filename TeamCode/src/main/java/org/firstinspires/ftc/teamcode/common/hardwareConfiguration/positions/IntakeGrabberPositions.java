@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints;
+package org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions;
 
 public enum IntakeGrabberPositions {
     //    OPEN(0.74),

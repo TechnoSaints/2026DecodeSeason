@@ -6,9 +6,11 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.common.Extendo;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints.ExtendoPositions;
+import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.ExtendoPositions;
+import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.HandlerArmPositions;
 
 @Config
 @TeleOp(name = "ExtendoPresetTest", group = "Test")

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints;
+package org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions;
 
 public enum ExtendoPositions {
     RETRACTED(4.0),
