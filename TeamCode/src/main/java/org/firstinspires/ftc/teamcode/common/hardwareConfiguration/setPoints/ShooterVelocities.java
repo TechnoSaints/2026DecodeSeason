@@ -1,17 +1,17 @@
 package org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints;
 
 public enum ShooterVelocities {
-    MAX(1.0f),
-    MEDIUM(0.5f),
-    MIN(0.0f);
+    MAX(1.0),
+    MEDIUM(0.5),
+    MIN(0.0);
 
-    private float value;
+    private double value;
 
-    ShooterVelocities(float value) {
+    ShooterVelocities(double value) {
         this.value = value;
     }
 
-    public float getValue() {
+    public double getValue() {
         return value;
     }
 }
