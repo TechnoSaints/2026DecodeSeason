@@ -39,10 +39,9 @@ public class OneMotorEncoderDrivePosition extends LinearOpMode {
     public void runOpMode() {
         motor = hardwareMap.get(DcMotorEx.class, "motor");
         motor.setDirection(DcMotorSimple.Direction.FORWARD);
-        motor.setTargetPosition(targetTicks);
-        motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motor.setTargetPosition(targetTicks);
+        motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motor.setPower(motorPower);
 
         telemetry.addData("ticksPerInch: ", ticksPerInch);
