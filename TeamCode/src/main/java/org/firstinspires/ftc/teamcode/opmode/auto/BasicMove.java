@@ -4,11 +4,10 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.common.Modes;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.ExtendoPositions;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.HandlerArmPositions;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.HandlerGrabberPositions;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.IntakeSwivelPositions;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.LiftPositions;
+import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints.ExtendoPositions;
+import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints.HandlerArmPositions;
+import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints.HandlerGrabberPositions;
+import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints.LiftPositions;
 import org.firstinspires.ftc.teamcode.opmode.Paths;
 
 @Autonomous(name = "BasicMove", group = "Bucket")

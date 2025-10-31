@@ -39,7 +39,8 @@ public class OneMotorEncoderDrivePosition extends LinearOpMode {
     public void runOpMode() {
         motor = hardwareMap.get(DcMotorEx.class, "motor");
         motor.setDirection(DcMotorSimple.Direction.FORWARD);
-        motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motor.setTargetPosition(targetTicks);
+        motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motor.setTargetPosition(targetTicks);
         motor.setPower(motorPower);
@@ -55,9 +56,10 @@ public class OneMotorEncoderDrivePosition extends LinearOpMode {
                 targetInches -= targetInchesIncrement;
             }
             targetTicks = Math.round(targetInches * ticksPerInch);
-            motor.setTargetPosition((int)targetTicks);
+            motor.setTargetPosition(targetTicks);
+
             telemetry.addData("targetInches: ", targetInches);
-            telemetry.addData("targetTicks: ", targetTicks);
+            telemetry.addData("targetTicks: ", motor.getTargetPosition());
             telemetry.addData("Current Position Inches: ", motor.getCurrentPosition()/ticksPerInch);
             telemetry.addData("Current Position Ticks: ", motor.getCurrentPosition());
             telemetry.update();

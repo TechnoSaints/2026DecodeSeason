@@ -5,7 +5,7 @@ import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.common.Modes;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.HandlerArmPositions;
+import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints.HandlerArmPositions;
 import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
 import org.firstinspires.ftc.teamcode.opmode.Paths;
 

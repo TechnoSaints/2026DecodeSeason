@@ -3,14 +3,14 @@ package org.firstinspires.ftc.teamcode.opmode.auto;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.common.Modes;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.ExtendoPositions;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.HandlerArmPositions;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.HandlerGrabberPositions;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.HandlerWristPositions;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.IntakeGrabberPositions;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.IntakeSwivelPositions;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.IntakeWristPositions;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.LiftPositions;
+import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints.ExtendoPositions;
+import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints.HandlerArmPositions;
+import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints.HandlerGrabberPositions;
+import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints.HandlerWristPositions;
+import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints.IntakeGrabberPositions;
+import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints.IntakeSwivelPositions;
+import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints.IntakeWristPositions;
+import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints.LiftPositions;
 import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
 import org.firstinspires.ftc.teamcode.opmode.Paths;
 
