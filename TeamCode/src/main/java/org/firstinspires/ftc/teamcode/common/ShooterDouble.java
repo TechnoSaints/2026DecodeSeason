@@ -18,7 +18,6 @@ public class ShooterDouble extends Component {
     private final ShooterData shooterData = new ShooterData();
     private final double maxPower;
     private final int maxTicksPerSecond;
-
     int direction = 1;
     int targetVelocity = 0;
 
@@ -30,15 +29,29 @@ public class ShooterDouble extends Component {
         shooterMotorL = hardwareMap.get(DcMotorEx.class, motorNameL);
         shooterMotorR = hardwareMap.get(DcMotorEx.class, motorNameR);
         resetEncoders();
+        setVelocityFactor(targetVelocity);
         setMotorsPower(maxPower);
     }
 
-    public void setPower(float targetPower)
-    {
-        targetVelocity = Math.toIntExact(Math.round(targetPower * maxTicksPerSecond));
+    public void setVelocityFactor(double targetVelocityFactor) {
+        if (Math.abs(targetVelocityFactor) < 0.05)
+        {
+            targetVelocityFactor = 0.0;
+        } else if (targetVelocityFactor > 1.0)
+        {
+            targetVelocityFactor = 1.0;
+        } else if (targetVelocityFactor < -1.0)
+        {
+            targetVelocityFactor = -1.0;
+        }
+        targetVelocity = Math.toIntExact(Math.round(targetVelocityFactor * maxTicksPerSecond));
+        setMotorsTargetVelocity(targetVelocity);
     }
-    public void stop() {
-        setMotorsPower(0.0);
+
+    private void setMotorsTargetVelocity(int targetVelocity)
+    {
+        shooterMotorL.setVelocity(targetVelocity);
+        shooterMotorR.setVelocity(targetVelocity);
     }
 
     private void setMotorsPower(double power) {
@@ -60,13 +73,14 @@ public class ShooterDouble extends Component {
         shooterMotorR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
     }
 
-
     public void log() {
+        telemetry.addData("maxTicksPerSecond:  ", maxTicksPerSecond);
         telemetry.addData("targetVelocity:  ", targetVelocity);
         telemetry.addData("Actual Velocity L:  ", shooterMotorL.getVelocity());
         telemetry.addData("Actual Velocity R:  ", shooterMotorR.getVelocity());
         telemetry.addData("PowerL:  ", shooterMotorL.getPower());
         telemetry.addData("PowerR:  ", shooterMotorR.getPower());
+        telemetry.update();
     }
 
 }
