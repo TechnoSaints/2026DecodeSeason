@@ -8,8 +8,6 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.common.AutoBot;
-import org.firstinspires.ftc.teamcode.common.Modes;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.HandlerGrabberPositions;
 
 public abstract class AutoOpMode extends OpMode {
     protected AutoBot bot;
