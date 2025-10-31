@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions;
+package org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints;
 
 public enum IntakeSwivelPositions {
     DEGREES0(0.86),

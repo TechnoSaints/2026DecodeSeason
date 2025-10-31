@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.IntakeSwivelPositions;
+import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints.IntakeSwivelPositions;
 
 @TeleOp(name = "Intake Swivel Test", group = "Test")
 @Disabled

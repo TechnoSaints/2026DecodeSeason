@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions;
+package org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints;
 
 public enum HandlerGrabberPositions {
     OPEN(0.70),
