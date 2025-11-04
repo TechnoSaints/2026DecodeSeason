@@ -15,6 +15,21 @@ public class LauncherSettings {
     private static boolean initialized = false;
 
     private static void init() {
+
+        // Set your empirical data here
+        // For each distance to the target (in inches), you need to determine what
+        //      velocity and angle to use.
+        // Both velocity and angle should be represented as decimal numbers.
+        // These numbers are the ones you provide to the launcher and servo when setting velocity
+        //  and position, respectively.
+        // For wheel velocities, put each the distance and velocity in velocityFactors
+        // For launch angle, put each the distance and ange in launchAngles
+        // For example, from 35 inches, you may need velocity 0.5 and angle 0.25.
+        // This data would be entered as:
+        //      velocityFactors.add(35.0, 0.5);
+        //      launchAngles.add(25.0, 0.25);
+
+
         velocityFactors.add(1.0, 0.95);
         velocityFactors.add(144.0, 0.1);
 

@@ -11,20 +11,19 @@ import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.Launcher
 
 @Config
 public class LauncherDouble extends Component {
-    private final DcMotorEx shooterMotorL, shooterMotorR;
-    private final LauncherData shooterData = new LauncherData();
+    private final DcMotorEx launcherMotorL, launcherMotorR;
+    private final LauncherData launcherData = new LauncherData();
     private final double maxPower;
     private final int maxTicksPerSecond;
-    int direction = 1;
     int targetVelocity = 0;
 
     public LauncherDouble(HardwareMap hardwareMap, Telemetry telemetry, String motorNameL, String motorNameR, MotorData motorData) {
         super(telemetry);
-        maxPower = shooterData.maxPower;
+        maxPower = launcherData.maxPower;
         maxTicksPerSecond = motorData.maxTicksPerSec;
 
-        shooterMotorL = hardwareMap.get(DcMotorEx.class, motorNameL);
-        shooterMotorR = hardwareMap.get(DcMotorEx.class, motorNameR);
+        launcherMotorL = hardwareMap.get(DcMotorEx.class, motorNameL);
+        launcherMotorR = hardwareMap.get(DcMotorEx.class, motorNameR);
         resetEncoders();
         setVelocityFactor(targetVelocity);
         setMotorsPower(maxPower);
@@ -47,36 +46,36 @@ public class LauncherDouble extends Component {
 
     private void setMotorsTargetVelocity(int targetVelocity)
     {
-        shooterMotorL.setVelocity(targetVelocity);
-        shooterMotorR.setVelocity(targetVelocity);
+        launcherMotorL.setVelocity(targetVelocity);
+        launcherMotorR.setVelocity(targetVelocity);
     }
 
     private void setMotorsPower(double power) {
-        shooterMotorL.setPower(power);
-        shooterMotorR.setPower(power);
+        launcherMotorL.setPower(power);
+        launcherMotorR.setPower(power);
     }
 
     private void resetEncoders() {
-        shooterMotorL.setDirection(DcMotor.Direction.FORWARD);
-        shooterMotorR.setDirection(DcMotor.Direction.REVERSE);
+        launcherMotorL.setDirection(DcMotor.Direction.FORWARD);
+        launcherMotorR.setDirection(DcMotor.Direction.REVERSE);
 
-        shooterMotorL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        shooterMotorR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        launcherMotorL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        launcherMotorR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        shooterMotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        shooterMotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        launcherMotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        launcherMotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        shooterMotorL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        shooterMotorR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        launcherMotorL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        launcherMotorR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
     }
 
     public void log() {
         telemetry.addData("maxTicksPerSecond:  ", maxTicksPerSecond);
         telemetry.addData("targetVelocity:  ", targetVelocity);
-        telemetry.addData("Actual Velocity L:  ", shooterMotorL.getVelocity());
-        telemetry.addData("Actual Velocity R:  ", shooterMotorR.getVelocity());
-        telemetry.addData("PowerL:  ", shooterMotorL.getPower());
-        telemetry.addData("PowerR:  ", shooterMotorR.getPower());
+        telemetry.addData("Actual Velocity L:  ", launcherMotorL.getVelocity());
+        telemetry.addData("Actual Velocity R:  ", launcherMotorR.getVelocity());
+        telemetry.addData("PowerL:  ", launcherMotorL.getPower());
+        telemetry.addData("PowerR:  ", launcherMotorR.getPower());
         telemetry.update();
     }
 
