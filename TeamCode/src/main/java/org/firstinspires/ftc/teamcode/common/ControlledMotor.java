@@ -10,7 +10,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda435DcMotorData;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.LiftData;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.MotorData;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.LiftPositions;
+import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints.LiftPositions;
 
 // Modified from LiftSingle to be used for continuous motor movement that doesn't require limits
 public class ControlledMotor extends Component {

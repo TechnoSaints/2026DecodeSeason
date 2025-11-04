@@ -2,19 +2,10 @@ package org.firstinspires.ftc.teamcode.common;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.DrivetrainData;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda435DcMotorData;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.ExtendoPositions;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.HandlerArmPositions;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.HandlerGrabberPositions;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.HandlerWristPositions;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.IntakeGrabberPositions;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.IntakeSwivelPositions;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.IntakeWristPositions;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.LiftPositions;
 
 public class TeleopBotSimple extends Component {
     private final Drivetrain drivetrain;

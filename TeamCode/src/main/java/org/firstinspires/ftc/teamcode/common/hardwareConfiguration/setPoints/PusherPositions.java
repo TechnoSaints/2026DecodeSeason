@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions;
+package org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints;
 
 public enum PusherPositions {
     FIRE(.1),
