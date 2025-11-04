@@ -68,6 +68,10 @@ public class FieldLocations {
     // start goal left = 12h, 132v
     // start goal right = 132h, 132v
 
+    // Targets (temp.)
+    public final static Pose redTarget = new Pose(10, 10, 0);
+    public final static Pose blueTarget = new Pose(10, 300, 0);
+
     //test
     public final static Pose testStartPose = new Pose(0,0,0);
     public final static Pose positiveXPose = new Pose(4*inches, 0, 0);

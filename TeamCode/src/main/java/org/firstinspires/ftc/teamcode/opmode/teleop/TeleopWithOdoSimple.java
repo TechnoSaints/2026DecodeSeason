@@ -69,7 +69,7 @@ public class TeleopWithOdoSimple extends LinearOpMode {
         speedTimer.reset();
         // 1580 tps far
         while (opModeIsActive() && !isStopRequested()) {
-            bot.processDrivetrainInput(gamepad1);
+            bot.odoDrivetrainInput(gamepad1);
 
             // Launcher
             leftLauncher.setPower((gamepad1.right_trigger-gamepad1.left_trigger));

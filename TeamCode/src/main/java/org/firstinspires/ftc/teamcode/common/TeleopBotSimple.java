@@ -45,4 +45,8 @@ public class TeleopBotSimple extends Component {
                 drivetrain.moveDirection(driveAxial, driveStrafe, driveYaw);
         }
     }
+
+    public void odoDrivetrainInput(Gamepad gamepad){
+        drivetrain.processTeleopDrive(gamepad);
+    }
 }

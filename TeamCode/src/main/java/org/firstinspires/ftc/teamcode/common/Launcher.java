@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.common;
 
+import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -7,6 +8,9 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda6000DcMotorData;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.AimerPositions;
+import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
+
+import java.text.DecimalFormat;
 
 public class Launcher extends Component{
     private DcMotorEx leftLauncher, rightLauncher;
@@ -48,6 +52,24 @@ public class Launcher extends Component{
     public void stopLauncher() {
         leftLauncher.setVelocity(0);
         rightLauncher.setVelocity(0);
+    }
+
+    public double distanceFromLauncher(Pose botPose, boolean red){
+        Pose target;
+        if (red){
+            target = FieldLocations.redTarget;
+        }
+        else {
+            target = FieldLocations.blueTarget;
+        }
+        return Math.sqrt(
+                Math.pow(botPose.getX() - target.getX(), 2) +
+                        Math.pow(botPose.getY() - target.getY(), 2)
+        );
+    }
+
+    public void preloadFromDistance(Pose botPose, boolean red) {
+        double distance = distanceFromLauncher(botPose, red);
     }
 
     public double getVelocity(){
