@@ -6,23 +6,22 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.common.LiftDouble;
-import org.firstinspires.ftc.teamcode.common.ShooterDouble;
+import org.firstinspires.ftc.teamcode.common.LauncherDouble;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda6000DcMotorData;
 
 @Config
-@TeleOp(name = "ShooterDoubleTest", group = "Test")
+@TeleOp(name = "LauncherDoubleTest", group = "Test")
 
-public class ShooterDoubleTest extends LinearOpMode {
+public class LauncherDoubleTest extends LinearOpMode {
 
-    private ShooterDouble shooter;
+    private LauncherDouble shooter;
     private double velocityFactorIncrement = 0.1;
     private double targetVelocityFactor = 0.0;
 
     @Override
     public void runOpMode() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        shooter = new ShooterDouble(hardwareMap, telemetry, "shooterL", "shooterR", new GoBilda6000DcMotorData());
+        shooter = new LauncherDouble(hardwareMap, telemetry, "shooterL", "shooterR", new GoBilda6000DcMotorData());
         shooter.setVelocityFactor(targetVelocityFactor);
 
         waitForStart();

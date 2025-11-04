@@ -1,27 +1,24 @@
 package org.firstinspires.ftc.teamcode.common;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.arcrobotics.ftclib.controller.PIDFController;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.MotorData;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.ShooterData;
+import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.LauncherData;
 
 @Config
-public class ShooterDouble extends Component {
+public class LauncherDouble extends Component {
     private final DcMotorEx shooterMotorL, shooterMotorR;
-    private final ShooterData shooterData = new ShooterData();
+    private final LauncherData shooterData = new LauncherData();
     private final double maxPower;
     private final int maxTicksPerSecond;
     int direction = 1;
     int targetVelocity = 0;
 
-    public ShooterDouble(HardwareMap hardwareMap, Telemetry telemetry, String motorNameL, String motorNameR, MotorData motorData) {
+    public LauncherDouble(HardwareMap hardwareMap, Telemetry telemetry, String motorNameL, String motorNameR, MotorData motorData) {
         super(telemetry);
         maxPower = shooterData.maxPower;
         maxTicksPerSecond = motorData.maxTicksPerSec;
