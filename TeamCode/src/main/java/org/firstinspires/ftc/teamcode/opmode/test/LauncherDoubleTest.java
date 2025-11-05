@@ -22,7 +22,7 @@ public class LauncherDoubleTest extends LinearOpMode {
     public void runOpMode() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         shooter = new LauncherDouble(hardwareMap, telemetry, "shooterL", "shooterR", new GoBilda6000DcMotorData());
-        shooter.setVelocityFactor(targetVelocityFactor);
+        shooter.setVelocityFactorVoltageCompensated(targetVelocityFactor);
 
         waitForStart();
         while (opModeIsActive() && !isStopRequested()) {
@@ -31,7 +31,7 @@ public class LauncherDoubleTest extends LinearOpMode {
             } else if (gamepad1.a) {
                 targetVelocityFactor -= velocityFactorIncrement;
             }
-            shooter.setVelocityFactor(targetVelocityFactor);
+            shooter.setVelocityFactorVoltageCompensated(targetVelocityFactor);
             telemetry.addData("targetVelocityFactor in ShooterDoubleTest: ", targetVelocityFactor);
             shooter.log();
             sleep(100);
