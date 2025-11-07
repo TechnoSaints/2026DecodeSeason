@@ -17,8 +17,6 @@ public class IntakeMotors extends Component {
     private double maxTicks;
     private int currentSpeed;
 
-    private final GoBilda435DcMotorData motorData = new GoBilda435DcMotorData();
-
     private final LiftData liftData = new LiftData();
 
     public IntakeMotors(Telemetry telemetry) {
@@ -26,10 +24,9 @@ public class IntakeMotors extends Component {
     }
 
     public void init(HardwareMap hardwareMap, String intakeName) {
-        maxVelocity = motorData.maxTicksPerSec;
+        maxVelocity = GoBilda435DcMotorData.maxTicksPerSec;
         maxMovePower = liftData.maxMovePower;
         stopPower = liftData.stopPower;
-        maxTicks = 11.1428571;
 
         motor = hardwareMap.get(DcMotorEx.class, intakeName);
         resetEncoder();
@@ -40,11 +37,11 @@ public class IntakeMotors extends Component {
     }
 
     public void setSpeed(double speedMultiplier) {
-        motor.setPower(speedMultiplier);
+        motor.setVelocity(maxVelocity*speedMultiplier);
     }
 
     public void stopMotor() {
-        motor.setPower(0);
+        motor.setVelocity(0);
     }
 
     private void resetEncoder() {

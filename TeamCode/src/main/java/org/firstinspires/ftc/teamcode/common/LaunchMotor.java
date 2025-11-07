@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda435DcMotorData;
+import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda6000DcMotorData;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.LiftData;
 
 public class LaunchMotor extends Component {
@@ -17,8 +17,6 @@ public class LaunchMotor extends Component {
     private  double maxTicks;
     private int currentSpeed;
 
-    private final GoBilda435DcMotorData motorData = new GoBilda435DcMotorData();
-
     private final LiftData liftData = new LiftData();
 
 
@@ -27,10 +25,9 @@ public class LaunchMotor extends Component {
     }
 
     public void init(HardwareMap hardwareMap, String launchMotorName) {
-        maxVelocity = motorData.maxTicksPerSec;
+        maxVelocity = GoBilda6000DcMotorData.maxTicksPerSec;
         maxMovePower = liftData.maxMovePower;
         stopPower = liftData.stopPower;
-        maxTicks = 214.285714;
 
         motor = hardwareMap.get(DcMotorEx.class, launchMotorName);
         resetEncoder();
@@ -41,11 +38,13 @@ public class LaunchMotor extends Component {
     }
 
     public void setSpeed(double speedMultiplier) {
-        motor.setVelocity(maxTicks * speedMultiplier);
+        motor.setVelocity(maxVelocity * speedMultiplier);
+//        motor.setPower(speedMultiplier);
     }
 
     public void stopMotor() {
         motor.setVelocity(0);
+//        motor.setPower(0);
     }
 
     private void resetEncoder() {
@@ -60,9 +59,9 @@ public class LaunchMotor extends Component {
     }
 
     public void log() {
-        telemetry.addData("isBusy(): ", isBusy());
-        telemetry.addData("Position:  ", motor.getCurrentPosition());
         telemetry.addData("current: ", motor.getCurrent(CurrentUnit.AMPS));
+        telemetry.addData("Motor speed (ticks)", motor.getVelocity());
+
         telemetry.update();
     }
 }

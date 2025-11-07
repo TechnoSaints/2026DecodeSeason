@@ -20,6 +20,10 @@ public class Bot extends Component {
     private Modes currentMode;
     private int currentPhase;
 
+    private boolean blackWheelRunning = false;
+    private boolean blackWheelForward = false; // true = moving forward, false = stopped
+    private boolean blackWheelBackward = false; // true = moving backward, false = stopped
+
     public double aimerPosition = 0.0;
     private boolean onHold = false;
 
@@ -78,25 +82,22 @@ public class Bot extends Component {
         pusher.setPosition(0);
     }
 
-    public void launchMotor1Stop() {
-        rightLaunchMotor.stopMotor();
+    public void toggleBlackWheel() {
+        if (!blackWheelRunning) {
+            // Turn on
+            pusher.setPosition(1.0);
+            blackWheelRunning = true;
+        } else {
+            // Turn off
+            pusher.setPosition(0.0);
+            blackWheelRunning = false;
+        }
     }
 
-    public void launchMotor1Start() {
-        rightLaunchMotor.setSpeed(-0.5);
-    }
 
-    public void launchMotor2Stop() {
-        leftLaunchMotor.stopMotor();
-    }
-
-    public void launchMotor2Start() {
-        leftLaunchMotor.setSpeed(-0.5);
-    }
-
-    public void startLaunchMotors() {
-        rightLaunchMotor.setSpeed(-0.5);
-        leftLaunchMotor.setSpeed(-0.5);
+    public void startLaunchMotors(double multiple) {
+        rightLaunchMotor.setSpeed(-multiple);
+        leftLaunchMotor.setSpeed(multiple);
     }
 
     public void stopLaunchMotors() {
@@ -110,6 +111,10 @@ public class Bot extends Component {
 
     public void intakeMotorStart() {
         intake.setSpeed(-1);
+    }
+
+    public void log() {
+        leftLaunchMotor.log();
     }
 
 }
