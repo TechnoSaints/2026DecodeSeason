@@ -16,32 +16,32 @@ public class OneMotorEncoderDrivePosition extends LinearOpMode {
 
     // Data for GoBilda 312 RPM motor
     private final int maxMotorRPM = 6000;
-    private final float gearRatio = 19.2f;
+    private final double gearRatio = 19.2f;
     private final int ticksPerMotorRev = 28;
-    private final float ticksPerWheelRev = ticksPerMotorRev * gearRatio;
+    private final double ticksPerWheelRev = ticksPerMotorRev * gearRatio;
 
     // GoBilda mecanum wheels - grippy rollers - 104mm diameter
     // GoBilda mecanum wheels - smooth rollers - 96 mm diameter
-    private final float wheelDiameterInches = 104.0f / 25.4f;
-    private final float wheelCircumferenceInches = wheelDiameterInches * 3.1415f;
+    private final double wheelDiameterInches = 104.0f / 25.4f;
+    private final double wheelCircumferenceInches = wheelDiameterInches * 3.1415f;
 
     // Determine how many ticks required to move forward one inch.
-    private final float ticksPerInch = ticksPerWheelRev / wheelCircumferenceInches;
+    private final double ticksPerInch = ticksPerWheelRev / wheelCircumferenceInches;
 
     // Target position relative to start
-    private float targetInches = 0.0f;
+    private double targetInches = 0.0f;
 
-    private final float targetInchesIncrement = 12.0f;
+    private final double targetInchesIncrement = 12.0f;
     private int targetTicks = 0;
-    private float motorPower = 0.5f;
+    private double motorPower = 0.5f;
 
     @Override
     public void runOpMode() {
         motor = hardwareMap.get(DcMotorEx.class, "motor");
         motor.setDirection(DcMotorSimple.Direction.FORWARD);
-        motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motor.setTargetPosition(targetTicks);
+        motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motor.setPower(motorPower);
 
         telemetry.addData("ticksPerInch: ", ticksPerInch);
@@ -54,10 +54,11 @@ public class OneMotorEncoderDrivePosition extends LinearOpMode {
             } else if (gamepad1.a) {
                 targetInches -= targetInchesIncrement;
             }
-            targetTicks = Math.round(targetInches * ticksPerInch);
-            motor.setTargetPosition((int)targetTicks);
+            targetTicks = Math.toIntExact(Math.round(targetInches * ticksPerInch));
+            motor.setTargetPosition(targetTicks);
+
             telemetry.addData("targetInches: ", targetInches);
-            telemetry.addData("targetTicks: ", targetTicks);
+            telemetry.addData("targetTicks: ", motor.getTargetPosition());
             telemetry.addData("Current Position Inches: ", motor.getCurrentPosition()/ticksPerInch);
             telemetry.addData("Current Position Ticks: ", motor.getCurrentPosition());
             telemetry.update();
