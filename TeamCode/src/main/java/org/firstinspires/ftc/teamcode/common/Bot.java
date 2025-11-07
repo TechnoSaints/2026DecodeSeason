@@ -1,6 +1,9 @@
 package org.firstinspires.ftc.teamcode.common;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -9,12 +12,15 @@ public class Bot extends Component {
 //    private final ServoSimple handlerArm, handlerWrist, handlerGrabber;
 //    private final RevTouchSensor handlerSwitch, bumperSwitchL, bumperSwitchR;
 //    private final Extendo extendo;
-    private LaunchMotor launchTest1, launchTest2;
+    private LaunchMotor rightLaunchMotor, leftLaunchMotor;
 
     private IntakeMotors intake;
 
+    Servo launchServo, pusher;
     private Modes currentMode;
     private int currentPhase;
+
+    public double aimerPosition = 0.0;
     private boolean onHold = false;
 
     public Bot(Telemetry telemetry) {
@@ -22,13 +28,19 @@ public class Bot extends Component {
     }
 
     public void init(OpMode opMode) {
-        launchTest1 = new LaunchMotor(telemetry);
-        launchTest1.init(opMode.hardwareMap, "launchtest1");
+        rightLaunchMotor = new LaunchMotor(telemetry);
+        rightLaunchMotor.init(opMode.hardwareMap, "rightLaunchMotor");
 
-        launchTest2 = new LaunchMotor(telemetry);
-        launchTest2.init(opMode.hardwareMap, "launchtest2");
+        leftLaunchMotor = new LaunchMotor(telemetry);
+        leftLaunchMotor.init(opMode.hardwareMap, "leftLaunchMotor");
         intake = new IntakeMotors(telemetry);
         intake.init(opMode.hardwareMap, "intake");
+
+        // Servos
+        launchServo = opMode.hardwareMap.get(Servo.class, "launchServo");
+        launchServo.setPosition(0);
+        pusher = opMode.hardwareMap.get(Servo.class, "pusher");
+        pusher.setPosition(0);
     }
 
     // Phases are used to divide mode actions into sequential section, with entry criteria
@@ -40,21 +52,56 @@ public class Bot extends Component {
         return (currentPhase == phase);
     }
 
+    public void fullIntakeCycle() {
+        intakeMotorStart();
+        // Some code to sleep onl this portion for 0-1 seconds
+        intakeMotorStop();
+        fullPushBlackWheel();
+    }
+    public void moveAimerUp(double amount) {
+        aimerPosition+=amount;
+        launchServo.setPosition(aimerPosition);
+    }
+
+    public void moveAimerDown(double amount) {
+        aimerPosition-=amount;
+        launchServo.setPosition(aimerPosition);
+    }
+
+    public void zeroAimer() {
+        aimerPosition = 0;
+        launchServo.setPosition(aimerPosition);
+    }
+
+    public void fullPushBlackWheel() {
+        pusher.setPosition(1);
+        pusher.setPosition(0);
+    }
 
     public void launchMotor1Stop() {
-        launchTest1.stopMotor();
+        rightLaunchMotor.stopMotor();
     }
 
     public void launchMotor1Start() {
-        launchTest1.setSpeed(-0.5);
+        rightLaunchMotor.setSpeed(-0.5);
     }
 
     public void launchMotor2Stop() {
-        launchTest2.stopMotor();
+        leftLaunchMotor.stopMotor();
     }
 
     public void launchMotor2Start() {
-        launchTest2.setSpeed(-0.5);
+        leftLaunchMotor.setSpeed(-0.5);
+    }
+
+    public void startLaunchMotors() {
+        rightLaunchMotor.setSpeed(-0.5);
+        leftLaunchMotor.setSpeed(-0.5);
+    }
+
+    public void stopLaunchMotors() {
+        rightLaunchMotor.stopMotor();
+        leftLaunchMotor.stopMotor();
     }
 
     public void intakeMotorStop() {
@@ -62,7 +109,7 @@ public class Bot extends Component {
     }
 
     public void intakeMotorStart() {
-        intake.setSpeed(1);
+        intake.setSpeed(-1);
     }
 
 }

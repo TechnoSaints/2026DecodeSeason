@@ -21,12 +21,10 @@ public class IntakeMotors extends Component {
 
     private final LiftData liftData = new LiftData();
 
-    // ✅ Constructor no longer takes hardwareMap
     public IntakeMotors(Telemetry telemetry) {
         super(telemetry);
     }
 
-    // ✅ New init() method for hardware setup
     public void init(HardwareMap hardwareMap, String intakeName) {
         maxVelocity = motorData.maxTicksPerSec;
         maxMovePower = liftData.maxMovePower;
@@ -42,11 +40,11 @@ public class IntakeMotors extends Component {
     }
 
     public void setSpeed(double speedMultiplier) {
-        motor.setVelocity(maxTicks * speedMultiplier);
+        motor.setPower(speedMultiplier);
     }
 
     public void stopMotor() {
-        motor.setVelocity(0);
+        motor.setPower(0);
     }
 
     private void resetEncoder() {

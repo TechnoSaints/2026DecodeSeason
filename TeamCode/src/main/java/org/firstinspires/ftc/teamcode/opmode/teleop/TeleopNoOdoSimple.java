@@ -45,15 +45,13 @@ public class TeleopNoOdoSimple extends LinearOpMode {
             // Launcher
             if (gamepad1.right_trigger >= .2)
             {
-                b.launchMotor1Stop();
-                b.launchMotor2Stop();
+                b.stopLaunchMotors();
             }
 
 
             if (gamepad1.left_trigger >= .2)
             {
-               b.launchMotor1Start();
-               b.launchMotor2Start();
+                b.startLaunchMotors();
             }
 
 
@@ -66,10 +64,25 @@ public class TeleopNoOdoSimple extends LinearOpMode {
             {
                 b.intakeMotorStop();
             }
-            // Pusher (temp)
-            boolean pressedOnce = false;
+
+            if (gamepad1.right_bumper) {
+                b.moveAimerUp(0.05);
+            }
+
+            if (gamepad1.left_bumper) {
+                b.moveAimerDown(0.05);
+            }
+
+            if (gamepad1.x) {
+                b.fullPushBlackWheel();
+            }
+
+            if (gamepad1.y) {
+                b.fullIntakeCycle();
+            }
 
             telemetry.update();
+            sleep(100);
         }
     }
 }
