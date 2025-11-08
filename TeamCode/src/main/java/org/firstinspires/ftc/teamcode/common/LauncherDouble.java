@@ -76,5 +76,4 @@ public class LauncherDouble extends Component {
         telemetry.addData("PowerR:  ", launcherMotorR.getPower());
         telemetry.update();
     }
-
 }
