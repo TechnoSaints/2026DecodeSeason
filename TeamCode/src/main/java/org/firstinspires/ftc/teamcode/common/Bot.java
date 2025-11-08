@@ -4,6 +4,8 @@ import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.har
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Servo;
+import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda6000DcMotorData;
+import org.firstinspires.ftc.teamcode.common.LauncherDouble;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -12,7 +14,8 @@ public class Bot extends Component {
 //    private final ServoSimple handlerArm, handlerWrist, handlerGrabber;
 //    private final RevTouchSensor handlerSwitch, bumperSwitchL, bumperSwitchR;
 //    private final Extendo extendo;
-    private LaunchMotor rightLaunchMotor, leftLaunchMotor;
+//    private LaunchMotor rightLaunchMotor, leftLaunchMotor;
+    private LauncherDouble launchMotors;
 
     private IntakeMotors intake;
 
@@ -32,11 +35,7 @@ public class Bot extends Component {
     }
 
     public void init(OpMode opMode) {
-        rightLaunchMotor = new LaunchMotor(telemetry);
-        rightLaunchMotor.init(opMode.hardwareMap, "rightLaunchMotor");
-
-        leftLaunchMotor = new LaunchMotor(telemetry);
-        leftLaunchMotor.init(opMode.hardwareMap, "leftLaunchMotor");
+        launchMotors = new LauncherDouble(opMode.hardwareMap, telemetry, "leftLaunchMotor", "rightLaunchMotor", new GoBilda6000DcMotorData());
         intake = new IntakeMotors(telemetry);
         intake.init(opMode.hardwareMap, "intake");
 
@@ -56,12 +55,6 @@ public class Bot extends Component {
         return (currentPhase == phase);
     }
 
-    public void fullIntakeCycle() {
-        intakeMotorStart();
-        // Some code to sleep onl this portion for 0-1 seconds
-        intakeMotorStop();
-        fullPushBlackWheel();
-    }
     public void moveAimerUp(double amount) {
         aimerPosition+=amount;
         launchServo.setPosition(aimerPosition);
@@ -72,15 +65,6 @@ public class Bot extends Component {
         launchServo.setPosition(aimerPosition);
     }
 
-    public void zeroAimer() {
-        aimerPosition = 0;
-        launchServo.setPosition(aimerPosition);
-    }
-
-    public void fullPushBlackWheel() {
-        pusher.setPosition(1);
-        pusher.setPosition(0);
-    }
 
     public void toggleBlackWheel() {
         if (!blackWheelRunning) {
@@ -96,13 +80,11 @@ public class Bot extends Component {
 
 
     public void startLaunchMotors(double multiple) {
-        rightLaunchMotor.setSpeed(-multiple);
-        leftLaunchMotor.setSpeed(multiple);
+        launchMotors.setVelocityFactor(multiple);
     }
 
     public void stopLaunchMotors() {
-        rightLaunchMotor.stopMotor();
-        leftLaunchMotor.stopMotor();
+        launchMotors.setVelocityFactor(0.0);
     }
 
     public void intakeMotorStop() {
@@ -114,7 +96,7 @@ public class Bot extends Component {
     }
 
     public void log() {
-        leftLaunchMotor.log();
+        launchMotors.log();
     }
 
 }

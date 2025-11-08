@@ -44,8 +44,6 @@ public class TeleopNoOdoSimple extends LinearOpMode {
 
             if (gamepad1.left_trigger >= .2) {
                 b.startLaunchMotors(gamepad1.left_trigger * 0.6);
-
-//                b.startLaunchMotors(0.5);
             } else {
                 b.stopLaunchMotors();
             }
@@ -77,10 +75,6 @@ public class TeleopNoOdoSimple extends LinearOpMode {
                 pressed = false;
             }
 
-
-            if (gamepad1.y) {
-                b.fullIntakeCycle();
-            }
 
             telemetry.update();
             sleep(100);

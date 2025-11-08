@@ -45,12 +45,12 @@ public class LauncherDouble extends Component {
     private void setMotorsTargetVelocity(int targetVelocity)
     {
         launcherMotorL.setVelocity(targetVelocity);
-        launcherMotorR.setVelocity(targetVelocity);
+        launcherMotorR.setVelocity(-targetVelocity);
     }
 
     private void setMotorsPower(double power) {
         launcherMotorL.setPower(power);
-        launcherMotorR.setPower(power);
+        launcherMotorR.setPower(-power);
     }
 
     private void resetEncoders() {
