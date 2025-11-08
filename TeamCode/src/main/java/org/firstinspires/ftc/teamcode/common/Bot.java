@@ -19,9 +19,12 @@ public class Bot extends Component {
 
     private IntakeMotors intake;
 
-    Servo launchServo, pusher;
+    Servo launchServo, pusher, stick;
     private Modes currentMode;
     private int currentPhase;
+
+    private long stickTimer = 0;
+    private boolean stickActiveRunning = false;
 
     private boolean blackWheelRunning = false;
     private boolean blackWheelForward = false; // true = moving forward, false = stopped
@@ -41,9 +44,11 @@ public class Bot extends Component {
 
         // Servos
         launchServo = opMode.hardwareMap.get(Servo.class, "launchServo");
-        launchServo.setPosition(0);
+        launchServo.setPosition(aimerPosition);
         pusher = opMode.hardwareMap.get(Servo.class, "pusher");
         pusher.setPosition(0);
+        stick = opMode.hardwareMap.get(Servo.class, "stick");
+        stick.setPosition(0.85);
     }
 
     // Phases are used to divide mode actions into sequential section, with entry criteria
@@ -55,8 +60,29 @@ public class Bot extends Component {
         return (currentPhase == phase);
     }
 
+    public void updateStick() {
+        if (stickActiveRunning) {
+            if (System.currentTimeMillis() - stickTimer >= 1000) {   // 1 second
+                stick.setPosition(0.85);
+                stickActiveRunning = false;  // done
+            }
+        }
+    }
+
+    public void stickActivate() {
+        if (!stickActiveRunning) {
+            stickActiveRunning = true;
+            stickTimer = System.currentTimeMillis();
+
+            stick.setPosition(1);
+        }
+    }
+
     public void moveAimerUp(double amount) {
         aimerPosition+=amount;
+        if (aimerPosition >= 0.3) {
+            aimerPosition=0.3;
+        }
         launchServo.setPosition(aimerPosition);
     }
 

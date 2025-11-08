@@ -65,7 +65,9 @@ public class TeleopNoOdoSimple extends LinearOpMode {
                 b.moveAimerDown(0.05);
             }
 
-
+            if (gamepad1.y) {
+                b.stickActivate();
+            }
 
             if (gamepad1.x && !pressed) {
                 b.toggleBlackWheel();
@@ -75,7 +77,7 @@ public class TeleopNoOdoSimple extends LinearOpMode {
                 pressed = false;
             }
 
-
+            b.updateStick();
             telemetry.update();
             sleep(100);
         }
