@@ -51,7 +51,6 @@ public class TeleopNoOdoSimple extends LinearOpMode {
         leftAimer = hardwareMap.get(Servo.class, "leftAimer");
         rightAimer = hardwareMap.get(Servo.class, "rightAimer");
         pusher = hardwareMap.get(Servo.class, "pusher");
-        launcherTicksPerSecond = GoBilda6000DcMotorData.ticksPerGearboxRev;
         maxVelocity = GoBilda6000DcMotorData.maxTicksPerSec;
         rumble = false;
         pusherActive = false;

@@ -8,12 +8,14 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda6000DcMotorData;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints.AimerPositions;
+import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints.LauncherSettings;
+import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
 
 public class Launcher extends Component{
     private DcMotorEx leftLauncher, rightLauncher;
     private Servo leftAimer, rightAimer;
-    private double maxVelocity, targetVelocity;
-
+    private double maxVelocity;
+    private double targetAngle, targetVelocity;
 
     public Launcher(Telemetry telemetry, HardwareMap hardwareMap) {
         super(telemetry);
@@ -23,32 +25,13 @@ public class Launcher extends Component{
         rightLauncher = hardwareMap.get(DcMotorEx.class, "rightLauncher");
         leftAimer = hardwareMap.get(Servo.class, "leftAimer");
         rightAimer = hardwareMap.get(Servo.class, "rightAimer");
+        leftLauncher.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        rightLauncher.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
 
-    }
-
-    public void setPositionPreset(AimerPositions position) {
-        leftAimer.setPosition(position.getValue());
-        rightAimer.setPosition(position.getValue());
-    }
-
-    public void setTargetVelocity(int desiredVelocity){
-        targetVelocity = desiredVelocity;
-    }
-
-    public void preloadLauncher(){
-        leftLauncher.setVelocity(targetVelocity);
-        rightLauncher.setVelocity(maxVelocity);
-    }
-
-    public void preloadLauncherPower(double desiredPower){
-        leftLauncher.setVelocity(desiredPower * maxVelocity);
-        rightLauncher.setVelocity(desiredPower * maxVelocity);
-        telemetry.addLine("Launcher is ready");
     }
 
     public void stopLauncher() {
-        leftLauncher.setVelocity(0);
-        rightLauncher.setVelocity(0);
+        setVelocity(0);
     }
 
     public double distanceFromLauncher(Pose botPose, boolean red){
@@ -67,18 +50,33 @@ public class Launcher extends Component{
 
     public void preloadFromDistance(Pose botPose, boolean red) {
         double distance = distanceFromLauncher(botPose, red);
+        setVelocity(LauncherSettings.getVelocityFactor(distance));
+        setAngle(LauncherSettings.getLaunchAngle(distance));
+    }
+
+    private void setVelocity(double power){
+        leftLauncher.setVelocity(maxVelocity * power);
+        rightLauncher.setVelocity(maxVelocity * power);
+    }
+
+    private void setAngle(double angle){
+        leftAimer.setPosition(angle);
+        rightAimer.setPosition(angle);
     }
 
     public double getVelocity(){
         return leftLauncher.getVelocity();
     }
 
-    public void isReady(){
-        if (getVelocity() == targetVelocity){
-            telemetry.addLine("Launcher is ready");
-        }
-        else {
-            telemetry.addLine("Launcher is not ready");
-        }
+    public double getAngle(){ return leftAimer.getPosition(); }
+
+    private boolean ready(){
+        return (Math.abs(getVelocity()-targetVelocity) < 50 && Math.abs(getAngle()-targetAngle) < 0.05);
+    }
+
+    public void log(){
+        telemetry.addData("Launcher Velocity", getVelocity());
+        telemetry.addData("Aimer Position", getAngle());
+        telemetry.addData("Is launcher ready?", ready());
     }
 }

@@ -62,10 +62,12 @@ public class LauncherSettings {
     }
 
     public static double getVelocityFactor(double distance) {
+        init();
         return (calculateY(velocityFactorCoefficients, distance));
     }
 
     public static double getLaunchAngle(double distance) {
+        init();
         return (calculateY(velocityFactorCoefficients, distance));
     }
 }
