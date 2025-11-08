@@ -4,7 +4,6 @@ import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.MotorData;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.LauncherData;
@@ -13,32 +12,31 @@ import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.Launcher
 public class LauncherDouble extends Component {
     private final DcMotorEx launcherMotorL, launcherMotorR;
     private final LauncherData launcherData = new LauncherData();
-    private final double maxPower;
+    private final double maxVelocityFactor;
     private final int maxTicksPerSecond;
     int targetVelocity = 0;
 
     public LauncherDouble(HardwareMap hardwareMap, Telemetry telemetry, String motorNameL, String motorNameR, MotorData motorData) {
         super(telemetry);
-        maxPower = launcherData.maxPower;
+        maxVelocityFactor = launcherData.maxVelocityFactor;
         maxTicksPerSecond = motorData.maxTicksPerSec;
-
         launcherMotorL = hardwareMap.get(DcMotorEx.class, motorNameL);
         launcherMotorR = hardwareMap.get(DcMotorEx.class, motorNameR);
         resetEncoders();
         setVelocityFactor(targetVelocity);
-        setMotorsPower(maxPower);
     }
 
     public void setVelocityFactor(double targetVelocityFactor) {
+
         if (Math.abs(targetVelocityFactor) < 0.05)
         {
             targetVelocityFactor = 0.0;
-        } else if (targetVelocityFactor > 1.0)
+        } else if (targetVelocityFactor > maxVelocityFactor)
         {
-            targetVelocityFactor = 1.0;
-        } else if (targetVelocityFactor < -1.0)
+            targetVelocityFactor = maxVelocityFactor;
+        } else if (targetVelocityFactor < -maxVelocityFactor)
         {
-            targetVelocityFactor = -1.0;
+            targetVelocityFactor = -maxVelocityFactor;
         }
         targetVelocity = Math.toIntExact(Math.round(targetVelocityFactor * maxTicksPerSecond));
         setMotorsTargetVelocity(targetVelocity);
