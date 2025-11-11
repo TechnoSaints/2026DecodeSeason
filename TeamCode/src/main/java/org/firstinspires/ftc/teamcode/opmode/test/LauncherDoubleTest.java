@@ -14,26 +14,38 @@ import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda6
 
 public class LauncherDoubleTest extends LinearOpMode {
 
-    private LauncherDouble shooter;
+    private LauncherDouble launcher;
     private double velocityFactorIncrement = 0.1;
     private double targetVelocityFactor = 0.0;
+
+    private double positionIncrement = 0.1;
+    private double targetLaunchPosition = 0.5;
 
     @Override
     public void runOpMode() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        shooter = new LauncherDouble(hardwareMap, telemetry, "shooterL", "shooterR", new GoBilda6000DcMotorData());
-        shooter.setVelocityFactor(targetVelocityFactor);
-
+        launcher = new LauncherDouble(hardwareMap, telemetry);
+        launcher.setVelocityFactor(targetVelocityFactor);
+        launcher.setLaunchPosition(targetLaunchPosition);
         waitForStart();
+
         while (opModeIsActive() && !isStopRequested()) {
             if (gamepad1.y) {
                 targetVelocityFactor += velocityFactorIncrement;
             } else if (gamepad1.a) {
                 targetVelocityFactor -= velocityFactorIncrement;
             }
-            shooter.setVelocityFactor(targetVelocityFactor);
-            telemetry.addData("targetVelocityFactor in ShooterDoubleTest: ", targetVelocityFactor);
-            shooter.log();
+            if (gamepad1.x) {
+                targetLaunchPosition += positionIncrement;
+            } else if (gamepad1.b) {
+                targetLaunchPosition -= positionIncrement;
+            }
+
+            launcher.setVelocityFactor(targetVelocityFactor);
+            launcher.setLaunchPosition(targetLaunchPosition);
+            telemetry.addData("targetVelocityFactor in launcherDoubleTest: ", targetVelocityFactor);
+            telemetry.addData("targetLaunchPosition in launcherDoubleTest: ", targetLaunchPosition);
+            launcher.log();
             sleep(100);
         }
     }

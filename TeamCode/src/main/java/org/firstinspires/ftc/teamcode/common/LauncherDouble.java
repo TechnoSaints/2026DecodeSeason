@@ -4,30 +4,40 @@ import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
+
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda6000DcMotorData;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.MotorData;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.LauncherData;
 
 @Config
 public class LauncherDouble extends Component {
-    private final DcMotorEx launcherMotorL, launcherMotorR;
+    private final DcMotorEx motorL, motorR;
+    private final Servo servoL, servoR;
     private final LauncherData launcherData = new LauncherData();
-    private final double maxVelocityFactor;
-    private final int maxTicksPerSecond;
-    int targetVelocity = 0;
+    private final double maxVelocityFactor = launcherData.maxVelocityFactor;
+    private MotorData motorData = new GoBilda6000DcMotorData();
+    private final int maxTicksPerSecond = motorData.maxTicksPerSec;
+    private int targetVelocity = 0;
+    private double targetLaunchPosition = 0.5;
+    private final double maxLaunchPosition = 1.0;
+    private final double minLaunchPosition = 0.0;
 
-    public LauncherDouble(HardwareMap hardwareMap, Telemetry telemetry, String motorNameL, String motorNameR, MotorData motorData) {
+
+    public LauncherDouble(HardwareMap hardwareMap, Telemetry telemetry) {
         super(telemetry);
-        maxVelocityFactor = launcherData.maxVelocityFactor;
-        maxTicksPerSecond = motorData.maxTicksPerSec;
-        launcherMotorL = hardwareMap.get(DcMotorEx.class, motorNameL);
-        launcherMotorR = hardwareMap.get(DcMotorEx.class, motorNameR);
+        motorL = hardwareMap.get(DcMotorEx.class, "motorL");
+        motorR = hardwareMap.get(DcMotorEx.class, "motorR");
+        servoL = hardwareMap.get(Servo.class, "servoL");
+        servoR = hardwareMap.get(Servo.class, "servoL");
+
         resetEncoders();
         setVelocityFactor(targetVelocity);
+        setLaunchPosition(targetLaunchPosition);
     }
 
     public void setVelocityFactor(double targetVelocityFactor) {
-
         if (Math.abs(targetVelocityFactor) < 0.05)
         {
             targetVelocityFactor = 0.0;
@@ -42,38 +52,52 @@ public class LauncherDouble extends Component {
         setMotorsTargetVelocity(targetVelocity);
     }
 
+    public void setLaunchPosition(double targetLaunchPosition) {
+        if (targetLaunchPosition >= maxLaunchPosition)
+        {
+            targetLaunchPosition = maxLaunchPosition;
+        } else if (targetLaunchPosition <= minLaunchPosition)
+        {
+            targetLaunchPosition = minLaunchPosition;
+        }
+        setServosTargetLaunchPosition(targetLaunchPosition);
+    }
     private void setMotorsTargetVelocity(int targetVelocity)
     {
-        launcherMotorL.setVelocity(targetVelocity);
-        launcherMotorR.setVelocity(targetVelocity);
+        motorL.setVelocity(targetVelocity);
+        motorR.setVelocity(-targetVelocity);
     }
 
-    private void setMotorsPower(double power) {
-        launcherMotorL.setPower(power);
-        launcherMotorR.setPower(power);
+    private void setServosTargetLaunchPosition(double targetLaunchPosition)
+    {
+        servoL.setPosition(targetLaunchPosition);
+        servoR.setPosition(1.0-targetLaunchPosition);
     }
 
     private void resetEncoders() {
-        launcherMotorL.setDirection(DcMotor.Direction.FORWARD);
-        launcherMotorR.setDirection(DcMotor.Direction.REVERSE);
+        motorL.setDirection(DcMotor.Direction.FORWARD);
+        motorR.setDirection(DcMotor.Direction.REVERSE);
 
-        launcherMotorL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        launcherMotorR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        launcherMotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        launcherMotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        launcherMotorL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        launcherMotorR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        motorL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        motorR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
     }
 
     public void log() {
         telemetry.addData("maxTicksPerSecond:  ", maxTicksPerSecond);
         telemetry.addData("targetVelocity:  ", targetVelocity);
-        telemetry.addData("Actual Velocity L:  ", launcherMotorL.getVelocity());
-        telemetry.addData("Actual Velocity R:  ", launcherMotorR.getVelocity());
-        telemetry.addData("PowerL:  ", launcherMotorL.getPower());
-        telemetry.addData("PowerR:  ", launcherMotorR.getPower());
+        telemetry.addData("Actual Velocity L:  ", motorL.getVelocity());
+        telemetry.addData("Actual Velocity R:  ", motorR.getVelocity());
+        telemetry.addData("PowerL:  ", motorL.getPower());
+        telemetry.addData("PowerR:  ", motorR.getPower());
+        telemetry.addData("targetLaunchPosition:  ", targetLaunchPosition);
+        telemetry.addData("Actual Position L:  ", servoL.getPosition());
+        telemetry.addData("Actual Position R:  ", servoR.getPosition());
         telemetry.update();
     }
 
