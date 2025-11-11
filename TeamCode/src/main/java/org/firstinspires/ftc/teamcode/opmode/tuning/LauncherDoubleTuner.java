@@ -17,7 +17,7 @@ public class LauncherDoubleTuner extends LinearOpMode {
     private double velocityFactorIncrement = 0.1;
     private double targetVelocityFactor = 0.0;
 
-    private double positionIncrement = 0.1;
+    private double positionIncrement = 0.05;
     private double targetLaunchPosition = 0.5;
 
     @Override
@@ -34,9 +34,9 @@ public class LauncherDoubleTuner extends LinearOpMode {
             } else if (gamepad1.a) {
                 targetVelocityFactor -= velocityFactorIncrement;
             }
-            if (gamepad1.x) {
+            if (gamepad1.b) {
                 targetLaunchPosition += positionIncrement;
-            } else if (gamepad1.b) {
+            } else if (gamepad1.x) {
                 targetLaunchPosition -= positionIncrement;
             }
 

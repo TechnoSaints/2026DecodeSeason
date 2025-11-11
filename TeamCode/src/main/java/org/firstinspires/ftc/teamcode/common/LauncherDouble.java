@@ -19,6 +19,8 @@ public class LauncherDouble extends Component {
     private final double maxVelocityFactor = launcherData.maxVelocityFactor;
     private MotorData motorData = new GoBilda6000DcMotorData();
     private final int maxTicksPerSecond = motorData.maxTicksPerSec;
+
+    private double targetVelocityFactor = 0.0;
     private int targetVelocity = 0;
     private double targetLaunchPosition = 0.5;
     private final double maxLaunchPosition = 1.0;
@@ -27,17 +29,18 @@ public class LauncherDouble extends Component {
 
     public LauncherDouble(HardwareMap hardwareMap, Telemetry telemetry) {
         super(telemetry);
-        motorL = hardwareMap.get(DcMotorEx.class, "motorL");
-        motorR = hardwareMap.get(DcMotorEx.class, "motorR");
-        servoL = hardwareMap.get(Servo.class, "servoL");
-        servoR = hardwareMap.get(Servo.class, "servoL");
+        motorL = hardwareMap.get(DcMotorEx.class, "launcherMotorL");
+        motorR = hardwareMap.get(DcMotorEx.class, "launcherMotorR");
+        servoL = hardwareMap.get(Servo.class, "launcherServoR");
+        servoR = hardwareMap.get(Servo.class, "launcherServoL");
 
         resetEncoders();
         setVelocityFactor(targetVelocity);
         setLaunchPosition(targetLaunchPosition);
     }
 
-    public void setVelocityFactor(double targetVelocityFactor) {
+    public void setVelocityFactor(double velocityFactor) {
+        targetVelocityFactor = velocityFactor;
         if (Math.abs(targetVelocityFactor) < 0.05)
         {
             targetVelocityFactor = 0.0;
@@ -52,7 +55,8 @@ public class LauncherDouble extends Component {
         setMotorsTargetVelocity(targetVelocity);
     }
 
-    public void setLaunchPosition(double targetLaunchPosition) {
+    public void setLaunchPosition(double launchPosition) {
+        targetLaunchPosition = launchPosition;
         if (targetLaunchPosition >= maxLaunchPosition)
         {
             targetLaunchPosition = maxLaunchPosition;
@@ -71,7 +75,7 @@ public class LauncherDouble extends Component {
     private void setServosTargetLaunchPosition(double targetLaunchPosition)
     {
         servoL.setPosition(targetLaunchPosition);
-        servoR.setPosition(1.0-targetLaunchPosition);
+        servoR.setPosition(targetLaunchPosition);
     }
 
     private void resetEncoders() {
@@ -89,12 +93,13 @@ public class LauncherDouble extends Component {
     }
 
     public void log() {
+        telemetry.addData("targetVelocityFactor:  ", targetVelocityFactor);
         telemetry.addData("maxTicksPerSecond:  ", maxTicksPerSecond);
         telemetry.addData("targetVelocity:  ", targetVelocity);
         telemetry.addData("Actual Velocity L:  ", motorL.getVelocity());
         telemetry.addData("Actual Velocity R:  ", motorR.getVelocity());
-        telemetry.addData("PowerL:  ", motorL.getPower());
-        telemetry.addData("PowerR:  ", motorR.getPower());
+        //       telemetry.addData("PowerL:  ", motorL.getPower());
+        //       telemetry.addData("PowerR:  ", motorR.getPower());
         telemetry.addData("targetLaunchPosition:  ", targetLaunchPosition);
         telemetry.addData("Actual Position L:  ", servoL.getPosition());
         telemetry.addData("Actual Position R:  ", servoR.getPosition());
