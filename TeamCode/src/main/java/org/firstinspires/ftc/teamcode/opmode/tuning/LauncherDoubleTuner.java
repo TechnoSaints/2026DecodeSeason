@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmode.test;
+package org.firstinspires.ftc.teamcode.opmode.tuning;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
@@ -7,12 +7,11 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.common.LauncherDouble;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda6000DcMotorData;
 
 @Config
-@TeleOp(name = "LauncherDoubleTest", group = "Test")
+@TeleOp(name = "LauncherDoubleTuner", group = "Tuning")
 
-public class LauncherDoubleTest extends LinearOpMode {
+public class LauncherDoubleTuner extends LinearOpMode {
 
     private LauncherDouble launcher;
     private double velocityFactorIncrement = 0.1;
