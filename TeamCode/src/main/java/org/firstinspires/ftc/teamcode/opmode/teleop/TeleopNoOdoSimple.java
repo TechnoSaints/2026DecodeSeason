@@ -43,10 +43,15 @@ public class TeleopNoOdoSimple extends LinearOpMode {
             bot.processDrivetrainInput(gamepad1);
 
             if (gamepad1.left_trigger >= .2) {
-                b.startLaunchMotors(gamepad1.left_trigger * 0.6);
+                b.startLaunchMotors(0.5);
+                b.setAimerZero();
+            } else if (gamepad1.right_trigger >= .2) {
+                b.startLaunchMotors(0.6);
+                b.setAimerZero();
             } else {
                 b.stopLaunchMotors();
             }
+
 
 
             if (gamepad1.a) {
@@ -56,14 +61,14 @@ public class TeleopNoOdoSimple extends LinearOpMode {
             if (gamepad1.b) {
                 b.intakeMotorStop();
             }
-
-            if (gamepad1.right_bumper) {
-                b.moveAimerUp(0.05);
-            }
-
-            if (gamepad1.left_bumper) {
-                b.moveAimerDown(0.05);
-            }
+//
+//            if (gamepad1.right_bumper) {
+//                b.moveAimerUp(0.05);
+//            }
+//
+//            if (gamepad1.left_bumper) {
+//                b.moveAimerDown(0.05);
+//            }
 
             if (gamepad1.y) {
                 b.stickActivate();

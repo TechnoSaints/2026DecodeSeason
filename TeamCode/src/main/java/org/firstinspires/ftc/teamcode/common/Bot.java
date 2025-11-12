@@ -45,7 +45,6 @@ public class Bot extends Component {
     }
 
     public void init(OpMode opMode) {
-        double miliseconds = runtime.milliseconds();
         launchMotors = new LauncherDouble(opMode.hardwareMap, telemetry);
 
         intake = new IntakeMotors(telemetry);
@@ -71,7 +70,7 @@ public class Bot extends Component {
     public void updateStick() {
         if (stickActiveRunning) {
             if (System.currentTimeMillis() - stickTimer >= 500) {
-                stick.setPosition(0.85);
+                stick.setPosition(0.43);
                 stickActiveRunning = false;  // done
             }
         }
@@ -100,15 +99,16 @@ public class Bot extends Component {
     }
 
 
+    public void setAimerZero() {
+        aimerPosition = 0.0;
+        launchServo.setPosition(aimerPosition);
+    }
+
     public void toggleBlackWheel() {
         if (!blackWheelRunning) {
-            double currentServoTime = runtime.milliseconds() + 5000;
-            while (currentServoTime > runtime.milliseconds()) {
-                pusher.setPower(1.0);
-            }
+            pusher.setPower(1.0);
             blackWheelRunning = true;
         } else {
-            // Turn off
             pusher.setPower(0.0);
             blackWheelRunning = false;
         }
