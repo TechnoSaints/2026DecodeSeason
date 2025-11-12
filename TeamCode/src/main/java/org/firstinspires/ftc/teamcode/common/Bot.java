@@ -2,7 +2,8 @@ package org.firstinspires.ftc.teamcode.common;
 
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
 
-import com.arcrobotics.ftclib.hardware.motors.CRServo;
+//import com.arcrobotics.ftclib.hardware.motors.CRServo;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -103,12 +104,12 @@ public class Bot extends Component {
         if (!blackWheelRunning) {
             double currentServoTime = runtime.milliseconds() + 5000;
             while (currentServoTime > runtime.milliseconds()) {
-                pusher.set(1.0);
+                pusher.setPower(1.0);
             }
             blackWheelRunning = true;
         } else {
             // Turn off
-            pusher.set(0.0);
+            pusher.setPower(0.0);
             blackWheelRunning = false;
         }
     }
