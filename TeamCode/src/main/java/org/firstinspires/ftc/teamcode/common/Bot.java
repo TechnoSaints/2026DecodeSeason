@@ -48,7 +48,7 @@ public class Bot extends Component {
         pusher = opMode.hardwareMap.get(Servo.class, "pusher");
         pusher.setPosition(0);
         stick = opMode.hardwareMap.get(Servo.class, "stick");
-        stick.setPosition(0.85);
+        stick.setPosition(0.43);
     }
 
     // Phases are used to divide mode actions into sequential section, with entry criteria
@@ -62,8 +62,8 @@ public class Bot extends Component {
 
     public void updateStick() {
         if (stickActiveRunning) {
-            if (System.currentTimeMillis() - stickTimer >= 1000) {   // 1 second
-                stick.setPosition(0.85);
+            if (System.currentTimeMillis() - stickTimer >= 500) {   // 1 second
+                stick.setPosition(0.43);
                 stickActiveRunning = false;  // done
             }
         }
@@ -73,8 +73,7 @@ public class Bot extends Component {
         if (!stickActiveRunning) {
             stickActiveRunning = true;
             stickTimer = System.currentTimeMillis();
-
-            stick.setPosition(1);
+            stick.setPosition(0.54);
         }
     }
 

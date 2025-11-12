@@ -44,8 +44,8 @@ public class LauncherDouble extends Component {
 
     private void setMotorsTargetVelocity(int targetVelocity)
     {
-        launcherMotorL.setVelocity(-targetVelocity);
-        launcherMotorR.setVelocity(-targetVelocity);
+        launcherMotorL.setVelocity(targetVelocity);
+        launcherMotorR.setVelocity(targetVelocity);
     }
 
     private void setMotorsPower(double power) {

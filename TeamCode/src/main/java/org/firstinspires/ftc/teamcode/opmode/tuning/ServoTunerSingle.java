@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 @TeleOp(name = "Servo Tuner Single", group = "Tuning")
 public class ServoTunerSingle extends LinearOpMode {
 
-    static final double INCREMENT = 0.01;     // amount to slew servo each CYCLE_MS cycle
+    static final double INCREMENT = 0.01;    // amount to slew servo each CYCLE_MS cycle
     static final int CYCLE_MS = 50;     // period of each cycle
     static final double MAX_POS = 1.0;     // Maximum rotational position
     static final double MIN_POS = 0.0;     // Minimum rotational position
@@ -22,7 +22,7 @@ public class ServoTunerSingle extends LinearOpMode {
 
         // Connect to servo (Assume Robot Left Hand)
         // Change the text in quotes to match any servo name on your robot.
-        servo = hardwareMap.get(Servo.class, "launchServo");
+        servo = hardwareMap.get(Servo.class, "stick");
 
         // Wait for the start button
         telemetry.addData(">", "Press Start to tune servo.");
