@@ -46,7 +46,7 @@ public class TeleopNoOdoSimple extends LinearOpMode {
                 b.startLaunchMotors(0.5);
                 b.setAimerZero();
             } else if (gamepad1.right_trigger >= .2) {
-                b.startLaunchMotors(0.6);
+                b.startLaunchMotors(0.55);
                 b.setAimerZero();
             } else {
                 b.stopLaunchMotors();
