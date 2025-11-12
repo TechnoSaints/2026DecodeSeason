@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.Launcher
 @Config
 public class LauncherDouble extends Component {
     private final DcMotorEx motorL, motorR;
-    private final Servo servoL, servoR;
+    private final Servo launchServo;
     private final LauncherData launcherData = new LauncherData();
     private final double maxVelocityFactor = launcherData.maxVelocityFactor;
     private MotorData motorData = new GoBilda6000DcMotorData();
@@ -31,13 +31,11 @@ public class LauncherDouble extends Component {
         super(telemetry);
         motorL = hardwareMap.get(DcMotorEx.class, "launcherMotorL");
         motorR = hardwareMap.get(DcMotorEx.class, "launcherMotorR");
-        servoL = hardwareMap.get(Servo.class, "launcherServoR");
-        servoR = hardwareMap.get(Servo.class, "launcherServoL");
+        launchServo = hardwareMap.get(Servo.class, "launchServo");
 
         resetEncoders();
         setVelocityFactor(targetVelocity);
-        setLaunchPosition(targetLaunchPosition);
-    }
+        setLaunchPosition(targetLaunchPosition);}
 
     public void setVelocityFactor(double velocityFactor) {
         targetVelocityFactor = velocityFactor;
@@ -69,13 +67,12 @@ public class LauncherDouble extends Component {
     private void setMotorsTargetVelocity(int targetVelocity)
     {
         motorL.setVelocity(targetVelocity);
-        motorR.setVelocity(-targetVelocity);
+        motorR.setVelocity(targetVelocity);
     }
 
     private void setServosTargetLaunchPosition(double targetLaunchPosition)
     {
-        servoL.setPosition(targetLaunchPosition);
-        servoR.setPosition(targetLaunchPosition);
+        launchServo.setPosition(targetLaunchPosition);
     }
 
     private void resetEncoders() {
@@ -101,8 +98,7 @@ public class LauncherDouble extends Component {
         //       telemetry.addData("PowerL:  ", motorL.getPower());
         //       telemetry.addData("PowerR:  ", motorR.getPower());
         telemetry.addData("targetLaunchPosition:  ", targetLaunchPosition);
-        telemetry.addData("Actual Position L:  ", servoL.getPosition());
-        telemetry.addData("Actual Position R:  ", servoR.getPosition());
+        telemetry.addData("Actual Position Launch Servo:  ", launchServo.getPosition());
         telemetry.update();
     }
 

@@ -2,8 +2,11 @@ package org.firstinspires.ftc.teamcode.common;
 
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
 
+import com.arcrobotics.ftclib.hardware.motors.CRServo;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda6000DcMotorData;
 import org.firstinspires.ftc.teamcode.common.LauncherDouble;
 
@@ -19,7 +22,10 @@ public class Bot extends Component {
 
     private IntakeMotors intake;
 
-    Servo launchServo, pusher, stick;
+    public ElapsedTime runtime = new ElapsedTime();
+
+    Servo launchServo, stick;
+    CRServo pusher;
     private Modes currentMode;
     private int currentPhase;
 
@@ -38,17 +44,18 @@ public class Bot extends Component {
     }
 
     public void init(OpMode opMode) {
-        launchMotors = new LauncherDouble(opMode.hardwareMap, telemetry, "leftLaunchMotor", "rightLaunchMotor", new GoBilda6000DcMotorData());
+        double miliseconds = runtime.milliseconds();
+        launchMotors = new LauncherDouble(opMode.hardwareMap, telemetry);
+
         intake = new IntakeMotors(telemetry);
         intake.init(opMode.hardwareMap, "intake");
 
         // Servos
         launchServo = opMode.hardwareMap.get(Servo.class, "launchServo");
         launchServo.setPosition(aimerPosition);
-        pusher = opMode.hardwareMap.get(Servo.class, "pusher");
-        pusher.setPosition(0);
+        pusher = opMode.hardwareMap.get(CRServo.class, "pusher");
         stick = opMode.hardwareMap.get(Servo.class, "stick");
-        stick.setPosition(0.85);
+        stick.setPosition(0.43);
     }
 
     // Phases are used to divide mode actions into sequential section, with entry criteria
@@ -62,7 +69,7 @@ public class Bot extends Component {
 
     public void updateStick() {
         if (stickActiveRunning) {
-            if (System.currentTimeMillis() - stickTimer >= 1000) {   // 1 second
+            if (System.currentTimeMillis() - stickTimer >= 500) {
                 stick.setPosition(0.85);
                 stickActiveRunning = false;  // done
             }
@@ -74,7 +81,7 @@ public class Bot extends Component {
             stickActiveRunning = true;
             stickTimer = System.currentTimeMillis();
 
-            stick.setPosition(1);
+            stick.setPosition(0.54);
         }
     }
 
@@ -94,12 +101,14 @@ public class Bot extends Component {
 
     public void toggleBlackWheel() {
         if (!blackWheelRunning) {
-            // Turn on
-            pusher.setPosition(1.0);
+            double currentServoTime = runtime.milliseconds() + 5000;
+            while (currentServoTime > runtime.milliseconds()) {
+                pusher.set(1.0);
+            }
             blackWheelRunning = true;
         } else {
             // Turn off
-            pusher.setPosition(0.0);
+            pusher.set(0.0);
             blackWheelRunning = false;
         }
     }
