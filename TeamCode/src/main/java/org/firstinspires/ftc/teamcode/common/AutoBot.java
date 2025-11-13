@@ -13,12 +13,17 @@ import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
 public class AutoBot extends Bot {
     private final Follower follower;
+    private final Launcher launcher;
+    private final Storage storage;
 
     public AutoBot(OpMode opMode, Telemetry telemetry) {
         super(opMode, telemetry);
         follower = Constants.createFollower(opMode.hardwareMap);
         follower.setStartingPose(FieldLocations.startPose);
+        storage = new Storage(telemetry, opMode.hardwareMap);
+        launcher = new Launcher(telemetry, opMode.hardwareMap);
         setMode(Modes.AUTO_START_POS);
+
     }
 
     public void followPath(PathChain path, boolean holdEnd) {

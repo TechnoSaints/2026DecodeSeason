@@ -70,7 +70,7 @@ public class Launcher extends Component{
 
     public double getAngle(){ return leftAimer.getPosition(); }
 
-    private boolean ready(){
+    public boolean ready(){
         return (Math.abs(getVelocity()-targetVelocity) < 50 && Math.abs(getAngle()-targetAngle) < 0.05);
     }
 

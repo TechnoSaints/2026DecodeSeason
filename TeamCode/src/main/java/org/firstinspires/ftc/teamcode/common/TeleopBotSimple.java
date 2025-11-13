@@ -71,7 +71,16 @@ public class TeleopBotSimple extends Component {
         storage.shootBalls();
     }
 
+    public boolean launcherIsReady(){
+        return launcher.ready();
+    }
+
+    public void updateStorage(){
+        storage.updateStorage();
+    }
+
     public void log(){
         launcher.log();
+        storage.log();
     }
 }

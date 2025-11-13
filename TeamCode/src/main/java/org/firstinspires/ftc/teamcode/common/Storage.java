@@ -42,10 +42,10 @@ public class Storage extends Component {
             if (balls[0] == 'X' && balls[1] == 'X' && balls[2] == 'X') {
                 state = 1;
             }
-            else if (balls[0] != 'X' && balls[1] != 'X' && balls[2] != 'X') {
+            else if (balls[0] != 'X' && balls[1] == 'X' && balls[2] == 'X') {
                 state = 3;
             }
-            else if (balls[0] != 'X' && balls[1] != 'X' && balls[2] == 'X') {
+            else if (balls[0] != 'X' && balls[1] != 'X' && balls[2] != 'X') {
                 state = 5;
             }
         }
@@ -109,9 +109,9 @@ public class Storage extends Component {
             if (balls[0] != 'X' && balls[1] != 'X' && balls[2] != 'X') {
                 state = -1;
             } else if (balls[0] != 'X' && balls[1] == 'X' && balls[2] != 'X') {
+                state = -2;
+            } else if (balls[0] != 'X' && balls[1] == 'X' && balls[2] == 'X') {
                 state = -3;
-            } else if (balls[0] == 'X' && balls[1] == 'X' && balls[2] != 'X') {
-                state = -5;
             }
         } else {
             state = 0;
