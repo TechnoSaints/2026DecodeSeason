@@ -17,7 +17,8 @@ public abstract class Bot extends Component {
     Servo kicker, spinner;
 
 
-    public Bot(OpMode opMode, Telemetry telemetry) {
+    public Bot(LinearOpMode opMode, Telemetry telemetry) {
+
         super(telemetry);
         drivetrain = new Drivetrain(opMode, telemetry, new DrivetrainData(), new GoBilda435DcMotorData());
         intake = hardwareMap.get(DcMotorEx.class, "intake");
@@ -37,7 +38,7 @@ public abstract class Bot extends Component {
         drivetrain.setToFastTeleopPower();
     }
 
-    public void settoMediumPower(){drivetrain.setToMediumTeleopPower();}
+    public void setToMediumPower(){drivetrain.setToMediumTeleopPower();}
 
     public void setToSlowPower() {
         drivetrain.setToSlowTeleopPower();

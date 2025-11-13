@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.common.Modes;
 import org.firstinspires.ftc.teamcode.common.TeleopBot;
 
 @Config
-@TeleOp(name = "Teleop - No Odo", group = "Linear OpMode")
+@TeleOp(name = "Teleop9800Decode", group = "Linear OpMode")
 public class TeleopNoOdo extends LinearOpMode {
     private TeleopBot bot;
 
