@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.common.LauncherDouble;
 public class LauncherDoubleTuner extends LinearOpMode {
 
     private LauncherDouble launcher;
-    private double velocityFactorIncrement = 0.1;
+    private double velocityFactorIncrement = 0.05;
     private double targetVelocityFactor = 0.0;
 
     private double positionIncrement = 0.05;
@@ -25,7 +25,6 @@ public class LauncherDoubleTuner extends LinearOpMode {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         launcher = new LauncherDouble(hardwareMap, telemetry);
         launcher.setVelocityFactor(targetVelocityFactor);
-        launcher.setLaunchPosition(targetLaunchPosition);
         waitForStart();
 
         while (opModeIsActive() && !isStopRequested()) {
@@ -41,7 +40,6 @@ public class LauncherDoubleTuner extends LinearOpMode {
             }
 
             launcher.setVelocityFactor(targetVelocityFactor);
-            launcher.setLaunchPosition(targetLaunchPosition);
             telemetry.addData("targetVelocityFactor in launcherDoubleTest: ", targetVelocityFactor);
             telemetry.addData("targetLaunchPosition in launcherDoubleTest: ", targetLaunchPosition);
             launcher.log();
