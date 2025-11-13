@@ -23,8 +23,8 @@ import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.Drivetra
 public abstract class Bot extends Component {
     private LinearOpMode opMode;
     private Drivetrain drivetrain;
-    private final ServoSimple intakeWrist, intakeSwivel, intakeGrabber, intakeLight;
-    private final ServoSimple handlerArm, handlerWrist, handlerGrabber;
+    DcMotorEx intake, leftLauncher, rightLauncher;
+    private final kicker, spinner;
 
     private boolean onHold = false;
 
@@ -34,6 +34,7 @@ public abstract class Bot extends Component {
         intake = HardwareMap.get(DcMotorEx.class, "intake");
         leftLauncher = hardwareMap.get(DcMotorEx.class, "leftLauncher");
         rightLauncher = hardwareMap.get(DcMotorEx.class, "rightLauncher");
+        kicker =
     }
 
         }
