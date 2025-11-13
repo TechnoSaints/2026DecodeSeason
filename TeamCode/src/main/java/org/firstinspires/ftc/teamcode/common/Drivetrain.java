@@ -1,15 +1,8 @@
 package org.firstinspires.ftc.teamcode.common;
 
-import com.arcrobotics.ftclib.controller.PIDFController;
-import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.IMU;
-import com.qualcomm.robotcore.hardware.TouchSensor;
-import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.DrivetrainData;
@@ -23,6 +16,8 @@ public class Drivetrain extends Component {
     private final double maxFastPower;
     private final double maxMediumPower;
     private final double maxSlowPower;
+
+    private double currentPower;
 
     public Drivetrain(HardwareMap hardwareMap, Telemetry telemetry, DrivetrainData drivetrainData, MotorData motorData) {
         super(telemetry);
@@ -98,5 +93,15 @@ public class Drivetrain extends Component {
         telemetry.addData("leftFrontDrive Target: ", leftFrontDrive.getTargetPosition());
         telemetry.addData("leftFrontDrive Velocity: ", leftFrontDrive.getVelocity());
         telemetry.update();
+    }
+
+    public void setToFastTeleopPower() {
+        currentPower = maxFastPower;
+    }
+
+    public void setToMediumTeleopPower(){currentPower = maxMediumPower;}
+
+    public void setToSlowTeleopPower() {
+        currentPower = maxSlowPower;
     }
 }

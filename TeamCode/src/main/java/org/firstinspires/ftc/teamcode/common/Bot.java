@@ -1,23 +1,12 @@
 package org.firstinspires.ftc.teamcode.common;
 
-import com.qualcomm.hardware.rev.RevTouchSensor;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.ExtendoPositions;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.HandlerArmPositions;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.HandlerGrabberPositions;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.HandlerWristPositions;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.IntakeGrabberPositions;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.IntakeLightPositions;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.IntakeSwivelPositions;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.IntakeWristPositions;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.LiftPositions;
-import org.firstinspires.ftc.teamcode.common.servos.ServoSimple;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda435DcMotorData;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.DrivetrainData;
 
@@ -25,17 +14,35 @@ public abstract class Bot extends Component {
     private LinearOpMode opMode;
     private Drivetrain drivetrain;
     DcMotorEx intake, leftLauncher, rightLauncher;
-    private final kicker, spinner;
+    Servo kicker, spinner;
 
-    private boolean onHold = false;
 
     public Bot(OpMode opMode, Telemetry telemetry) {
         super(telemetry);
-        drivetrain = new Drivetrain(HardwareMap, telemetry, new DrivetrainData(), new GoBilda435DcMotorData());
-        intake = HardwareMap.get(DcMotorEx.class, "intake");
+        drivetrain = new Drivetrain(opMode, telemetry, new DrivetrainData(), new GoBilda435DcMotorData());
+        intake = hardwareMap.get(DcMotorEx.class, "intake");
         leftLauncher = hardwareMap.get(DcMotorEx.class, "leftLauncher");
         rightLauncher = hardwareMap.get(DcMotorEx.class, "rightLauncher");
         kicker = hardwareMap.get(Servo.class, "kicker");
+        spinner = hardwareMap.get(Servo.class, "spinner");
+    }
+    public void creepDirection(double axial, double strafe, double yaw) {
+        drivetrain.creepDirection(axial, strafe, yaw);
     }
 
+    public void moveDirection(double axial, double strafe, double yaw) {
+        drivetrain.moveDirection(axial, strafe, yaw);
+    }
+    public void setToFastPower() {
+        drivetrain.setToFastTeleopPower();
+    }
+
+    public void settoMediumPower(){drivetrain.setToMediumTeleopPower();}
+
+    public void setToSlowPower() {
+        drivetrain.setToSlowTeleopPower();
+    }
+    public void stopDrive() {
+        drivetrain.moveDirection(0, 0, 0);
+    }
         }
