@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.common.Modes;
 import org.firstinspires.ftc.teamcode.common.TeleopBot;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.HandlerArmPositions;
+import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints.HandlerArmPositions;
 
 @Config
 @TeleOp(name = "SpecimenHangTuner", group = "Tuning")

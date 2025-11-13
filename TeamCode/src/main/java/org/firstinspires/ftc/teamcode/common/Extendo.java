@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.ExtendoData;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.positions.ExtendoPositions;
+import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints.ExtendoPositions;
 import org.firstinspires.ftc.teamcode.common.servos.ServoAngular;
 
 public class Extendo extends Component {
