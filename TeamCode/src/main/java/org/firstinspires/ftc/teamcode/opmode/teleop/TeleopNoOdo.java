@@ -20,6 +20,8 @@ public class TeleopNoOdo extends LinearOpMode {
         double driveStrafe = 0.0;
         double driveYaw = 0.0;
 
+        boolean intakePressed = false;
+
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         bot = new TeleopBot(this, telemetry);
 
@@ -43,4 +45,13 @@ public class TeleopNoOdo extends LinearOpMode {
                     bot.moveDirection(driveAxial, driveStrafe, -driveYaw);
             }
         }
+
+        if (gamepad1.a){
+            bot.setIntakePower(1.0);
+        } else if (gamepad1.b) {
+            bot.setIntakePower(-1.0);
+        } else {
+            bot.setIntakePower(0);
+        }
+
     }}
