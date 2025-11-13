@@ -105,13 +105,11 @@ public class Bot extends Component {
     }
 
     public void toggleBlackWheel() {
-        if (!blackWheelRunning) {
-            pusher.setPower(1.0);
-            blackWheelRunning = true;
-        } else {
-            pusher.setPower(0.0);
-            blackWheelRunning = false;
-        }
+        pusher.setPower(1);
+    }
+
+    public void turnOffBlackWheel() {
+        pusher.setPower(0);
     }
 
 

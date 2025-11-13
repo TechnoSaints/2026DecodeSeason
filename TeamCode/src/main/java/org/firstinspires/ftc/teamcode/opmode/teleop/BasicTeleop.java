@@ -24,7 +24,6 @@ public class BasicTeleop extends LinearOpMode {
     double launcherTicksPerSecond;
     ElapsedTime aimerTimer = new ElapsedTime();
     private final static double ADJUSTMENT_DELAY = 50;
-    boolean pressed;
 
     @Override
     public void runOpMode() {
@@ -43,10 +42,10 @@ public class BasicTeleop extends LinearOpMode {
             bot.processDrivetrainInput(gamepad1);
 
             if (gamepad1.left_trigger >= .2) {
-                b.startLaunchMotors(0.5);
+                b.startLaunchMotors(0.45);
                 b.setAimerZero();
             } else if (gamepad1.right_trigger >= .2) {
-                b.startLaunchMotors(0.55);
+                b.startLaunchMotors(0.65);
                 b.setAimerZero();
             } else {
                 b.stopLaunchMotors();
@@ -74,12 +73,12 @@ public class BasicTeleop extends LinearOpMode {
                 b.stickActivate();
             }
 
-            if (gamepad1.x && !pressed) {
+            if (gamepad1.x) {
                 b.toggleBlackWheel();
-                pressed = true;
             }
-            if (!gamepad1.x) {
-                pressed = false;
+
+            if (gamepad1.xWasReleased()) {
+                b.turnOffBlackWheel();
             }
 
             b.updateStick();
