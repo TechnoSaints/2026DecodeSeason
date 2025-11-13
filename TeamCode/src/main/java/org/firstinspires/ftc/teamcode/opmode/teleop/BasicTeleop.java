@@ -15,8 +15,8 @@ import org.firstinspires.ftc.teamcode.common.TeleopBotSimple;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda6000DcMotorData;
 
 @Config
-@TeleOp(name = "Teleop - No Odo Simple", group = "Linear OpMode")
-public class TeleopNoOdoSimple extends LinearOpMode {
+@TeleOp(name = "Basic Teleop", group = "Linear OpMode")
+public class BasicTeleop extends LinearOpMode {
     private TeleopBotSimple bot;
 
     private Bot b;

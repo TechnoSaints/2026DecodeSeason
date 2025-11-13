@@ -1,11 +1,14 @@
 package org.firstinspires.ftc.teamcode.common;
 
 import com.arcrobotics.ftclib.controller.PIDFController;
+import com.pedropathing.follower.Follower;
+import com.pedropathing.geometry.Pose;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.TouchSensor;
@@ -46,11 +49,11 @@ public class Drivetrain extends Component {
         moveDirection(axial * maxSlowPower, strafe * maxSlowPower, yaw * maxSlowPower);
     }
 
-    protected void moveDirection(double axial, double strafe, double yaw) {
+    public void moveDirection(double axial, double strafe, double yaw) {
         // Calculate wheel powers.
-        double leftFrontPower = axial - strafe + yaw;
+        double leftFrontPower = axial + strafe + yaw;
         double rightFrontPower = axial - strafe - yaw;
-        double leftBackPower = axial + strafe + yaw;
+        double leftBackPower = axial - strafe + yaw;
         double rightBackPower = axial + strafe - yaw;
 
         // Normalize wheel powers to be less than 1.0
@@ -92,6 +95,41 @@ public class Drivetrain extends Component {
         rightFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         rightBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
     }
+
+    /* public void setOdoStartingPose(Pose startPose){
+        follower.setStartingPose(startPose);
+        follower.update();
+    }
+
+    public void startTeleopDrive(){
+        follower.startTeleopDrive();
+    }
+
+    public void loop(){
+        follower.update();
+    }
+
+    public void processTeleopDrive(Gamepad gamepad){
+        if (gamepad.dpad_up){
+            follower.setTeleOpDrive(maxSlowPower, 0, 0, true);
+        }
+        else if (gamepad.dpad_down){
+            follower.setTeleOpDrive(-maxSlowPower, 0, 0, true);
+        }
+        else if (gamepad.dpad_left){
+            follower.setTeleOpDrive(0, -maxSlowPower, 0, true);
+        }
+        else if (gamepad.dpad_right){
+            follower.setTeleOpDrive(0, maxSlowPower, 0, true);
+        }
+        else {
+            follower.setTeleOpDrive(gamepad.left_stick_y, gamepad.left_stick_x, gamepad.right_stick_x, true);
+        }
+    }
+
+    public Pose getPose(){
+        return follower.getPose();
+    } */
 
     private void log() {
         telemetry.addData("leftFrontDrive Position: ", leftFrontDrive.getCurrentPosition());
