@@ -5,18 +5,14 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.common.Bot;
 import org.firstinspires.ftc.teamcode.common.TeleopBotSimple;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda6000DcMotorData;
 
 @Config
-@TeleOp(name = "TestingTeleop", group = "Linear OpMode")
-public class TestingTeleop extends LinearOpMode {
+@TeleOp(name = "TwoPersonTeleop", group = "Linear OpMode")
+public class TwoPersonTeleop extends LinearOpMode {
     private TeleopBotSimple bot;
 
     private Bot b;
@@ -25,6 +21,10 @@ public class TestingTeleop extends LinearOpMode {
     ElapsedTime aimerTimer = new ElapsedTime();
     private final static double ADJUSTMENT_DELAY = 50;
     boolean pressed;
+
+    boolean ballIntaked = false;
+
+    int totalBallsPossesed = 0;
 
     @Override
     public void runOpMode() {
@@ -70,9 +70,14 @@ public class TestingTeleop extends LinearOpMode {
 //                b.moveAimerDown(0.05);
 //            }
 
+            if (gamepad2.left_bumper) {
+
+            }
+
             if (gamepad1.y) {
                 b.stickActivate();
             }
+
 
             if (gamepad1.x && !pressed) {
                 b.toggleBlackWheel();
