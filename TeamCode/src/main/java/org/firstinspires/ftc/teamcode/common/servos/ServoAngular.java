@@ -30,7 +30,7 @@ public class ServoAngular extends ServoSimple {
 
     public void setPositionDegrees(double posDegrees, double delay) {
         if (!stopAtLimit(posDegrees)) {
-            setPositionTicks(degreesToTicks(posDegrees), 0);
+            setPositionTicks(degreesToTicks(posDegrees));
             currentPosDegrees = posDegrees;
         }
         setTimer(delay);
@@ -44,11 +44,11 @@ public class ServoAngular extends ServoSimple {
         boolean atLimit = false;
 
         if (posDegrees <= minPosDegrees) {
-            setPositionTicks(ticksAtMinPosDegrees, 0);
+            setPositionTicks(ticksAtMinPosDegrees);
             currentPosDegrees = minPosDegrees;
             atLimit = true;
         } else if (posDegrees >= maxPosDegrees) {
-            setPositionTicks(ticksAtMaxPosDegrees, 0);
+            setPositionTicks(ticksAtMaxPosDegrees);
             currentPosDegrees = maxPosDegrees;
             atLimit = true;
         }
