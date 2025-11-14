@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-@Autonomous(name = "BasicAuto", group = "Linear OpMode")
+@Autonomous(name = "BasicAuto", group = "Autonomous")
 public class BasicAuto extends LinearOpMode {
 
     private DcMotorEx leftFront, rightFront, leftBack, rightBack;
@@ -31,11 +31,17 @@ public class BasicAuto extends LinearOpMode {
         rightFront.setDirection(DcMotor.Direction.FORWARD);
         rightBack.setDirection(DcMotor.Direction.FORWARD);
 
+
         // Reset encoders
         leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        leftFront.setTargetPosition(0);
+        rightFront.setTargetPosition(0);
+        leftBack.setTargetPosition(0);
+        rightBack.setTargetPosition(0);
 
         leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
