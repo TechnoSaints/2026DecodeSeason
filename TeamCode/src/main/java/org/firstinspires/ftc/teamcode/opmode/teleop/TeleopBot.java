@@ -36,9 +36,9 @@ public class TeleopBot extends Bot {
 
     public void processGamepadInput(Gamepad gamepad) {
         if (gamepad.dpad_up) {
-            drivetrain.creepDirection(1.0, 0.0, 0.0);
-        } else if (gamepad.dpad_down) {
             drivetrain.creepDirection(-1.0, 0.0, 0.0);
+        } else if (gamepad.dpad_down) {
+            drivetrain.creepDirection(1.0, 0.0, 0.0);
         } else if (gamepad.dpad_left) {
             drivetrain.creepDirection(0.0, -1.0, 0.0);
         } else if (gamepad.dpad_right) {
@@ -69,7 +69,7 @@ public class TeleopBot extends Bot {
             buttonTimer.reset();
         }
 
-        if (gamepad.y && !pusherButtonPressedLast && pusherTimer.milliseconds() > pusherDebounceMs) {
+        if (gamepad.x && !pusherButtonPressedLast && pusherTimer.milliseconds() > pusherDebounceMs) {
             if (!pusherMoving) {
                 pusherStart();      // Turn ON
                 pusherMoving = true;
@@ -79,7 +79,7 @@ public class TeleopBot extends Bot {
             }
             pusherTimer.reset();    // Reset debounce timer
         }
-        pusherButtonPressedLast = gamepad.y;
+        pusherButtonPressedLast = gamepad.x;
 
         if (gamepad.a && buttonPushable()) {
             if (!intakeMoving) {
@@ -93,7 +93,7 @@ public class TeleopBot extends Bot {
         }
 
 
-        if (gamepad.x)
+        if (gamepad.y)
         {
             stickLaunch();
         } else
