@@ -70,8 +70,6 @@ public class TeleopBot extends Bot {
             topRollerStop();
         }
 
-<<<<<<< Updated upstream
-=======
         if (gamepad.x)
         {
             kickerLaunch();
@@ -79,6 +77,5 @@ public class TeleopBot extends Bot {
         {
             kickerLoad();
         }
->>>>>>> Stashed changes
     }
 }
