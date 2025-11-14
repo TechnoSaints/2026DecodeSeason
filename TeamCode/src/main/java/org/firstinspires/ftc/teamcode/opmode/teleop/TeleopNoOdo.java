@@ -27,31 +27,5 @@ public class TeleopNoOdo extends LinearOpMode {
 
         waitForStart();
         while (opModeIsActive() && !isStopRequested()) {
-            if (gamepad1.dpad_up) {
-                bot.creepDirection(-1.0, 0.0, 0.0);
-            } else if (gamepad1.dpad_down) {
-                bot.creepDirection(1.0, 0.0, 0.0);
-            } else if (gamepad1.dpad_left) {
-                bot.creepDirection(0.0, -1.0, 0.0);
-            } else if (gamepad1.dpad_right) {
-                bot.creepDirection(0.0, 1.0, 0.0);
-            } else {
-                driveAxial = gamepad1.left_stick_y;
-                driveStrafe = gamepad1.left_stick_x;
-                driveYaw = -gamepad1.right_stick_x;
-                if ((Math.abs(driveAxial) < 0.2) && (Math.abs(driveStrafe) < 0.2) && (Math.abs(driveYaw) < 0.2)) {
-                    bot.stopDrive();
-                } else
-                    bot.moveDirection(driveAxial, driveStrafe, -driveYaw);
-            }
-        }
-
-        if (gamepad1.a){
-            bot.setIntakePower(1.0);
-        } else if (gamepad1.b) {
-            bot.setIntakePower(-1.0);
-        } else {
-            bot.setIntakePower(0);
-        }
-
-    }}
+           bot.processDrivetrainInput(gamepad1);
+    }}}
