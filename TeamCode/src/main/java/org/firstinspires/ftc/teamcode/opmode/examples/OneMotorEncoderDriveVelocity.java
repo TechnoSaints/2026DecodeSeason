@@ -11,14 +11,14 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda312DcMotorData;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.MotorData;
 
+@Disabled
+
 @Config
 @TeleOp(name = "OneMotorEncoderDriveVelocity", group = "Examples")
 
 public class OneMotorEncoderDriveVelocity extends LinearOpMode {
 
     private DcMotorEx motor;
-
-    // Data for GoBilda 312 RPM motor
     private final int maxMotorRPM = 6000;
     private final int ticksPerMotorRev = 28;
     private final int maxTicksPerSec = Math.round((maxMotorRPM * ticksPerMotorRev)/60.0f);

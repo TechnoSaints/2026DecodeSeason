@@ -7,6 +7,8 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+@Disabled
+
 @TeleOp(name = "Servo Tuner Single", group = "Tuning")
 
 public class ServoTunerSingle extends LinearOpMode {
