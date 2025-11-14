@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @Config
-@TeleOp(name = "Teleop - No Odo", group = "Linear OpMode")
+@TeleOp(name = "TeleopGame", group = "Linear OpMode")
 public class TeleopNoOdo extends LinearOpMode {
     private TeleopBot bot;
 

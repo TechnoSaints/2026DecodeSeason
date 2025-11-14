@@ -29,7 +29,7 @@ public class TeleopBotSimple extends Component {
         } else {
             driveAxial = -gamepad.left_stick_y;
             driveStrafe = gamepad.left_stick_x;
-            driveYaw = gamepad.right_stick_x;
+            driveYaw = -gamepad.right_stick_x;
             if ((Math.abs(driveAxial) < 0.2) && (Math.abs(driveStrafe) < 0.2) && (Math.abs(driveYaw) < 0.2)) {
                 drivetrain.stop();
             } else
