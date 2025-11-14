@@ -8,8 +8,9 @@ import org.firstinspires.ftc.teamcode.opmode.teleop.TeleopWithOdoSimple;
 @TeleOp(name = "Red Base Teleop - Odo Simple", group = "1Odo")
 public class RedNearTeleop extends TeleopWithOdoSimple {
 
-    public RedNearTeleop() {
-        super.red = true;
-        super.startPose = FieldLocations.redBaseStartPose;
+    @Override
+    public void initializeOpMode(){
+        this.red = true;
+        this.startPose = FieldLocations.redBaseStartPose;
     }
 }

@@ -8,8 +8,9 @@ import org.firstinspires.ftc.teamcode.opmode.teleop.TeleopWithOdoSimple;
 @TeleOp(name = "Red Goal Teleop - Odo Simple", group = "1Odo")
 public class RedFarTeleop extends TeleopWithOdoSimple {
 
-    public RedFarTeleop() {
-        super.red = true;
-        super.startPose = FieldLocations.redGoalStartPose;
+    @Override
+    public void initializeOpMode(){
+        this.red = true;
+        this.startPose = FieldLocations.redGoalStartPose;
     }
-    }
+}

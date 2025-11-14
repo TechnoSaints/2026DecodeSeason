@@ -33,12 +33,18 @@ public abstract class TeleopWithOdoSimple extends LinearOpMode {
     protected Pose startPose;
     Limelight3A limelight;
 
+    public abstract void initializeOpMode();
+
+
     @Override
     public void runOpMode() {
+        initializeOpMode();
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         bot = new TeleopBotSimple(this, telemetry, startPose);
         rumble = false;
         pusherActive = false;
+        telemetry.addData("Start Pose", startPose.toString());
+        telemetry.update();
 
         //List<Character> motif = new ArrayList<>();
 
@@ -46,6 +52,7 @@ public abstract class TeleopWithOdoSimple extends LinearOpMode {
         limelight.pipelineSwitch(8); // Change to our pipeline, setup tutorial -> https://www.youtube.com/watch?v=slt0fIq-a2E
          */
         waitForStart();
+        bot.startOdoTeleop();
         //limelight.start();
         aimerTimer.reset();
         pusherTimer.reset();

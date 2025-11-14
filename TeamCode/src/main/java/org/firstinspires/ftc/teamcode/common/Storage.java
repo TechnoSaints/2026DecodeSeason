@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.common;
 
 import android.graphics.Color;
 
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -14,7 +15,7 @@ import org.firstinspires.ftc.teamcode.common.servos.ServoSimple;
 import java.util.Arrays;
 
 public class Storage extends Component {
-    private Servo lowerRoller, upperRoller;
+    private CRServo lowerRoller, upperRoller;
     private DcMotorEx intake;
     private ColorSensor color, ball0;
     private TouchSensor touch;
@@ -26,8 +27,8 @@ public class Storage extends Component {
         balls[0] = 'X';
         balls[1] = 'X';
         balls[2] = 'X';
-        lowerRoller = hardwareMap.get(Servo.class, "lowerRoller");
-        upperRoller = hardwareMap.get(Servo.class, "upperRoller");
+        lowerRoller = hardwareMap.get(CRServo.class, "lowerRoller");
+        upperRoller = hardwareMap.get(CRServo.class, "upperRoller");
         intake = hardwareMap.get(DcMotorEx.class, "intake");
         color = hardwareMap.get(ColorSensor.class, "color");
         ball0 = hardwareMap.get(ColorSensor.class, "ball0");
@@ -55,8 +56,8 @@ public class Storage extends Component {
         switch (state) {
             case 1:
                 intake.setPower(1); //garrett was here
-                lowerRoller.setPosition(0);
-                upperRoller.setPosition(0);
+                lowerRoller.setPower(-1);
+                upperRoller.setPower(-1);
                 balls[0] = getColor(color);
                 while (!detectBall(ball0)){
 
@@ -65,8 +66,8 @@ public class Storage extends Component {
                 break;
             case 2:
                 intake.setPower(1);
-                lowerRoller.setPosition(0);
-                upperRoller.setPosition(0);
+                lowerRoller.setPower(-1);
+                upperRoller.setPower(-1);
                 balls[1] = getColor(color);
                 while (!touch.isPressed()) {
 
@@ -75,29 +76,29 @@ public class Storage extends Component {
                 break;
             case 3:
                 intake.setPower(1);
-                lowerRoller.setPosition(0);
-                upperRoller.setPosition(0);
+                lowerRoller.setPower(-1);
+                upperRoller.setPower(-1);
                 balls[2] = getColor(color);
                 state = 0;
                 break;
             case -1:
                 intake.setPower(0);
-                lowerRoller.setPosition(0);
-                upperRoller.setPosition(1);
+                lowerRoller.setPower(-1);
+                upperRoller.setPower(1);
                 balls[1] = 'X';
                 state = -2;
                 break;
             case -2:
                 intake.setPower(-1);
-                lowerRoller.setPosition(0);
-                upperRoller.setPosition(1);
+                lowerRoller.setPower(-1);
+                upperRoller.setPower(1);
                 balls[0] = 'X';
                 state = -3;
                 break;
             case -3:
                 intake.setPower(1);
-                lowerRoller.setPosition(0);
-                upperRoller.setPosition(1);
+                lowerRoller.setPower(-1);
+                upperRoller.setPower(1);
                 balls[2] = 'X';
                 state = 0;
                 break;

@@ -17,6 +17,7 @@ import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.DrivetrainData;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.MotorData;
+import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
 public class Drivetrain extends Component {
     private final DcMotorEx leftFrontDrive;
@@ -33,7 +34,8 @@ public class Drivetrain extends Component {
         maxFastPower = drivetrainData.maxFastTeleopPower;
         maxMediumPower = drivetrainData.maxMediumTeleopPower;
         maxSlowPower = drivetrainData.maxSlowTeleopPower;
-        follower = hardwareMap.get(Follower.class, "follower");
+        follower = Constants.createFollower(hardwareMap);
+        follower.update();
 
         leftFrontDrive = hardwareMap.get(DcMotorEx.class, drivetrainData.leftFrontMotorName);
         leftBackDrive = hardwareMap.get(DcMotorEx.class,drivetrainData.leftRearMotorName);
@@ -127,6 +129,7 @@ public class Drivetrain extends Component {
         else {
             follower.setTeleOpDrive(gamepad.left_stick_y, gamepad.left_stick_x, gamepad.right_stick_x, true);
         }
+        loop();
     }
 
     public Pose getPose(){

@@ -59,6 +59,10 @@ public class TeleopBotSimple extends Component {
         drivetrain.processTeleopDrive(gamepad);
     }
 
+    public void startOdoTeleop(){
+        drivetrain.startTeleopDrive();
+    }
+
     public void preloadLauncher(boolean red){
         launcher.preloadFromDistance(drivetrain.getPose(), red);
     }
