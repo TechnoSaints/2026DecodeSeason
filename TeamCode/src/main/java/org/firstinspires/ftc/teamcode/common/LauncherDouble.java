@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints.Lau
 @Config
 public class LauncherDouble extends Component {
     private final DcMotorEx motorL, motorR;
-    private final Servo servoL, servoR;
+    private final Servo launchServo;
     private final LauncherData launcherData = new LauncherData();
     private final double maxVelocityFactor = launcherData.maxVelocityFactor;
     private MotorData motorData = new GoBilda6000DcMotorData();
@@ -40,8 +40,7 @@ public class LauncherDouble extends Component {
 
         motorL = hardwareMap.get(DcMotorEx.class, "launcherMotorL");
         motorR = hardwareMap.get(DcMotorEx.class, "launcherMotorR");
-        servoL = hardwareMap.get(Servo.class, "launcherServoR");
-        servoR = hardwareMap.get(Servo.class, "launcherServoL");
+        launchServo = hardwareMap.get(Servo.class, "launchServo");
 
         resetEncoders();
         setVelocityFactor(targetVelocity);
@@ -124,8 +123,8 @@ public class LauncherDouble extends Component {
 
     private void setServosTargetLaunchPosition(double targetLaunchPosition)
     {
-        servoL.setPosition(targetLaunchPosition);
-        servoR.setPosition(targetLaunchPosition);
+        launchServo.setPosition(targetLaunchPosition);
+        launchServo.setPosition(targetLaunchPosition);
     }
 
     private void resetEncoders() {
@@ -151,8 +150,8 @@ public class LauncherDouble extends Component {
         //       telemetry.addData("PowerL:  ", motorL.getPower());
         //       telemetry.addData("PowerR:  ", motorR.getPower());
         telemetry.addData("targetLaunchPosition:  ", targetLaunchPosition);
-        telemetry.addData("Actual Position L:  ", servoL.getPosition());
-        telemetry.addData("Actual Position R:  ", servoR.getPosition());
+        telemetry.addData("Actual Position L:  ", launchServo.getPosition());
+        telemetry.addData("Actual Position R:  ", launchServo.getPosition());
         telemetry.update();
     }
 

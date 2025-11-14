@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.common;
 
-import com.qualcomm.hardware.rev.RevTouchSensor;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -9,20 +8,19 @@ import org.firstinspires.ftc.teamcode.common.servos.ServoSimple;
 public abstract class Bot extends Component {
     private LauncherDouble launcher;
 
-    private RollerMotor intake;
-    private RollerCRServo topRoller, bottomRoller;
+    private intakeMotor intake;
+    private pusherCRServo pusher;
 
-    private ServoSimple kicker;
+    private ServoSimple stick;
     private double kickerLoadPosition = 0.45;
     private double kickerLaunchPosition = 0.55;
 
     public Bot(OpMode opMode, Telemetry telemetry) {
         super(telemetry);
         launcher = new LauncherDouble(opMode.hardwareMap,telemetry);
-        intake = new RollerMotor(opMode.hardwareMap, telemetry,"intake");
-        topRoller = new RollerCRServo(opMode.hardwareMap, telemetry,"topRoller");
-        bottomRoller = new RollerCRServo(opMode.hardwareMap, telemetry,"bottomRoller");
-        kicker = new ServoSimple(opMode.hardwareMap, telemetry,"kicker");
+        intake = new intakeMotor(opMode.hardwareMap, telemetry,"intake");
+        pusher = new pusherCRServo(opMode.hardwareMap, telemetry,"pusher");
+        stick = new ServoSimple(opMode.hardwareMap, telemetry,"stick");
     }
 
     public void setLauncherShortShot()
@@ -54,44 +52,25 @@ public abstract class Bot extends Component {
         intake.stop();
     }
 
-    public void topRollerForward()
+    public void pusherStart()
     {
-        topRoller.forward();
+        pusher.forward();
     }
 
-    public void topRollerReverse()
+    public void stopPusher()
     {
-        topRoller.reverse();
+        pusher.stop();
     }
 
-    public void topRollerStop()
+
+    public void stickLaunch()
     {
-        bottomRoller.stop();
+        stick.setPositionTicks(kickerLaunchPosition);
     }
 
-    public void bottomRollerForward()
+    public void stickLoad()
     {
-        bottomRoller.forward();
-    }
-
-    public void bottomRollerReverse()
-    {
-        bottomRoller.reverse();
-    }
-
-    public void bottomRollerStop()
-    {
-        bottomRoller.stop();
-    }
-
-    public void kickerLaunch()
-    {
-        kicker.setPositionTicks(kickerLaunchPosition);
-    }
-
-    public void kickerLoad()
-    {
-        kicker.setPositionTicks(kickerLoadPosition);
+        stick.setPositionTicks(kickerLoadPosition);
     }
 
 

@@ -1,10 +1,12 @@
-package org.firstinspires.ftc.teamcode.common;
+package org.firstinspires.ftc.teamcode.opmode.teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.common.Bot;
+import org.firstinspires.ftc.teamcode.common.Drivetrain;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.DrivetrainData;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda435DcMotorData;
 
@@ -13,6 +15,8 @@ public class TeleopBot extends Bot {
     private double driveAxial = 0.0;
     private double driveStrafe = 0.0;
     private double driveYaw = 0.0;
+    private boolean pusherMoving = false;
+    private boolean intakeMoving = false;
     private ElapsedTime buttonTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     private int buttonDelay = 350;
 
@@ -58,24 +62,31 @@ public class TeleopBot extends Bot {
 
         if (gamepad.y)
         {
-            intakeForward();
-            topRollerForward();
-        } else if (gamepad.b)
-        {
-            intakeReverse();
-            topRollerReverse();
-        } else if (gamepad.a)
-        {
-            intakeStop();
-            topRollerStop();
+            if(pusherMoving) {
+                stopPusher();
+                pusherMoving = false;
+            } else {
+                pusherStart();
+                pusherMoving = true;
+            }
+        }
+
+        if (gamepad.a) {
+            if(intakeMoving) {
+                intakeForward();
+                intakeMoving = false;
+            } else {
+                intakeStop();
+                intakeMoving = true;
+            }
         }
 
         if (gamepad.x)
         {
-            kickerLaunch();
+            stickLaunch();
         } else
         {
-            kickerLoad();
+            stickLoad();
         }
     }
 }

@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.common.TeleopBotSimple;
 
 @Disabled
 @Config
-@TeleOp(name = "Teleop - No Odo Simple", group = "Linear OpMode")
+@TeleOp(name = "GameTeleop", group = "Linear OpMode")
 public class TeleopNoOdoSimple extends LinearOpMode {
     private TeleopBotSimple bot;
 

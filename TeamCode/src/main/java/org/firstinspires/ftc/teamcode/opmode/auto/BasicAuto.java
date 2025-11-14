@@ -1,23 +1,17 @@
-package org.firstinspires.ftc.teamcode.opmode.test;
+package org.firstinspires.ftc.teamcode.opmode.auto;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.opmode.teleop.TeleopBot;
 
-@Disabled
 @Config
-@TeleOp(name = "BotTest", group = "Test")
-
-public class BotTest extends LinearOpMode {
-
+@TeleOp(name = "BasicAuto", group = "Linear OpMode")
+public class BasicAuto extends LinearOpMode {
     private TeleopBot bot;
-    private Servo servo;
 
     @Override
     public void runOpMode() {
@@ -25,7 +19,6 @@ public class BotTest extends LinearOpMode {
         bot = new TeleopBot(this, telemetry);
 
         waitForStart();
-
         while (opModeIsActive() && !isStopRequested()) {
             bot.processGamepadInput(gamepad1);
             bot.update();
