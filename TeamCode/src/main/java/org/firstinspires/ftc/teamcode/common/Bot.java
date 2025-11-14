@@ -8,11 +8,13 @@ import org.firstinspires.ftc.teamcode.common.servos.ServoSimple;
 
 public abstract class Bot extends Component {
     private LauncherDouble launcher;
+
     private RollerMotor intake;
     private RollerCRServo topRoller, bottomRoller;
+
     private ServoSimple kicker;
-    private double kickerLaunchPosition = 0.65;
     private double kickerLoadPosition = 0.45;
+    private double kickerLaunchPosition = 0.55;
 
     public Bot(OpMode opMode, Telemetry telemetry) {
         super(telemetry);
@@ -20,7 +22,7 @@ public abstract class Bot extends Component {
         intake = new RollerMotor(opMode.hardwareMap, telemetry,"intake");
         topRoller = new RollerCRServo(opMode.hardwareMap, telemetry,"topRoller");
         bottomRoller = new RollerCRServo(opMode.hardwareMap, telemetry,"bottomRoller");
-        kicker = new ServoSimple(opMode.hardwareMap, telemetry, "kicker");
+        kicker = new ServoSimple(opMode.hardwareMap, telemetry,"kicker");
     }
 
     public void setLauncherShortShot()
@@ -91,6 +93,8 @@ public abstract class Bot extends Component {
     {
         kicker.setPositionTicks(kickerLoadPosition);
     }
+
+
     public void update() {
     }
 }

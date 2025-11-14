@@ -20,6 +20,7 @@ public class ServoSimple extends Component {
 
     public void setPositionTicks(double position) {
         servo.setPosition(position);
+//        setTimer(duration);
     }
 
     protected double getPositionTicks() {

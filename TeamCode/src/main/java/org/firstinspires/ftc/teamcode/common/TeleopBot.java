@@ -77,6 +77,5 @@ public class TeleopBot extends Bot {
         {
             kickerLoad();
         }
-
     }
 }
