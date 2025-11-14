@@ -70,5 +70,12 @@ public class TeleopBot extends Bot {
             topRollerStop();
         }
 
+        if (gamepad.x)
+        {
+            kickerLaunch();
+        } else
+        {
+            kickerLoad();
+        }
     }
 }
