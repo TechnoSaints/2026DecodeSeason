@@ -6,9 +6,10 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+@Disabled
+
 @Config
 @TeleOp(name = "MotorTest", group = "Test")
-@Disabled
 public class MotorTest extends LinearOpMode {
 
     private DcMotor motor;

@@ -4,45 +4,82 @@ import com.qualcomm.hardware.rev.RevTouchSensor;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.common.servos.ServoSimple;
 
 public abstract class Bot extends Component {
-    private Modes currentMode;
-    private int currentPhase;
-    private boolean onHold = false;
+    private LauncherDouble launcher;
+
+    private RollerMotor intake;
+    private RollerCRServo topRoller, bottomRoller;
 
     public Bot(OpMode opMode, Telemetry telemetry) {
         super(telemetry);
+        launcher = new LauncherDouble(opMode.hardwareMap,telemetry);
+        intake = new RollerMotor(opMode.hardwareMap, telemetry,"intake");
+        topRoller = new RollerCRServo(opMode.hardwareMap, telemetry,"topRoller");
+        bottomRoller = new RollerCRServo(opMode.hardwareMap, telemetry,"bottomRoller");
     }
 
-    // Phases are used to divide mode actions into sequential section, with entry criteria
-    private void setPhase(int phase) {
-        currentPhase = phase;
+    public void setLauncherShortShot()
+    {
+        launcher.setShortShot();
     }
 
-    private boolean isPhase(int phase) {
-        return (currentPhase == phase);
+    public void setLauncherLongShot()
+    {
+        launcher.setLongShot();
+    }
+    public void launcherStop()
+    {
+        launcher.stop();
     }
 
-    // Modes used to manage all mechanisms except drivetrain
-    public void setMode(Modes newMode) {
-        currentMode = newMode;
-        setPhase(1);
+    public void intakeForward()
+    {
+        intake.forward();
     }
 
-    public Modes getMode() {
-        return (currentMode);
+    public void intakeReverse()
+    {
+        intake.reverse();
     }
 
-    public boolean isMode(Modes mode) {
-        return (this.currentMode == mode);
+    public void intakeStop()
+    {
+        intake.stop();
+    }
+
+    public void topRollerForward()
+    {
+        topRoller.forward();
+    }
+
+    public void topRollerReverse()
+    {
+        topRoller.reverse();
+    }
+
+    public void topRollerStop()
+    {
+        bottomRoller.stop();
+    }
+
+    public void bottomRollerForward()
+    {
+        bottomRoller.forward();
+    }
+
+    public void bottomRollerReverse()
+    {
+        bottomRoller.reverse();
+    }
+
+    public void bottomRollerStop()
+    {
+        bottomRoller.stop();
     }
 
 
-    public boolean onHold() {
-        return (onHold);
-    }
-
-
-    protected void logIsBusyStatuses() {
+    public void update() {
     }
 }
