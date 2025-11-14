@@ -21,12 +21,12 @@ public class intakeMotor extends Component {
 
     public void forward()
     {
-        motor.setPower(onPower);
+        motor.setPower(-onPower);
     }
 
     public void reverse()
     {
-        motor.setPower(-onPower);
+        motor.setPower(onPower);
     }
 
     public void stop()

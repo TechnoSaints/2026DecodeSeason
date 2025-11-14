@@ -15,8 +15,12 @@ public class TeleopBot extends Bot {
     private double driveAxial = 0.0;
     private double driveStrafe = 0.0;
     private double driveYaw = 0.0;
-    private boolean pusherMoving = false;
     private boolean intakeMoving = false;
+
+    private boolean pusherMoving = false;
+    private boolean pusherButtonPressedLast = false;
+    private ElapsedTime pusherTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
+    private int pusherDebounceMs = 300; // 300 ms debounce
     private ElapsedTime buttonTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     private int buttonDelay = 350;
 
@@ -40,9 +44,9 @@ public class TeleopBot extends Bot {
         } else if (gamepad.dpad_right) {
             drivetrain.creepDirection(0.0, 1.0, 0.0);
         } else {
-            driveAxial = -gamepad.left_stick_y;
+            driveAxial = gamepad.left_stick_y;
             driveStrafe = gamepad.left_stick_x;
-            driveYaw = gamepad.right_stick_x;
+            driveYaw = -gamepad.right_stick_x;
             if ((Math.abs(driveAxial) < 0.2) && (Math.abs(driveStrafe) < 0.2) && (Math.abs(driveYaw) < 0.2)) {
                 drivetrain.stop();
             } else
@@ -52,34 +56,42 @@ public class TeleopBot extends Bot {
         if (gamepad.left_bumper)
         {
             setLauncherShortShot();
-        } else if (gamepad.right_bumper)
+        }
+
+        if (gamepad.right_bumper)
         {
             setLauncherLongShot();
-        } else if (gamepad.right_trigger > 0.2)
+        }
+
+        if (gamepad.right_trigger > 0.2 && buttonPushable())
         {
             launcherStop();
+            buttonTimer.reset();
         }
 
-        if (gamepad.y)
-        {
-            if(pusherMoving) {
-                stopPusher();
-                pusherMoving = false;
-            } else {
-                pusherStart();
+        if (gamepad.y && !pusherButtonPressedLast && pusherTimer.milliseconds() > pusherDebounceMs) {
+            if (!pusherMoving) {
+                pusherStart();      // Turn ON
                 pusherMoving = true;
+            } else {
+                stopPusher();       // Turn OFF
+                pusherMoving = false;
             }
+            pusherTimer.reset();    // Reset debounce timer
+        }
+        pusherButtonPressedLast = gamepad.y;
+
+        if (gamepad.a && buttonPushable()) {
+            if (!intakeMoving) {
+                intakeForward();      // turn ON
+                intakeMoving = true;
+            } else {
+                intakeStop();         // turn OFF
+                intakeMoving = false;
+            }
+            buttonTimer.reset();
         }
 
-        if (gamepad.a) {
-            if(intakeMoving) {
-                intakeForward();
-                intakeMoving = false;
-            } else {
-                intakeStop();
-                intakeMoving = true;
-            }
-        }
 
         if (gamepad.x)
         {

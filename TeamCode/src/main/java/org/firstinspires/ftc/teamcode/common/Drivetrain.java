@@ -31,7 +31,7 @@ public class Drivetrain extends Component {
         maxSlowPower = drivetrainData.maxSlowTeleopPower;
 
         leftFrontDrive = hardwareMap.get(DcMotorEx.class, drivetrainData.leftFrontMotorName);
-        leftBackDrive = hardwareMap.get(DcMotorEx.class,drivetrainData.leftRearMotorName);
+        leftBackDrive = hardwareMap.get(DcMotorEx.class, drivetrainData.leftRearMotorName);
         rightFrontDrive = hardwareMap.get(DcMotorEx.class, drivetrainData.rightFrontMotorName);
         rightBackDrive = hardwareMap.get(DcMotorEx.class, drivetrainData.rightRearMotorName);
 
@@ -39,7 +39,19 @@ public class Drivetrain extends Component {
         leftBackDrive.setDirection(drivetrainData.leftRearMotorDirection);
         rightFrontDrive.setDirection(drivetrainData.rightFrontMotorDirection);
         rightBackDrive.setDirection(drivetrainData.rightRearMotorDirection);
+
         setBrakingOn();
+
+        // *** ENABLE ENCODERS ***
+        leftFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        leftFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     public void creepDirection(double axial, double strafe, double yaw) {
