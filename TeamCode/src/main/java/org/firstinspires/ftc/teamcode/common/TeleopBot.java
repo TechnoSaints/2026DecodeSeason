@@ -58,24 +58,27 @@ public class TeleopBot extends Bot {
 
         if (gamepad.y)
         {
-            intakeForward();
+            intakeReverse();
             topRollerForward();
+            bottomRollerReverse();
         } else if (gamepad.b)
         {
-            intakeReverse();
+            intakeForward();
             topRollerReverse();
+            bottomRollerReverse();
         } else if (gamepad.a)
         {
             intakeStop();
             topRollerStop();
+            bottomRollerStop();
         }
-
-        if (gamepad.x)
-        {
-            kickerLaunch();
-        } else
-        {
-            kickerLoad();
-        }
+//
+//        if (gamepad.x)
+//        {
+//            kickerLaunch();
+//        } else
+//        {
+//            kickerLoad();
+//        }
     }
 }

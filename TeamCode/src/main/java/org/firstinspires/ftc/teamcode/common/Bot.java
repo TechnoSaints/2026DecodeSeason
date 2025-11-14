@@ -12,7 +12,7 @@ public abstract class Bot extends Component {
     private RollerMotor intake;
     private RollerCRServo topRoller, bottomRoller;
 
-    private ServoSimple kicker;
+//    private ServoSimple kicker;
     private double kickerLoadPosition = 0.45;
     private double kickerLaunchPosition = 0.55;
 
@@ -22,7 +22,7 @@ public abstract class Bot extends Component {
         intake = new RollerMotor(opMode.hardwareMap, telemetry,"intake");
         topRoller = new RollerCRServo(opMode.hardwareMap, telemetry,"topRoller");
         bottomRoller = new RollerCRServo(opMode.hardwareMap, telemetry,"bottomRoller");
-        kicker = new ServoSimple(opMode.hardwareMap, telemetry,"kicker");
+//        kicker = new ServoSimple(opMode.hardwareMap, telemetry,"kicker");
     }
 
     public void setLauncherShortShot()
@@ -66,7 +66,7 @@ public abstract class Bot extends Component {
 
     public void topRollerStop()
     {
-        bottomRoller.stop();
+        topRoller.stop();
     }
 
     public void bottomRollerForward()
@@ -84,15 +84,15 @@ public abstract class Bot extends Component {
         bottomRoller.stop();
     }
 
-    public void kickerLaunch()
-    {
-        kicker.setPositionTicks(kickerLaunchPosition);
-    }
-
-    public void kickerLoad()
-    {
-        kicker.setPositionTicks(kickerLoadPosition);
-    }
+//    public void kickerLaunch()
+//    {
+//        kicker.setPositionTicks(kickerLaunchPosition);
+//    }
+//
+//    public void kickerLoad()
+//    {
+//        kicker.setPositionTicks(kickerLoadPosition);
+//    }
 
 
     public void update() {
