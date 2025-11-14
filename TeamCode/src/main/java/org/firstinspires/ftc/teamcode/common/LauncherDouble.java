@@ -38,10 +38,10 @@ public class LauncherDouble extends Component {
         longShotVelocityFactor = LauncherSettings.longShotVelocityFactor;
         longShotPosition = LauncherSettings.longShotPosition;
 
-        motorL = hardwareMap.get(DcMotorEx.class, "launcherMotorL");
-        motorR = hardwareMap.get(DcMotorEx.class, "launcherMotorR");
-        servoL = hardwareMap.get(Servo.class, "launcherServoR");
-        servoR = hardwareMap.get(Servo.class, "launcherServoL");
+        motorL = hardwareMap.get(DcMotorEx.class, "rightLauncher");
+        motorR = hardwareMap.get(DcMotorEx.class, "leftLauncher");
+        servoL = hardwareMap.get(Servo.class, "leftAimer");
+        servoR = hardwareMap.get(Servo.class, "rightAimer");
 
         resetEncoders();
         setVelocityFactor(targetVelocity);
@@ -118,8 +118,8 @@ public class LauncherDouble extends Component {
     }
     private void setMotorsTargetVelocity(int targetVelocity)
     {
-        motorL.setVelocity(targetVelocity);
-        motorR.setVelocity(-targetVelocity);
+        motorL.setVelocity(-targetVelocity);
+        motorR.setVelocity(targetVelocity);
     }
 
     private void setServosTargetLaunchPosition(double targetLaunchPosition)

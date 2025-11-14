@@ -31,5 +31,6 @@ public class RollerCRServo extends Component {
     public void stop()
     {
         servo.setPower(0.0);
+
     }
 }
