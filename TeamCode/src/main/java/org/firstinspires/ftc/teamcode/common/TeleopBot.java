@@ -46,13 +46,16 @@ public class TeleopBot extends Bot {
                 drivetrain.moveDirection(driveAxial, driveStrafe, driveYaw);
         }
 
-        if (gamepad.left_bumper)
+        if (gamepad.right_bumper)
         {
             setLauncherShortShot();
-        } else if (gamepad.right_bumper)
+        } else if (gamepad.right_trigger > 0.2)
         {
             setLauncherLongShot();
-        } else if (gamepad.right_trigger > 0.2)
+        } else if(gamepad.left_bumper){
+            setLauncherMediumShot();
+        }
+        else if (gamepad.left_trigger > 0.2)
         {
             launcherStop();
         }
@@ -60,15 +63,12 @@ public class TeleopBot extends Bot {
         if (gamepad.y)
         {
             intakeForward();
-            topRollerForward();
         } else if (gamepad.b)
         {
             intakeReverse();
-            topRollerReverse();
         } else if (gamepad.a)
         {
             intakeStop();
-            topRollerStop();
         }
 
         if (gamepad.x)
@@ -77,6 +77,12 @@ public class TeleopBot extends Bot {
         } else
         {
             kickerLoad();
+        }
+
+        if (gamepad.start){
+            spinnerForward();
+        } else if (gamepad.share) {
+            spinnerReverse();
         }
     }
 }

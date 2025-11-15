@@ -10,7 +10,7 @@ public abstract class Bot extends Component {
     private LauncherDouble launcher;
 
     private RollerMotor intake;
-    private RollerCRServo topRoller, bottomRoller;
+    private RollerCRServo spinner;
 
     private ServoSimple kicker;
     private double kickerLoadPosition = 0.45;
@@ -20,8 +20,7 @@ public abstract class Bot extends Component {
         super(telemetry);
         launcher = new LauncherDouble(opMode.hardwareMap,telemetry);
         intake = new RollerMotor(opMode.hardwareMap, telemetry,"intake");
-        topRoller = new RollerCRServo(opMode.hardwareMap, telemetry,"topRoller");
-        bottomRoller = new RollerCRServo(opMode.hardwareMap, telemetry,"bottomRoller");
+        spinner = new RollerCRServo(opMode.hardwareMap, telemetry,"spinner");
         kicker = new ServoSimple(opMode.hardwareMap, telemetry,"kicker");
     }
 
@@ -33,6 +32,10 @@ public abstract class Bot extends Component {
     public void setLauncherLongShot()
     {
         launcher.setLongShot();
+    }
+
+    public void setLauncherMediumShot(){
+        launcher.setMediumShot();
     }
     public void launcherStop()
     {
@@ -54,34 +57,19 @@ public abstract class Bot extends Component {
         intake.stop();
     }
 
-    public void topRollerForward()
+    public void spinnerForward()
     {
-        topRoller.forward();
+        spinner.forward();
     }
 
-    public void topRollerReverse()
+    public void spinnerReverse()
     {
-        topRoller.reverse();
+        spinner.reverse();
     }
 
-    public void topRollerStop()
+    public void spinnerStop()
     {
-        bottomRoller.stop();
-    }
-
-    public void bottomRollerForward()
-    {
-        bottomRoller.forward();
-    }
-
-    public void bottomRollerReverse()
-    {
-        bottomRoller.reverse();
-    }
-
-    public void bottomRollerStop()
-    {
-        bottomRoller.stop();
+        spinner.stop();
     }
 
     public void kickerLaunch()
