@@ -7,14 +7,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.DrivetrainData;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda435DcMotorData;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints.ExtendoPositions;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints.HandlerArmPositions;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints.HandlerGrabberPositions;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints.HandlerWristPositions;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints.IntakeGrabberPositions;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints.IntakeSwivelPositions;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints.IntakeWristPositions;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints.LiftPositions;
 
 public class TeleopBot extends Bot {
     private final Drivetrain drivetrain;
@@ -22,13 +14,7 @@ public class TeleopBot extends Bot {
     private double driveStrafe = 0.0;
     private double driveYaw = 0.0;
     private ElapsedTime buttonTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
-    private ElapsedTime controlTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
-
     private int buttonDelay = 350;
-    private boolean looking = false;
-    private boolean liftManualControl = false;
-    private boolean holdingSpecimen = false;
-    private boolean grabPosition = false;
 
     public TeleopBot(OpMode opMode, Telemetry telemetry) {
         super(opMode, telemetry);
@@ -40,7 +26,8 @@ public class TeleopBot extends Bot {
         return (buttonTimer.milliseconds() > buttonDelay);
     }
 
-    public void processDrivetrainInput(Gamepad gamepad) {
+    public void processGamepadInput(Gamepad gamepad) {
+
         if (gamepad.dpad_up) {
             drivetrain.creepDirection(1.0, 0.0, 0.0);
         } else if (gamepad.dpad_down) {
@@ -59,14 +46,37 @@ public class TeleopBot extends Bot {
                 drivetrain.moveDirection(driveAxial, driveStrafe, driveYaw);
         }
 
-        if (gamepad.a){
-            setIntakePower(1.0);
-        } else if (gamepad.b) {
-            setIntakePower(-1.0);
-        } else {
-            setIntakePower(0);
+        if (gamepad.left_bumper)
+        {
+            setLauncherShortShot();
+        } else if (gamepad.right_bumper)
+        {
+            setLauncherLongShot();
+        } else if (gamepad.right_trigger > 0.2)
+        {
+            launcherStop();
         }
 
-    }
+        if (gamepad.y)
+        {
+            intakeForward();
+            topRollerForward();
+        } else if (gamepad.b)
+        {
+            intakeReverse();
+            topRollerReverse();
+        } else if (gamepad.a)
+        {
+            intakeStop();
+            topRollerStop();
+        }
 
+        if (gamepad.x)
+        {
+            kickerLaunch();
+        } else
+        {
+            kickerLoad();
+        }
+    }
 }

@@ -1,55 +1,100 @@
 package org.firstinspires.ftc.teamcode.common;
 
-
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.hardware.rev.RevTouchSensor;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda312DcMotorData;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.DrivetrainData;
-
+import org.firstinspires.ftc.teamcode.common.servos.ServoSimple;
 
 public abstract class Bot extends Component {
-    private LinearOpMode opMode;
-    private Drivetrain drivetrain;
-    DcMotorEx intake, leftLauncher, rightLauncher;
-    Servo kicker, spinner;
+    private LauncherDouble launcher;
 
+    private RollerMotor intake;
+    private RollerCRServo topRoller, bottomRoller;
+
+    private ServoSimple kicker;
+    private double kickerLoadPosition = 0.45;
+    private double kickerLaunchPosition = 0.55;
 
     public Bot(OpMode opMode, Telemetry telemetry) {
-
         super(telemetry);
-        drivetrain = new Drivetrain(opMode.hardwareMap, telemetry, new DrivetrainData(), new GoBilda312DcMotorData());
-        intake = opMode.hardwareMap.get(DcMotorEx.class, "intake");
-        leftLauncher = opMode.hardwareMap.get(DcMotorEx.class, "leftLauncher");
-        rightLauncher = opMode.hardwareMap.get(DcMotorEx.class, "rightLauncher");
-        kicker = opMode.hardwareMap.get(Servo.class, "kicker");
-        spinner = opMode.hardwareMap.get(Servo.class, "spinner");
-    }
-    public void creepDirection(double axial, double strafe, double yaw) {
-        drivetrain.creepDirection(axial, strafe, yaw);
+        launcher = new LauncherDouble(opMode.hardwareMap,telemetry);
+        intake = new RollerMotor(opMode.hardwareMap, telemetry,"intake");
+        topRoller = new RollerCRServo(opMode.hardwareMap, telemetry,"topRoller");
+        bottomRoller = new RollerCRServo(opMode.hardwareMap, telemetry,"bottomRoller");
+        kicker = new ServoSimple(opMode.hardwareMap, telemetry,"kicker");
     }
 
-    public void moveDirection(double axial, double strafe, double yaw) {
-        drivetrain.moveDirection(axial, strafe, yaw);
-    }
-    public void setToFastPower() {
-        drivetrain.setToFastTeleopPower();
-    }
-
-    public void setToMediumPower(){drivetrain.setToMediumTeleopPower();}
-
-    public void setToSlowPower() {
-        drivetrain.setToSlowTeleopPower();
-    }
-    public void stopDrive() {
-        drivetrain.moveDirection(0, 0, 0);
-    }
-
-    public void setIntakePower(double power)
+    public void setLauncherShortShot()
     {
-        intake.setPower(power);
-    };
+        launcher.setShortShot();
+    }
+
+    public void setLauncherLongShot()
+    {
+        launcher.setLongShot();
+    }
+    public void launcherStop()
+    {
+        launcher.stop();
+    }
+
+    public void intakeForward()
+    {
+        intake.forward();
+    }
+
+    public void intakeReverse()
+    {
+        intake.reverse();
+    }
+
+    public void intakeStop()
+    {
+        intake.stop();
+    }
+
+    public void topRollerForward()
+    {
+        topRoller.forward();
+    }
+
+    public void topRollerReverse()
+    {
+        topRoller.reverse();
+    }
+
+    public void topRollerStop()
+    {
+        bottomRoller.stop();
+    }
+
+    public void bottomRollerForward()
+    {
+        bottomRoller.forward();
+    }
+
+    public void bottomRollerReverse()
+    {
+        bottomRoller.reverse();
+    }
+
+    public void bottomRollerStop()
+    {
+        bottomRoller.stop();
+    }
+
+    public void kickerLaunch()
+    {
+        kicker.setPositionTicks(kickerLaunchPosition);
+    }
+
+    public void kickerLoad()
+    {
+        kicker.setPositionTicks(kickerLoadPosition);
+    }
+
+
+    public void update() {
+    }
 }
