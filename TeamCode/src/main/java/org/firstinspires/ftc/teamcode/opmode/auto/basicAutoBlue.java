@@ -5,13 +5,12 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.opmode.teleop.TeleopBot;
 
 @Config
-@Autonomous(name = "AUTO", group = "Linear OpMode")
-public class basicAuto extends LinearOpMode {
+@Autonomous(name = "AUTOblue", group = "Linear OpMode")
+public class basicAutoBlue extends LinearOpMode {
     private TeleopBot teleopBot;
 
     @Override
@@ -25,8 +24,8 @@ public class basicAuto extends LinearOpMode {
             sleep(2000);
             teleopBot.fullStop();
             sleep(200);
-            teleopBot.moveBot(0,0,0.1);
-            sleep(1000);
+            teleopBot.moveBot(0,0,0.5);
+            sleep(250);
             teleopBot.fullStop();
 
             sleep(100);
