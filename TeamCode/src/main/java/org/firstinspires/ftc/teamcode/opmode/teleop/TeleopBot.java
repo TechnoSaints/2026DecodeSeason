@@ -34,6 +34,36 @@ public class TeleopBot extends Bot {
         return (buttonTimer.milliseconds() > buttonDelay);
     }
 
+    // driveaxial is forward back pos is forward neg is back 0-1
+    // drivestrafe is left right, left is positive and rihgt is neg 1 to -1
+    // driveyaw is rotation negtive is left, -1 to 1
+    public void moveBot(double driveAxial, double driveStrafe, double driveYaw) {
+        drivetrain.moveDirection(driveAxial, driveStrafe, driveYaw);
+    }
+
+    public void fullStop() {
+        drivetrain.moveDirection(0,0,0);
+    }
+
+    public void launcherTurnOn() {
+        setLauncherShortShot();
+    }
+
+    public void stickL() {
+        stickLaunch();
+    }
+    public void stickReset() {
+        stickLoad();
+    }
+
+    public void turnOnBlackWheel() {
+        pusherStart();
+    }
+
+    public void turnOffBlackWheel() {
+        stopPusher();
+    }
+
     public void processGamepadInput(Gamepad gamepad) {
         if (gamepad.dpad_up) {
             drivetrain.creepDirection(-1.0, 0.0, 0.0);
