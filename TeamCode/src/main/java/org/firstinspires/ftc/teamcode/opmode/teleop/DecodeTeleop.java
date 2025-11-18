@@ -1,36 +1,57 @@
+
 package org.firstinspires.ftc.teamcode.opmode.teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+
 
 @TeleOp(name="Decode TeleOp", group="TeleOp")
 public class DecodeTeleop extends LinearOpMode
 {
+    // Data for GoBilda 312 RPM motor
+    final double maxMotorRPM = 6000;
+    final double ticksPerMotorRev = 28;
+    final double maxTicksPerSec = Math.round((maxMotorRPM * ticksPerMotorRev)/60.0f);
+    double targetTicksPerSec = 0;
+    int ticksPerSecondIncrement = 100;
+
 
     public void runOpMode()
     {
         // Init hardware
-        DcMotor frontLeftMotor = hardwareMap.get(DcMotor.class, "frontLeftMotor");
-        DcMotor frontRightMotor = hardwareMap.get(DcMotor.class, "frontRightMotor");
-        DcMotor backLeftMotor = hardwareMap.get(DcMotor.class, "backLeftMotor");
-        DcMotor backRightMotor = hardwareMap.get(DcMotor.class, "backRightMotor");
-        DcMotor wheelMotor = hardwareMap.get(DcMotor.class, "wheelMotor");
+        DcMotor frontLeftMotor = hardwareMap.get(DcMotorEx.class, "frontLeftMotor");
+        DcMotor frontRightMotor = hardwareMap.get(DcMotorEx.class, "frontRightMotor");
+        DcMotor backLeftMotor = hardwareMap.get(DcMotorEx.class, "backLeftMotor");
+        DcMotor backRightMotor = hardwareMap.get(DcMotorEx.class, "backRightMotor");
+        DcMotor wheelMotor = hardwareMap.get(DcMotorEx.class, "wheelMotor");
         Servo leftServo = hardwareMap.get(Servo.class, "leftServo");
         Servo rightServo = hardwareMap.get(Servo.class, "rightServo");
+
+        //Encoders
+        // Setting encoders
+        frontLeftMotor.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        frontRightMotor.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        backLeftMotor.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        backRightMotor.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        wheelMotor.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+
+        ((DcMotorEx) frontLeftMotor).setVelocity(targetTicksPerSec);
+        ((DcMotorEx) frontRightMotor).setVelocity(targetTicksPerSec);
+        ((DcMotorEx) backLeftMotor).setVelocity(targetTicksPerSec);
+        ((DcMotorEx) backRightMotor).setVelocity(targetTicksPerSec);
+        ((DcMotorEx) wheelMotor).setVelocity(targetTicksPerSec);
+
+        telemetry.addData("maxTicksPerSec: ", maxTicksPerSec);
+        telemetry.update();
+        waitForStart();
 
         frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        // Setting encoders
-        frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        wheelMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Reversing back left motor
         backLeftMotor.setDirection(DcMotor.Direction.REVERSE);
@@ -70,8 +91,8 @@ public class DecodeTeleop extends LinearOpMode
             double rightBackPower = drive + strafe - turn;
 
             // Servos
-            double leftServoPosition = 0;
-            double rightServoPosition = 0;
+            double leftServoPosition = 1;
+            double rightServoPosition = 1;
 
             // No value exceeds 1.0
             double max = Math.max(
@@ -97,20 +118,16 @@ public class DecodeTeleop extends LinearOpMode
             if (gamepad1.right_trigger > 0.5 && !isShooting)
             {
                 isShooting = true;
-                wheelMotor.setPower(0.67);
                 leftServo.setPosition(1.0);
-                rightServo.setPosition(1.0);
-                leftServoPosition = 1.0;
-                rightServoPosition = 1.0;
+                rightServo.setPosition(0.0);
+                wheelMotor.setPower(0.63);
             }
             if (gamepad1.right_bumper)
             {
                 wheelMotor.setPower(0.0);
                 leftServo.setPosition(0.0);
-                rightServo.setPosition(0.0);
+                rightServo.setPosition(1.0);
                 isShooting = false;
-                rightServoPosition = 0.0;
-                leftServoPosition = 0.0;
             }
 
 
@@ -130,4 +147,5 @@ public class DecodeTeleop extends LinearOpMode
     }
 
 }
+
 

@@ -1,5 +1,5 @@
-package org.firstinspires.ftc.teamcode.opmode.auto;
 
+/*package org.firstinspires.ftc.teamcode.opmode.auto;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
@@ -88,4 +88,4 @@ public class BasicMove extends BucketAutoOpMode {
         }
     }
 }
-
+*/

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmode.auto;
+/*package org.firstinspires.ftc.teamcode.opmode.auto;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
@@ -19,8 +19,10 @@ public abstract class AutoOpMode extends OpMode {
     /**
      * This method is called once at the init of the OpMode.
      **/
+    /*
     @Override
-    public void init() {
+     */
+    /*public void init() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         bot = new AutoBot(this, telemetry);
     }
@@ -28,7 +30,7 @@ public abstract class AutoOpMode extends OpMode {
     /**
      * This method is called continuously after Init while waiting for "play".
      **/
-    @Override
+    /*
     public void init_loop() {
         bot.update();
     }
@@ -41,6 +43,7 @@ public abstract class AutoOpMode extends OpMode {
     /**
      * This is the main loop of the OpMode, it will run repeatedly after clicking "Play".
      **/
+    /*
     @Override
     public void loop() {
         // These loop the movements of the robot
@@ -59,4 +62,4 @@ public abstract class AutoOpMode extends OpMode {
 
     protected abstract void autonomousPathUpdate();
 }
-
+*/

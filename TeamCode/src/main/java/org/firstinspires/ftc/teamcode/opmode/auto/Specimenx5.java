@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmode.auto;
+/*package org.firstinspires.ftc.teamcode.opmode.auto;
 
 
 import com.pedropathing.geometry.Pose;
@@ -342,4 +342,4 @@ public class Specimenx5 extends SpecimenAutoOpMode {
         }
     }
 }
-
+*/
