@@ -81,11 +81,5 @@ public class TeleopBot extends Bot {
         {
             kickerLaunch();
         }
-
-      /*  if (gamepad.start){
-            spinnerForward();
-        } else if (gamepad.back) {
-            spinnerReverse();
-        }*/
     }
 }
