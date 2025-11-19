@@ -10,17 +10,18 @@ public abstract class Bot extends Component {
     private LauncherDouble launcher;
 
     private RollerMotor intake;
-    private RollerCRServo spinner;
 
     private ServoSimple kicker;
     private double kickerLoadPosition = 0.45;
     private double kickerLaunchPosition = 0.55;
+    private double spinnerOpenPosition = 0.3;
+    private double spinnerClosePosition = 0.5;
+
 
     public Bot(OpMode opMode, Telemetry telemetry) {
         super(telemetry);
         launcher = new LauncherDouble(opMode.hardwareMap,telemetry);
         intake = new RollerMotor(opMode.hardwareMap, telemetry,"intake");
-        spinner = new RollerCRServo(opMode.hardwareMap, telemetry,"spinner");
         kicker = new ServoSimple(opMode.hardwareMap, telemetry,"kicker");
     }
 
@@ -57,20 +58,6 @@ public abstract class Bot extends Component {
         intake.stop();
     }
 
-    public void spinnerForward()
-    {
-        spinner.forward();
-    }
-
-    public void spinnerReverse()
-    {
-        spinner.reverse();
-    }
-
-    public void spinnerStop()
-    {
-        spinner.stop();
-    }
 
     public void kickerLaunch()
     {

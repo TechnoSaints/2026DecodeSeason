@@ -26,6 +26,9 @@ public class TeleopBot extends Bot {
         return (buttonTimer.milliseconds() > buttonDelay);
     }
 
+    public void move(double axial, double strafe, double yaw){
+        drivetrain.moveDirection(axial, strafe, yaw);
+    }
     public void processGamepadInput(Gamepad gamepad) {
 
         if (gamepad.dpad_up) {
@@ -51,9 +54,9 @@ public class TeleopBot extends Bot {
             setLauncherShortShot();
         } else if (gamepad.right_trigger > 0.2)
         {
-            setLauncherLongShot();
-        } else if(gamepad.left_bumper){
             setLauncherMediumShot();
+        } else if(gamepad.left_bumper){
+            setLauncherLongShot();
         }
         else if (gamepad.left_trigger > 0.2)
         {
@@ -73,16 +76,16 @@ public class TeleopBot extends Bot {
 
         if (gamepad.x)
         {
-            kickerLaunch();
+            kickerLoad();
         } else
         {
-            kickerLoad();
+            kickerLaunch();
         }
 
-        if (gamepad.start){
+      /*  if (gamepad.start){
             spinnerForward();
-        } else if (gamepad.share) {
+        } else if (gamepad.back) {
             spinnerReverse();
-        }
+        }*/
     }
 }
