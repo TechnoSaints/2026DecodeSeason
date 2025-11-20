@@ -6,13 +6,20 @@ import org.apache.commons.math3.fitting.WeightedObservedPoints;
 import java.util.Arrays;
 
 public class LauncherSettings {
-    private static WeightedObservedPoints velocityFactors = new WeightedObservedPoints();
-    private static WeightedObservedPoints launchAngles = new WeightedObservedPoints();
+    public static double shortShotVelocityFactor = 0.4;
+    public static double shortShotPosition = 0.8;
+    public static double mediumShotVelocityFactor = 0.5;
+    public static double mediumShotPosition = 0.8;
+    public static double longShotVelocityFactor = 0.55;
+    public static double longShotPosition = 0.8;
 
-    private static PolynomialCurveFitter velocityFactorFitter = PolynomialCurveFitter.create(2);
-    private static PolynomialCurveFitter launchAngleFitter = PolynomialCurveFitter.create(2);
+    private static final WeightedObservedPoints velocityFactors = new WeightedObservedPoints();
+    private static final WeightedObservedPoints launchAngles = new WeightedObservedPoints();
+    private static final PolynomialCurveFitter velocityFactorFitter = PolynomialCurveFitter.create(2);
+    private static final PolynomialCurveFitter launchAngleFitter = PolynomialCurveFitter.create(2);
     private static double[] velocityFactorCoefficients, launchAngleCoefficients;
     private static boolean initialized = false;
+
 
     private static void init() {
 
