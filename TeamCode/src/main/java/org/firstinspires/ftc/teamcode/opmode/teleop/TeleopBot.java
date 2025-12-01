@@ -12,6 +12,7 @@ import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda4
 
 public class TeleopBot extends Bot {
     private final Drivetrain drivetrain;
+
     private double driveAxial = 0.0;
     private double driveStrafe = 0.0;
     private double driveYaw = 0.0;
@@ -82,6 +83,7 @@ public class TeleopBot extends Bot {
             } else
                 drivetrain.moveDirection(driveAxial, driveStrafe, driveYaw);
         }
+
 
         if (gamepad.left_bumper)
         {
