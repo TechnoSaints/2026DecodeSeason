@@ -15,17 +15,13 @@ public class FarBlueLeave extends LinearOpMode {
     private Drivetrain drivetrain;
     private GoBilda435DcMotorData motorData;
     private DrivetrainData drivetrainData;
-    ElapsedTime time;
     public void runOpMode() throws InterruptedException{
         drivetrainData = new DrivetrainData();
         motorData = new GoBilda435DcMotorData();
         drivetrain = new Drivetrain(hardwareMap, telemetry, drivetrainData, motorData);
         waitForStart();
-        time.reset();
         drivetrain.moveDirection(-1, 1.0, 0.0);
-        while (time.milliseconds() < 1000){
-            telemetry.addData("Time", time.milliseconds());
-        }
+        sleep(2000);
         drivetrain.stop();
     }
 

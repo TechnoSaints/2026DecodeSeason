@@ -48,8 +48,7 @@ public class Launcher extends Component{
         );
     }
 
-    public void preloadFromDistance(Pose botPose, boolean red) {
-        double distance = distanceFromLauncher(botPose, red);
+    public void preloadFromDistance(double distance) {
         setVelocity(LauncherSettings.getVelocityFactor(distance));
         setAngle(LauncherSettings.getLaunchAngle(distance));
     }

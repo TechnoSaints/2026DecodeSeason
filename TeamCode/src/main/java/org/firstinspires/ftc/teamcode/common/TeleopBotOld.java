@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.common;
 
+import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -8,25 +9,43 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.DrivetrainData;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda435DcMotorData;
 
-public class TeleopBot extends Bot {
+public class TeleopBotOld extends BotNew {
     private final Drivetrain drivetrain;
     private double driveAxial = 0.0;
     private double driveStrafe = 0.0;
     private double driveYaw = 0.0;
     private ElapsedTime buttonTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     private int buttonDelay = 350;
-    private int targetVelocity = 0;
-    private double positionIncrement = 0.05;
-    private double targetLaunchPosition = 0.5;
+    boolean red;
 
-    public TeleopBot(OpMode opMode, Telemetry telemetry) {
+    public TeleopBotOld(OpMode opMode, Telemetry telemetry) {
         super(opMode, telemetry);
         drivetrain = new Drivetrain(opMode.hardwareMap, telemetry, new DrivetrainData(), new GoBilda435DcMotorData());
         buttonTimer.reset();
     }
 
+    public TeleopBotOld(OpMode opMode, Telemetry telemetry, Pose startPose, boolean red) {
+        super(opMode, telemetry);
+        drivetrain = new Drivetrain(opMode.hardwareMap, telemetry, new DrivetrainData(), new GoBilda435DcMotorData());
+        drivetrain.setOdoStartingPose(startPose);
+        drivetrain.loop();
+        buttonTimer.reset();
+    }
+
     private boolean buttonPushable() {
         return (buttonTimer.milliseconds() > buttonDelay);
+    }
+
+    public void launcherPreload(){
+        launcher.preloadFromDistance(distanceFromTarget());
+    }
+
+    public double distanceFromTarget(){
+        return launcher.distanceFromLauncher(drivetrain.getPose(), red);
+    }
+
+    public void log(){
+        launcher.log();
     }
 
     public void processGamepadInput(Gamepad gamepad) {
@@ -47,31 +66,13 @@ public class TeleopBot extends Bot {
             } else
                 drivetrain.moveDirection(driveAxial, driveStrafe, driveYaw);
         }
-//
-//        if (gamepad.left_bumper)
-//        {
-//            setLauncherShortShot();
-//        } else if (gamepad.right_bumper)
-//        {
-//            setLauncherLongShot();
-//        } else if (gamepad.right_trigger > 0.2)
-//        {
-//            launcherStop();
-//        }
 
-
-        if (gamepad.right_bumper && buttonPushable()) {
-            targetLaunchPosition += positionIncrement;
-            buttonTimer.reset();
-        } else if (gamepad.left_bumper && buttonPushable()) {
-            targetLaunchPosition -= positionIncrement;
-            buttonTimer.reset();
-        }
-
-        if (gamepad.right_trigger > 0.2){
-            targetVelocity = 1;
-        } else if (gamepad.left_trigger > 0.2){
-            targetVelocity = 0;
+        if (gamepad.left_bumper)
+        {
+            launcherPreload();
+        } else if (gamepad.right_bumper)
+        {
+            launcherStop();
         }
 
         if (gamepad.y)
@@ -89,14 +90,10 @@ public class TeleopBot extends Bot {
             intakeStop();
             topRollerStop();
             bottomRollerStop();
-        } else if (gamepad.x){
-            intakeReverse();
-            topRollerStop();
-            bottomRollerStop();
         }
-
-        setLauncher(targetLaunchPosition, targetVelocity);
-
+        drivetrain.loop();
+        telemetry.addData("Current Pose", drivetrain.getPose().toString());
+        telemetry.addData("Distance from Target", distanceFromTarget());
 //
 //        if (gamepad.x)
 //        {

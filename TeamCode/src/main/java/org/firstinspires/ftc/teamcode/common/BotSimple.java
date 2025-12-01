@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public abstract class BotSimple extends Component {
-    private Modes currentMode;
     private int currentPhase;
     private boolean onHold = false;
 
@@ -20,20 +19,6 @@ public abstract class BotSimple extends Component {
 
     private boolean isPhase(int phase) {
         return (currentPhase == phase);
-    }
-
-    // Modes used to manage all mechanisms except drivetrain
-    public void setMode(Modes newMode) {
-        currentMode = newMode;
-        setPhase(1);
-    }
-
-    public Modes getMode() {
-        return (currentMode);
-    }
-
-    public boolean isMode(Modes mode) {
-        return (this.currentMode == mode);
     }
 
     public boolean onHold() {

@@ -64,7 +64,7 @@ public class TeleopBotSimple extends Component {
     }
 
     public void preloadLauncher(boolean red){
-        launcher.preloadFromDistance(drivetrain.getPose(), red);
+        launcher.preloadFromDistance(launcher.distanceFromLauncher(drivetrain.getPose(), red));
     }
 
     public void intake(){
@@ -86,5 +86,6 @@ public class TeleopBotSimple extends Component {
     public void log(){
         launcher.log();
         storage.log();
+        telemetry.addData("Current Pose", drivetrain.getPose().toString());
     }
 }

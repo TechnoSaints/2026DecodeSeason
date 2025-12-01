@@ -27,8 +27,8 @@ public class Storage extends Component {
         balls[0] = 'X';
         balls[1] = 'X';
         balls[2] = 'X';
-        lowerRoller = hardwareMap.get(CRServo.class, "lowerRoller");
-        upperRoller = hardwareMap.get(CRServo.class, "upperRoller");
+        lowerRoller = hardwareMap.get(CRServo.class, "topRoller");
+        upperRoller = hardwareMap.get(CRServo.class, "bottomRoller");
         intake = hardwareMap.get(DcMotorEx.class, "intake");
         color = hardwareMap.get(ColorSensor.class, "color");
         ball0 = hardwareMap.get(ColorSensor.class, "ball0");

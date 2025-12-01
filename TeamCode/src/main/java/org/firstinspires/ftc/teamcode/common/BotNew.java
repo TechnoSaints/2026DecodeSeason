@@ -1,13 +1,11 @@
 package org.firstinspires.ftc.teamcode.common;
 
-import com.qualcomm.hardware.rev.RevTouchSensor;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.common.servos.ServoSimple;
 
-public abstract class Bot extends Component {
-    private LauncherDouble launcher;
+public abstract class BotNew extends Component {
+    protected Launcher launcher;
 
     private RollerMotor intake;
     private RollerCRServo topRoller, bottomRoller;
@@ -16,27 +14,28 @@ public abstract class Bot extends Component {
     private double kickerLoadPosition = 0.45;
     private double kickerLaunchPosition = 0.55;
 
-    public Bot(OpMode opMode, Telemetry telemetry) {
+    public BotNew(OpMode opMode, Telemetry telemetry) {
         super(telemetry);
-        launcher = new LauncherDouble(opMode.hardwareMap,telemetry);
+        launcher = new Launcher(telemetry,opMode.hardwareMap);
         intake = new RollerMotor(opMode.hardwareMap, telemetry,"intake");
         topRoller = new RollerCRServo(opMode.hardwareMap, telemetry,"topRoller");
         bottomRoller = new RollerCRServo(opMode.hardwareMap, telemetry,"bottomRoller");
 //        kicker = new ServoSimple(opMode.hardwareMap, telemetry,"kicker");
     }
 
-    public void setLauncherShortShot()
-    {
-        launcher.setShortShot();
-    }
+//    public void setLauncherShortShot()
+//    {
+//        launcher.setShortShot();
+//    }
+//
+//    public void setLauncherLongShot()
+//    {
+//        launcher.setLongShot();
+//    }
 
-    public void setLauncherLongShot()
-    {
-        launcher.setLongShot();
-    }
     public void launcherStop()
     {
-        launcher.stop();
+        launcher.stopLauncher();
     }
 
     public void intakeForward()
@@ -84,11 +83,6 @@ public abstract class Bot extends Component {
         bottomRoller.stop();
     }
 
-    public void setLauncher(double position, int power){
-        launcher.setVelocityFactor(power);
-        launcher.setLaunchPosition(position);
-    }
-
 //    public void kickerLaunch()
 //    {
 //        kicker.setPositionTicks(kickerLaunchPosition);
@@ -101,6 +95,5 @@ public abstract class Bot extends Component {
 
 
     public void update() {
-        launcher.log();
     }
 }

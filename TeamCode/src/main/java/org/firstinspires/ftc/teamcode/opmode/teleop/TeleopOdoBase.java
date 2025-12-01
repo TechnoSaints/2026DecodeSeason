@@ -10,9 +10,10 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.common.TeleopBot;
 
 @Config
-@TeleOp(name = "Teleop - No Odo", group = "Linear OpMode")
-public class TeleopNoOdo extends LinearOpMode {
+public class TeleopOdoBase extends LinearOpMode {
     private TeleopBot bot;
+    protected boolean red;
+    protected Pose startPose;
 
     @Override
     public void runOpMode() {

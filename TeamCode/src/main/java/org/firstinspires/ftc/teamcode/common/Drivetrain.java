@@ -140,6 +140,5 @@ public class Drivetrain extends Component {
         telemetry.addData("leftFrontDrive Position: ", leftFrontDrive.getCurrentPosition());
         telemetry.addData("leftFrontDrive Target: ", leftFrontDrive.getTargetPosition());
         telemetry.addData("leftFrontDrive Velocity: ", leftFrontDrive.getVelocity());
-        telemetry.update();
     }
 }

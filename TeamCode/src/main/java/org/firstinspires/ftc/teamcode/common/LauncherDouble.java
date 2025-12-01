@@ -153,7 +153,6 @@ public class LauncherDouble extends Component {
         telemetry.addData("targetLaunchPosition:  ", targetLaunchPosition);
         telemetry.addData("Actual Position L:  ", servoL.getPosition());
         telemetry.addData("Actual Position R:  ", servoR.getPosition());
-        telemetry.update();
     }
 
 }
