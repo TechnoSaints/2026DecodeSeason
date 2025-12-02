@@ -6,11 +6,8 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.common.Modes;
-import org.firstinspires.ftc.teamcode.common.TeleopBot;
-
 @Config
-@TeleOp(name = "Teleop - No Odo", group = "Linear OpMode")
+@TeleOp(name = "TeleopGame", group = "Linear OpMode")
 public class TeleopNoOdo extends LinearOpMode {
     private TeleopBot bot;
 
@@ -20,9 +17,8 @@ public class TeleopNoOdo extends LinearOpMode {
         bot = new TeleopBot(this, telemetry);
 
         waitForStart();
-        bot.setMode(Modes.TELEOP_START_POS);
         while (opModeIsActive() && !isStopRequested()) {
-            bot.processSpecimenInput(gamepad1);
+            bot.processGamepadInput(gamepad1);
             bot.update();
         }
     }

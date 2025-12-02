@@ -8,11 +8,12 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.common.TeleopBot;
+import org.firstinspires.ftc.teamcode.opmode.teleop.TeleopBot;
 
+@Disabled
 @Config
 @TeleOp(name = "BotTest", group = "Test")
-@Disabled
+
 public class BotTest extends LinearOpMode {
 
     private TeleopBot bot;
@@ -26,7 +27,7 @@ public class BotTest extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive() && !isStopRequested()) {
-            bot.processSpecimenInput(gamepad1);
+            bot.processGamepadInput(gamepad1);
             bot.update();
         }
     }
