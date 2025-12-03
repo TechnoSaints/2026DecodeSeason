@@ -18,8 +18,8 @@ public class Constants {
     private static DrivetrainData drivetrainData = new DrivetrainData();
     public static FollowerConstants followerConstants = new FollowerConstants()
             .mass(11.35)
-            .forwardZeroPowerAcceleration(-33)
-            .lateralZeroPowerAcceleration(-65)
+            .forwardZeroPowerAcceleration(-17.11541848)
+            .lateralZeroPowerAcceleration(-46.95679073)
             .useSecondaryTranslationalPIDF(false)
             .useSecondaryHeadingPIDF(false)
             .useSecondaryDrivePIDF(false)
@@ -39,8 +39,8 @@ public class Constants {
             .leftRearMotorDirection(drivetrainData.leftRearMotorDirection)
             .rightFrontMotorDirection(drivetrainData.rightFrontMotorDirection)
             .rightRearMotorDirection(drivetrainData.rightRearMotorDirection)
-            .xVelocity(75)
-            .yVelocity(62)
+            .xVelocity(42)
+            .yVelocity(24)
             .useBrakeModeInTeleOp(true)
             .nominalVoltage(12.5)
             .useVoltageCompensation(true);
