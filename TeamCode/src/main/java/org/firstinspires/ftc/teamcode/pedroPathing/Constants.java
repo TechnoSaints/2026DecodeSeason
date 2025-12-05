@@ -50,7 +50,6 @@ public class Constants {
             .strafePodX(-4.838)
             .distanceUnit(DistanceUnit.INCH)
             .hardwareMapName("pinpoint")
-            .yawScalar(1.0)
             .encoderResolution(
                     GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_SWINGARM_POD
             )
