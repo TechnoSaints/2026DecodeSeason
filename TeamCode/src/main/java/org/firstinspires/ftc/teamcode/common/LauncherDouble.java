@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.common;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -128,8 +129,8 @@ public class LauncherDouble extends Component {
     }
 
     private void resetEncoders() {
-        motorL.setDirection(DcMotor.Direction.FORWARD);
-        motorR.setDirection(DcMotor.Direction.REVERSE);
+        motorL.setDirection(DcMotor.Direction.REVERSE);
+        motorR.setDirection(DcMotor.Direction.FORWARD);
 
         motorL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

@@ -20,6 +20,7 @@ public class TeleopBot extends Bot {
 
     private boolean pusherMoving = false;
     private boolean pusherButtonPressedLast = false;
+    private boolean pusherButtonPressedReverse = false;
     private ElapsedTime pusherTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     private int pusherDebounceMs = 300; // 300 ms debounce
     private ElapsedTime buttonTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
@@ -76,7 +77,7 @@ public class TeleopBot extends Bot {
             drivetrain.creepDirection(0.0, 1.0, 0.0);
         } else {
             driveAxial = gamepad.left_stick_y;
-            driveStrafe = gamepad.left_stick_x;
+            driveStrafe = -gamepad.left_stick_x;
             driveYaw = -gamepad.right_stick_x;
             if ((Math.abs(driveAxial) < 0.2) && (Math.abs(driveStrafe) < 0.2) && (Math.abs(driveYaw) < 0.2)) {
                 drivetrain.stop();
@@ -111,7 +112,20 @@ public class TeleopBot extends Bot {
             }
             pusherTimer.reset();    // Reset debounce timer
         }
+
+        if (gamepad.b && !pusherButtonPressedLast && pusherTimer.milliseconds() > pusherDebounceMs) {
+            if (!pusherMoving) {
+                pusherReverse();      // Turn ON
+                pusherMoving = true;
+            } else {
+                stopPusher();       // Turn OFF
+                pusherMoving = false;
+            }
+            pusherTimer.reset();    // Reset debounce timer
+        }
+
         pusherButtonPressedLast = gamepad.x;
+        pusherButtonPressedReverse = gamepad.b;
 
         if (gamepad.a && buttonPushable()) {
             if (!intakeMoving) {

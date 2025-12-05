@@ -120,6 +120,11 @@ public abstract class Bot extends Component {
         pusher.forward();
     }
 
+    public void pusherReverse()
+    {
+        pusher.reverse();
+    }
+
     public void stopPusher()
     {
         pusher.stop();
