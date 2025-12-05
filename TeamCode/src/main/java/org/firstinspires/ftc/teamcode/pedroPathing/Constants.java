@@ -52,7 +52,7 @@ public class Constants {
             .hardwareMapName("pinpoint")
             .yawScalar(1.0)
             .encoderResolution(
-                    GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD
+                    GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_SWINGARM_POD
             )
             .forwardEncoderDirection(GoBildaPinpointDriver.EncoderDirection.REVERSED)
             .strafeEncoderDirection(GoBildaPinpointDriver.EncoderDirection.FORWARD);
