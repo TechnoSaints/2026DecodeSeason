@@ -78,7 +78,7 @@ public abstract class TeleopWithOdoSimple extends LinearOpMode {
             }
 
             else if (gamepad1.left_stick_button){
-                bot.
+                bot.stopStorage();
             }
 
             // Adds lights to indicate launcher status and rumble when launcher is ready
