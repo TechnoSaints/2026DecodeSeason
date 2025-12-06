@@ -17,6 +17,7 @@ import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.DrivetrainData;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.MotorData;
+import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
 public class Drivetrain extends Component {
@@ -28,6 +29,7 @@ public class Drivetrain extends Component {
     private final double maxMediumPower;
     private final double maxSlowPower;
     private Follower follower;
+    private HardwareMap hardwareMap;
 
     public Drivetrain(HardwareMap hardwareMap, Telemetry telemetry, DrivetrainData drivetrainData, MotorData motorData) {
         super(telemetry);
@@ -36,6 +38,7 @@ public class Drivetrain extends Component {
         maxSlowPower = drivetrainData.maxSlowTeleopPower;
         follower = Constants.createFollower(hardwareMap);
         follower.update();
+        this.hardwareMap = hardwareMap;
 
         leftFrontDrive = hardwareMap.get(DcMotorEx.class, drivetrainData.leftFrontMotorName);
         leftBackDrive = hardwareMap.get(DcMotorEx.class,drivetrainData.leftRearMotorName);
@@ -103,6 +106,11 @@ public class Drivetrain extends Component {
     public void setOdoStartingPose(Pose startPose){
         follower.setStartingPose(startPose);
         follower.update();
+    }
+
+    public void resetOdo(){
+        follower = Constants.createFollower(hardwareMap);
+        setOdoStartingPose(FieldLocations.redBaseStartPose);
     }
 
     public void startTeleopDrive(){

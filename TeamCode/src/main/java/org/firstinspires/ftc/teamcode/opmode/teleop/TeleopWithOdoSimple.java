@@ -65,12 +65,20 @@ public abstract class TeleopWithOdoSimple extends LinearOpMode {
                 bot.preloadLauncher(red);
             }
 
+            else if (gamepad1.left_bumper){
+                bot.stopLauncher();
+            }
+
             if (gamepad1.left_trigger > 0.2){
                 bot.intake();
             }
 
-            if (gamepad1.right_trigger > 0.2){
+            else if (gamepad1.right_trigger > 0.2){
                 bot.shoot();
+            }
+
+            else if (gamepad1.left_stick_button){
+                bot.
             }
 
             // Adds lights to indicate launcher status and rumble when launcher is ready
@@ -80,6 +88,10 @@ public abstract class TeleopWithOdoSimple extends LinearOpMode {
             }
             else {
                 gamepad1.setLedColor(255, 0 , 0, 120000);
+            }
+
+            if (gamepad1.ps){
+                bot.resetOdo();
             }
 
             bot.updateStorage();

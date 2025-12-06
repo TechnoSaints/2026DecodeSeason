@@ -74,8 +74,19 @@ public class Launcher extends Component{
     }
 
     public void log(){
-        telemetry.addData("Launcher Velocity", getVelocity());
-        telemetry.addData("Aimer Position", getAngle());
-        telemetry.addData("Is launcher ready?", ready());
+        telemetry.addData("targetVelocity:  ", targetVelocity);
+        telemetry.addData("Actual Velocity L:  ", leftLauncher.getVelocity());
+        telemetry.addData("Actual Velocity R:  ", rightLauncher.getVelocity());
+        //       telemetry.addData("PowerL:  ", motorL.getPower());
+        //       telemetry.addData("PowerR:  ", motorR.getPower());
+        telemetry.addData("targetLaunchPosition:  ", targetAngle);
+        telemetry.addData("Actual Position L:  ", leftAimer.getPosition());
+        telemetry.addData("Actual Position R:  ", rightAimer.getPosition());
+        if (ready()){
+            telemetry.addLine("Launcher is ready");
+        }
+        else {
+            telemetry.addLine("Launcher is not ready");
+        }
     }
 }

@@ -63,8 +63,16 @@ public class TeleopBotSimple extends Component {
         drivetrain.startTeleopDrive();
     }
 
+    public void resetOdo(){
+        drivetrain.resetOdo();
+    }
+
     public void preloadLauncher(boolean red){
         launcher.preloadFromDistance(launcher.distanceFromLauncher(drivetrain.getPose(), red));
+    }
+
+    public void stopLauncher(){
+        launcher.stopLauncher();
     }
 
     public void intake(){
@@ -74,6 +82,8 @@ public class TeleopBotSimple extends Component {
     public void shoot(){
         storage.shootBalls();
     }
+
+    public void stopStorage() {storage.stop();}
 
     public boolean launcherIsReady(){
         return launcher.ready();

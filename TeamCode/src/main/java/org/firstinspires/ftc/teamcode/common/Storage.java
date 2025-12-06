@@ -15,10 +15,9 @@ import org.firstinspires.ftc.teamcode.common.servos.ServoSimple;
 import java.util.Arrays;
 
 public class Storage extends Component {
-    private CRServo lowerRoller, upperRoller;
-    private DcMotorEx intake;
-    private ColorSensor color, ball0;
-    private TouchSensor touch;
+    private CRServo upperRoller;
+    private DcMotorEx intake, lowerRoller;
+    private TouchSensor ball0,  ball1, ball2;
     public int state = 0;
     private char[] balls = new char[3]; // these balls are massive - Nathaniel Hoaglen aden's king
 
@@ -27,27 +26,25 @@ public class Storage extends Component {
         balls[0] = 'X';
         balls[1] = 'X';
         balls[2] = 'X';
-        lowerRoller = hardwareMap.get(CRServo.class, "topRoller");
+        lowerRoller = hardwareMap.get(DcMotorEx.class, "topRoller");
         upperRoller = hardwareMap.get(CRServo.class, "bottomRoller");
         intake = hardwareMap.get(DcMotorEx.class, "intake");
-        color = hardwareMap.get(ColorSensor.class, "color");
-        ball0 = hardwareMap.get(ColorSensor.class, "ball0");
-        touch = hardwareMap.get(TouchSensor.class, "touch");
+        ball0 = hardwareMap.get(TouchSensor.class, "ball0");
+        ball1 = hardwareMap.get(TouchSensor.class, "ball1");
+        ball2 = hardwareMap.get(TouchSensor.class, "ball2");
     }
 
 
     public void intakeBalls() {
-        if (state != 0) {
-            state = 0;
-        } else {
+        if (state <= 0) {
             if (balls[0] == 'X' && balls[1] == 'X' && balls[2] == 'X') {
                 state = 1;
             }
             else if (balls[0] != 'X' && balls[1] == 'X' && balls[2] == 'X') {
-                state = 3;
+                state = 2;
             }
-            else if (balls[0] != 'X' && balls[1] != 'X' && balls[2] != 'X') {
-                state = 5;
+            else if (balls[0] != 'X' && balls[1] != 'X' && balls[2] == 'X') {
+                state = 3;
             }
         }
     }
@@ -56,110 +53,104 @@ public class Storage extends Component {
         switch (state) {
             case 1:
                 intake.setPower(1); //garrett was here
-                lowerRoller.setPower(-1);
-                upperRoller.setPower(-1);
-                balls[0] = getColor(color);
-                while (!detectBall(ball0)){
+                lowerRoller.setPower(1);
+                upperRoller.setPower(1);
+                while (!ball0.isPressed()){
 
                 }
+                balls[0] = 'O';
                 state = 2;
                 break;
             case 2:
                 intake.setPower(1);
-                lowerRoller.setPower(-1);
-                upperRoller.setPower(-1);
-                balls[1] = getColor(color);
-                while (!touch.isPressed()) {
+                lowerRoller.setPower(1);
+                upperRoller.setPower(0);
+                while (!ball1.isPressed()) {
 
                 }
+                balls[1] = 'O';
                 state = 3;
                 break;
             case 3:
                 intake.setPower(1);
-                lowerRoller.setPower(-1);
-                upperRoller.setPower(-1);
-                balls[2] = getColor(color);
+                lowerRoller.setPower(0);
+                upperRoller.setPower(0);
+                balls[2] = 'O';
+                while (!ball2.isPressed()){
+                    
+                }
                 state = 0;
                 break;
             case -1:
                 intake.setPower(0);
-                lowerRoller.setPower(-1);
+                lowerRoller.setPower(0);
                 upperRoller.setPower(1);
-                balls[1] = 'X';
+                while (ball0.isPressed()){
+
+                }
+                intake.setPower(0); //garrett was here
+                upperRoller.setPower(0);
+                lowerRoller.setPower(1);
+                while (!ball0.isPressed() && !ball1.isPressed() && ball2.isPressed()){
+
+                }
+                balls[2] = 'X';
                 state = -2;
                 break;
             case -2:
-                intake.setPower(-1);
-                lowerRoller.setPower(-1);
+                intake.setPower(0);
+                lowerRoller.setPower(0);
                 upperRoller.setPower(1);
-                balls[0] = 'X';
+                while (ball0.isPressed()){
+                    
+                }
+                upperRoller.setPower(0);
+                lowerRoller.setPower(1);
+                intake.setPower(0);
+                while (!ball0.isPressed() && ball1.isPressed()){
+                    
+                }
+                balls[1] = 'X';
                 state = -3;
                 break;
             case -3:
-                intake.setPower(1);
-                lowerRoller.setPower(-1);
+                intake.setPower(0);
+                lowerRoller.setPower(0);
                 upperRoller.setPower(1);
-                balls[2] = 'X';
+                while (ball0.isPressed()){
+                    
+                }
+                balls[0] = 'X';
                 state = 0;
+                break;
+            case 0:
+                intake.setPower(0);
+                lowerRoller.setPower(0);
+                upperRoller.setPower(0);
                 break;
         }
     }
 
     public void shootBalls() {
-        if (state == 0) {
+        if (state >= 0) {
             if (balls[0] != 'X' && balls[1] != 'X' && balls[2] != 'X') {
                 state = -1;
-            } else if (balls[0] != 'X' && balls[1] == 'X' && balls[2] != 'X') {
+            } else if (balls[0] != 'X' && balls[1] != 'X' && balls[2] == 'X') {
                 state = -2;
             } else if (balls[0] != 'X' && balls[1] == 'X' && balls[2] == 'X') {
                 state = -3;
             }
-        } else {
-            state = 0;
         }
+    }
+    
+    public void stop(){
+        state = 0;
     }
 
     public int getState() {
         return state;
     }
 
-    public void updateState(boolean disable) {
-        if (disable) {
-            state = 0;
-        } else if (state > 0) {
-            state++;
-        } else {
-            state--;
-        }
-    }
-
-    private char getColor(ColorSensor sensor) {
-        int red, blue, green;
-        boolean greenBall = false;
-        boolean purpleBall = false;
-        while (!greenBall && !purpleBall) {
-            red = sensor.red();
-            blue = sensor.blue();
-            green = sensor.green();
-            greenBall = red < 25 && blue < 25 && green > 250;
-            purpleBall = red > 130 && blue > 230 && green < 25;
-        }
-        if (greenBall) {
-            return 'G';
-        } else {
-            return 'P';
-        }
-    }
-
-    private boolean detectBall(ColorSensor sensor){
-        int red = sensor.red();
-        int blue = sensor.blue();
-        int green = sensor.green();
-        return red < 25 && blue < 25 && green < 25;
-    }
-
-    public void log(){
-        telemetry.addData("State", state);
-        telemetry.addData("Balls", Arrays.toString(balls));
+    public void log() {
     }
 }
