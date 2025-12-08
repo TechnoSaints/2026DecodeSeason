@@ -19,6 +19,8 @@ public class TeleopNoOdo extends LinearOpMode {
         waitForStart();
         while (opModeIsActive() && !isStopRequested()) {
             bot.processGamepadInput(gamepad1);
+            bot.displayPose();
+            telemetry.update();
             bot.update();
         }
     }

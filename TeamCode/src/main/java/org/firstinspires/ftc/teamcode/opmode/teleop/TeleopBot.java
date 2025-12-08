@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode.opmode.teleop;
 
+
+import com.pedropathing.geometry.Pose;
+import com.pedropathing.follower.Follower;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -9,6 +12,7 @@ import org.firstinspires.ftc.teamcode.common.Bot;
 import org.firstinspires.ftc.teamcode.common.Drivetrain;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.DrivetrainData;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda435DcMotorData;
+import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
 public class TeleopBot extends Bot {
     private final Drivetrain drivetrain;
@@ -17,6 +21,8 @@ public class TeleopBot extends Bot {
     private double driveStrafe = 0.0;
     private double driveYaw = 0.0;
     private boolean intakeMoving = false;
+
+    Follower follower;
 
     private boolean pusherMoving = false;
     private boolean pusherButtonPressedLast = false;
@@ -29,6 +35,7 @@ public class TeleopBot extends Bot {
     public TeleopBot(OpMode opMode, Telemetry telemetry) {
         super(opMode, telemetry);
         drivetrain = new Drivetrain(opMode.hardwareMap, telemetry, new DrivetrainData(), new GoBilda435DcMotorData());
+        follower = Constants.createFollower(opMode.hardwareMap);
         buttonTimer.reset();
     }
 
@@ -57,6 +64,22 @@ public class TeleopBot extends Bot {
     public void stickReset() {
         stickLoad();
     }
+    public Pose getCurrentPose() {
+        if (follower != null) {
+            return follower.getPose();
+        } else {
+            return new Pose(0, 0, 0);
+        }
+    }
+
+    public void displayPose() {
+        Pose pose = getCurrentPose();
+        telemetry.addData("X Position", pose.getX());
+        telemetry.addData("Y Position", pose.getY());
+        telemetry.addData("Heading", pose.getHeading());
+        telemetry.addData("Heading (deg)", Math.toDegrees(pose.getHeading()));
+        telemetry.update();
+    }
 
     public void turnOnBlackWheel() {
         pusherStart();
@@ -64,6 +87,10 @@ public class TeleopBot extends Bot {
 
     public void turnOffBlackWheel() {
         stopPusher();
+    }
+
+    public void autoAim() {
+
     }
 
     public void processGamepadInput(Gamepad gamepad) {
