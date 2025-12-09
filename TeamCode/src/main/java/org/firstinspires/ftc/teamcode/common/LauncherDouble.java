@@ -98,8 +98,8 @@ public class LauncherDouble extends Component {
 
 
     private void resetEncoders() {
-        motorL.setDirection(DcMotor.Direction.FORWARD);
-        motorR.setDirection(DcMotor.Direction.REVERSE);
+        motorL.setDirection(DcMotor.Direction.REVERSE);
+        motorR.setDirection(DcMotor.Direction.FORWARD);
 
         motorL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
