@@ -7,7 +7,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.common.servos.ServoSimple;
 
 public abstract class Bot extends Component {
-    private Launcher launcher;
+    protected Launcher launcher;
     private Storage storage;
 
     public Bot(OpMode opMode, Telemetry telemetry) {
@@ -20,9 +20,11 @@ public abstract class Bot extends Component {
         launcher.stopLauncher();
     }
 
-    public void preloadLauncher(){
-        launcher.preloadFromDistance(launcher.distanceFromLauncher());
-    }
+    public void shootBalls(){storage.shootBalls();}
+
+    public void intakeBalls(){storage.intakeBalls();}
+
+    public void stopStorage(){storage.stop();}
 
 //    public void kickerLaunch()
 //    {
@@ -36,6 +38,8 @@ public abstract class Bot extends Component {
 
 
     public void update() {
+        storage.updateStorage();
         launcher.log();
+        storage.log();
     }
 }

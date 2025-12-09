@@ -5,6 +5,9 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.DrivetrainData;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda435DcMotorData;
 
@@ -68,7 +71,7 @@ public class TeleopBotSimple extends Component {
     }
 
     public void preloadLauncher(boolean red){
-        launcher.preloadFromDistance(launcher.distanceFromLauncher(drivetrain.getPose(), red));
+        launcher.preloadFromDistance(launcher.distanceFromLauncher(new Pose2D(DistanceUnit.INCH,0,0, AngleUnit.DEGREES, 0), red)); //temp
     }
 
     public void stopLauncher(){

@@ -10,6 +10,5 @@ import org.firstinspires.ftc.teamcode.opmode.teleop.TeleopWithOdoSimple;
 public class RedFarTeleop extends TeleopOdoBase {
     public RedFarTeleop() {
         super.red = true;
-        super.startPose = FieldLocations.redGoalStartPose;
     }
 }

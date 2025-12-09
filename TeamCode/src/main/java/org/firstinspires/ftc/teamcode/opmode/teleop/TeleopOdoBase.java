@@ -18,33 +18,35 @@ public class TeleopOdoBase extends LinearOpMode {
     private TeleopBot bot;
     protected boolean red;
     protected Pose2D startPose;
-    private GoBildaPinpointDriver pinpoint;
 
     @Override
     public void runOpMode() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         bot = new TeleopBot(this, telemetry);
-        pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint");
-        pinpoint.setOffsets(-2.5,-4.5, DistanceUnit.INCH);
-        pinpoint.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
-        pinpoint.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD,
-                GoBildaPinpointDriver.EncoderDirection.FORWARD);
-        pinpoint.resetPosAndIMU();
-        pinpoint.setPosition(startPose);
 
         waitForStart();
         while (opModeIsActive() && !isStopRequested()) {
             bot.processGamepadInput(gamepad1);
+            if (gamepad1.left_bumper){
+                bot.intakeBalls();
+            }
+            else if (gamepad1.right_bumper){
+                bot.shootBalls();
+            }
+            else if (gamepad1.left_trigger > 0.2){
+                bot.stopStorage();
+            }
+            bot.updateLauncher(red, gamepad1.right_trigger > 0.7);
+            if (gamepad1.touchpad){
+                bot.setOdoPosition(new Pose2D(DistanceUnit.INCH, 48,-52, AngleUnit.DEGREES, 45));
+            }
 
-            pinpoint.update();
-            Pose2D pose = pinpoint.getPosition();
+            Pose2D pose = bot.getPosition();
             Pose2D target = new Pose2D(DistanceUnit.INCH, 1,1, AngleUnit.DEGREES, 0);
-            if ()
-
             telemetry.addData("X (inches)", pose.getX(DistanceUnit.INCH));
             telemetry.addData("Y (inches)", pose.getY(DistanceUnit.INCH));
             telemetry.addData("Heading (degree)", pose.getHeading(AngleUnit.DEGREES));
-            bot.update();
+            bot.teleopUpdate(red);
             telemetry.update();
         }
     }

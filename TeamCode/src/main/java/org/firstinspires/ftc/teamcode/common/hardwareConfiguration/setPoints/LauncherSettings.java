@@ -38,22 +38,20 @@ public class LauncherSettings {
 
 
         velocityFactors.add(73.5, 0.8);
-        velocityFactors.add(35, 0.7);
-        velocityFactors.add(114.5,1);
-        velocityFactors.add(130,1);
+        velocityFactors.add(114.5,0.9);
         velocityFactors.add(69,0.8);
-        velocityFactors.add(39,0.8);
+        velocityFactors.add(40,0.8);
         velocityFactors.add(76.5,0.8);
         velocityFactors.add(104,0.9);
 
-        velocityFactors.add(73.5, 0.1);
-        velocityFactors.add(35, 0.1);
-        velocityFactors.add(114.5,0.2);
-        velocityFactors.add(130,0);
-        velocityFactors.add(69,0.2);
-        velocityFactors.add(39,0.17);
-        velocityFactors.add(76.5,0.2);
-        velocityFactors.add(104,0.2);
+        launchPositions.add(73.5, 0.1);
+        launchPositions.add(114.5,0.2);
+        launchPositions.add(69,0.2);
+        launchPositions.add(40,0.17);
+        launchPositions.add(76.5,0.2);
+        launchPositions.add(104,0.2);
+
+        // 80 inches - 0.8@0.15
 
         velocityFactorCoefficients = velocityFactorFitter.fit(velocityFactors.toList());
         launchPositionCoefficients = launchPositionFitter.fit(launchPositions.toList());

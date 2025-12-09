@@ -41,7 +41,7 @@ public class TeleopBotOld extends BotNew {
     }
 
     public double distanceFromTarget(){
-        return launcher.distanceFromLauncher(drivetrain.getPose(), red);
+        return 0; //temp
     }
 
     public void log(){

@@ -11,6 +11,5 @@ public class BlueNearTeleop extends TeleopOdoBase {
 
     public BlueNearTeleop() {
         super.red = false;
-        super.startPose = FieldLocations.blueBaseStartPose;
     }
 }

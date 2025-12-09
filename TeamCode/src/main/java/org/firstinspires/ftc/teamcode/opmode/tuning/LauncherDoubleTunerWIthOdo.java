@@ -53,6 +53,8 @@ public class LauncherDoubleTunerWIthOdo extends LinearOpMode {
         pinpoint.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD,
                 GoBildaPinpointDriver.EncoderDirection.FORWARD);
         pinpoint.resetPosAndIMU();
+        pinpoint.setPosition(new Pose2D(DistanceUnit.INCH, 0,0, AngleUnit.DEGREES, -45));
+        pinpoint.update();
         intake = hardwareMap.get(DcMotorEx.class, "intake");
         lowerRoller = hardwareMap.get(DcMotorEx.class, "lowerRoller");
         upperRoller = hardwareMap.get(CRServo.class, "upperRoller");

@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda6000DcMotorData;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints.LauncherSettings;
@@ -28,6 +29,7 @@ public class Launcher extends Component{
         rightAimer = hardwareMap.get(Servo.class, "rightAimer");
         leftLauncher.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         rightLauncher.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+
         setVelocity(0);
         setPosition(0.5);
     }
@@ -36,7 +38,7 @@ public class Launcher extends Component{
         setVelocity(0);
     }
 
-    public double distanceFromLauncher(Pose botPose, boolean red){
+    public double distanceFromLauncher(Pose2D botPose, boolean red){
         Pose target;
         if (red){
             target = FieldLocations.redTarget;
@@ -45,8 +47,8 @@ public class Launcher extends Component{
             target = FieldLocations.blueTarget;
         }
         return Math.sqrt(
-                Math.pow(botPose.getX() - target.getX(), 2) +
-                        Math.pow(botPose.getY() - target.getY(), 2)
+                Math.pow(botPose.getX(DistanceUnit.INCH) - target.getX(), 2) +
+                        Math.pow(botPose.getY(DistanceUnit.INCH) - target.getY(), 2)
         );
     }
 
@@ -55,9 +57,15 @@ public class Launcher extends Component{
         setPosition(LauncherSettings.getLaunchPosition(distance));
     }
 
-    public void update(Pose2D botPose, boolean red){
+    public void update(Pose2D botPose, boolean red, boolean changeTarget){
+        if (changeTarget){
+            target = !target;
+        }
         if (target){
-            preloadFromDistance(distanceFromLauncher());
+            preloadFromDistance(distanceFromLauncher(botPose, red));
+        }
+        else {
+            stopLauncher();
         }
     }
 
@@ -81,6 +89,10 @@ public class Launcher extends Component{
 
     public boolean ready(){
         return (Math.abs(getVelocity()-targetVelocity) < 50 && Math.abs(getPosition()-targetPosition) <= 0.02);
+    }
+
+    public void teleopDistanceLog(Pose2D pose, boolean red){
+        telemetry.addData("Distance from launcher", distanceFromLauncher(pose, red));
     }
 
     public void log(){

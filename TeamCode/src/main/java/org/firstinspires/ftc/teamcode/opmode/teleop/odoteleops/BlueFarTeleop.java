@@ -11,6 +11,5 @@ public class BlueFarTeleop extends TeleopOdoBase {
 
     public BlueFarTeleop() {
         super.red = false;
-        super.startPose = FieldLocations.blueGoalStartPose;
     }
 }
