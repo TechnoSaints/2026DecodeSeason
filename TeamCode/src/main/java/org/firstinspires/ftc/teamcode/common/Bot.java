@@ -12,8 +12,8 @@ public abstract class Bot extends Component {
     private RollerMotor intake;
 
     private ServoSimple kicker;
-    private double kickerLoadPosition = 0.45;
-    private double kickerLaunchPosition = 0.95;
+    private double kickerLoadPosition = 0.35;
+    private double kickerLaunchPosition = 0.85;
 
     private double kickerGatePosition = 0.7;
 
