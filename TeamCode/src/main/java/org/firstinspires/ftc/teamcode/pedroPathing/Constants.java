@@ -39,8 +39,8 @@ public class Constants {
             .leftRearMotorDirection(drivetrainData.leftRearMotorDirection)
             .rightFrontMotorDirection(drivetrainData.rightFrontMotorDirection)
             .rightRearMotorDirection(drivetrainData.rightRearMotorDirection)
-            .xVelocity(42)
-            .yVelocity(24)
+            .xVelocity(66.9132988397)
+            .yVelocity(44)
             .useBrakeModeInTeleOp(true)
             .nominalVoltage(12.5)
             .useVoltageCompensation(true);
@@ -53,7 +53,7 @@ public class Constants {
             .encoderResolution(
                     GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_SWINGARM_POD
             )
-            .forwardEncoderDirection(GoBildaPinpointDriver.EncoderDirection.REVERSED)
+            .forwardEncoderDirection(GoBildaPinpointDriver.EncoderDirection.FORWARD)
             .strafeEncoderDirection(GoBildaPinpointDriver.EncoderDirection.FORWARD);
 
     public static PathConstraints pathConstraints = new PathConstraints(

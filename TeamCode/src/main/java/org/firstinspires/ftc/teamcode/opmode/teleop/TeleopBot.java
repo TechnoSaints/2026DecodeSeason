@@ -21,9 +21,6 @@ public class TeleopBot extends Bot {
     private double driveStrafe = 0.0;
     private double driveYaw = 0.0;
     private boolean intakeMoving = false;
-
-    Follower follower;
-
     private boolean pusherMoving = false;
     private boolean pusherButtonPressedLast = false;
     private boolean pusherButtonPressedReverse = false;
@@ -32,10 +29,10 @@ public class TeleopBot extends Bot {
     private ElapsedTime buttonTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     private int buttonDelay = 350;
 
-    public TeleopBot(OpMode opMode, Telemetry telemetry) {
+    public TeleopBot(OpMode opMode, Telemetry telemetry, Pose pose) {
         super(opMode, telemetry);
         drivetrain = new Drivetrain(opMode.hardwareMap, telemetry, new DrivetrainData(), new GoBilda435DcMotorData());
-        follower = Constants.createFollower(opMode.hardwareMap);
+        drivetrain.setOdoStartingPose(pose);
         buttonTimer.reset();
     }
 
@@ -54,6 +51,9 @@ public class TeleopBot extends Bot {
         drivetrain.moveDirection(0,0,0);
     }
 
+    public void startOdoTeleop() {
+        drivetrain.startTeleopDrive();
+    }
     public void launcherTurnOn() {
         setLauncherShortShot();
     }
@@ -64,22 +64,8 @@ public class TeleopBot extends Bot {
     public void stickReset() {
         stickLoad();
     }
-    public Pose getCurrentPose() {
-        if (follower != null) {
-            return follower.getPose();
-        } else {
-            return new Pose(0, 0, 0);
-        }
-    }
 
-    public void displayPose() {
-        Pose pose = getCurrentPose();
-        telemetry.addData("X Position", pose.getX());
-        telemetry.addData("Y Position", pose.getY());
-        telemetry.addData("Heading", pose.getHeading());
-        telemetry.addData("Heading (deg)", Math.toDegrees(pose.getHeading()));
-        telemetry.update();
-    }
+
 
     public void turnOnBlackWheel() {
         pusherStart();
@@ -103,9 +89,9 @@ public class TeleopBot extends Bot {
         } else if (gamepad.dpad_right) {
             drivetrain.creepDirection(0.0, 1.0, 0.0);
         } else {
-            driveAxial = gamepad.left_stick_y;
-            driveStrafe = -gamepad.left_stick_x;
-            driveYaw = -gamepad.right_stick_x;
+            driveAxial = -gamepad.left_stick_y;
+            driveStrafe = gamepad.left_stick_x;
+            driveYaw = gamepad.right_stick_x;
             if ((Math.abs(driveAxial) < 0.2) && (Math.abs(driveStrafe) < 0.2) && (Math.abs(driveYaw) < 0.2)) {
                 drivetrain.stop();
             } else
@@ -174,4 +160,6 @@ public class TeleopBot extends Bot {
             stickLoad();
         }
     }
+
+   //h
 }
