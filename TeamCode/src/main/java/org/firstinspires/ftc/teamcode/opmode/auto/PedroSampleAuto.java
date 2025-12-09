@@ -59,8 +59,8 @@ public class PedroSampleAuto extends OpMode{
                 if (!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 5){
                     //TODO add logic for shooter
                     telemetry.addLine("Done Path 1");
-                    follower.followPath(driveShootPosPrepPickup1Pos, true);
                     setPathState(PathState.DRIVE_SHOOTPOS_PREPPICKUP1POS);
+                    follower.followPath(driveShootPosPrepPickup1Pos, true);
                 }
                 break;
             case DRIVE_SHOOTPOS_PREPPICKUP1POS:

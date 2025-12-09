@@ -14,6 +14,8 @@ public abstract class Bot extends Component {
     private ServoSimple kicker;
     private double kickerLoadPosition = 0.45;
     private double kickerLaunchPosition = 0.55;
+
+    private double kickerGatePosition = 0.7;
     private double spinnerOpenPosition = 0.3;
     private double spinnerClosePosition = 0.5;
 
@@ -68,6 +70,8 @@ public abstract class Bot extends Component {
     {
         kicker.setPositionTicks(kickerLoadPosition);
     }
+
+    public void kickerGate(){kicker.setPositionTicks(kickerGatePosition);}
 
 
     public void update() {

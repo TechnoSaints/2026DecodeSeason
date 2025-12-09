@@ -13,6 +13,9 @@ public class TeleopBot extends Bot {
     private double driveAxial = 0.0;
     private double driveStrafe = 0.0;
     private double driveYaw = 0.0;
+    private int position = 1;
+    private boolean kickerWaiting = false;
+    private ElapsedTime kickerTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     private ElapsedTime buttonTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     private int buttonDelay = 350;
 
@@ -74,12 +77,21 @@ public class TeleopBot extends Bot {
             intakeStop();
         }
 
-        if (gamepad.x)
+
+
+        if ((gamepad.x) && (position == 1))
         {
+            position = 2;
             kickerLoad();
-        } else
-        {
+        } else if ((gamepad.x) && (position == 2)){
+            position = 3;
             kickerLaunch();
+            kickerTimer.reset();
+            kickerWaiting = false;
+        } else if ((kickerTimer.milliseconds() > 3000) && (kickerWaiting == false)){
+            position = 1;
+            kickerGate();
+            kickerWaiting = true;
         }
     }
 }
