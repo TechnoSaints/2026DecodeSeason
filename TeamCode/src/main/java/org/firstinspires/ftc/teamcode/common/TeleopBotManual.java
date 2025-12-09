@@ -7,16 +7,26 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.DrivetrainData;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda435DcMotorData;
-
-public class TeleopBot extends Bot {
+/*
+public class TeleopBotManual extends Bot {
     private final Drivetrain drivetrain;
     private double driveAxial = 0.0;
     private double driveStrafe = 0.0;
     private double driveYaw = 0.0;
+    private ElapsedTime buttonTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
+    private int buttonDelay = 350;
+    private int targetVelocity = 0;
+    private double positionIncrement = 0.05;
+    private double targetLaunchPosition = 0.5;
 
-    public TeleopBot(OpMode opMode, Telemetry telemetry) {
+    public TeleopBotManual(OpMode opMode, Telemetry telemetry) {
         super(opMode, telemetry);
         drivetrain = new Drivetrain(opMode.hardwareMap, telemetry, new DrivetrainData(), new GoBilda435DcMotorData());
+        buttonTimer.reset();
+    }
+
+    private boolean buttonPushable() {
+        return (buttonTimer.milliseconds() > buttonDelay);
     }
 
     public void processGamepadInput(Gamepad gamepad) {
@@ -50,6 +60,43 @@ public class TeleopBot extends Bot {
 //        }
 
 
+        if (gamepad.right_bumper && buttonPushable()) {
+            targetLaunchPosition += positionIncrement;
+            buttonTimer.reset();
+        } else if (gamepad.left_bumper && buttonPushable()) {
+            targetLaunchPosition -= positionIncrement;
+            buttonTimer.reset();
+        }
+
+        if (gamepad.right_trigger > 0.2){
+            targetVelocity = 1;
+        } else if (gamepad.left_trigger > 0.2){
+            targetVelocity = 0;
+        }
+
+        if (gamepad.y)
+        {
+            intakeReverse();
+            topRollerForward();
+            bottomRollerReverse();
+        } else if (gamepad.b)
+        {
+            intakeForward();
+            topRollerReverse();
+            bottomRollerReverse();
+        } else if (gamepad.a)
+        {
+            intakeStop();
+            topRollerStop();
+            bottomRollerStop();
+        } else if (gamepad.x){
+            intakeReverse();
+            topRollerStop();
+            bottomRollerStop();
+        }
+
+        setLauncher(targetLaunchPosition, targetVelocity);
+
 //
 //        if (gamepad.x)
 //        {
@@ -60,3 +107,4 @@ public class TeleopBot extends Bot {
 //        }
     }
 }
+*/

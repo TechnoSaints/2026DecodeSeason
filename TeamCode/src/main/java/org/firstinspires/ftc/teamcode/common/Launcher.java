@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.common;
 
+import com.arcrobotics.ftclib.geometry.Pose2d;
 import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda6000DcMotorData;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints.LauncherSettings;
 import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
@@ -15,6 +17,7 @@ public class Launcher extends Component{
     private Servo leftAimer, rightAimer;
     private double maxVelocity;
     private double targetAngle, targetVelocity;
+    private boolean target;
 
     public Launcher(Telemetry telemetry, HardwareMap hardwareMap) {
         super(telemetry);
@@ -50,6 +53,12 @@ public class Launcher extends Component{
     public void preloadFromDistance(double distance) {
         setVelocity(LauncherSettings.getVelocityFactor(distance));
         setAngle(LauncherSettings.getLaunchAngle(distance));
+    }
+
+    public void update(Pose2D botPose, boolean red){
+        if (target){
+            preloadFromDistance(distanceFromLauncher());
+        }
     }
 
     private void setVelocity(double power){
