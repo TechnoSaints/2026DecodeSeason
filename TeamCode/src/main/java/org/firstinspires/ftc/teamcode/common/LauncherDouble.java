@@ -19,7 +19,7 @@ public class LauncherDouble extends Component {
     private final LauncherData launcherData = new LauncherData();
     private final double maxVelocityFactor = launcherData.maxVelocityFactor;
     private MotorData motorData = new GoBilda6000DcMotorData();
-    private final int maxTicksPerSecond = motorData.maxTicksPerSec;
+    private final int maxTicksPerSecond = motorData.maxTicksPerSec;\
     private double targetVelocityFactor = 0.0;
     private int targetVelocity = 0;
     private double velocityFactorIncrement = 0.05;
