@@ -12,15 +12,19 @@ import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda6
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints.LauncherSettings;
 import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
 
-public class Launcher extends Component{
+public class Launcher extends Component {
     private DcMotorEx leftLauncher, rightLauncher;
     private Servo leftAimer, rightAimer;
-    private double maxVelocity;
+    private double maxVelocity, maxPosition, minPosition;
     private double targetPosition, targetVelocity;
     private boolean target;
+
     public Launcher(Telemetry telemetry, HardwareMap hardwareMap) {
         super(telemetry);
         maxVelocity = GoBilda6000DcMotorData.maxTicksPerSec;
+        maxPosition = LauncherSettings.maxPosition;
+        minPosition = LauncherSettings.minPosition;
+
         //InitAprilTag(hardwareMap);
         leftLauncher = hardwareMap.get(DcMotorEx.class, "leftLauncher");
         rightLauncher = hardwareMap.get(DcMotorEx.class, "rightLauncher");
@@ -36,12 +40,11 @@ public class Launcher extends Component{
         setVelocity(0);
     }
 
-    public double distanceFromLauncher(Pose botPose, boolean red){
+    public double distanceFromLauncher(Pose botPose, boolean red) {
         Pose target;
-        if (red){
+        if (red) {
             target = FieldLocations.redTarget;
-        }
-        else {
+        } else {
             target = FieldLocations.blueTarget;
         }
         return Math.sqrt(
@@ -55,45 +58,52 @@ public class Launcher extends Component{
         setPosition(LauncherSettings.getLaunchPosition(distance));
     }
 
-    public void update(Pose2D botPose, boolean red){
-        if (target){
+    public void update(Pose2D botPose, boolean red) {
+        if (target) {
             preloadFromDistance(distanceFromLauncher());
         }
     }
 
-    private void setVelocity(double power){
+    private void setVelocity(double power) {
         targetVelocity = maxVelocity * power;
         leftLauncher.setVelocity(targetVelocity);
         rightLauncher.setVelocity(targetVelocity);
     }
 
-    private void setPosition(double position){
-        targetPosition = position;
+    private void setPosition(double position) {
+        if (position > maxPosition) {
+            targetPosition = maxPosition
+        } else if (position < minPosition) {
+            targetPosition = minPosition
+        } else {
+            targetPosition = position;
+        }
         leftAimer.setPosition(targetPosition);
         rightAimer.setPosition(targetPosition);
     }
 
-    public double getVelocity(){
+    public double getVelocity() {
         return leftLauncher.getVelocity();
     }
 
-    public double getPosition(){ return leftAimer.getPosition(); }
-
-    public boolean ready(){
-        return (Math.abs(getVelocity()-targetVelocity) < 50 && Math.abs(getPosition()-targetPosition) <= 0.02);
+    public double getPosition() {
+        return leftAimer.getPosition();
     }
 
-    public void log(){
+    public boolean ready() {
+        return (Math.abs(getVelocity() - targetVelocity) < 50 && Math.abs(getPosition() - targetPosition) <= 0.02);
+    }
+
+    public void log() {
         telemetry.addData("targetVelocity:  ", targetVelocity);
         telemetry.addData("Actual Velocity L:  ", leftLauncher.getVelocity());
         telemetry.addData("Actual Velocity R:  ", rightLauncher.getVelocity());
         telemetry.addData("targetLaunchPosition:  ", targetPosition);
         telemetry.addData("Actual Position L:  ", leftAimer.getPosition());
         telemetry.addData("Actual Position R:  ", rightAimer.getPosition());
-        if (ready()){
+        if (ready()) {
             telemetry.addLine("Launcher is ready");
-        }
-        else {
+        } else {
             telemetry.addLine("Launcher is not ready");
         }
     }

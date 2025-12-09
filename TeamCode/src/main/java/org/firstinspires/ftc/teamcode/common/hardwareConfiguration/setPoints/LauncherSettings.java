@@ -13,6 +13,9 @@ public class LauncherSettings {
     public static double longShotVelocityFactor = 1;
     public static double longShotPosition = 0.5;
 
+    public static double maxPosition = 0.7;
+    public static double minPosition = 0.0;
+
     private static final WeightedObservedPoints velocityFactors = new WeightedObservedPoints();
     private static final WeightedObservedPoints launchPositions = new WeightedObservedPoints();
     private static final PolynomialCurveFitter velocityFactorFitter = PolynomialCurveFitter.create(2);
