@@ -14,6 +14,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.DrivetrainData;
 
+
 public class Constants {
     private static DrivetrainData drivetrainData = new DrivetrainData();
     public static FollowerConstants followerConstants = new FollowerConstants()
@@ -41,6 +42,7 @@ public class Constants {
             .rightRearMotorDirection(drivetrainData.rightRearMotorDirection)
             .xVelocity(66)
             .yVelocity(55)
+            //stuff
             .useBrakeModeInTeleOp(true)
             .nominalVoltage(12.5)
             .useVoltageCompensation(true);
@@ -53,7 +55,7 @@ public class Constants {
             .encoderResolution(
                     GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_SWINGARM_POD
             )
-            .forwardEncoderDirection(GoBildaPinpointDriver.EncoderDirection.REVERSED)
+            .forwardEncoderDirection(GoBildaPinpointDriver.EncoderDirection.FORWARD)
             .strafeEncoderDirection(GoBildaPinpointDriver.EncoderDirection.FORWARD);
 
     public static PathConstraints pathConstraints = new PathConstraints(

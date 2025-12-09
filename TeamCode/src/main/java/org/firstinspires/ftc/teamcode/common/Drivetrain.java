@@ -10,8 +10,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.Range;
-import com.pedropathing.geometry.Pose;
-import com.pedropathing.follower.Follower;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.DrivetrainData;
@@ -25,21 +23,16 @@ public class Drivetrain extends Component {
     private final DcMotorEx leftBackDrive;
     private final DcMotorEx rightBackDrive;
 
-    private Follower follower;
     private final double maxFastPower;
     private final double maxMediumPower;
     private final double maxSlowPower;
 
-    private HardwareMap hardwareMap;
 
     public Drivetrain(HardwareMap hardwareMap, Telemetry telemetry, DrivetrainData drivetrainData, MotorData motorData) {
         super(telemetry);
         maxFastPower = drivetrainData.maxFastTeleopPower;
         maxMediumPower = drivetrainData.maxMediumTeleopPower;
         maxSlowPower = drivetrainData.maxSlowTeleopPower;
-        follower = Constants.createFollower(hardwareMap);
-        follower.update();
-        this.hardwareMap = hardwareMap;
 
         leftFrontDrive = hardwareMap.get(DcMotorEx.class, drivetrainData.leftFrontMotorName);
         leftBackDrive = hardwareMap.get(DcMotorEx.class, drivetrainData.leftRearMotorName);
@@ -63,20 +56,6 @@ public class Drivetrain extends Component {
         rightFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         leftBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    }
-
-    public void setOdoStartingPose(Pose startPose) {
-        follower.setStartingPose(startPose);
-        follower.update();
-    }
-
-//    public void resetOdo() {
-//        follower = Constants.createFollower(hardwareMap);
-//        setOdoStartingPose(FieldLocations.redBaseStartPose);
-//    }
-
-    public Pose getPose() {
-        return follower.getPose();
     }
 
     public void creepDirection(double axial, double strafe, double yaw) {
@@ -123,9 +102,6 @@ public class Drivetrain extends Component {
         rightBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
-    public void startTeleopDrive() {
-        follower.startTeleopDrive();
-    }
     private void setBrakingOff() {
         leftFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         leftBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);

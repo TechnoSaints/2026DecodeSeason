@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmode.test;
 
 import com.acmerobotics.dashboard.FtcDashboard;
-import com.pedropathing.geometry.Pose;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -18,14 +17,12 @@ import org.firstinspires.ftc.teamcode.opmode.teleop.TeleopBot;
 public class BotTest extends LinearOpMode {
 
     private TeleopBot bot;
-
-    private Pose startpose;
     private Servo servo;
 
     @Override
     public void runOpMode() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        bot = new TeleopBot(this, telemetry, startpose);
+        bot = new TeleopBot(this, telemetry);
 
         waitForStart();
 

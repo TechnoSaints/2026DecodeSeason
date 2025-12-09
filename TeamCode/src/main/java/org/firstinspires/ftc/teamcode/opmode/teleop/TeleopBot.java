@@ -1,8 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmode.teleop;
 
 
-import com.pedropathing.geometry.Pose;
-import com.pedropathing.follower.Follower;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -29,10 +27,9 @@ public class TeleopBot extends Bot {
     private ElapsedTime buttonTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     private int buttonDelay = 350;
 
-    public TeleopBot(OpMode opMode, Telemetry telemetry, Pose pose) {
+    public TeleopBot(OpMode opMode, Telemetry telemetry) {
         super(opMode, telemetry);
         drivetrain = new Drivetrain(opMode.hardwareMap, telemetry, new DrivetrainData(), new GoBilda435DcMotorData());
-        drivetrain.setOdoStartingPose(pose);
         buttonTimer.reset();
     }
 
@@ -49,10 +46,6 @@ public class TeleopBot extends Bot {
 
     public void fullStop() {
         drivetrain.moveDirection(0,0,0);
-    }
-
-    public void startOdoTeleop() {
-        drivetrain.startTeleopDrive();
     }
     public void launcherTurnOn() {
         setLauncherShortShot();
@@ -161,5 +154,5 @@ public class TeleopBot extends Bot {
         }
     }
 
-   //h
+    //h
 }
