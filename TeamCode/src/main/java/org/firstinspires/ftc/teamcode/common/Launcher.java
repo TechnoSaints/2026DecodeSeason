@@ -16,9 +16,8 @@ public class Launcher extends Component{
     private DcMotorEx leftLauncher, rightLauncher;
     private Servo leftAimer, rightAimer;
     private double maxVelocity;
-    private double targetAngle, targetVelocity;
+    private double targetPosition, targetVelocity;
     private boolean target;
-
     public Launcher(Telemetry telemetry, HardwareMap hardwareMap) {
         super(telemetry);
         maxVelocity = GoBilda6000DcMotorData.maxTicksPerSec;
@@ -29,7 +28,8 @@ public class Launcher extends Component{
         rightAimer = hardwareMap.get(Servo.class, "rightAimer");
         leftLauncher.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         rightLauncher.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-
+        setVelocity(0);
+        setPosition(0.5);
     }
 
     public void stopLauncher() {
@@ -52,7 +52,7 @@ public class Launcher extends Component{
 
     public void preloadFromDistance(double distance) {
         setVelocity(LauncherSettings.getVelocityFactor(distance));
-        setAngle(LauncherSettings.getLaunchAngle(distance));
+        setPosition(LauncherSettings.getLaunchPosition(distance));
     }
 
     public void update(Pose2D botPose, boolean red){
@@ -62,32 +62,32 @@ public class Launcher extends Component{
     }
 
     private void setVelocity(double power){
-        leftLauncher.setVelocity(maxVelocity * power);
-        rightLauncher.setVelocity(maxVelocity * power);
+        targetVelocity = maxVelocity * power;
+        leftLauncher.setVelocity(targetVelocity);
+        rightLauncher.setVelocity(targetVelocity);
     }
 
-    private void setAngle(double angle){
-        leftAimer.setPosition(angle);
-        rightAimer.setPosition(angle);
+    private void setPosition(double position){
+        targetPosition = position;
+        leftAimer.setPosition(targetPosition);
+        rightAimer.setPosition(targetPosition);
     }
 
     public double getVelocity(){
         return leftLauncher.getVelocity();
     }
 
-    public double getAngle(){ return leftAimer.getPosition(); }
+    public double getPosition(){ return leftAimer.getPosition(); }
 
     public boolean ready(){
-        return (Math.abs(getVelocity()-targetVelocity) < 50 && Math.abs(getAngle()-targetAngle) < 0.05);
+        return (Math.abs(getVelocity()-targetVelocity) < 50 && Math.abs(getPosition()-targetPosition) <= 0.02);
     }
 
     public void log(){
         telemetry.addData("targetVelocity:  ", targetVelocity);
         telemetry.addData("Actual Velocity L:  ", leftLauncher.getVelocity());
         telemetry.addData("Actual Velocity R:  ", rightLauncher.getVelocity());
-        //       telemetry.addData("PowerL:  ", motorL.getPower());
-        //       telemetry.addData("PowerR:  ", motorR.getPower());
-        telemetry.addData("targetLaunchPosition:  ", targetAngle);
+        telemetry.addData("targetLaunchPosition:  ", targetPosition);
         telemetry.addData("Actual Position L:  ", leftAimer.getPosition());
         telemetry.addData("Actual Position R:  ", rightAimer.getPosition());
         if (ready()){
