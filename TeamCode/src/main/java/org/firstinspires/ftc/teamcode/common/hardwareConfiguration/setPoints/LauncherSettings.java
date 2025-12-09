@@ -37,11 +37,23 @@ public class LauncherSettings {
         //      launchAngles.add(25.0, 0.25);
 
 
-        velocityFactors.add(1.0, 0.95);
-        velocityFactors.add(144.0, 0.1);
+        velocityFactors.add(73.5, 0.8);
+        velocityFactors.add(35, 0.7);
+        velocityFactors.add(114.5,1);
+        velocityFactors.add(130,1);
+        velocityFactors.add(69,0.8);
+        velocityFactors.add(39,0.8);
+        velocityFactors.add(76.5,0.8);
+        velocityFactors.add(104,0.9);
 
-        launchAngles.add(1.0, 0.25);
-        launchAngles.add(144.0, 1.0);
+        velocityFactors.add(73.5, 0.1);
+        velocityFactors.add(35, 0.1);
+        velocityFactors.add(114.5,0.2);
+        velocityFactors.add(130,0);
+        velocityFactors.add(69,0.2);
+        velocityFactors.add(39,0.17);
+        velocityFactors.add(76.5,0.2);
+        velocityFactors.add(104,0.2);
 
         velocityFactorCoefficients = velocityFactorFitter.fit(velocityFactors.toList());
         launchAngleCoefficients = launchAngleFitter.fit(launchAngles.toList());

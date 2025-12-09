@@ -44,6 +44,7 @@ public class LauncherDoubleTuner extends LinearOpMode {
             telemetry.addData("targetVelocityFactor in launcherDoubleTest: ", targetVelocityFactor);
             telemetry.addData("targetLaunchPosition in launcherDoubleTest: ", targetLaunchPosition);
             launcher.log();
+            telemetry.update();
             sleep(100);
         }
     }
