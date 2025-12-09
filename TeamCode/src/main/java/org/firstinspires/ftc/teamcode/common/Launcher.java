@@ -7,7 +7,6 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda6000DcMotorData;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints.AimerPositions;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints.LauncherSettings;
 import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
 

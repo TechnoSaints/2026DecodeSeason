@@ -14,9 +14,9 @@ import org.firstinspires.ftc.teamcode.common.LauncherDouble;
 public class LauncherDoubleTuner extends LinearOpMode {
 
     private LauncherDouble launcher;
-    private double velocityFactorIncrement = 0.1;
+    private double velocityFactorIncrement = 0.05;
     private double targetVelocityFactor = 0.0;
-    private double positionIncrement = 0.05;
+    private double positionIncrement = 0.02;
     private double targetLaunchPosition = 0.5;
 
     @Override
