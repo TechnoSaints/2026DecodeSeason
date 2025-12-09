@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.common.TeleopBot;
 
     @Config
     @Autonomous(name = "Red9800", group = "Linear OpMode")
-    public class Red9800 extends LinearOpMode {
+    public class TimerRed9800 extends LinearOpMode {
         private TeleopBot bot;
 
         @Override
