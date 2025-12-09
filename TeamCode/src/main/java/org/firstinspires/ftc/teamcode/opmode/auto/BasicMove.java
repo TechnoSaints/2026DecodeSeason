@@ -7,9 +7,9 @@ import org.firstinspires.ftc.teamcode.common.Modes;
 import org.firstinspires.ftc.teamcode.opmode.Paths;
 
 
-@Autonomous(name = "BasicMove", group = "Bucket")
+@Autonomous(name = "BasicMove", group = "Artifact")
 
-public class BasicMove extends AutoOpMode {
+public class BasicMove extends ArtifactAutoOpMode {
 
     protected void autonomousPathUpdate() {
         switch (pathState) {

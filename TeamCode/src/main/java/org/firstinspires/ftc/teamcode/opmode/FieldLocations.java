@@ -5,8 +5,8 @@ import com.pedropathing.geometry.Pose;
 
 public class FieldLocations {
     public static Pose startPose;
-    public final static Pose startToLaunchPosition = new Pose(0, 2.0, Math.toRadians(90));
-    public final static Pose specimenStartPose = new Pose(47.25, 3.0, Math.toRadians(90));
+    public final static Pose startToLaunchPosition = new Pose(48, 52, Math.toRadians(90));
+    public final static Pose centerPose = new Pose(0, 0, Math.toRadians(90));
 
     // position to drop the brick in the top bucket
     public final static Pose getStartToLaunchPosition = new Pose(-40, 40, Math.toRadians(45));

@@ -18,8 +18,8 @@ public class Paths {
 
     public static void buildSamplePaths(Follower follower) {
         startToLaunchPosition = follower.pathBuilder()
-                .addPath(new BezierLine(FieldLocations.startPose, FieldLocations.startToLaunchPosition))
-                .setLinearHeadingInterpolation(FieldLocations.startPose.getHeading(), FieldLocations.startToLaunchPosition.getHeading())
+                .addPath(new BezierLine(FieldLocations.startPose, FieldLocations.centerPose))
+                .setLinearHeadingInterpolation(FieldLocations.startPose.getHeading(), FieldLocations.centerPose.getHeading())
                 .build();
 
         /* endToLaunchPosition = follower.pathBuilder()
