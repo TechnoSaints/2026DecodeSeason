@@ -82,7 +82,7 @@ public abstract class TeleopWithOdoSimple extends LinearOpMode {
             }
 
             // Adds lights to indicate launcher status and rumble when launcher is ready
-            if (bot.launcherIsReady()){
+            if (bot.launcherReady()){
                 gamepad1.setLedColor(0, 255, 0, 120000);
                 gamepad1.rumble(100);
             }

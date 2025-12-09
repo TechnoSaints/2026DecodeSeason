@@ -85,7 +85,7 @@ public class TeleopBotSimple extends Component {
 
     public void stopStorage() {storage.stop();}
 
-    public boolean launcherIsReady(){
+    public boolean launcherReady(){
         return launcher.ready();
     }
 
