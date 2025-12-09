@@ -32,7 +32,15 @@ public class PedroSampleAuto extends OpMode{
 
         DRIVE_SHOOTPOS_PREPINTAKE2POS,
 
-        INTAKE_TWO
+        DRIVE_PREPINTAKE2POSE_INTAKE2POS,
+
+        INTAKE_TWO,
+
+        DRIVE_INTAKE2POS_SHOOTPOS,
+
+        SHOOT_INTAKETWO,
+
+        DRIVE_SHOOTPOS_ENDPOS
 
     }
 
@@ -45,8 +53,9 @@ public class PedroSampleAuto extends OpMode{
     private final Pose intake1Pose = new Pose(17.38430583501006, 84, Math.toRadians(180));
     private final Pose prepIntake2Pose = new Pose(43.17102615694165, 60, Math.toRadians(180));
     private final Pose intake2Pose = new Pose(17.38430583501006, 60, Math.toRadians(180));
+    private final Pose endPose = new Pose(68.95774647887323, 94.16498993963782, Math.toRadians(135));
 
-    private PathChain driveStartPosShootPos, driveShootPosPrepIntake1Pos, drivePrepIntake1PosIntake1Pos, driveIntake1PosShootPos, driveShootPosPrepIntake2Pos, drivePrepIntake2PosIntake2Pos;
+    private PathChain driveStartPosShootPos, driveShootPosPrepIntake1Pos, drivePrepIntake1PosIntake1Pos, driveIntake1PosShootPos, driveShootPosPrepIntake2Pos, drivePrepIntake2PosIntake2Pos, driveIntake2PosShootPos, driveShootPosEndPos;
 
     public void buildPaths() {
         //put in coordinates for starting pose then put in coordinates for ending pose
@@ -74,6 +83,15 @@ public class PedroSampleAuto extends OpMode{
                 .addPath(new BezierLine(prepIntake2Pose, intake2Pose))
                 .setLinearHeadingInterpolation(prepIntake2Pose.getHeading(), intake2Pose.getHeading())
                 .build();
+        driveIntake2PosShootPos = follower.pathBuilder()
+                .addPath(new BezierLine(intake2Pose, shootPose))
+                .setLinearHeadingInterpolation(intake2Pose.getHeading(), shootPose.getHeading())
+                .build();
+        driveShootPosEndPos = follower.pathBuilder()
+                .addPath(new BezierLine(shootPose, endPose))
+                .setLinearHeadingInterpolation(shootPose.getHeading(), endPose.getHeading())
+                .build();
+
 
     }
 
@@ -123,11 +141,31 @@ public class PedroSampleAuto extends OpMode{
                 }
             case INTAKE_TWO:
                 if(!follower.isBusy()) {
-                    //TODO Turn on intake
+                    //TODO Intake On
                     follower.followPath(drivePrepIntake2PosIntake2Pos, true);
                     telemetry.addLine("Done Path 6");
-                    setPathState(PathState.DRIVE_INTAKE1POS_SHOOTPOS);
+                    setPathState(PathState.DRIVE_INTAKE2POS_SHOOTPOS);
                 }
+            case DRIVE_INTAKE2POS_SHOOTPOS:
+                if(!follower.isBusy()) {
+                    follower.followPath(driveIntake2PosShootPos, true);
+                    telemetry.addLine("Done path 7");
+                    setPathState(PathState.SHOOT_INTAKETWO);
+                }
+                
+            case SHOOT_INTAKETWO:
+                if (!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 5) {
+                    //TODO add logic for shooter
+                    //TODO Turn off intake
+                    setPathState(PathState.DRIVE_SHOOTPOS_PREPINTAKE2POS);
+                }
+            case DRIVE_SHOOTPOS_ENDPOS:
+                if(!follower.isBusy()) {
+                    follower.followPath(driveShootPosEndPos, true);
+                    telemetry.addLine("Done Path 8");
+                    break;
+                }
+
 
             default:
                 telemetry.addLine("No State Command");
