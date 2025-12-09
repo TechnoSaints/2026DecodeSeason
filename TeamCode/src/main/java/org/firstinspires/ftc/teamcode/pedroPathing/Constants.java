@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.Drivetra
 public class Constants {
     private static DrivetrainData drivetrainData = new DrivetrainData();
     public static FollowerConstants followerConstants = new FollowerConstants()
-            .mass(11.35)
+            .mass(11.37)
             .forwardZeroPowerAcceleration(-33)
             .lateralZeroPowerAcceleration(-65)
             .useSecondaryTranslationalPIDF(false)
@@ -46,8 +46,8 @@ public class Constants {
             .useVoltageCompensation(true);
 
     public static PinpointConstants localizerConstants = new PinpointConstants()
-            .forwardPodY(-4.125)
-            .strafePodX(-3.4375)
+            .forwardPodY(2.25)
+            .strafePodX(-7)
             .distanceUnit(DistanceUnit.INCH)
             .hardwareMapName("pinpoint")
             .encoderResolution(
