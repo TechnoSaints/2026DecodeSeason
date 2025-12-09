@@ -8,14 +8,12 @@ import org.firstinspires.ftc.teamcode.opmode.Paths;
 
 
 @Autonomous(name = "BasicMove", group = "Bucket")
-@Disabled
+
 public class BasicMove extends AutoOpMode {
 
     protected void autonomousPathUpdate() {
         switch (pathState) {
             case 0:
-                //bot.(LiftPositions.HIGH_BUCKET_AUTO);
-                //bot.setHandlerArmPositionPreset(HandlerArmPositions.TOP,0);
                 bot.followPath(Paths.startToLaunchPosition, false);
                 setPathState(1);
                 break;

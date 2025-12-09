@@ -18,14 +18,14 @@ public class Paths {
 
     public static void buildSamplePaths(Follower follower) {
         startToLaunchPosition = follower.pathBuilder()
-                .addPath(new BezierLine(FieldLocations.startPose, FieldLocations.bucketPose))
-                .setLinearHeadingInterpolation(FieldLocations.startPose.getHeading(), FieldLocations.bucketPose.getHeading())
+                .addPath(new BezierLine(FieldLocations.startPose, FieldLocations.startToLaunchPosition))
+                .setLinearHeadingInterpolation(FieldLocations.startPose.getHeading(), FieldLocations.startToLaunchPosition.getHeading())
                 .build();
 
-        endToLaunchPosition = follower.pathBuilder()
+        /* endToLaunchPosition = follower.pathBuilder()
                 .addPath(new BezierLine(FieldLocations.sampleHumanPlayerPose, FieldLocations.bucketPose))
                 .setLinearHeadingInterpolation(FieldLocations.sampleHumanPlayerPose.getHeading(), FieldLocations.bucketPose.getHeading())
-                .build();
+                .build(); */
     }
 
 
