@@ -30,7 +30,7 @@ public class LauncherSettings {
         // These numbers are the ones you provide to the launcher and servo when setting velocity
         //  and position, respectively.
         // For wheel velocities, put each the distance and velocity in velocityFactors
-        // For launch position, put each the distance and ange in launchPositions
+        // For launch position, put each the distance and position in launchPositions
         // For example, from 35 inches, you may need velocity 0.5 and position 0.25.
         // This data would be entered as:
         //      velocityFactors.add(35.0, 0.5);
