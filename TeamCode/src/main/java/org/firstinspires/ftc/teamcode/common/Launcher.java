@@ -13,15 +13,19 @@ import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda6
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints.LauncherSettings;
 import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
 
-public class Launcher extends Component{
+public class Launcher extends Component {
     private DcMotorEx leftLauncher, rightLauncher;
     private Servo leftAimer, rightAimer;
-    private double maxVelocity;
+    private double maxVelocity, maxPosition, minPosition;
     private double targetPosition, targetVelocity;
     private boolean target;
+
     public Launcher(Telemetry telemetry, HardwareMap hardwareMap) {
         super(telemetry);
         maxVelocity = GoBilda6000DcMotorData.maxTicksPerSec;
+        maxPosition = LauncherSettings.maxPosition;
+        minPosition = LauncherSettings.minPosition;
+
         //InitAprilTag(hardwareMap);
         leftLauncher = hardwareMap.get(DcMotorEx.class, "leftLauncher");
         rightLauncher = hardwareMap.get(DcMotorEx.class, "rightLauncher");
@@ -29,7 +33,6 @@ public class Launcher extends Component{
         rightAimer = hardwareMap.get(Servo.class, "rightAimer");
         leftLauncher.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         rightLauncher.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-
         setVelocity(0);
         setPosition(0.5);
     }
@@ -69,19 +72,25 @@ public class Launcher extends Component{
         }
     }
 
-    private void setVelocity(double power){
+    private void setVelocity(double power) {
         targetVelocity = maxVelocity * power;
         leftLauncher.setVelocity(targetVelocity);
         rightLauncher.setVelocity(targetVelocity);
     }
 
-    private void setPosition(double position){
-        targetPosition = position;
+    private void setPosition(double position) {
+        if (position > maxPosition) {
+            targetPosition = maxPosition;
+        } else if (position < minPosition) {
+            targetPosition = minPosition;
+        } else {
+            targetPosition = position;
+        }
         leftAimer.setPosition(targetPosition);
         rightAimer.setPosition(targetPosition);
     }
 
-    public double getVelocity(){
+    public double getVelocity() {
         return leftLauncher.getVelocity();
     }
 
