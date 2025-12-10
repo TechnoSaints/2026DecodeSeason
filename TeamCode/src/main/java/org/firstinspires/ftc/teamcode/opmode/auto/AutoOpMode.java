@@ -8,13 +8,12 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.common.AutoBot;
+import org.firstinspires.ftc.teamcode.opmode.Paths;
 
 public abstract class AutoOpMode extends OpMode {
     protected AutoBot bot;
     protected int pathState;
-    protected Pose startPose;
     protected ElapsedTime controlTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
-
 
     /**
      * This method is called once at the init of the OpMode.
@@ -25,6 +24,7 @@ public abstract class AutoOpMode extends OpMode {
     /*public void init() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         bot = new AutoBot(this, telemetry);
+        Paths.buildPaths(bot.getFollower());
     }
 
     /**
@@ -50,7 +50,7 @@ public abstract class AutoOpMode extends OpMode {
         bot.update();
         autonomousPathUpdate();
         try {
-            Thread.sleep(10);
+            Thread.sleep(25);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
