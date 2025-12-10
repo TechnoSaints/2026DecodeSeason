@@ -12,26 +12,28 @@ import java.lang.reflect.Field;
 
 public class Paths {
 
-    // samples paths
-    public static PathChain startToLaunchPosition, endToLaunchPosition;
-    // specimen paths
+    public static PathChain startToShortShot, shortShotToStack1Setup, stack1SetupToStack1Finish, stack1FinishToShortShot;
 
-    public static void buildSamplePaths(Follower follower) {
-        startToLaunchPosition = follower.pathBuilder()
-                .addPath(new BezierLine(FieldLocations.startPose, FieldLocations.centerPose))
-                .setLinearHeadingInterpolation(FieldLocations.startPose.getHeading(), FieldLocations.centerPose.getHeading())
+    public static void buildPaths(Follower follower) {
+        startToShortShot = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.startPose, FieldLocations.shortShotPose))
+                .setLinearHeadingInterpolation(FieldLocations.startPose.getHeading(), FieldLocations.shortShotPose.getHeading())
                 .build();
 
-        /* endToLaunchPosition = follower.pathBuilder()
-                .addPath(new BezierLine(FieldLocations.sampleHumanPlayerPose, FieldLocations.bucketPose))
-                .setLinearHeadingInterpolation(FieldLocations.sampleHumanPlayerPose.getHeading(), FieldLocations.bucketPose.getHeading())
-                .build(); */
-    }
+        shortShotToStack1Setup = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.shortShotPose, FieldLocations.stack1SetupPose))
+                .setLinearHeadingInterpolation(FieldLocations.shortShotPose.getHeading(), FieldLocations.stack1SetupPose.getHeading())
+                .build();
 
+        stack1SetupToStack1Finish = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.stack1SetupPose, FieldLocations.stack1FinishPose))
+                .setLinearHeadingInterpolation(FieldLocations.stack1SetupPose.getHeading(), FieldLocations.stack1FinishPose.getHeading())
+                .build();
 
-    public static boolean currentLocWithinTolerance(
-            Pose target, Pose current, double toleranceX, double toleranceY) {
-        return ((Math.abs(target.getX() - current.getX()) < toleranceX) &&
-                (Math.abs(target.getY() - current.getY()) < toleranceY));
+        stack1FinishToShortShot = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.stack1FinishPose, FieldLocations.shortShotPose))
+                .setLinearHeadingInterpolation(FieldLocations.stack1FinishPose.getHeading(), FieldLocations.shortShotPose.getHeading())
+                .build();
+        
     }
 }

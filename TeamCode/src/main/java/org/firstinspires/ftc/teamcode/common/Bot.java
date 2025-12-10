@@ -20,11 +20,11 @@ public abstract class Bot extends Component {
     private pusherCRServo pusher;
 
     private ServoSimple stick;
+
     private double kickerLoadPosition = 0.45;
     private double kickerLaunchPosition = 0.55;
 
     // Limelight
-
     public double TURN_KP = 0.03;               // Adjustable turn gain
     public double MAX_TURN_POWER = 0.40;        // Safety cap
     public double TAG_DEADBAND_DEG = 1.8;       // Acceptable alignment
@@ -42,34 +42,28 @@ public abstract class Bot extends Component {
 
     }
 
-
-
     public void setLauncherShortShot()
     {
         launcher.setShortShot();
     }
 
-    public void setLauncherLongShot()
-    {
+    public void setLauncherLongShot() {
         launcher.setLongShot();
     }
-    public void launcherStop()
-    {
+
+    public void launcherStop() {
         launcher.stop();
     }
 
-    public void intakeForward()
-    {
+    public void intakeForward() {
         intake.forward();
     }
 
-    public void intakeReverse()
-    {
+    public void intakeReverse() {
         intake.reverse();
     }
 
-    public void intakeStop()
-    {
+    public void intakeStop() {
         intake.stop();
     }
 
@@ -99,7 +93,9 @@ public abstract class Bot extends Component {
         stick.setPositionTicks(kickerLoadPosition);
     }
 
-
+    public boolean isBusy() {
+        return (false);
+    }
     public void update() {
 
     }
