@@ -255,13 +255,31 @@ public class Paths {
         blueS1B3Shoot = follower.pathBuilder()
                 .addPath(new BezierLine(FieldLocations.blueS1B3, FieldLocations.blueFarShoot))
                 .setLinearHeadingInterpolation(FieldLocations.blueS1B3.getHeading(), FieldLocations.blueFarShoot.getHeading())
+
+    public static PathChain startToShortShot, shortShotToStack1Setup, stack1SetupToStack1Finish,
+                stack1FinishToShortShot;
+
+    public static void buildPaths(Follower follower) {
+        startToShortShot = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.startPose, FieldLocations.shortShotPose))
+                .setLinearHeadingInterpolation(FieldLocations.startPose.getHeading(), FieldLocations.shortShotPose.getHeading())
+                .build();
+
+        shortShotToStack1Setup = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.shortShotPose, FieldLocations.stack1SetupPose))
+                .setLinearHeadingInterpolation(FieldLocations.shortShotPose.getHeading(), FieldLocations.stack1SetupPose.getHeading())
+                .build();
+
+        stack1SetupToStack1Finish = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.stack1SetupPose, FieldLocations.stack1FinishPose))
+                .setLinearHeadingInterpolation(FieldLocations.stack1SetupPose.getHeading(), FieldLocations.stack1FinishPose.getHeading())
+                .build();
+
+        stack1FinishToShortShot = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.stack1FinishPose, FieldLocations.shortShotPose))
+                .setLinearHeadingInterpolation(FieldLocations.stack1FinishPose.getHeading(), FieldLocations.shortShotPose.getHeading())
                 .build();
 
     }
 
-    public static boolean currentLocWithinTolerance(
-            Pose target, Pose current, double toleranceX, double toleranceY) {
-        return ((Math.abs(target.getX() - current.getX()) < toleranceX) &&
-                (Math.abs(target.getY() - current.getY()) < toleranceY));
-    }
 }

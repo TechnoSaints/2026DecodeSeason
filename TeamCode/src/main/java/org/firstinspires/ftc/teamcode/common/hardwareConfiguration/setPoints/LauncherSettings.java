@@ -89,6 +89,7 @@ public class LauncherSettings {
     public static double getLaunchPosition(double distance) {
         init();
         return (calculateY(launchPositionCoefficients, distance));
+
     }
 }
 

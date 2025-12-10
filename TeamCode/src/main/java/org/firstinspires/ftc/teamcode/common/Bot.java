@@ -37,6 +37,9 @@ public abstract class Bot extends Component {
 //    }
 
 
+    public boolean isBusy() {
+        return (false);
+    }
     public void update() {
         storage.updateStorage();
         launcher.log();
