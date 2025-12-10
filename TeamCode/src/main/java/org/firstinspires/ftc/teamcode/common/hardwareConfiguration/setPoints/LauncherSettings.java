@@ -18,10 +18,7 @@ public class LauncherSettings {
     private static final PolynomialCurveFitter velocityFactorFitter = PolynomialCurveFitter.create(2);
     private static final PolynomialCurveFitter launchPositionFitter = PolynomialCurveFitter.create(2);
     private static double[] velocityFactorCoefficients, launchPositionCoefficients;
-    private static boolean initialized = false;
-
-
-    private static void init() {
+    public static void init() {
 
         // Set your empirical data here
         // For each distance to the target (in inches), you need to determine what
@@ -46,20 +43,20 @@ public class LauncherSettings {
         launchPositionCoefficients = launchPositionFitter.fit(launchPositions.toList());
 /*
         System.out.println("Fitted coefficients (a, b, c) for velocity: " + Arrays.toString(velocityFactorCoefficients));
-        System.out.println("Fitted coefficients (a, b, c) for Position: " + Arrays.toString(launchAngleCoefficients));
+        System.out.println("Fitted coefficients (a, b, c) for Position: " + Arrays.toString(launchPositionCoefficients));
 
         // The resulting equation is y = coefficients[0] + coefficients[1]*x + coefficients[2]*x^2
         // You can now use this equation to predict y values for new x values.
 
-        double predictedVelocityFactor = 0.0, predictedLaunchAngle = 0.0;
+        double predictedVelocityFactor = 0.0, predictedLaunchPosition = 0.0;
         for (double x = 1.0; x <= 144.0; x += 1.0) {
             predictedVelocityFactor = velocityFactorCoefficients[0] + velocityFactorCoefficients[1] * x
                     + velocityFactorCoefficients[2] * x * x;
-            predictedLaunchAngle = launchAngleCoefficients[0] + launchAngleCoefficients[1] * x
-                    + launchAngleCoefficients[2] * x * x;
+            predictedLaunchPosition = launchPositionCoefficients[0] + launchPositionCoefficients[1] * x
+                    + launchPositionCoefficients[2] * x * x;
 
             System.out.println("Predicted velocityFactor for x = " + x + ": " + predictedVelocityFactor);
-            System.out.println("Predicted launchAngle for x = " + x + ": " + predictedLaunchAngle);
+            System.out.println("Predicted launchPosition for x = " + x + ": " + predictedLaunchPosition);
 */
     }
 
@@ -71,7 +68,7 @@ public class LauncherSettings {
         return (calculateY(velocityFactorCoefficients, distance));
     }
 
-    public static double getLaunchAngle(double distance) {
+    public static double getLaunchPosition(double distance) {
         return (calculateY(launchPositionCoefficients, distance));
     }
 }
