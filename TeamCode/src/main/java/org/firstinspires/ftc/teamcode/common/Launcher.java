@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda6000DcMotorData;
@@ -42,16 +43,16 @@ public class Launcher extends Component {
     }
 
     public double distanceFromLauncher(Pose2D botPose, boolean red){
-        Pose target;
+        Pose2D target;
         if (red){
-            target = FieldLocations.redTarget;
+            target = new Pose2D(DistanceUnit.INCH, 48,-52, AngleUnit.DEGREES, 0);
         }
         else {
-            target = FieldLocations.blueTarget;
+            target = new Pose2D(DistanceUnit.INCH, 48,52, AngleUnit.DEGREES, 0);
         }
         return Math.sqrt(
-                Math.pow(botPose.getX(DistanceUnit.INCH) - target.getX(), 2) +
-                        Math.pow(botPose.getY(DistanceUnit.INCH) - target.getY(), 2)
+                Math.pow(botPose.getX(DistanceUnit.INCH) - target.getX(DistanceUnit.INCH), 2) +
+                        Math.pow(botPose.getY(DistanceUnit.INCH) - target.getY(DistanceUnit.INCH), 2)
         );
     }
 
@@ -79,6 +80,7 @@ public class Launcher extends Component {
     }
 
     private void setPosition(double position) {
+        telemetry.addData("Original position", position);
         if (position > maxPosition) {
             targetPosition = maxPosition;
         } else if (position < minPosition) {
