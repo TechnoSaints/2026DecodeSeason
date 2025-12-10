@@ -28,7 +28,7 @@ public class LauncherSettings {
 
         // Set your empirical data here
         // For each distance to the target (in inches), you need to determine what
-        //      velocity and sposition to use.
+        //      velocity and position to use.
         // Both velocity and position should be represented as decimal numbers.
         // These numbers are the ones you provide to the launcher and servo when setting velocity
         //  and position, respectively.
@@ -38,7 +38,6 @@ public class LauncherSettings {
         // This data would be entered as:
         //      velocityFactors.add(35.0, 0.5);
         //      launchPositions.add(25.0, 0.25);
-
 
         //velocityFactors.add(73.5, 0.8);
         velocityFactors.add(114.5,0.9);
@@ -56,11 +55,14 @@ public class LauncherSettings {
 
         // 80 inches - 0.8@0.15
 
+
         velocityFactorCoefficients = velocityFactorFitter.fit(velocityFactors.toList());
         launchPositionCoefficients = launchPositionFitter.fit(launchPositions.toList());
 /*
         System.out.println("Fitted coefficients (a, b, c) for velocity: " + Arrays.toString(velocityFactorCoefficients));
+
         System.out.println("Fitted coefficients (a, b, c) for position: " + Arrays.toString(launchPositionCoefficients));
+
 
         // The resulting equation is y = coefficients[0] + coefficients[1]*x + coefficients[2]*x^2
         // You can now use this equation to predict y values for new x values.
@@ -90,7 +92,6 @@ public class LauncherSettings {
         init();
         return (calculateY(launchPositionCoefficients, distance));
 
-    }
 }
 
 

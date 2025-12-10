@@ -11,7 +11,6 @@ import com.pedropathing.paths.PathChain;
 import java.lang.reflect.Field;
 
 public class Paths {
-
     public static PathChain testX, testY, testRotation, doubleTest, tripleTest;
     public static PathChain returnX, returnY, returnRotation, returnDoubleTest;
 
@@ -256,8 +255,8 @@ public class Paths {
                 .addPath(new BezierLine(FieldLocations.blueS1B3, FieldLocations.blueFarShoot))
                 .setLinearHeadingInterpolation(FieldLocations.blueS1B3.getHeading(), FieldLocations.blueFarShoot.getHeading())
 
-    public static PathChain startToShortShot, shortShotToStack1Setup, stack1SetupToStack1Finish,
-                stack1FinishToShortShot;
+
+    public static PathChain startToShortShot, shortShotToStack1Setup, stack1SetupToStack1Finish, stack1FinishToShortShot;
 
     public static void buildPaths(Follower follower) {
         startToShortShot = follower.pathBuilder()
@@ -281,5 +280,4 @@ public class Paths {
                 .build();
 
     }
-
 }
