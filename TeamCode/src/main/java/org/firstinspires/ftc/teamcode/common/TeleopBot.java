@@ -13,6 +13,7 @@ import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda4
 
 public class TeleopBot extends Bot {
     private final Drivetrain drivetrain;
+    private final GoBildaPinpointDriver pinpoint;
     private double driveAxial = 0.0;
     private double driveStrafe = 0.0;
     private double driveYaw = 0.0;
@@ -25,6 +26,12 @@ public class TeleopBot extends Bot {
     public TeleopBot(OpMode opMode, Telemetry telemetry) {
         super(opMode, telemetry);
         drivetrain = new Drivetrain(opMode.hardwareMap, telemetry, new DrivetrainData(), new GoBilda435DcMotorData());
+        pinpoint = opMode.hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint");
+        pinpoint.setOffsets(2.25,-7, DistanceUnit.INCH);
+        pinpoint.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
+        pinpoint.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD,
+                GoBildaPinpointDriver.EncoderDirection.FORWARD);
+        pinpoint.resetPosAndIMU();
         buttonTimer.reset();
     }
 
@@ -89,5 +96,7 @@ public class TeleopBot extends Bot {
             kickerWaiting = true;
         }
     }
+
+
 }
 
