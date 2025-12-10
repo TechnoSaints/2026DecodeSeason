@@ -14,9 +14,9 @@ public class Paths {
 
     public static PathChain startToBucket;
 
-    public static void buildSamplePaths(Follower follower) {
+    public static void buildPaths(Follower follower) {
         startToBucket = follower.pathBuilder()
-                .addPath(new BezierLine(FieldLocations.startPose, FieldLocations.bucketPose))
+                .addPath(new BezierLine(FieldLocations.startPose, FieldLocations.goalStartPoseRight))
                 .setLinearHeadingInterpolation(FieldLocations.startPose.getHeading(), FieldLocations.bucketPose.getHeading())
                 .build();
     }
