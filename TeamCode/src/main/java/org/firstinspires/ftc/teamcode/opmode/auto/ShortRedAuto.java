@@ -21,23 +21,53 @@ public class ShortRedAuto extends AutoOpMode {
             // Move start to short shot
             case 0:
                 bot.followPath(Paths.startToShortShot, false);
+                bot.setLauncherShortShot();
+                controlTimer.reset();
                 setPathState(1);
                 break;
 
             // Shoot three balls after move is finished
             case 1:
                 if (!bot.followerIsBusy()) {
-                    // Shoot balls
-                    setPathState(2);
+                    if (controlTimer.milliseconds() > 250) {
+                        telemetry.addLine("I Have REACHED this CASE!");
+                        telemetry.update();
+                        bot.stickLaunch();
+                        bot.pusherStart();
+                        controlTimer.reset();
+                        setPathState(2);
+                    }
                 }
                 break;
 
-            // Move to stack1 setup
             case 2:
-                bot.followPath(Paths.shortShotToStack1Setup, false);
-                setPathState(3);
+                if (!bot.followerIsBusy()) {
+                    if (controlTimer.milliseconds() > 200) {
+                        bot.stickLoad();
+                        controlTimer.reset();
+                        bot.stopPusher();
+                        setPathState(3);
+                    }
+                }
                 break;
 
+            case 3:
+                if (!bot.followerIsBusy()) {
+                    if (controlTimer.milliseconds() > 200) {
+                        bot.stickLaunch();
+                        controlTimer.reset();
+                        setPathState(4);
+                    }
+                }
+                break;
+            // Move to stack1 setup
+            case 4:
+                if (controlTimer.milliseconds() > 250) {
+                    bot.followPath(Paths.shortShotToStack1Setup, false);
+                }
+                setPathState(5);
+                break;
+/*
             // Turn on rollers and move to stack1 finish after move is finished
             case 3:
                 if (!bot.followerIsBusy()) {
@@ -81,7 +111,7 @@ public class ShortRedAuto extends AutoOpMode {
                 setPathState(-1);
 
                 requestOpModeStop();
-                break;
+                break; */
         }
     }
 }
