@@ -21,6 +21,7 @@ public class LauncherSettings {
     private static final PolynomialCurveFitter velocityFactorFitter = PolynomialCurveFitter.create(2);
     private static final PolynomialCurveFitter launchPositionFitter = PolynomialCurveFitter.create(2);
     private static double[] velocityFactorCoefficients, launchPositionCoefficients;
+
     public static void init() {
 
         // Set your empirical data here
@@ -37,18 +38,18 @@ public class LauncherSettings {
         //      launchPositions.add(25.0, 0.25);
 
         //velocityFactors.add(73.5, 0.8);
-        velocityFactors.add(114.5,0.9);
-        velocityFactors.add(69,0.8);
-        velocityFactors.add(40,0.8);
-        velocityFactors.add(76.5,0.8);
-        velocityFactors.add(104,0.9);
+        velocityFactors.add(114.5, 0.9);
+        velocityFactors.add(69, 0.8);
+        velocityFactors.add(40, 0.8);
+        velocityFactors.add(76.5, 0.8);
+        velocityFactors.add(104, 0.9);
 
         //launchPositions.add(73.5, 0.1);
-        launchPositions.add(114.5,0.2);
-        launchPositions.add(69,0.2);
-        launchPositions.add(40,0.17);
-        launchPositions.add(76.5,0.2);
-        launchPositions.add(104,0.2);
+        launchPositions.add(114.5, 0.2);
+        launchPositions.add(69, 0.2);
+        launchPositions.add(40, 0.17);
+        launchPositions.add(76.5, 0.2);
+        launchPositions.add(104, 0.2);
 
         // 80 inches - 0.8@0.15
 
@@ -87,7 +88,6 @@ public class LauncherSettings {
 
     public static double getLaunchPosition(double distance) {
         return (calculateY(launchPositionCoefficients, distance));
-
+    }
 }
-
 
