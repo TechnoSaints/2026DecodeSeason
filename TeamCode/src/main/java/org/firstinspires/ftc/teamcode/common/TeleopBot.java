@@ -96,7 +96,23 @@ public class TeleopBot extends Bot {
             kickerWaiting = true;
         }
     }
+    public void setOdoPosition(Pose2D position){
+        pinpoint.setPosition(position);
+    }
 
+    public void updateLauncher(boolean red, boolean changeTarget){
+        launcher.update(pinpoint.getPosition(), red, changeTarget);
+    }
+
+    public void teleopUpdate(boolean red){
+        update();
+        pinpoint.update();
+        launcher.teleopDistanceLog(pinpoint.getPosition(), red);
+    }
+
+    public Pose2D getPosition(){
+        return pinpoint.getPosition();
+    }
 
 }
 
