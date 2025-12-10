@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.DrivetrainData;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda435DcMotorData;
 
@@ -94,4 +95,15 @@ public class TeleopBot extends Bot {
             kickerWaiting = true;
         }
     }
+
+    public void teleopUpdate(boolean red){
+        update();
+        pinpoint.update();
+        launcher.teleopDistanceLog(pinpoint.getPosition(), red);
+    }
+
+    public Pose2D getPosition(){
+        return pinpoint.getPosition();
+    }
+}
 }
