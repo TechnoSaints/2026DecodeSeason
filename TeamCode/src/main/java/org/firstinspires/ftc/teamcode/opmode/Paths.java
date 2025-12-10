@@ -12,8 +12,7 @@ import java.lang.reflect.Field;
 
 public class Paths {
 
-    public static PathChain startToShortShot, shortShotToStack1Setup, stack1SetupToStack1Finish,
-                stack1FinishToShortShot;
+    public static PathChain startToShortShot, shortShotToStack1Setup, stack1SetupToStack1Finish, stack1FinishToShortShot;
 
     public static void buildPaths(Follower follower) {
         startToShortShot = follower.pathBuilder()
@@ -36,11 +35,5 @@ public class Paths {
                 .setLinearHeadingInterpolation(FieldLocations.stack1FinishPose.getHeading(), FieldLocations.shortShotPose.getHeading())
                 .build();
 
-    }
-
-    public static boolean currentLocWithinTolerance(
-            Pose target, Pose current, double toleranceX, double toleranceY) {
-        return ((Math.abs(target.getX() - current.getX()) < toleranceX) &&
-                (Math.abs(target.getY() - current.getY()) < toleranceY));
     }
 }

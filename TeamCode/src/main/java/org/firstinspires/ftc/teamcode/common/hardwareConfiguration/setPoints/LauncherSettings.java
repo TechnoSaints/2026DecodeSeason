@@ -14,10 +14,10 @@ public class LauncherSettings {
     public static double longShotPosition = 0.8;
 
     private static final WeightedObservedPoints velocityFactors = new WeightedObservedPoints();
-    private static final WeightedObservedPoints launchAngles = new WeightedObservedPoints();
+    private static final WeightedObservedPoints launchPositions = new WeightedObservedPoints();
     private static final PolynomialCurveFitter velocityFactorFitter = PolynomialCurveFitter.create(2);
-    private static final PolynomialCurveFitter launchAngleFitter = PolynomialCurveFitter.create(2);
-    private static double[] velocityFactorCoefficients, launchAngleCoefficients;
+    private static final PolynomialCurveFitter launchPositionFitter = PolynomialCurveFitter.create(2);
+    private static double[] velocityFactorCoefficients, launchPositionCoefficients;
     private static boolean initialized = false;
 
 
@@ -25,29 +25,28 @@ public class LauncherSettings {
 
         // Set your empirical data here
         // For each distance to the target (in inches), you need to determine what
-        //      velocity and angle to use.
-        // Both velocity and angle should be represented as decimal numbers.
+        //      velocity and position to use.
+        // Both velocity and position should be represented as decimal numbers.
         // These numbers are the ones you provide to the launcher and servo when setting velocity
         //  and position, respectively.
         // For wheel velocities, put each the distance and velocity in velocityFactors
-        // For launch angle, put each the distance and ange in launchAngles
-        // For example, from 35 inches, you may need velocity 0.5 and angle 0.25.
+        // For launch position, put each the distance and position in launchPositions
+        // For example, from 35 inches, you may need velocity 0.5 and position 0.25.
         // This data would be entered as:
         //      velocityFactors.add(35.0, 0.5);
-        //      launchAngles.add(25.0, 0.25);
-
+        //      launchPositions.add(25.0, 0.25);
 
         velocityFactors.add(1.0, 0.95);
         velocityFactors.add(144.0, 0.1);
 
-        launchAngles.add(1.0, 0.25);
-        launchAngles.add(144.0, 1.0);
+        launchPositions.add(1.0, 0.25);
+        launchPositions.add(144.0, 1.0);
 
         velocityFactorCoefficients = velocityFactorFitter.fit(velocityFactors.toList());
-        launchAngleCoefficients = launchAngleFitter.fit(launchAngles.toList());
+        launchPositionCoefficients = launchPositionFitter.fit(launchPositions.toList());
 /*
         System.out.println("Fitted coefficients (a, b, c) for velocity: " + Arrays.toString(velocityFactorCoefficients));
-        System.out.println("Fitted coefficients (a, b, c) for angle: " + Arrays.toString(launchAngleCoefficients));
+        System.out.println("Fitted coefficients (a, b, c) for Position: " + Arrays.toString(launchAngleCoefficients));
 
         // The resulting equation is y = coefficients[0] + coefficients[1]*x + coefficients[2]*x^2
         // You can now use this equation to predict y values for new x values.
@@ -73,7 +72,7 @@ public class LauncherSettings {
     }
 
     public static double getLaunchAngle(double distance) {
-        return (calculateY(launchAngleCoefficients, distance));
+        return (calculateY(launchPositionCoefficients, distance));
     }
 }
 

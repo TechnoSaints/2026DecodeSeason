@@ -38,10 +38,10 @@ public class ShortRedAuto extends AutoOpMode {
                 setPathState(3);
                 break;
 
-            // Turn on intake and move to stack1 finish after move is finished
+            // Turn on rollers and move to stack1 finish after move is finished
             case 3:
                 if (!bot.followerIsBusy()) {
-                    bot.intakeForward();
+                    // Turn on rollers
                     bot.followPath(Paths.stack1SetupToStack1Finish, false);
                     setPathState(4);
                 }

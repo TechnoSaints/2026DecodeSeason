@@ -54,7 +54,6 @@ public class FieldLocations {
 
 
     public static void buildPoses(String side, String shortLong) {
-
         if (side.equals("red")) {
             goalPose = goalRightPose;
             goalStartPose = goalStartRightPose;
