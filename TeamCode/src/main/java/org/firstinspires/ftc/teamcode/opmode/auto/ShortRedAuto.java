@@ -42,7 +42,7 @@ public class ShortRedAuto extends AutoOpMode {
 
             case 2:
                 if (!bot.followerIsBusy()) {
-                    if (controlTimer.milliseconds() > 200) {
+                    if (controlTimer.milliseconds() > 3000) {
                         bot.stickLoad();
                         controlTimer.reset();
                         bot.stopPusher();
@@ -53,7 +53,7 @@ public class ShortRedAuto extends AutoOpMode {
 
             case 3:
                 if (!bot.followerIsBusy()) {
-                    if (controlTimer.milliseconds() > 200) {
+                    if (controlTimer.milliseconds() > 3000) {
                         bot.stickLaunch();
                         controlTimer.reset();
                         setPathState(4);
