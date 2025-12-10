@@ -28,13 +28,6 @@ public class AutoBot extends Bot {
         return (follower);
     }
 
-    public boolean isBusy() {
-        return (super.isBusy() || followerIsBusy());
-    }
-
-    public boolean followerIsBusy() {
-        return (follower.isBusy());
-    }
 
     public void moveManualInches(double axial, double strafe, double heading) {
         Pose targetPose = new Pose(getFollower().getPose().getX() - axial, getFollower().getPose().getY() - strafe, getFollower().getPose().getHeading() + Math.toRadians(heading));
@@ -46,9 +39,12 @@ public class AutoBot extends Bot {
 
         followPath(targetPath, true);
     }
+    public boolean followerIsBusy() {
+        return (follower.isBusy());
+    }
 
-    protected void logIsBusy() {
-        telemetry.update();
+    public boolean isBusy() {
+        return (super.isBusy() || followerIsBusy());
     }
 
     public void update() {
