@@ -76,7 +76,7 @@ public class TeleopBot extends Bot {
     }
 
     public void updateLauncher(boolean red, boolean changeTarget){
-        super.launcher.update(pinpoint.getPosition(), red, changeTarget);
+        launcher.update(pinpoint.getPosition(), red, changeTarget);
     }
 
     public void teleopUpdate(boolean red){
