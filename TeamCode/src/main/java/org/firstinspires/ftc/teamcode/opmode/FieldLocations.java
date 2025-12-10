@@ -4,56 +4,93 @@ package org.firstinspires.ftc.teamcode.opmode;
 import com.pedropathing.geometry.Pose;
 
 public class FieldLocations {
-    public static Pose startPose;
-    public final static Pose sampleStartPose = new Pose(0, 2.0, Math.toRadians(90));
-    public final static Pose specimenStartPose = new Pose(47.25, 3.0, Math.toRadians(90));
+    public static Pose startPose, goalPose, goalStartPose, shortShotPose, stack1SetupPose, stack1FinishPose,
+            stack2SetupPose, stack2FinishPose, stack3SetupPose, stack3FinishPose, longShotPose, longStartPose, basePose;
+    // Right side poses
+    public final static Pose goalRightPose = new Pose(132.0, 132.0, Math.toRadians(45));
+    public final static Pose goalStartRightPose = new Pose(124.0, 124.0, Math.toRadians(45));
+    public final static Pose shortShotRightPose = new Pose(84.0, 84.0, Math.toRadians(45));
+    public final static Pose stack1SetupRightPose = new Pose(108.0, 84.0, Math.toRadians(0));
+    public final static Pose stack1FinishRightPose = new Pose(135.0, 84.0, Math.toRadians(0));
+    public final static Pose stack2SetupRightPose = new Pose(108.0, 60.0, Math.toRadians(0));
+    public final static Pose stack2FinishRightPose = new Pose(135.0, 60.0, Math.toRadians(0));
+    public final static Pose stack3SetupRightPose = new Pose(108.0, 36.0, Math.toRadians(0));
+    public final static Pose stack3FinishRightPose = new Pose(135.0, 36.0, Math.toRadians(0));
+    public final static Pose longShotRightPose = new Pose(86.0, 21.0, Math.toRadians(67.5));
+    public final static Pose longStartRightPose = new Pose(90.0, 8.0, Math.toRadians(90));
+    public final static Pose baseRightPose = new Pose(36.0, 36.0, Math.toRadians(90));
 
-    // position to drop the brick in the top bucket
-    public final static Pose bucketPose = new Pose(-17.25, 7.5, Math.toRadians(45));
+    // Left side poses
+    public final static Pose goalLeftPose =
+            new Pose(144 - goalRightPose.getX(), goalRightPose.getY(), 135);
+    public final static Pose goalStartLeftPose =
+            new Pose(144 - goalStartRightPose.getX(), goalStartRightPose.getY(), 135);
+    public final static Pose shortShotLeftPose =
+            new Pose(144 - shortShotRightPose.getX(), shortShotRightPose.getY(), 135);
+    public final static Pose stack1SetupLeftPose =
+            new Pose(144 - stack1SetupRightPose.getX(), stack1SetupRightPose.getY(), 180);
 
-    // position to grab the brick at the innermost spike mark
-    public final static Pose sampleSpike1Pose = new Pose(-8.75, 23.5, Math.toRadians(90));
+    public final static Pose stack1FinishLeftPose =
+            new Pose(144 - stack1FinishRightPose.getX(), stack1FinishRightPose.getY(), 180);
 
-    // position to grab the brick at the middle spike mark
-    public final static Pose sampleSpike2Pose = new Pose(-18.24, 23.5, Math.toRadians(90));
+    public final static Pose stack2SetupLeftPose =
+            new Pose(144 - stack2SetupRightPose.getX(), stack2SetupRightPose.getY(), 180);
 
-    public final static Pose sampleSpike3SetupPose = new Pose(-14.5, 28, Math.toRadians(180));
+    public final static Pose stack2FinishLeftPose =
+            new Pose(144 - stack2FinishRightPose.getX(), stack2FinishRightPose.getY(), 180);
+    public final static Pose stack3SetupLeftPose =
+            new Pose(144 - stack3SetupRightPose.getX(), stack3SetupRightPose.getY(), 180);
+    public final static Pose stack3FinishLeftPose =
+            new Pose(144 - stack3FinishRightPose.getX(), stack3FinishRightPose.getY(), 180);
 
-    // position to grab the brick at the spike mark closest to the wall
-    public final static Pose sampleSpike3Pose = new Pose(-14.5, 37.5, Math.toRadians(180));
+    public final static Pose longShotLeftPose =
+            new Pose(144 - longShotRightPose.getX(), longShotRightPose.getY(), 112.5);
 
-    public final static Pose sampleHumanPlayerPose = new Pose(75, 4.5, Math.toRadians(0));
+    public final static Pose longStartLeftPose =
+            new Pose(144 - longStartRightPose.getX(), longStartRightPose.getY(), 90);
 
-    public final static Pose sampleHumanPlayerReturnSetupPose = new Pose(55, 7.5, Math.toRadians(90));
+    public final static Pose baseLeftPose =
+            new Pose(144 - baseRightPose.getX(), baseRightPose.getY(), 90);
 
-    public final static Pose sampleParkSetupPose = new Pose(14, 54, Math.toRadians(0));
-    // park position
-    public final static Pose sampleParkPose = new Pose(20.5, 54, Math.toRadians(0));
 
-    public final static Pose humanPlayerParkPose = new Pose(85, 3, Math.toRadians(90));
+    public static void buildPoses(String side, String shortLong) {
 
-    // Specimen hanging poses
-    public static Pose subShortSideSetupPose = new Pose(35.5, 32, Math.toRadians(90));
-    public static Pose subShortSidePose = new Pose(35.5, 36.5, Math.toRadians(90));
-    public static Pose startSubShortSidePose = new Pose(34, 35, Math.toRadians(90));
+        if (side.equals("red")) {
+            goalPose = goalRightPose;
+            goalStartPose = goalStartRightPose;
+            shortShotPose = shortShotRightPose;
+            stack1SetupPose = stack1SetupRightPose;
+            stack1FinishPose = stack1FinishRightPose;
+            stack2SetupPose = stack2SetupRightPose;
+            stack2FinishPose = stack2FinishRightPose;
+            stack3SetupPose = stack3SetupRightPose;
+            stack3FinishPose = stack3FinishRightPose;
+            longShotPose = longShotRightPose;
+            longStartPose = longStartRightPose;
+            basePose = baseLeftPose;
+        } else if (side.equals("blue")) {
+            goalPose = goalLeftPose;
+            goalStartPose = goalStartLeftPose;
+            shortShotPose = shortShotLeftPose;
+            stack1SetupPose = stack1SetupLeftPose;
+            stack1FinishPose = stack1FinishLeftPose;
+            stack2SetupPose = stack2SetupLeftPose;
+            stack2FinishPose = stack2FinishLeftPose;
+            stack3SetupPose = stack3SetupLeftPose;
+            stack2FinishPose = stack3FinishLeftPose;
+            longShotPose = longShotLeftPose;
+            longStartPose = longStartLeftPose;
+            basePose = baseRightPose;
+        } else {
+            throw new RuntimeException("side = " + side);
+        }
 
-    // Push poses
-    public final static Pose subShortClearPose = new Pose(72, 20, Math.toRadians(90));
-    public final static Pose specimenSpike1SetupPose = new Pose(74, 58, Math.toRadians(90));
-    public final static Pose specimenSpike1Pose = new Pose(90, 57, Math.toRadians(90));
-    public final static Pose specimenSpike1DropPose = new Pose(90, 7, Math.toRadians(90));
-    public final static Pose specimenSpike2SetupPose = new Pose(80, 57, Math.toRadians(90));
-    public final static Pose specimenSpike2Pose = new Pose(100, 57, Math.toRadians(90));
-    public final static Pose specimenSpike2DropPose = new Pose(95, 7, Math.toRadians(90));
-    public final static Pose specimenSpike3SetupPose = new Pose(95, 70, Math.toRadians(90));
-    public final static Pose specimenSpike3Pose = new Pose(103, 60, Math.toRadians(90));
-    public final static Pose specimenSpike3DropPose = new Pose(103, 7, Math.toRadians(90));
-    public final static Pose specimenSpike3GrabPose = new Pose(103, 2.25, Math.toRadians(90));
-
-    //
-    public final static Pose humanPlayerDropPose = new Pose(98, 7, Math.toRadians(90));
-
-    public final static Pose specimenGrabSetupPose = new Pose(73.5, 7.5, Math.toRadians(90));
-
-    public final static Pose specimenGrabPose = new Pose(73.5, 2, Math.toRadians(90));
+        if (shortLong.equals("short")) {
+            startPose = goalStartPose;
+        } else if (shortLong.equals("long")) {
+            startPose = longStartPose;
+        } else {
+            throw new RuntimeException("shortLong = " + shortLong);
+        }
+    }
 }

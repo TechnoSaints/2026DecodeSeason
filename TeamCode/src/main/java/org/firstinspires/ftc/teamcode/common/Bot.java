@@ -10,7 +10,6 @@ import org.firstinspires.ftc.teamcode.common.servos.ServoSimple;
 
 public abstract class Bot extends Component {
     private LauncherDouble launcher;
-
     private RollerMotor intake;
 
     private ServoSimple kicker;
@@ -25,15 +24,14 @@ public abstract class Bot extends Component {
         launcher = new LauncherDouble(opMode.hardwareMap,telemetry);
         intake = new RollerMotor(opMode.hardwareMap, telemetry,"intake");
         kicker = new ServoSimple(opMode.hardwareMap, telemetry,"kicker");
+
     }
 
-    public void setLauncherShortShot()
-    {
+    public void setLauncherShortShot() {
         launcher.setShortShot();
     }
 
-    public void setLauncherLongShot()
-    {
+    public void setLauncherLongShot() {
         launcher.setLongShot();
     }
 
@@ -42,38 +40,36 @@ public abstract class Bot extends Component {
     }
     public void launcherStop()
     {
+
         launcher.stop();
     }
 
-    public void intakeForward()
-    {
+    public void intakeForward() {
         intake.forward();
     }
 
-    public void intakeReverse()
-    {
+    public void intakeReverse() {
         intake.reverse();
     }
 
-    public void intakeStop()
-    {
+    public void intakeStop() {
         intake.stop();
     }
 
 
-    public void kickerLaunch()
-    {
+    public void kickerLaunch() {
         kicker.setPositionTicks(kickerLaunchPosition);
     }
 
-    public void kickerLoad()
-    {
+    public void kickerLoad() {
         kicker.setPositionTicks(kickerLoadPosition);
     }
-
+    
     public void kickerGate(){kicker.setPositionTicks(kickerGatePosition);}
 
-
+    public boolean isBusy() {
+        return (false);
+    }
     public void update() {
     }
 }
