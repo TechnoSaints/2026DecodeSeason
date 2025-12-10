@@ -13,7 +13,6 @@ import org.firstinspires.ftc.teamcode.opmode.Paths;
 public abstract class AutoOpMode extends OpMode {
     protected AutoBot bot;
     protected int pathState;
-    protected Pose startPose;
     protected ElapsedTime controlTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
 
     /**
