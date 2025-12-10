@@ -9,12 +9,14 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.pedropathing.util.Timer;
 
+import org.firstinspires.ftc.teamcode.common.AutoBot;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
 @Autonomous
 public class BlueFarAuto extends OpMode{
     private Follower follower;
     private Timer pathTimer, opModeTimer;
+    private AutoBot bot;
 
     public enum PathState{
         // START Position -> END Position
@@ -184,7 +186,7 @@ public class BlueFarAuto extends OpMode{
         pathState = PathState.DRIVE_STARTPOS_SHOOTPOS;
         pathTimer = new Timer();
         opModeTimer = new Timer();
-        follower = Constants.createFollower(hardwareMap);
+        bot  = new AutoBot(this, telemetry);
         //TODO add in any other init mechanisms
 
         buildPaths();
