@@ -21,17 +21,10 @@ public class TeleopBot extends Bot {
     private ElapsedTime kickerTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     private ElapsedTime buttonTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     private int buttonDelay = 350;
-    private final GoBildaPinpointDriver pinpoint;
 
     public TeleopBot(OpMode opMode, Telemetry telemetry) {
         super(opMode, telemetry);
         drivetrain = new Drivetrain(opMode.hardwareMap, telemetry, new DrivetrainData(), new GoBilda435DcMotorData());
-        pinpoint = opMode.hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint");
-        pinpoint.setOffsets(-2.5,-4.5, DistanceUnit.INCH);
-        pinpoint.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
-        pinpoint.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD,
-                GoBildaPinpointDriver.EncoderDirection.FORWARD);
-        pinpoint.resetPosAndIMU();
         buttonTimer.reset();
     }
 
@@ -39,9 +32,10 @@ public class TeleopBot extends Bot {
         return (buttonTimer.milliseconds() > buttonDelay);
     }
 
-    public void move(double axial, double strafe, double yaw){
+    public void move(double axial, double strafe, double yaw) {
         drivetrain.moveDirection(axial, strafe, yaw);
     }
+
     public void processGamepadInput(Gamepad gamepad) {
 
         if (gamepad.dpad_up) {
@@ -62,57 +56,38 @@ public class TeleopBot extends Bot {
                 drivetrain.moveDirection(driveAxial, driveStrafe, driveYaw);
         }
 
-        if (gamepad.right_bumper)
-        {
+        if (gamepad.right_bumper) {
             setLauncherShortShot();
-        } else if (gamepad.right_trigger > 0.2)
-        {
+        } else if (gamepad.right_trigger > 0.2) {
             setLauncherMediumShot();
-        } else if(gamepad.left_bumper){
+        } else if (gamepad.left_bumper) {
             setLauncherLongShot();
-        }
-        else if (gamepad.left_trigger > 0.2)
-        {
+        } else if (gamepad.left_trigger > 0.2) {
             launcherStop();
         }
 
-        if (gamepad.y)
-        {
+        if (gamepad.y) {
             intakeForward();
-        } else if (gamepad.b)
-        {
+        } else if (gamepad.b) {
             intakeReverse();
-        } else if (gamepad.a)
-        {
+        } else if (gamepad.a) {
             intakeStop();
         }
 
 
-
-        if ((gamepad.x) && (position == 1))
-        {
+        if ((gamepad.x) && (position == 1)) {
             position = 2;
             kickerLoad();
-        } else if ((gamepad.x) && (position == 2)){
+        } else if ((gamepad.x) && (position == 2)) {
             position = 3;
             kickerLaunch();
             kickerTimer.reset();
             kickerWaiting = false;
-        } else if ((kickerTimer.milliseconds() > 3000) && (kickerWaiting == false)){
+        } else if ((kickerTimer.milliseconds() > 3000) && (kickerWaiting == false)) {
             position = 1;
             kickerGate();
             kickerWaiting = true;
         }
-    }
-
-    public void teleopUpdate(boolean red){
-        update();
-        pinpoint.update();
-        launcher.teleopDistanceLog(pinpoint.getPosition(), red);
-    }
-
-    public Pose2D getPosition(){
-        return pinpoint.getPosition();
     }
 }
 
