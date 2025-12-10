@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
 import org.firstinspires.ftc.teamcode.opmode.Paths;
 
-@Autonomous(name = "shortRedAuto", group = "Red")
+@Autonomous(name = "\uD83D\uDD34shortRedAuto", group = "Red")
 //@Disabled
 public class ShortRedAuto extends AutoOpMode {
 
