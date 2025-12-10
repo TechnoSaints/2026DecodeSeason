@@ -14,6 +14,15 @@ public class Paths {
     public static PathChain testX, testY, testRotation, doubleTest, tripleTest;
     public static PathChain returnX, returnY, returnRotation, returnDoubleTest;
 
+    public static PathChain startToShortShot, shortShotToStack1Setup, stack1SetupToStack1Finish, stack1FinishToShortShot;
+
+    public static void buildPaths(Follower follower) {
+        startToShortShot = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.startPose, FieldLocations.shortShotPose))
+                .setLinearHeadingInterpolation(FieldLocations.startPose.getHeading(), FieldLocations.shortShotPose.getHeading())
+                .build();
+    }
+
     public static void buildSamplePaths(Follower follower) {
         testX = follower.pathBuilder()
                 .addPath(new BezierLine(FieldLocations.testPose1,
@@ -250,19 +259,12 @@ public class Paths {
                 .addPath(new BezierLine(FieldLocations.blueFarShoot, FieldLocations.blueS1B3))
                 .setLinearHeadingInterpolation(FieldLocations.blueFarShoot.getHeading(), FieldLocations.blueS1B3.getHeading())
                 .build();
-
+/*
         blueS1B3Shoot = follower.pathBuilder()
                 .addPath(new BezierLine(FieldLocations.blueS1B3, FieldLocations.blueFarShoot))
-                .setLinearHeadingInterpolation(FieldLocations.blueS1B3.getHeading(), FieldLocations.blueFarShoot.getHeading())
+                .setLinearHeadingInterpolation(FieldLocations.blueS1B3.getHeading(), FieldLocations.blueFarShoot.getHeading());
+*/
 
-
-    public static PathChain startToShortShot, shortShotToStack1Setup, stack1SetupToStack1Finish, stack1FinishToShortShot;
-
-    public static void buildPaths(Follower follower) {
-        startToShortShot = follower.pathBuilder()
-                .addPath(new BezierLine(FieldLocations.startPose, FieldLocations.shortShotPose))
-                .setLinearHeadingInterpolation(FieldLocations.startPose.getHeading(), FieldLocations.shortShotPose.getHeading())
-                .build();
 
         shortShotToStack1Setup = follower.pathBuilder()
                 .addPath(new BezierLine(FieldLocations.shortShotPose, FieldLocations.stack1SetupPose))

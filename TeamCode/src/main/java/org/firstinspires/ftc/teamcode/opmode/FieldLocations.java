@@ -5,7 +5,6 @@ import com.pedropathing.geometry.Pose;
 
 public class FieldLocations {
 
-    public static Pose startPose;
     private static final int inches = 2;
     private static final int feet = 24;
     // x+ = forward
@@ -80,7 +79,7 @@ public class FieldLocations {
     public final static Pose positiveDegreePose = new Pose(0,0,Math.toRadians(90));
     public final static Pose testPose1 = new Pose(4*inches, 0*inches, 0);
     public final static Pose testPose2 = new Pose(4*inches, 4*inches, Math.toRadians(90));
-}
+
     public static Pose startPose, goalPose, goalStartPose, shortShotPose, stack1SetupPose, stack1FinishPose,
             stack2SetupPose, stack2FinishPose, stack3SetupPose, stack3FinishPose, longShotPose, longStartPose, basePose;
     // Right side poses
