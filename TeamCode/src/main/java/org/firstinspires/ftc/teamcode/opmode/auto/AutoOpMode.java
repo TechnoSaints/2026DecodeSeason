@@ -47,7 +47,7 @@ public abstract class AutoOpMode extends OpMode {
         bot.update();
         autonomousPathUpdate();
         try {
-            Thread.sleep(10);
+            Thread.sleep(25);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

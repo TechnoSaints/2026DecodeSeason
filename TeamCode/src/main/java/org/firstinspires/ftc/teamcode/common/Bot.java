@@ -8,10 +8,8 @@ import org.firstinspires.ftc.teamcode.common.servos.ServoSimple;
 
 public abstract class Bot extends Component {
     private LauncherDouble launcher;
-
     private RollerMotor intake;
     private RollerCRServo topRoller, bottomRoller;
-
     private ServoSimple kicker;
     private double kickerLoadPosition = 0.45;
     private double kickerLaunchPosition = 0.55;
