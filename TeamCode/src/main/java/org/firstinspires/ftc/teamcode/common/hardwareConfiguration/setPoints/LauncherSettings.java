@@ -25,13 +25,13 @@ public class LauncherSettings {
 
         // Set your empirical data here
         // For each distance to the target (in inches), you need to determine what
-        //      velocity and Position to use.
-        // Both velocity and Position should be represented as decimal numbers.
+        //      velocity and position to use.
+        // Both velocity and position should be represented as decimal numbers.
         // These numbers are the ones you provide to the launcher and servo when setting velocity
         //  and position, respectively.
         // For wheel velocities, put each the distance and velocity in velocityFactors
-        // For launch Position, put each the distance and ange in launchPositions
-        // For example, from 35 inches, you may need velocity 0.5 and Position 0.25.
+        // For launch position, put each the distance and position in launchPositions
+        // For example, from 35 inches, you may need velocity 0.5 and position 0.25.
         // This data would be entered as:
         //      velocityFactors.add(35.0, 0.5);
         //      launchPositions.add(25.0, 0.25);
@@ -73,7 +73,7 @@ public class LauncherSettings {
     }
 
     public static double getLaunchAngle(double distance) {
-        return (calculateY(launchAngleCoefficients, distance));
+        return (calculateY(launchPositionCoefficients, distance));
     }
 }
 
