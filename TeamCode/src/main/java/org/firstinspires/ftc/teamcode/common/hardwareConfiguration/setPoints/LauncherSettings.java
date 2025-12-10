@@ -36,7 +36,6 @@ public class LauncherSettings {
         //      velocityFactors.add(35.0, 0.5);
         //      launchPositions.add(25.0, 0.25);
 
-
         velocityFactors.add(1.0, 0.95);
         velocityFactors.add(144.0, 0.1);
 
