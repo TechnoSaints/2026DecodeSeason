@@ -57,16 +57,16 @@ public class Launcher extends Component {
     }
 
     public double distanceFromLauncher(Pose botPose, boolean red){
-        Pose2D target;
+        Pose target;
         if (red){
-            target = new Pose2D(DistanceUnit.INCH, 48,-52, AngleUnit.DEGREES, 0);
+            target = new Pose(49,-52,0);
         }
         else {
-            target = new Pose2D(DistanceUnit.INCH, 48,52, AngleUnit.DEGREES, 0);
+            target = new Pose(49,52,0);
         }
         return Math.sqrt(
-                Math.pow(botPose.getX() - target.getX(DistanceUnit.INCH), 2) +
-                        Math.pow(botPose.getY() - target.getY(DistanceUnit.INCH), 2)
+                Math.pow(botPose.getX() - target.getX(), 2) +
+                        Math.pow(botPose.getY() - target.getY(), 2)
         );
     }
 

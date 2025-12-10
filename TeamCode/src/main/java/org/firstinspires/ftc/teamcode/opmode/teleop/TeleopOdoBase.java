@@ -7,6 +7,7 @@ import com.pedropathing.geometry.Pose;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
@@ -18,13 +19,16 @@ public class TeleopOdoBase extends LinearOpMode {
     private TeleopBot bot;
     protected boolean red;
     protected Pose2D startPose;
+    private ElapsedTime buttonTimer;
 
     @Override
     public void runOpMode() {
+        buttonTimer = new ElapsedTime();
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         bot = new TeleopBot(this, telemetry);
 
         waitForStart();
+        buttonTimer.reset();
         while (opModeIsActive() && !isStopRequested()) {
             bot.processGamepadInput(gamepad1);
             if (gamepad1.left_bumper){
@@ -36,7 +40,11 @@ public class TeleopOdoBase extends LinearOpMode {
             else if (gamepad1.left_trigger > 0.2){
                 bot.stopStorage();
             }
-            bot.updateLauncher(red, gamepad1.right_trigger > 0.7);
+            boolean changeTarget = gamepad1.right_trigger > 0.7 && buttonTimer.milliseconds() > 250;
+            if (changeTarget){
+                buttonTimer.reset();
+            }
+            bot.updateLauncher(red, changeTarget);
             if (gamepad1.touchpad){
                 bot.setOdoPosition(new Pose2D(DistanceUnit.INCH, 48,-52, AngleUnit.DEGREES, 45));
             }

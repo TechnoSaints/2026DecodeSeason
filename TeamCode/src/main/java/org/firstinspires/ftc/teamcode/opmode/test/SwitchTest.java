@@ -15,7 +15,7 @@ public class SwitchTest extends LinearOpMode{
         ball1 = hardwareMap.get(TouchSensor.class, "ball1");
         ball2 = hardwareMap.get(TouchSensor.class, "ball2");
         waitForStart();
-        while (opModeIsActive() && isStopRequested()){
+        while (opModeIsActive() && !isStopRequested()){
             telemetry.addData("ball0", ball0.isPressed());
             telemetry.addData("ball1", ball1.isPressed());
             telemetry.addData("ball2", ball2.isPressed());

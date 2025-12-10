@@ -96,50 +96,64 @@ public class Storage extends Component {
                 state = -2;
                 break;
             case -2:
-                if (!ball0.isPressed()){
+                if (!ball0.isPressed()) {
                     intake.setPower(0); //garrett was here
-                    upperRoller.setPower(0);
                     lowerRoller.setPower(1);
+                    upperRoller.setPower(1);
+                    state = -3;
                 }
-                state = -3;
-                break;
+                    break;
             case -3:
-                if (ball0.isPressed() && ball1.isPressed() && !ball2.isPressed()){
-                    balls[2] = 'X';
-                    state = 0;
+                if (ball0.isPressed()) {
+                    state = -4;
                 }
                 break;
             case -4:
+                intake.setPower(1);
+                lowerRoller.setPower(1);
+                upperRoller.setPower(0);
+                state = -5;
+                        break;
+            case -5:
+                if (ball1.isPressed()) {
+                    state = 0;
+                    balls[2] = 'X';
+                }
+                break;
+            case -6:
                 intake.setPower(0);
                 lowerRoller.setPower(0);
                 upperRoller.setPower(1);
-                state = -5;
-                break;
-            case -5:
-                if (!ball0.isPressed()){
-                    upperRoller.setPower(0);
-                    lowerRoller.setPower(1);
-                    intake.setPower(0);
-                    state = -6;
-                }
-            case -6:
-                if (ball0.isPressed() && !ball1.isPressed()){
-                    balls[1] = 'X';
-                    state = 0;
-                }
+                state = -7;
                 break;
             case -7:
+                if (!ball0.isPressed()) {
+                    intake.setPower(0); //garrett was here
+                    lowerRoller.setPower(1);
+                    upperRoller.setPower(1);
+                    state = -8;
+                }
+                break;
+            case -8:
+                if (ball0.isPressed()) {
+                    state = 0;
+                    balls[1] = 'X';
+                }
+                break;
+            case -9:
                 intake.setPower(0);
                 lowerRoller.setPower(0);
                 upperRoller.setPower(1);
-                state = -8;
+                state = -10;
                 break;
-            case -8:
-                if (!ball0.isPressed()){
+            case -10:
+                if (!ball0.isPressed()) {
+                    upperRoller.setPower(0);
                     balls[0] = 'X';
                     state = 0;
                 }
                 break;
+
             case 0:
                 intake.setPower(0);
                 lowerRoller.setPower(0);
@@ -153,9 +167,9 @@ public class Storage extends Component {
             if (balls[0] != 'X' && balls[1] != 'X' && balls[2] != 'X') {
                 state = -1;
             } else if (balls[0] != 'X' && balls[1] != 'X' && balls[2] == 'X') {
-                state = -4;
+                state = -6;
             } else if (balls[0] != 'X' && balls[1] == 'X' && balls[2] == 'X') {
-                state = -7;
+                state = -8;
             }
         }
     }
