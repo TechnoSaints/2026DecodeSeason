@@ -34,6 +34,6 @@ public class Paths {
                 .addPath(new BezierLine(FieldLocations.stack1FinishPose, FieldLocations.shortShotPose))
                 .setLinearHeadingInterpolation(FieldLocations.stack1FinishPose.getHeading(), FieldLocations.shortShotPose.getHeading())
                 .build();
-        
+
     }
 }
