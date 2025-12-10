@@ -23,12 +23,12 @@ public abstract class Bot extends Component {
 
     public Bot(OpMode opMode, Telemetry telemetry) {
         super(telemetry);
-        launcher = new Launcher(opMode.hardwareMap,telemetry);
+        launcher = new Launcher(telemetry, opMode.hardwareMap);
         intake = new RollerMotor(opMode.hardwareMap, telemetry,"intake");
         kicker = new ServoSimple(opMode.hardwareMap, telemetry,"kicker");
     }
 
-    public void setLauncherShortShot()
+  /*  public void setLauncherShortShot()
     {
         launcher.setShortShot();
     }
@@ -44,7 +44,7 @@ public abstract class Bot extends Component {
     public void launcherStop()
     {
         launcher.stop();
-    }
+    } */
 
     public void intakeForward()
     {
