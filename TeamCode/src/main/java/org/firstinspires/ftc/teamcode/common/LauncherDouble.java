@@ -32,6 +32,7 @@ public class LauncherDouble extends Component {
 
     public LauncherDouble(HardwareMap hardwareMap, Telemetry telemetry) {
         super(telemetry);
+        LauncherSettings.init();
         shortShotVelocityFactor = LauncherSettings.shortShotVelocityFactor;
         shortShotPosition = LauncherSettings.shortShotPosition;
         longShotVelocityFactor = LauncherSettings.longShotVelocityFactor;

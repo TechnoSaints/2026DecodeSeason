@@ -21,10 +21,7 @@ public class LauncherSettings {
     private static final PolynomialCurveFitter velocityFactorFitter = PolynomialCurveFitter.create(2);
     private static final PolynomialCurveFitter launchPositionFitter = PolynomialCurveFitter.create(2);
     private static double[] velocityFactorCoefficients, launchPositionCoefficients;
-    private static boolean initialized = false;
-
-
-    private static void init() {
+    public static void init() {
 
         // Set your empirical data here
         // For each distance to the target (in inches), you need to determine what
@@ -61,7 +58,7 @@ public class LauncherSettings {
 /*
         System.out.println("Fitted coefficients (a, b, c) for velocity: " + Arrays.toString(velocityFactorCoefficients));
 
-        System.out.println("Fitted coefficients (a, b, c) for position: " + Arrays.toString(launchPositionCoefficients));
+        System.out.println("Fitted coefficients (a, b, c) for Position: " + Arrays.toString(launchPositionCoefficients));
 
 
         // The resulting equation is y = coefficients[0] + coefficients[1]*x + coefficients[2]*x^2
@@ -89,7 +86,6 @@ public class LauncherSettings {
     }
 
     public static double getLaunchPosition(double distance) {
-        init();
         return (calculateY(launchPositionCoefficients, distance));
 
 }
