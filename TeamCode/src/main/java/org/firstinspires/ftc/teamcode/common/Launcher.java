@@ -56,6 +56,20 @@ public class Launcher extends Component {
         );
     }
 
+    public double distanceFromLauncher(Pose botPose, boolean red){
+        Pose2D target;
+        if (red){
+            target = new Pose2D(DistanceUnit.INCH, 48,-52, AngleUnit.DEGREES, 0);
+        }
+        else {
+            target = new Pose2D(DistanceUnit.INCH, 48,52, AngleUnit.DEGREES, 0);
+        }
+        return Math.sqrt(
+                Math.pow(botPose.getX() - target.getX(DistanceUnit.INCH), 2) +
+                        Math.pow(botPose.getY() - target.getY(DistanceUnit.INCH), 2)
+        );
+    }
+
     public void preloadFromDistance(double distance) {
         setVelocity(LauncherSettings.getVelocityFactor(distance));
         setPosition(LauncherSettings.getLaunchPosition(distance));
@@ -71,6 +85,10 @@ public class Launcher extends Component {
         else {
             stopLauncher();
         }
+    }
+
+    public void autoPreload(Pose pose, boolean red){
+        preloadFromDistance(distanceFromLauncher(pose, red));
     }
 
     private void setVelocity(double power) {
