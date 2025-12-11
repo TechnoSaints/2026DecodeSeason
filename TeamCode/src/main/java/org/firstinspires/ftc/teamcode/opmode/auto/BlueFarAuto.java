@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.pedropathing.util.Timer;
 
 import org.firstinspires.ftc.teamcode.common.AutoBot;
+import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
 @Autonomous
@@ -36,7 +37,6 @@ public class BlueFarAuto extends OpMode{
 
         DRIVE_SHOOTPOS_PREPINTAKE2POS,
 
-        DRIVE_PREPINTAKE2POSE_INTAKE2POS,
 
         INTAKE_TWO,
 
@@ -189,6 +189,7 @@ public class BlueFarAuto extends OpMode{
         pathTimer = new Timer();
         opModeTimer = new Timer();
         bot  = new AutoBot(this, telemetry);
+        follower = bot.getFollower();
         //TODO add in any other init mechanisms
 
         buildPaths();

@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.common.TeleopBot;
+import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
 
 @Config
 @TeleOp(name = "Teleop - No Odo", group = "Linear OpMode")
@@ -16,7 +17,7 @@ public class TeleopNoOdo extends LinearOpMode {
     @Override
     public void runOpMode() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        bot = new TeleopBot(this, telemetry);
+        bot = new TeleopBot(this, telemetry, FieldLocations.endPose, FieldLocations.goalRightPose);
 
         waitForStart();
         while (opModeIsActive() && !isStopRequested()) {
