@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.common;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -10,27 +9,28 @@ import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda4
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.MotorData;
 
 @Config
-public class RollerCRServo extends Component {
-    private final CRServo servo;
+public class intakeMotor extends Component {
+    private final DcMotorEx motor;
+    private MotorData motorData = new GoBilda435DcMotorData();
     private double onPower = 1.0;
-    public RollerCRServo(HardwareMap hardwareMap, Telemetry telemetry, String servoName) {
+    public intakeMotor(HardwareMap hardwareMap, Telemetry telemetry, String motorName) {
         super(telemetry);
 
-        servo = hardwareMap.get(CRServo.class, servoName);
+        motor = hardwareMap.get(DcMotorEx.class, motorName);
     }
+
     public void forward()
     {
-        servo.setPower(onPower);
+        motor.setPower(onPower);
     }
 
     public void reverse()
     {
-        servo.setPower(-onPower);
+        motor.setPower(-onPower);
     }
 
     public void stop()
     {
-        servo.setPower(0.0);
-
+        motor.setPower(0.0);
     }
 }
