@@ -35,11 +35,10 @@ public class LauncherSettings {
 
         velocityFactors.add(1.0, 0.95);
         velocityFactors.add(144.0, 0.1);
+        velocityFactors.add(1,2);
 
 
-        velocityFactorCoefficients = velocityFactorFitter.fit(velocityFactors.toList());
-        launchPositionCoefficients = launchPositionFitter.fit(launchPositions.toList());
-/*
+        /*
         System.out.println("Fitted coefficients (a, b, c) for velocity: " + Arrays.toString(velocityFactorCoefficients));
         System.out.println("Fitted coefficients (a, b, c) for Position: " + Arrays.toString(launchPositionCoefficients));
 
@@ -65,10 +64,7 @@ public class LauncherSettings {
     public static double getVelocityFactor(double distance) {
         return (calculateY(velocityFactorCoefficients, distance));
     }
-
-    public static double getLaunchPosition(double distance) {
-        return (calculateY(launchPositionCoefficients, distance));
-    }
+    
 }
 
 

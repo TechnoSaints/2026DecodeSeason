@@ -14,10 +14,10 @@ public abstract class Bot extends Component {
 
     private ServoSimple kicker;
 
-    private double kickerLoadPosition = 0.65;
-    private double kickerLaunchPosition = 0.35;
+    private double kickerLoadPosition = 0.57;
+    private double kickerLaunchPosition = 0.26;
 
-    private double kickerGatePosition = 0.4;
+    private double kickerGatePosition = 0.37;
 
 
     public Bot(OpMode opMode, Telemetry telemetry) {

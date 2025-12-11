@@ -30,8 +30,8 @@ public class Launcher extends Component {
         //InitAprilTag(hardwareMap);
         leftLauncher = hardwareMap.get(DcMotorEx.class, "leftLauncher");
         rightLauncher = hardwareMap.get(DcMotorEx.class, "rightLauncher");
-        leftAimer = hardwareMap.get(Servo.class, "leftAimer");
-        rightAimer = hardwareMap.get(Servo.class, "rightAimer");
+      //  leftAimer = hardwareMap.get(Servo.class, "leftAimer");
+     //   rightAimer = hardwareMap.get(Servo.class, "rightAimer");
         leftLauncher.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         rightLauncher.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         setVelocity(0);
@@ -105,8 +105,6 @@ public class Launcher extends Component {
         } else {
             targetPosition = position;
         }
-        leftAimer.setPosition(targetPosition);
-        rightAimer.setPosition(targetPosition);
     }
 
     public double getVelocity() {

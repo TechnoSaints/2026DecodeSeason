@@ -36,8 +36,8 @@ public class LauncherDouble extends Component {
         longShotVelocityFactor = LauncherSettings.longShotVelocityFactor;
         mediumShotVelocityFactor = LauncherSettings.mediumShotVelocityFactor;
 
-        motorL = hardwareMap.get(DcMotorEx.class, "launcherMotorL");
-        motorR = hardwareMap.get(DcMotorEx.class, "launcherMotorR");
+        motorL = hardwareMap.get(DcMotorEx.class, "leftLauncher");
+        motorR = hardwareMap.get(DcMotorEx.class, "rightLauncher");
 
         resetEncoders();
         setVelocityFactor(targetVelocity);
