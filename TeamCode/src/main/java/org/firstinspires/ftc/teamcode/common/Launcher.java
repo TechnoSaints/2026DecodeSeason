@@ -11,18 +11,20 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda6000DcMotorData;
+import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.LauncherData;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.MotorData;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints.LauncherSettings;
 import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
 
+
 public class Launcher extends Component {
     private DcMotorEx leftLauncher, rightLauncher;
-    private MotorData motorData = new GoBilda6000DcMotorData();
-    private final int maxTicksPerSecond = motorData.maxTicksPerSec;
     private Servo leftAimer, rightAimer;
     private double maxVelocity, maxPosition, minPosition;
     private double targetPosition, targetVelocity;
     private boolean target;
+    private MotorData motorData = new GoBilda6000DcMotorData();
+    private final int maxTicksPerSecond = motorData.maxTicksPerSec;
 
     public Launcher(Telemetry telemetry, HardwareMap hardwareMap) {
         super(telemetry);
@@ -30,16 +32,19 @@ public class Launcher extends Component {
         //InitAprilTag(hardwareMap);
         leftLauncher = hardwareMap.get(DcMotorEx.class, "leftLauncher");
         rightLauncher = hardwareMap.get(DcMotorEx.class, "rightLauncher");
-      //  leftAimer = hardwareMap.get(Servo.class, "leftAimer");
-     //   rightAimer = hardwareMap.get(Servo.class, "rightAimer");
         leftLauncher.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         rightLauncher.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         setVelocity(0);
-        setPosition(0.5);
     }
 
     public void stopLauncher() {
         setVelocity(0);
+    }
+
+    public void stop()
+    {
+        targetVelocity = 0.0;
+        setVelocity(targetVelocity);
     }
 
     public double distanceFromLauncher(Pose2D botPose, boolean red){
@@ -57,16 +62,16 @@ public class Launcher extends Component {
     }
 
     public double distanceFromLauncher(Pose botPose, boolean red){
-        Pose2D target;
+        Pose target;
         if (red){
-            target = new Pose2D(DistanceUnit.INCH, 48,-52, AngleUnit.DEGREES, 0);
+            target = new Pose(49,-52,0);
         }
         else {
-            target = new Pose2D(DistanceUnit.INCH, 48,52, AngleUnit.DEGREES, 0);
+            target = new Pose(49,52,0);
         }
         return Math.sqrt(
-                Math.pow(botPose.getX() - target.getX(DistanceUnit.INCH), 2) +
-                        Math.pow(botPose.getY() - target.getY(DistanceUnit.INCH), 2)
+                Math.pow(botPose.getX() - target.getX(), 2) +
+                        Math.pow(botPose.getY() - target.getY(), 2)
         );
     }
 
@@ -96,16 +101,6 @@ public class Launcher extends Component {
         rightLauncher.setVelocity(targetVelocity);
     }
 
-    private void setPosition(double position) {
-        telemetry.addData("Original position", position);
-        if (position > maxPosition) {
-            targetPosition = maxPosition;
-        } else if (position < minPosition) {
-            targetPosition = minPosition;
-        } else {
-            targetPosition = position;
-        }
-    }
 
     public double getVelocity() {
         return leftLauncher.getVelocity();
@@ -121,18 +116,11 @@ public class Launcher extends Component {
         telemetry.addData("Distance from launcher", distanceFromLauncher(pose, red));
     }
 
-    public void stop()
-    {
-        targetVelocity = 0.0;
-        setVelocity(targetVelocity);
-    }
     public void log(){
         telemetry.addData("targetVelocity:  ", targetVelocity);
         telemetry.addData("Actual Velocity L:  ", leftLauncher.getVelocity());
         telemetry.addData("Actual Velocity R:  ", rightLauncher.getVelocity());
         telemetry.addData("targetLaunchPosition:  ", targetPosition);
-        telemetry.addData("Actual Position L:  ", leftAimer.getPosition());
-        telemetry.addData("Actual Position R:  ", rightAimer.getPosition());
         if (ready()){
             telemetry.addLine("Launcher is ready");
         }
@@ -141,4 +129,3 @@ public class Launcher extends Component {
         }
     }
 }
-

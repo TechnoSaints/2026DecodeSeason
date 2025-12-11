@@ -29,7 +29,12 @@ public abstract class Bot extends Component {
     }
 
     public void shoot(){
-
+        // Get current position(Location AND Heading)
+        // Find distance to goal
+        // Find target heading
+        // Set Launcher RPM
+        // Rotate to heading
+        // Kicker load position
     }
 
  /*   public void setLauncherShortShot() {

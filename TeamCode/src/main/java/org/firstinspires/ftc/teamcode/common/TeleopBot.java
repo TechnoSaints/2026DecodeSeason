@@ -87,7 +87,7 @@ public class TeleopBot extends Bot {
             intakeStop();
         }
         
-        if ((gamepad.x) && (kickerState == 1)) {
+        /*     if ((gamepad.x) && (kickerState == 1)) {
             kickerLoad();
             kickerState = 2;
         } else if ((gamepad.x) && (kickerState == 2)) {
@@ -97,7 +97,17 @@ public class TeleopBot extends Bot {
         } else if ((kickerTimer.milliseconds() > 3000) && (kickerState == 3)) {
             kickerGate();
             kickerState = 1;
+        } */
+
+        if ((gamepad.x) && (kickerState == 1)) {
+            kickerLaunch();
+            kickerTimer.reset();
+            kickerState = 2;
+        } else if ((kickerTimer.milliseconds() > 3000) && (kickerState == 2)) {
+            kickerGate();
+            kickerState = 1;
         }
+
     }
     public void setOdoPosition(Pose2D position){
         pinpoint.setPosition(position);
