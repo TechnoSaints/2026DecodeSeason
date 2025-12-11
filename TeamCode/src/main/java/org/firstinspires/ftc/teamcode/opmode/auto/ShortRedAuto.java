@@ -21,7 +21,7 @@ public class ShortRedAuto extends AutoOpMode {
             // Move start to short shot
             case 0:
                 bot.followPath(Paths.startToShortShot, false);
-                bot.setLauncherShortShot();
+                //bot.setLauncherShortShot();
                 controlTimer.reset();
                 setPathState(1);
                 break;
@@ -32,7 +32,7 @@ public class ShortRedAuto extends AutoOpMode {
                     if (controlTimer.milliseconds() > 350) {
                         telemetry.addLine("I Have reached this CASE 1");
                         telemetry.update();
-                        bot.stickLaunch();
+                        //bot.stickLaunch();
                         controlTimer.reset();
                         setPathState(2);
                     }
@@ -41,8 +41,8 @@ public class ShortRedAuto extends AutoOpMode {
 
             case 2:
                 if (controlTimer.milliseconds() > 1000) {
-                    bot.stickLoad();
-                    bot.pusherStart();
+                    //bot.stickLoad();
+                    //bot.pusherStart();
                     telemetry.addLine("I Have reached this CASE 2");
                     telemetry.update();
                     controlTimer.reset();
@@ -52,10 +52,10 @@ public class ShortRedAuto extends AutoOpMode {
 
             case 3:
                 if (controlTimer.milliseconds() > 1500) {
-                    bot.stopPusher();
+                    //bot.stopPusher();
                     telemetry.addLine("I Have reached this CASE 3");
                     telemetry.update();
-                    bot.stickLaunch();
+                    //bot.stickLaunch();
                     controlTimer.reset();
                     setPathState(4);
                 }
@@ -63,8 +63,8 @@ public class ShortRedAuto extends AutoOpMode {
 
             case 4:
                 if (controlTimer.milliseconds() > 1000) {
-                    bot.stickLoad();
-                    bot.pusherStart();
+                    //bot.stickLoad();
+                    //bot.pusherStart();
                     telemetry.addLine("I Have reached this CASE 4");
                     telemetry.update();
                     controlTimer.reset();
@@ -74,8 +74,8 @@ public class ShortRedAuto extends AutoOpMode {
 
             case 5:
                 if (controlTimer.milliseconds() > 1500) {
-                    bot.stopPusher();
-                    bot.stickLaunch();
+                    //bot.stopPusher();
+                   //bot.stickLaunch();
                     telemetry.addLine("I Have reached this CASE 5");
                     telemetry.update();
                     controlTimer.reset();
@@ -89,15 +89,16 @@ public class ShortRedAuto extends AutoOpMode {
                     bot.followPath(Paths.shortShotToStack1Setup, false);
                     telemetry.addLine("I Have reached this CASE 6");
                     telemetry.update();
+                    controlTimer.reset();
                     setPathState(7);
                 }
                 break;
 
             // Turn on rollers and move to stack1 finish after move is finished
             case 7:
-                if (!bot.followerIsBusy()) {
-                    bot.pusherStart();
-                    bot.intakeForward();
+                if (controlTimer.milliseconds() > 2000) {
+                    //bot.pusherStart();
+                    //bot.intakeForward();
                     telemetry.addLine("I Have reached this CASE 7");
                     telemetry.update();
                     bot.followPath(Paths.stack1SetupToStack1Finish, false);
@@ -138,9 +139,11 @@ public class ShortRedAuto extends AutoOpMode {
  */
             // Stop opmode
             case 8:
-                setPathState(-1);
+                if (controlTimer.milliseconds() > 20000) {
+                    setPathState(-1);
                 requestOpModeStop();
                 break;
+            }
         }
     }
 }
