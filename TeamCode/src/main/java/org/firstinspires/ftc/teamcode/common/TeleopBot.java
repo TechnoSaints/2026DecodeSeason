@@ -73,6 +73,12 @@ public class TeleopBot extends Bot {
             launcherStop();
         }
 */
+        if (gamepad.right_trigger > 0.2) {
+            shoot();
+        } else {
+            launcherStop();
+        }
+
         if (gamepad.y) {
             intakeForward();
         } else if (gamepad.b) {

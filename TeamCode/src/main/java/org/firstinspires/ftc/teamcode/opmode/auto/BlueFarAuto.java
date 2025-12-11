@@ -5,6 +5,7 @@ import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.PathBuilder;
 import com.pedropathing.paths.PathChain;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.pedropathing.util.Timer;
@@ -13,6 +14,8 @@ import org.firstinspires.ftc.teamcode.common.AutoBot;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
 @Autonomous
+@Disabled
+
 public class BlueFarAuto extends OpMode{
     private Follower follower;
     private Timer pathTimer, opModeTimer;

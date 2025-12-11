@@ -121,6 +121,11 @@ public class Launcher extends Component {
         telemetry.addData("Distance from launcher", distanceFromLauncher(pose, red));
     }
 
+    public void stop()
+    {
+        targetVelocity = 0.0;
+        setVelocity(targetVelocity);
+    }
     public void log(){
         telemetry.addData("targetVelocity:  ", targetVelocity);
         telemetry.addData("Actual Velocity L:  ", leftLauncher.getVelocity());

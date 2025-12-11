@@ -21,6 +21,11 @@ public class Drivetrain extends Component {
     private final double maxFastPower;
     private final double maxMediumPower;
     private final double maxSlowPower;
+
+    private double maxAutoCorrectionTurnSpeed = 0.7;
+
+    private double autoTurnGain = 0.02;
+    private double autoHeadingThreshold = 0.5;
     private IMU imu = null;
     LinearOpMode opMode = null;
 
@@ -106,12 +111,12 @@ public class Drivetrain extends Component {
     }
 
     public void turnToHeading(double targetHeading){
-        double turnSpeed = Constants.maxAutoCorrectionTurnSpeed;
+        double turnSpeed = maxAutoCorrectionTurnSpeed;
         double headingError = getHeadingError(targetHeading);
-        while (Math.abs(headingError) > Constants.autoHeadingThreshold) {
+        while (Math.abs(headingError) > autoHeadingThreshold) {
             headingError = getHeadingError(targetHeading);
-            turnSpeed = getSteeringCorrection(headingError, Constants.autoTurnGain);
-            turnSpeed = Range.clip(turnSpeed, -Constants.maxAutoCorrectionTurnSpeed, Constants.maxAutoCorrectionTurnSpeed);
+            turnSpeed = getSteeringCorrection(headingError, autoTurnGain);
+            turnSpeed = Range.clip(turnSpeed, -maxAutoCorrectionTurnSpeed, maxAutoCorrectionTurnSpeed);
             moveDirection(0,0,turnSpeed);
         }
         stop();
