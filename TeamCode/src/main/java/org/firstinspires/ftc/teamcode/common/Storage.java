@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.common.servos.ServoSimple;
@@ -20,6 +21,7 @@ public class Storage extends Component {
     private DcMotorEx intake, lowerRoller;
     private TouchSensor ball0,  ball1, ball2;
     public int state = 0;
+    private ElapsedTime timer;
     private char[] balls = new char[3]; // these balls are massive - Nathaniel Hoaglen aden's king
 
     public Storage(Telemetry telemetry, HardwareMap hardwareMap) {
@@ -34,6 +36,7 @@ public class Storage extends Component {
         ball0 = hardwareMap.get(TouchSensor.class, "ball0");
         ball1 = hardwareMap.get(TouchSensor.class, "ball1");
         ball2 = hardwareMap.get(TouchSensor.class, "ball2");
+        timer = new ElapsedTime();
     }
 
 
@@ -43,10 +46,10 @@ public class Storage extends Component {
                 state = 1;
             }
             else if (balls[0] != 'X' && balls[1] == 'X' && balls[2] == 'X') {
-                state = 3;
+                state = 4;
             }
             else if (balls[0] != 'X' && balls[1] != 'X' && balls[2] == 'X') {
-                state = 5;
+                state = 6;
             }
         }
     }
@@ -61,36 +64,41 @@ public class Storage extends Component {
                 break;
             case 2:
                 if (ball0.isPressed()){
-                    balls[0] = 'O';
+                    timer.reset();
                     state = 3;
                 }
                 break;
             case 3:
+                if (timer.milliseconds() > 150){
+                    balls[0] = 'O';
+                    state = 4;
+                }
+            case 4:
                 intake.setPower(1);
                 lowerRoller.setPower(1);
                 upperRoller.setPower(0);
-                state = 4;
-                break;
-            case 4:
-                if (ball1.isPressed()) {
-                    balls[1] = 'O';
-                    state = 5;
-                }
+                state = 5;
                 break;
             case 5:
+                if (ball1.isPressed()) {
+                    balls[1] = 'O';
+                    state = 6;
+                }
+                break;
+            case 6:
                 intake.setPower(1);
                 lowerRoller.setPower(0);
                 upperRoller.setPower(0);
-                state = 6;
+                state = 7;
                 break;
-            case 6:
-                balls[2] = 'O';
+            case 7:
                 if (ball2.isPressed()){
+                    balls[2] = 'O';
                     state = 0;
-                    break;
                 }
+                break;
             case -1:
-                intake.setPower(0);
+            intake.setPower(0);
                 lowerRoller.setPower(0);
                 upperRoller.setPower(1);
                 state = -2;
@@ -104,49 +112,60 @@ public class Storage extends Component {
                 }
                     break;
             case -3:
-                if (ball0.isPressed()) {
+                if (ball0.isPressed()){
+                    timer.reset();
                     state = -4;
                 }
                 break;
             case -4:
+                if (timer.milliseconds() > 150){
+                    state = -5;
+                }
+            case -5:
                 intake.setPower(1);
                 lowerRoller.setPower(1);
                 upperRoller.setPower(0);
-                state = -5;
+                state = -6;
                         break;
-            case -5:
+            case -6:
                 if (ball1.isPressed()) {
                     state = 0;
                     balls[2] = 'X';
                 }
                 break;
-            case -6:
+            case -7:
                 intake.setPower(0);
                 lowerRoller.setPower(0);
                 upperRoller.setPower(1);
-                state = -7;
+                state = -8;
                 break;
-            case -7:
+            case -8:
                 if (!ball0.isPressed()) {
                     intake.setPower(0); //garrett was here
                     lowerRoller.setPower(1);
                     upperRoller.setPower(1);
-                    state = -8;
-                }
-                break;
-            case -8:
-                if (ball0.isPressed()) {
-                    state = 0;
-                    balls[1] = 'X';
+                    state = -9;
                 }
                 break;
             case -9:
+                if (ball0.isPressed()){
+                    timer.reset();
+                    state = -10;
+                }
+                break;
+            case -10:
+                if (timer.milliseconds() > 150){
+                    balls[1] = 'X';
+                    state = 0;
+                }
+                break;
+            case -11:
                 intake.setPower(0);
                 lowerRoller.setPower(0);
                 upperRoller.setPower(1);
-                state = -10;
+                state = -12;
                 break;
-            case -10:
+            case -12:
                 if (!ball0.isPressed()) {
                     upperRoller.setPower(0);
                     balls[0] = 'X';
@@ -167,9 +186,9 @@ public class Storage extends Component {
             if (balls[0] != 'X' && balls[1] != 'X' && balls[2] != 'X') {
                 state = -1;
             } else if (balls[0] != 'X' && balls[1] != 'X' && balls[2] == 'X') {
-                state = -6;
+                state = -7;
             } else if (balls[0] != 'X' && balls[1] == 'X' && balls[2] == 'X') {
-                state = -8;
+                state = -11;
             }
         }
     }
