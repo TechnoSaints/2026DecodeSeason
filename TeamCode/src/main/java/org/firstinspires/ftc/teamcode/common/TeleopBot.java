@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.common;
 
-import com.pedropathing.geometry.Pose;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -24,9 +23,7 @@ public class TeleopBot extends Bot {
     private ElapsedTime buttonTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     private int buttonDelay = 350;
 
-    private Pose goalPose;
-
-    public TeleopBot(OpMode opMode, Telemetry telemetry, Pose startPose, Pose goalPose) {
+    public TeleopBot(OpMode opMode, Telemetry telemetry) {
         super(opMode, telemetry);
         drivetrain = new Drivetrain(opMode.hardwareMap, telemetry, new DrivetrainData(), new GoBilda435DcMotorData());
         pinpoint = opMode.hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint");
@@ -35,8 +32,6 @@ public class TeleopBot extends Bot {
         pinpoint.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD,
                 GoBildaPinpointDriver.EncoderDirection.FORWARD);
         pinpoint.resetPosAndIMU();
-        pinpoint.setPosition(startPose);
-        this.goalPose = goalPose;
         buttonTimer.reset();
     }
 

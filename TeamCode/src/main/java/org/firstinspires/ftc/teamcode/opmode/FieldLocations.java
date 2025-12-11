@@ -20,8 +20,6 @@ public class FieldLocations {
     public final static Pose longStartRightPose = new Pose(90.0, 8.0, Math.toRadians(90));
     public final static Pose baseRightPose = new Pose(36.0, 36.0, Math.toRadians(90));
 
-    public final static Pose endPose = new Pose(95, 75, Math.toRadians(45));
-
     // Left side poses
     public final static Pose goalLeftPose =
             new Pose(144 - goalRightPose.getX(), goalRightPose.getY(), 135);
