@@ -47,8 +47,13 @@ public class AutoBot extends Bot {
         return (super.isBusy() || followerIsBusy());
     }
 
-    public void update() {
+    public void updateLauncher(Pose launchPose, boolean red, boolean changeTarget){
+        launcher.update(launchPose, red, changeTarget);
+    }
+
+    public void update(boolean red) {
         super.update();
+        launcher.distanceFromLauncher(follower.getPose(), red);
         follower.update();
     }
 }

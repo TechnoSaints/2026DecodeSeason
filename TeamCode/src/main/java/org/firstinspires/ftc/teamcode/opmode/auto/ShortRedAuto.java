@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmode.auto;
 
+import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
@@ -9,6 +10,7 @@ import org.firstinspires.ftc.teamcode.opmode.Paths;
 @Autonomous(name = "\uD83D\uDD34shortRedAuto", group = "Red")
 //@Disabled
 public class ShortRedAuto extends AutoOpMode {
+    private Pose launchPose = FieldLocations.shortShotPose;
 
     @Override
     public void init() {
@@ -26,11 +28,20 @@ public class ShortRedAuto extends AutoOpMode {
 
             // Shoot three balls after move is finished
             case 1:
-                if (!bot.followerIsBusy()) {
+                /*if (!bot.followerIsBusy() && bot.getState() == 0) {
                     // Shoot balls
+                    if (bot.getBalls()[0] == 'X' && bot.getBalls()[1] == 'X' && bot.getBalls()[3] == 'X') {
+                        setPathState(2);
+                    }
+                    else {
+                        bot.shootBalls();
+                    }
+                }*/
+                if (!bot.followerIsBusy()){
                     setPathState(2);
                 }
                 break;
+
 
             // Move to stack1 setup
             case 2:
@@ -83,6 +94,8 @@ public class ShortRedAuto extends AutoOpMode {
                 requestOpModeStop();
                 break;
         }
+        bot.updateLauncher(launchPose, true, false);
+        telemetry.addData("Path State", pathState);
     }
 }
 

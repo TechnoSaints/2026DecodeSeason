@@ -207,6 +207,29 @@ public class Storage extends Component {
         return state;
     }
 
+    public char[] getBalls(){ return balls; }
+
+    public void findBalls(){
+        if (ball0.isPressed()){
+            balls[0] = 'O';
+        }
+        else {
+            balls[0] = 'X';
+        }
+        if (ball1.isPressed()){
+            balls[1] = 'O';
+        }
+        else {
+            balls[1] = 'X';
+        }
+        if (ball2.isPressed()){
+            balls[2] = 'O';
+        }
+        else {
+            balls[2] = 'X';
+        }
+    }
+
     public void log() {
         telemetry.addData("State", state);
         telemetry.addData("Balls", Arrays.toString(balls));

@@ -14,6 +14,7 @@ public abstract class Bot extends Component {
         super(telemetry);
         launcher = new Launcher(telemetry, opMode.hardwareMap);
         storage = new Storage(telemetry, opMode.hardwareMap);
+        findBalls();
     }
 
     public void stopLauncher(){
@@ -26,6 +27,15 @@ public abstract class Bot extends Component {
 
     public void stopStorage(){storage.stop();}
 
+    public int getState(){
+        return storage.getState();
+    }
+
+    public char[] getBalls() { return storage.getBalls();}
+
+    public void findBalls(){
+        storage.findBalls();
+    }
 //    public void kickerLaunch()
 //    {
 //        kicker.setPositionTicks(kickerLaunchPosition);
