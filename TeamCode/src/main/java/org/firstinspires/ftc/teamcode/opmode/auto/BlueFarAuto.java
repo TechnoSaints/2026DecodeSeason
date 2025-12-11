@@ -14,7 +14,6 @@ import org.firstinspires.ftc.teamcode.common.AutoBot;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
 @Autonomous
-@Disabled
 
 public class BlueFarAuto extends OpMode{
     private Follower follower;
