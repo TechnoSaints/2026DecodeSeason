@@ -1,15 +1,9 @@
 package org.firstinspires.ftc.teamcode.opmode;
 
 
-import com.pedropathing.ftc.InvertedFTCCoordinates;
-import com.pedropathing.ftc.PoseConverter;
 import com.pedropathing.geometry.Pose;
-import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
-
-import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 
 public class FieldLocations {
-
     public static Pose startPose, goalPose, goalStartPose, shortShotPose, stack1SetupPose, stack1FinishPose,
             stack2SetupPose, stack2FinishPose, stack3SetupPose, stack3FinishPose, longShotPose, longStartPose, basePose;
     // Right side poses

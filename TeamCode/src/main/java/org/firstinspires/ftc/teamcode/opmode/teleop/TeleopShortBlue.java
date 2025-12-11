@@ -9,17 +9,17 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.common.TeleopBot;
 
 @Config
-@TeleOp(name = "Teleop - No Odo", group = "Linear OpMode")
-public class TeleopNoOdo extends LinearOpMode {
+@TeleOp(name = "TeleopShortBlue", group = "Linear OpMode")
+public class TeleopShortBlue extends LinearOpMode {
     private TeleopBot bot;
 
     @Override
     public void runOpMode() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        bot = new TeleopBot(this, telemetry);
+        bot = new TeleopBot(this, telemetry, startPose, goalPose);
 
         waitForStart();
         while (opModeIsActive() && !isStopRequested()) {
             bot.processGamepadInput(gamepad1);
             bot.update();
-    }}}
+        }}}

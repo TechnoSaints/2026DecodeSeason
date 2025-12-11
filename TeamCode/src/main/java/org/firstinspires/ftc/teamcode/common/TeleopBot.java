@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.common;
 
-import com.pedropathing.ftc.InvertedFTCCoordinates;
-import com.pedropathing.ftc.PoseConverter;
 import com.pedropathing.geometry.Pose;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -31,17 +29,15 @@ public class TeleopBot extends Bot {
     public TeleopBot(OpMode opMode, Telemetry telemetry, Pose startPose, Pose goalPose) {
         super(opMode, telemetry);
         drivetrain = new Drivetrain(opMode.hardwareMap, telemetry, new DrivetrainData(), new GoBilda435DcMotorData());
-        Pose2D ftcStandard = PoseConverter.poseToPose2D(startPose, InvertedFTCCoordinates.INSTANCE);
         pinpoint = opMode.hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint");
         pinpoint.setOffsets(2.25,-7, DistanceUnit.INCH);
         pinpoint.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
         pinpoint.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD,
                 GoBildaPinpointDriver.EncoderDirection.FORWARD);
         pinpoint.resetPosAndIMU();
-        pinpoint.setPosition(ftcStandard);
+        pinpoint.setPosition(startPose);
         this.goalPose = goalPose;
         buttonTimer.reset();
-
     }
 
     private boolean buttonPushable() {

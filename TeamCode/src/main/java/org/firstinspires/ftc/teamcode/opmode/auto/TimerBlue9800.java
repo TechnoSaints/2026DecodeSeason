@@ -1,16 +1,16 @@
-package org.firstinspires.ftc.teamcode.opmode.teleop;
+package org.firstinspires.ftc.teamcode.opmode.auto;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.common.TeleopBot;
 
 @Config
-@TeleOp(name = "Teleop - No Odo", group = "Linear OpMode")
-public class TeleopNoOdo extends LinearOpMode {
+@Autonomous(name = "Blue9800", group = "Linear OpMode")
+public class TimerBlue9800 extends LinearOpMode {
     private TeleopBot bot;
 
     @Override
@@ -20,6 +20,12 @@ public class TeleopNoOdo extends LinearOpMode {
 
         waitForStart();
         while (opModeIsActive() && !isStopRequested()) {
-            bot.processGamepadInput(gamepad1);
+            bot.move(-0.5,0,0);
+            sleep(1000);
+            bot.move(0,0,0);
+            bot.move(0,-0.5,0);
+            sleep(1500);
+            bot.move(0,0,0);
             bot.update();
-    }}}
+        }}}
+

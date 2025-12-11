@@ -9,8 +9,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.common.TeleopBot;
 
 @Config
-@TeleOp(name = "Teleop - No Odo", group = "Linear OpMode")
-public class TeleopNoOdo extends LinearOpMode {
+@TeleOp(name = "TeleopShortRed", group = "Linear OpMode")
+public class TeleopShortRed extends LinearOpMode {
     private TeleopBot bot;
 
     @Override
@@ -22,4 +22,4 @@ public class TeleopNoOdo extends LinearOpMode {
         while (opModeIsActive() && !isStopRequested()) {
             bot.processGamepadInput(gamepad1);
             bot.update();
-    }}}
+        }}}

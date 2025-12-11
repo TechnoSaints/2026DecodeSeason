@@ -127,7 +127,7 @@ public class Drivetrain extends Component {
     }
 
     public double getHeading() {
-        return pinpoint.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
+        return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
     }
 
     public double getSteeringCorrection(double headingError, double gain) {
