@@ -29,11 +29,10 @@ public class ShortRedAuto extends AutoOpMode {
             // Shoot three balls after move is finished
             case 1:
                 if (!bot.followerIsBusy()) {
-                    if (controlTimer.milliseconds() > 250) {
+                    if (controlTimer.milliseconds() > 350) {
                         telemetry.addLine("I Have REACHED this CASE!");
                         telemetry.update();
                         bot.stickLaunch();
-                        bot.pusherStart();
                         controlTimer.reset();
                         setPathState(2);
                     }
@@ -42,10 +41,10 @@ public class ShortRedAuto extends AutoOpMode {
 
             case 2:
                 if (!bot.followerIsBusy()) {
-                    if (controlTimer.milliseconds() > 3000) {
+                    if (controlTimer.milliseconds() > 1000) {
                         bot.stickLoad();
+                        bot.pusherStart();
                         controlTimer.reset();
-                        bot.stopPusher();
                         setPathState(3);
                     }
                 }
@@ -53,30 +52,52 @@ public class ShortRedAuto extends AutoOpMode {
 
             case 3:
                 if (!bot.followerIsBusy()) {
-                    if (controlTimer.milliseconds() > 1000) {
+                    if (controlTimer.milliseconds() > 1500) {
+                        bot.stopPusher();
                         bot.stickLaunch();
                         controlTimer.reset();
                         setPathState(4);
                     }
                 }
                 break;
-            // Move to stack1 setup
+
             case 4:
-                if (controlTimer.milliseconds() > 250) {
-                    bot.followPath(Paths.shortShotToStack1Setup, false);
-                }
-                setPathState(5);
-                break;
-/*
-            // Turn on rollers and move to stack1 finish after move is finished
-            case 3:
                 if (!bot.followerIsBusy()) {
-                    // Turn on rollers
-                    bot.followPath(Paths.stack1SetupToStack1Finish, false);
-                    setPathState(4);
+                    if (controlTimer.milliseconds() > 1000) {
+                        bot.stickLoad();
+                        bot.pusherStart();
+                        controlTimer.reset();
+                        setPathState(5);
+                    }
                 }
                 break;
 
+            case 5:
+                if (!bot.followerIsBusy()) {
+                    if (controlTimer.milliseconds() > 1500) {
+                        bot.stopPusher();
+                        bot.stickLaunch();
+                        controlTimer.reset();
+                        setPathState(6);
+                    }
+                }
+                break;
+            // Move to stack1 setup
+            case 6:
+                bot.followPath(Paths.shortShotToStack1Setup, false);
+                setPathState(7);
+                break;
+
+            // Turn on rollers and move to stack1 finish after move is finished
+            case 7:
+                if (!bot.followerIsBusy()) {
+                    bot.pusherStart();
+                    bot.intakeForward();
+                    bot.followPath(Paths.stack1SetupToStack1Finish, false);
+                    setPathState(8);
+                }
+                break;
+/*
             // Do additional stuff, if needed, after move is finished
             case 4:
                 if (!bot.followerIsBusy()) {
