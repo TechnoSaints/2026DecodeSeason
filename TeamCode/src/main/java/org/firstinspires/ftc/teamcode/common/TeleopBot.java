@@ -17,7 +17,7 @@ public class TeleopBot extends Bot {
     private double driveAxial = 0.0;
     private double driveStrafe = 0.0;
     private double driveYaw = 0.0;
-    private int position = 1;
+    private int kickerState = 1;
     private boolean kickerWaiting = false;
     private ElapsedTime kickerTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     private ElapsedTime buttonTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
@@ -80,20 +80,17 @@ public class TeleopBot extends Bot {
         } else if (gamepad.a) {
             intakeStop();
         }
-
-
-        if ((gamepad.x) && (position == 1)) {
-            position = 2;
+        
+        if ((gamepad.x) && (kickerState == 1)) {
             kickerLoad();
-        } else if ((gamepad.x) && (position == 2)) {
-            position = 3;
+            kickerState = 2;
+        } else if ((gamepad.x) && (kickerState == 2)) {
             kickerLaunch();
             kickerTimer.reset();
-            kickerWaiting = false;
-        } else if ((kickerTimer.milliseconds() > 3000) && (kickerWaiting == false)) {
-            position = 1;
+            kickerState = 3;
+        } else if ((kickerTimer.milliseconds() > 3000) && (kickerState == 3)) {
             kickerGate();
-            kickerWaiting = true;
+            kickerState = 1;
         }
     }
     public void setOdoPosition(Pose2D position){
