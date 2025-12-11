@@ -79,11 +79,11 @@ public class TeleopBot extends Bot {
             launcherStop();
         }
 
-        if (gamepad.y) {
+        if (gamepad.a) {
             intakeForward();
-        } else if (gamepad.b) {
+        } else if (gamepad.y) {
             intakeReverse();
-        } else if (gamepad.a) {
+        } else if (gamepad.b) {
             intakeStop();
         }
         
