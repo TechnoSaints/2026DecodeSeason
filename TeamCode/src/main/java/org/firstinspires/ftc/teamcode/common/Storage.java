@@ -4,6 +4,7 @@ import android.graphics.Color;
 
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -22,6 +23,8 @@ public class Storage extends Component {
     private TouchSensor ball0,  ball1, ball2;
     public int state = 0;
     private ElapsedTime timer;
+    private static final int INTAKE_DELAY_MS = 250;
+    private static final int SHOOT_DELAY_MS = 100;
     private char[] balls = new char[3]; // these balls are massive - Nathaniel Hoaglen aden's king
 
     public Storage(Telemetry telemetry, HardwareMap hardwareMap) {
@@ -32,6 +35,7 @@ public class Storage extends Component {
         lowerRoller = hardwareMap.get(DcMotorEx.class, "lowerRoller");
         upperRoller = hardwareMap.get(CRServo.class, "upperRoller");
         lowerRoller.setDirection(DcMotorSimple.Direction.REVERSE);
+        lowerRoller.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intake = hardwareMap.get(DcMotorEx.class, "intake");
         ball0 = hardwareMap.get(TouchSensor.class, "ball0");
         ball1 = hardwareMap.get(TouchSensor.class, "ball1");
@@ -69,13 +73,14 @@ public class Storage extends Component {
                 }
                 break;
             case 3:
-                if (timer.milliseconds() > 150){
+                if (timer.milliseconds() > INTAKE_DELAY_MS){
                     balls[0] = 'O';
                     state = 4;
                 }
+                break;
             case 4:
                 intake.setPower(1);
-                lowerRoller.setPower(1);
+                lowerRoller.setPower(0.5);
                 upperRoller.setPower(0);
                 state = 5;
                 break;
@@ -118,12 +123,13 @@ public class Storage extends Component {
                 }
                 break;
             case -4:
-                if (timer.milliseconds() > 150){
+                if (timer.milliseconds() > SHOOT_DELAY_MS){
                     state = -5;
                 }
+                break;
             case -5:
                 intake.setPower(1);
-                lowerRoller.setPower(1);
+                lowerRoller.setPower(0.5);
                 upperRoller.setPower(0);
                 state = -6;
                         break;
@@ -154,7 +160,7 @@ public class Storage extends Component {
                 }
                 break;
             case -10:
-                if (timer.milliseconds() > 150){
+                if (timer.milliseconds() > SHOOT_DELAY_MS){
                     balls[1] = 'X';
                     state = 0;
                 }
