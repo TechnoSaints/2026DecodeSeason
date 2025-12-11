@@ -21,10 +21,14 @@ public class EmergencyAuto extends LinearOpMode {
         bot = new TeleopBot(this, telemetry);
         waitForStart();
         if(opModeIsActive() && !isStopRequested()) {
-            bot.setLauncherShortShot();
+            //bot.setLauncherShortShot();
             drivetrain.moveStraight(-60);
             drivetrain.turn(-1);
-            bot.stickLaunch();
+            //bot.stickLaunch();
+            drivetrain.turn(-25);
+            drivetrain.strafe(3);
+            //Turn On Intake
+            drivetrain.moveStraight(-36);
         }
 
     }
