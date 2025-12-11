@@ -14,7 +14,7 @@ public class TeleopBotSimple extends Component {
     private double driveYaw = 0.0;
     public TeleopBotSimple(OpMode opMode, Telemetry telemetry) {
         super(telemetry);
-        drivetrain = new Drivetrain(opMode.hardwareMap, telemetry, new DrivetrainData(), new GoBilda435DcMotorData());
+        drivetrain = new Drivetrain(opMode, opMode.hardwareMap, telemetry, new DrivetrainData(), new GoBilda435DcMotorData());
     }
 
     public void processDrivetrainInput(Gamepad gamepad) {

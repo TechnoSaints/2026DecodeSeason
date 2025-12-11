@@ -10,7 +10,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.Range;
-
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.DrivetrainData;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.MotorData;
@@ -22,47 +21,118 @@ public class Drivetrain extends Component {
     private final DcMotorEx rightFrontDrive;
     private final DcMotorEx leftBackDrive;
     private final DcMotorEx rightBackDrive;
-
     private final double maxFastPower;
     private final double maxMediumPower;
     private final double maxSlowPower;
+    private static OpMode opMode;
 
+    // *** ADDED CONSTANTS FOR ENCODER CALCULATIONS ***
+    // These values are placeholders; you must verify them for your specific robot hardware.
+    static final double COUNTS_PER_MOTOR_REV = 537.7;  // Gobilda 19.2:1 Yellow Jacket motors
+    static final double DRIVE_GEAR_REDUCTION = 1.0;     // No external gear reduction
+    static final double WHEEL_DIAMETER_INCHES = 4.09448819;   // Diameter of your robot's wheels
+    static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
+            (WHEEL_DIAMETER_INCHES * 3.1415);
+    static final double DRIVE_SPEED = 0.6; // Default autonomous drive speed
 
-    public Drivetrain(HardwareMap hardwareMap, Telemetry telemetry, DrivetrainData drivetrainData, MotorData motorData) {
+    public Drivetrain(OpMode opMode, HardwareMap hardwareMap, Telemetry telemetry, DrivetrainData drivetrainData, MotorData motorData) {
         super(telemetry);
         maxFastPower = drivetrainData.maxFastTeleopPower;
         maxMediumPower = drivetrainData.maxMediumTeleopPower;
         maxSlowPower = drivetrainData.maxSlowTeleopPower;
-
         leftFrontDrive = hardwareMap.get(DcMotorEx.class, drivetrainData.leftFrontMotorName);
         leftBackDrive = hardwareMap.get(DcMotorEx.class, drivetrainData.leftRearMotorName);
         rightFrontDrive = hardwareMap.get(DcMotorEx.class, drivetrainData.rightFrontMotorName);
         rightBackDrive = hardwareMap.get(DcMotorEx.class, drivetrainData.rightRearMotorName);
-
         leftFrontDrive.setDirection(drivetrainData.leftFrontMotorDirection);
         leftBackDrive.setDirection(drivetrainData.leftRearMotorDirection);
         rightFrontDrive.setDirection(drivetrainData.rightFrontMotorDirection);
         rightBackDrive.setDirection(drivetrainData.rightRearMotorDirection);
+        this.opMode = opMode;
 
         setBrakingOn();
 
-        // *** ENABLE ENCODERS ***
-        leftFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        leftBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        leftFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        leftBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        // *** ENABLE ENCODERS FOR AUTONOMOUS MODES ***
+        setRunMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
+
+    // Helper method to set run mode for all motors
+    private void setRunMode(DcMotor.RunMode mode) {
+        leftFrontDrive.setMode(mode);
+        rightFrontDrive.setMode(mode);
+        leftBackDrive.setMode(mode);
+        rightBackDrive.setMode(mode);
+    }
+
+    // *** ADDED METHOD 1: Move Straight (Axial) ***
+    public void moveStraight(double inches) {
+        // Simple implementation assuming forward is positive axial for all wheels
+        moveByEncoder(inches, 0, 0, DRIVE_SPEED);
+    }
+
+    // *** ADDED METHOD 2: Strafe (Lateral) ***
+    public void strafe(double inches) {
+        // Simple implementation for strafing
+        moveByEncoder(0, inches, 0, DRIVE_SPEED);
+    }
+
+    // *** ADDED METHOD 3: Turn (Yaw) ***
+    public void turn(double inches) {
+        // Turning is treated as an arc/distance for simplicity in this encoder example
+        // (You might want a separate angular PID turn for actual field navigation)
+        moveByEncoder(0, 0, inches, DRIVE_SPEED);
+    }
+
+    // Core method for encoder movements
+    private void moveByEncoder(double axialInches, double strafeInches, double yawInches, double speed) {
+        int leftFrontTarget;
+        int rightFrontTarget;
+        int leftBackTarget;
+        int rightBackTarget;
+
+        // Calculate targets based on the current position and desired change in inches
+        leftFrontTarget = leftFrontDrive.getCurrentPosition() + (int) ((axialInches + strafeInches + yawInches) * COUNTS_PER_INCH);
+        rightFrontTarget = rightFrontDrive.getCurrentPosition() + (int) ((axialInches - strafeInches - yawInches) * COUNTS_PER_INCH);
+        leftBackTarget = leftBackDrive.getCurrentPosition() + (int) ((axialInches - strafeInches + yawInches) * COUNTS_PER_INCH);
+        rightBackTarget = rightBackDrive.getCurrentPosition() + (int) ((axialInches + strafeInches - yawInches) * COUNTS_PER_INCH);
+
+
+        telemetry.addData("leftFrontTarget", leftFrontTarget);
+        // Set Target Position
+        leftFrontDrive.setTargetPosition(leftFrontTarget);
+        rightFrontDrive.setTargetPosition(rightFrontTarget);
+        leftBackDrive.setTargetPosition(leftBackTarget);
+        rightBackDrive.setTargetPosition(rightBackTarget);
+
+        // Switch to RUN_TO_POSITION mode
+        setRunMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        // Start motion
+        leftFrontDrive.setPower(Math.abs(speed));
+        rightFrontDrive.setPower(Math.abs(speed));
+        leftBackDrive.setPower(Math.abs(speed));
+        rightBackDrive.setPower(Math.abs(speed));
+
+        // Note: In a real autonomous OpMode, you must add a loop
+        // to wait for the motors to reach the target position.
+        // The `while (opModeIsActive() && (leftFrontDrive.isBusy() || ...))` loop
+        // is typically included in the LinearOpMode that calls this method.
+
+        while ((leftBackDrive.isBusy() || rightBackDrive.isBusy() || leftFrontDrive.isBusy() || rightFrontDrive.isBusy()) && !(opMode instanceof LinearOpMode && ((LinearOpMode) opMode).isStopRequested())) {
+
+        }
+    }
+
 
     public void creepDirection(double axial, double strafe, double yaw) {
         moveDirection(axial * maxSlowPower, strafe * maxSlowPower, yaw * maxSlowPower);
     }
 
     public void moveDirection(double axial, double strafe, double yaw) {
+        // Ensure that manual movement methods put motors back into the correct mode for teleop
+        setRunMode(DcMotor.RunMode.RUN_USING_ENCODER); // Or RUN_WITHOUT_ENCODER if that's preferred for teleop control
+
         // Calculate wheel powers.
         double leftFrontPower = axial + strafe + yaw;
         double rightFrontPower = axial - strafe - yaw;
@@ -73,7 +143,6 @@ public class Drivetrain extends Component {
         double max = Math.max(Math.abs(leftFrontPower), Math.abs(rightFrontPower));
         max = Math.max(max, Math.abs(leftBackPower));
         max = Math.max(max, Math.abs(rightBackPower));
-
         if (max > 1.0) {
             leftFrontPower /= max;
             rightFrontPower /= max;
@@ -85,7 +154,9 @@ public class Drivetrain extends Component {
         rightFrontDrive.setPower(rightFrontPower * maxFastPower);
         leftBackDrive.setPower(leftBackPower * maxFastPower);
         rightBackDrive.setPower(rightBackPower * maxFastPower);
-//        log();
+        // log();
+
+
     }
 
     public void stop() {
@@ -93,6 +164,8 @@ public class Drivetrain extends Component {
         leftBackDrive.setPower(0.0);
         rightFrontDrive.setPower(0.0);
         rightBackDrive.setPower(0.0);
+        // Stop also typically involves setting the mode back to RUN_USING_ENCODER in autonomous
+        setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     private void setBrakingOn() {
@@ -109,7 +182,8 @@ public class Drivetrain extends Component {
         rightBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
     }
 
-    private void log() {
+
+    public void log() {
         telemetry.addData("leftFrontDrive Position: ", leftFrontDrive.getCurrentPosition());
         telemetry.addData("leftFrontDrive Target: ", leftFrontDrive.getTargetPosition());
         telemetry.addData("leftFrontDrive Velocity: ", leftFrontDrive.getVelocity());
