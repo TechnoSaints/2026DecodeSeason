@@ -20,13 +20,13 @@ public class TeleopBotOld extends BotNew {
 
     public TeleopBotOld(OpMode opMode, Telemetry telemetry) {
         super(opMode, telemetry);
-        drivetrain = new Drivetrain(opMode.hardwareMap, telemetry, new DrivetrainData(), new GoBilda435DcMotorData());
+        drivetrain = new Drivetrain(opMode, opMode.hardwareMap, telemetry, new DrivetrainData(), new GoBilda435DcMotorData());
         buttonTimer.reset();
     }
 
     public TeleopBotOld(OpMode opMode, Telemetry telemetry, Pose startPose, boolean red) {
         super(opMode, telemetry);
-        drivetrain = new Drivetrain(opMode.hardwareMap, telemetry, new DrivetrainData(), new GoBilda435DcMotorData());
+        drivetrain = new Drivetrain(opMode, opMode.hardwareMap, telemetry, new DrivetrainData(), new GoBilda435DcMotorData());
         drivetrain.setOdoStartingPose(startPose);
         drivetrain.loop();
         buttonTimer.reset();

@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.common;
 import com.arcrobotics.ftclib.controller.PIDFController;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.Pose;
+import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -15,6 +16,7 @@ import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.DrivetrainData;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.MotorData;
 import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
@@ -30,8 +32,12 @@ public class Drivetrain extends Component {
     private final double maxSlowPower;
     private Follower follower;
     private HardwareMap hardwareMap;
+    private GoBildaPinpointDriver pinpoint;
+    private final double driveGain = 0.03;
+    private double ticksPerInch;
+    private static OpMode opMode;
 
-    public Drivetrain(HardwareMap hardwareMap, Telemetry telemetry, DrivetrainData drivetrainData, MotorData motorData) {
+    public Drivetrain(OpMode opMode, HardwareMap hardwareMap, Telemetry telemetry, DrivetrainData drivetrainData, MotorData motorData) {
         super(telemetry);
         maxFastPower = drivetrainData.maxFastTeleopPower;
         maxMediumPower = drivetrainData.maxMediumTeleopPower;
@@ -39,6 +45,7 @@ public class Drivetrain extends Component {
         follower = Constants.createFollower(hardwareMap);
         follower.update();
         this.hardwareMap = hardwareMap;
+        this.opMode = opMode;
 
         leftFrontDrive = hardwareMap.get(DcMotorEx.class, drivetrainData.leftFrontMotorName);
         leftBackDrive = hardwareMap.get(DcMotorEx.class,drivetrainData.leftRearMotorName);
@@ -49,7 +56,13 @@ public class Drivetrain extends Component {
         leftBackDrive.setDirection(drivetrainData.leftRearMotorDirection);
         rightFrontDrive.setDirection(drivetrainData.rightFrontMotorDirection);
         rightBackDrive.setDirection(drivetrainData.rightRearMotorDirection);
+        pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint");
+        pinpoint.resetPosAndIMU();
         setBrakingOn();
+    }
+
+    public void pinpointUpdate(){
+        pinpoint.update();
     }
 
     public void creepDirection(double axial, double strafe, double yaw) {
@@ -103,6 +116,20 @@ public class Drivetrain extends Component {
         rightBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
     }
 
+    private void setRunToPosition(){
+        leftFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    }
+
+    private void setRunUsingEncoder(){
+        leftFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
+
     public void setOdoStartingPose(Pose startPose){
         follower.setStartingPose(startPose);
         follower.update();
@@ -142,6 +169,96 @@ public class Drivetrain extends Component {
 
     public Pose getPose(){
         return follower.getPose();
+    }
+
+    public double getHeading(){
+        return pinpoint.getHeading(AngleUnit.DEGREES);
+    }
+
+    public void moveForwardForDistance(double distance){
+        moveForwardForDistance(distance, maxMediumPower);
+    }
+
+    public double getHeadingError(double targetHeading) {
+        return (targetHeading - getHeading());
+    }
+
+    public double getSteeringCorrection(double headingError, double gain) {
+        // Determine the heading current error
+
+        // Normalize the error to be within +/- 180 degrees
+        while (headingError > 180) headingError -= 360;
+        while (headingError <= -180) headingError += 360;
+
+        // Multiply the error by the gain to determine the required steering correction/  Limit the result to +/- 1.0
+        return Range.clip(headingError * gain, -1, 1);
+    }
+
+    private void moveForwardForDistance(double distance, double driveSpeed) {
+        int targetCounts = (int) (-distance * ticksPerInch);
+        int leftFrontTarget = 0;
+        int leftBackTarget = 0;
+        int rightFrontTarget = 0;
+        int rightBackTarget = 0;
+        double turnSpeed = 0;
+        double headingError = 0;
+        double targetHeading = pinpoint.getHeading(AngleUnit.DEGREES);
+
+        leftFrontTarget = leftFrontDrive.getCurrentPosition() + targetCounts;
+        leftBackTarget = leftBackDrive.getCurrentPosition() + targetCounts;
+        rightFrontTarget = rightFrontDrive.getCurrentPosition() + targetCounts;
+        rightBackTarget = rightBackDrive.getCurrentPosition() + targetCounts;
+
+        leftFrontDrive.setTargetPosition(leftFrontTarget);
+        leftBackDrive.setTargetPosition(leftBackTarget);
+        rightFrontDrive.setTargetPosition(rightFrontTarget);
+        rightBackDrive.setTargetPosition(rightBackTarget);
+
+        setRunToPosition();
+
+        while (leftFrontDrive.isBusy() && leftBackDrive.isBusy() && rightFrontDrive.isBusy() && rightBackDrive.isBusy() && !(opMode instanceof LinearOpMode && ((LinearOpMode) opMode).isStopRequested())) {
+            //while (leftFrontDrive.isBusy()) {
+            headingError = getHeadingError(targetHeading);
+            // Determine required steering to keep on heading
+            turnSpeed = getSteeringCorrection(headingError, driveGain);
+
+            // if driving in reverse, the motor correction also needs to be reversed
+            if (distance < 0)
+                turnSpeed *= -1.0;
+
+            // Apply the turning correction to the current driving speed.
+            moveDirection(driveSpeed, 0.0, 0.0);
+            //           log();
+        }
+        stop();
+        setRunUsingEncoder();
+    }
+
+    public void strafeRightForDistance(double distance) {
+        int targetCounts = (int) (-distance * ticksPerInch);
+        int leftFrontTarget = 0;
+        int leftBackTarget = 0;
+        int rightFrontTarget = 0;
+        int rightBackTarget = 0;
+        double strafeSpeed = maxMediumPower;
+
+        leftFrontTarget = leftFrontDrive.getCurrentPosition() + targetCounts;
+        leftBackTarget = leftBackDrive.getCurrentPosition() - targetCounts;
+        rightFrontTarget = rightFrontDrive.getCurrentPosition() - targetCounts;
+        rightBackTarget = rightBackDrive.getCurrentPosition() + targetCounts;
+
+        leftFrontDrive.setTargetPosition(leftFrontTarget);
+        leftBackDrive.setTargetPosition(leftBackTarget);
+        rightFrontDrive.setTargetPosition(rightFrontTarget);
+        rightBackDrive.setTargetPosition(rightBackTarget);
+
+        setRunToPosition();
+
+        while (leftFrontDrive.isBusy() && leftBackDrive.isBusy() && rightFrontDrive.isBusy() && rightBackDrive.isBusy() && !(opMode instanceof LinearOpMode && ((LinearOpMode) opMode).isStopRequested())) {
+            moveDirection(0, strafeSpeed, 0);
+        }
+        stop();
+        setRunUsingEncoder();
     }
 
     private void log() {

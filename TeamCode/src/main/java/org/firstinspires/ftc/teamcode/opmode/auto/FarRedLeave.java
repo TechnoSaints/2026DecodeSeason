@@ -18,7 +18,7 @@ public class FarRedLeave extends LinearOpMode {
     public void runOpMode() throws InterruptedException{
         drivetrainData = new DrivetrainData();
         motorData = new GoBilda435DcMotorData();
-        drivetrain = new Drivetrain(hardwareMap, telemetry, drivetrainData, motorData);
+        drivetrain = new Drivetrain(this, hardwareMap, telemetry, drivetrainData, motorData);
         waitForStart();
         drivetrain.moveDirection(-1, -1.0, 0.0);
         sleep(2000);
