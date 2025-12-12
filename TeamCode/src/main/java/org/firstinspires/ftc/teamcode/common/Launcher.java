@@ -1,10 +1,8 @@
 package org.firstinspires.ftc.teamcode.common;
 
-import com.arcrobotics.ftclib.geometry.Pose2d;
 import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -13,11 +11,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda6000DcMotorData;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.MotorData;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints.LauncherSettings;
-import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
 
 public class Launcher extends Component {
     private DcMotorEx leftLauncher, rightLauncher;
-    private Servo leftAimer, rightAimer;
     private double maxVelocity, maxPosition, minPosition;
     private MotorData motorData = new GoBilda6000DcMotorData();
     private double targetVelocity;
