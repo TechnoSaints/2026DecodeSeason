@@ -13,7 +13,6 @@ import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda4
 
 public class TeleopBot extends Bot {
     private final Drivetrain drivetrain;
-    private final GoBildaPinpointDriver pinpoint;
     private double driveAxial = 0.0;
     private double driveStrafe = 0.0;
     private double driveYaw = 0.0;
@@ -22,12 +21,11 @@ public class TeleopBot extends Bot {
     public TeleopBot(OpMode opMode, Telemetry telemetry) {
         super(opMode, telemetry);
         drivetrain = new Drivetrain(opMode, opMode.hardwareMap, telemetry, new DrivetrainData(), new GoBilda435DcMotorData());
-        pinpoint = opMode.hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint");
-        pinpoint.setOffsets(-2.5,-4.5, DistanceUnit.INCH);
-        pinpoint.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
-        pinpoint.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD,
+        drivetrain.getPinpoint().setOffsets(-2.5,-4.5, DistanceUnit.INCH);
+        drivetrain.getPinpoint().setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
+        drivetrain.getPinpoint().setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD,
                 GoBildaPinpointDriver.EncoderDirection.FORWARD);
-        pinpoint.resetPosAndIMU();
+        drivetrain.getPinpoint().resetPosAndIMU();
     }
 
     public void processGamepadInput(Gamepad gamepad) {
@@ -40,9 +38,9 @@ public class TeleopBot extends Bot {
         } else if (gamepad.dpad_right) {
             drivetrain.creepDirection(0.0, 1.0, 0.0);
         } else {
-            driveAxial = -gamepad.left_stick_y;
-            driveStrafe = gamepad.left_stick_x;
-            driveYaw = gamepad.right_stick_x;
+            driveAxial = gamepad.left_stick_y;
+            driveStrafe = -gamepad.left_stick_x;
+            driveYaw = -gamepad.right_stick_x;
             if ((Math.abs(driveAxial) < 0.2) && (Math.abs(driveStrafe) < 0.2) && (Math.abs(driveYaw) < 0.2)) {
                 drivetrain.stop();
             } else
@@ -72,20 +70,49 @@ public class TeleopBot extends Bot {
     }
 
     public void setOdoPosition(Pose2D position){
-        pinpoint.setPosition(position);
+        drivetrain.getPinpoint().setPosition(position);
     }
 
     public void updateLauncher(boolean red, boolean changeTarget){
-        launcher.update(pinpoint.getPosition(), red, changeTarget);
+        launcher.update(drivetrain.getPinpoint().getPosition(), red, changeTarget);
+    }
+
+    public void odoUpdate(){
+        drivetrain.loop();
     }
 
     public void teleopUpdate(boolean red){
         update();
-        pinpoint.update();
-        launcher.teleopDistanceLog(pinpoint.getPosition(), red);
+        drivetrain.getPinpoint().update();
+        launcher.teleopDistanceLog(drivetrain.getPinpoint().getPosition(), red);
     }
 
     public Pose2D getPosition(){
-        return pinpoint.getPosition();
+        return drivetrain.getPinpoint().getPosition();
+    }
+
+    public void moveStraight(double inches){
+        drivetrain.moveStraight(inches);
+    }
+
+    public void strafe(double inches){
+        drivetrain.strafe(inches);
+    }
+
+    public void turn (double degrees){
+        drivetrain.turn(degrees * ((double) 4 /15));
+    }
+
+    public void moveForwardForDistance(double inches){
+        drivetrain.moveForwardForDistance(inches);
+    }
+
+    public void strafeRightForDistance(double inches){
+        drivetrain.strafeRightForDistance(inches);
+    }
+
+    public void turnToHeading(double heading){
+        drivetrain.turnToHeading(heading);
+        drivetrain.turnToHeading(heading);
     }
 }

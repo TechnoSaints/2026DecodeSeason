@@ -33,7 +33,9 @@ public class Drivetrain extends Component {
     private Follower follower;
     private HardwareMap hardwareMap;
     private GoBildaPinpointDriver pinpoint;
+    private final double headingThreshold = 0.5;
     private final double driveGain = 0.03;
+    private final double turnGain = 0.02;
     private double ticksPerInch;
     private static OpMode opMode;
 
@@ -347,6 +349,48 @@ public class Drivetrain extends Component {
         }
         stop();
         setRunUsingEncoder();
+    }
+
+    public void turnToHeading(double targetHeading) {
+        double turnSpeed = maxMediumPower;
+        double headingError = getHeadingError(targetHeading);
+
+        // keep looping while we are still active, and not on heading.
+        while (Math.abs(headingError) > headingThreshold) {
+            headingError = getHeadingError(targetHeading);
+
+            // This section doesn't seem to work...
+
+
+            // Determine required steering to keep on heading
+            turnSpeed = getSteeringCorrection(headingError, turnGain);
+
+            // Clip the speed to the maximum permitted value.
+            turnSpeed = Range.clip(turnSpeed, -maxMediumPower, maxMediumPower);
+
+            // Pivot in place by applying the turning correction
+            moveDirection(0, 0, -turnSpeed);
+
+            /*if (getHeadingError(targetHeading) > headingError){
+                moveDirection(0, 0, -turnSpeed);
+            }
+            while (Math.abs(headingError) > headingThreshold && opMode.opModeIsActive() && !opMode.isStopRequested())
+            {*/
+            telemetry.addData("headingError: ", headingError);
+            telemetry.addData("turnSpeed: ", turnSpeed);
+            telemetry.addData("targetHeading", targetHeading);
+            telemetry.addData("currentPosition", getHeading());
+            telemetry.update();
+            //}
+        }
+        leftFrontDrive.setVelocity(0.0);
+        leftBackDrive.setVelocity(0.0);
+        rightFrontDrive.setVelocity(0.0);
+        rightBackDrive.setVelocity(0.0);
+    }
+
+    public GoBildaPinpointDriver getPinpoint(){
+        return pinpoint;
     }
 
     public void log() {
