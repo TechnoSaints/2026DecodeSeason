@@ -62,7 +62,7 @@ public class TeleopBot extends Bot {
             } else
                 drivetrain.moveDirection(driveAxial, driveStrafe, driveYaw);
         }
-/*
+
         if (gamepad.right_bumper) {
             setLauncherShortShot();
         } else if (gamepad.right_trigger > 0.2) {
@@ -72,7 +72,7 @@ public class TeleopBot extends Bot {
         } else if (gamepad.left_trigger > 0.2) {
             launcherStop();
         }
-*/
+
         if (gamepad.y) {
             intakeForward();
         } else if (gamepad.b) {
@@ -92,23 +92,6 @@ public class TeleopBot extends Bot {
             kickerGate();
             kickerState = 1;
         }
-    }
-    public void setOdoPosition(Pose2D position){
-        pinpoint.setPosition(position);
-    }
-
-    public void updateLauncher(boolean red, boolean changeTarget){
-        launcher.update(pinpoint.getPosition(), red, changeTarget);
-    }
-
-    public void teleopUpdate(boolean red){
-        update();
-        pinpoint.update();
-        launcher.teleopDistanceLog(pinpoint.getPosition(), red);
-    }
-
-    public Pose2D getPosition(){
-        return pinpoint.getPosition();
     }
 
 }

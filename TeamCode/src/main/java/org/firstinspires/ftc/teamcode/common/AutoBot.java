@@ -44,7 +44,7 @@ public class AutoBot extends Bot {
     }
 
     public boolean isBusy() {
-        return (super.isBusy() || followerIsBusy());
+        return (isBusy() || followerIsBusy());
     }
 
     public void update() {

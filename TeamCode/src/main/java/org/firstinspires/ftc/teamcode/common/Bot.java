@@ -3,13 +3,15 @@ package org.firstinspires.ftc.teamcode.common;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.hardware.rev.RevTouchSensor;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.common.servos.ServoSimple;
 
 public abstract class Bot extends Component {
-    protected Launcher launcher;
+    protected LauncherDouble launcher;
+
     private RollerMotor intake;
 
     private ServoSimple kicker;
@@ -22,17 +24,18 @@ public abstract class Bot extends Component {
 
     public Bot(OpMode opMode, Telemetry telemetry) {
         super(telemetry);
-        launcher = new Launcher(telemetry, opMode.hardwareMap);
+        launcher = new LauncherDouble(opMode.hardwareMap, telemetry);
         intake = new RollerMotor(opMode.hardwareMap, telemetry,"intake");
         kicker = new ServoSimple(opMode.hardwareMap, telemetry,"kicker");
-
     }
 
- /*   public void setLauncherShortShot() {
+    public void setLauncherShortShot()
+    {
         launcher.setShortShot();
     }
 
-    public void setLauncherLongShot() {
+    public void setLauncherLongShot()
+    {
         launcher.setLongShot();
     }
 
@@ -41,36 +44,38 @@ public abstract class Bot extends Component {
     }
     public void launcherStop()
     {
-
         launcher.stop();
-    } */
+    }
 
-    public void intakeForward() {
+    public void intakeForward()
+    {
         intake.forward();
     }
 
-    public void intakeReverse() {
+    public void intakeReverse()
+    {
         intake.reverse();
     }
 
-    public void intakeStop() {
+    public void intakeStop()
+    {
         intake.stop();
     }
 
 
-    public void kickerLaunch() {
+    public void kickerLaunch()
+    {
         kicker.setPositionTicks(kickerLaunchPosition);
     }
 
-    public void kickerLoad() {
+    public void kickerLoad()
+    {
         kicker.setPositionTicks(kickerLoadPosition);
     }
-    
+
     public void kickerGate(){kicker.setPositionTicks(kickerGatePosition);}
 
-    public boolean isBusy() {
-        return (false);
-    }
+
     public void update() {
     }
 }
