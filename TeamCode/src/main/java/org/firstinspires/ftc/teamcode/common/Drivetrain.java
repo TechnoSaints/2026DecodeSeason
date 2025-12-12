@@ -76,11 +76,28 @@ public class Drivetrain extends Component {
 //        log();
     }
 
+
     public void stop() {
         leftFrontDrive.setPower(0.0);
         leftBackDrive.setPower(0.0);
         rightFrontDrive.setPower(0.0);
         rightBackDrive.setPower(0.0);
+        // Stop also typically involves setting the mode back to RUN_USING_ENCODER in autonomous
+        setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
+
+    private void setRunToPosition(){
+        leftFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    }
+
+    private void setRunUsingEncoder(){
+        leftFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     private void setBrakingOn() {
