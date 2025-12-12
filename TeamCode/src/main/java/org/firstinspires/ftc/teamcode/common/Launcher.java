@@ -87,6 +87,18 @@ public class Launcher extends Component {
         }
     }
 
+    public void update(Pose botPose, boolean red, boolean changeTarget){
+        if (changeTarget){
+            target = !target;
+        }
+        if (target){
+            preloadFromDistance(distanceFromLauncher(botPose, red));
+        }
+        else {
+            stopLauncher();
+        }
+    }
+
     public void autoPreload(Pose pose, boolean red){
         preloadFromDistance(distanceFromLauncher(pose, red));
     }

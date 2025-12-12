@@ -24,7 +24,7 @@ public class TeleopBotSimple extends Component {
     // new constructor for odo in teleop
     public TeleopBotSimple(OpMode opMode, Telemetry telemetry, Pose pose) {
         super(telemetry);
-        drivetrain = new Drivetrain(opMode.hardwareMap, telemetry, new DrivetrainData(), new GoBilda435DcMotorData());
+        drivetrain = new Drivetrain(opMode, opMode.hardwareMap, telemetry, new DrivetrainData(), new GoBilda435DcMotorData());
         launcher = new Launcher(telemetry, opMode.hardwareMap);
         storage = new Storage(telemetry, opMode.hardwareMap);
         drivetrain.setOdoStartingPose(pose);
@@ -33,7 +33,7 @@ public class TeleopBotSimple extends Component {
     // legacy constructor for TeleopNoOdo
     public TeleopBotSimple(OpMode opMode, Telemetry telemetry) {
         super(telemetry);
-        drivetrain = new Drivetrain(opMode.hardwareMap, telemetry, new DrivetrainData(), new GoBilda435DcMotorData());
+        drivetrain = new Drivetrain(opMode, opMode.hardwareMap, telemetry, new DrivetrainData(), new GoBilda435DcMotorData());
         launcher = new Launcher(telemetry, opMode.hardwareMap);
         storage = new Storage(telemetry, opMode.hardwareMap);
     }
