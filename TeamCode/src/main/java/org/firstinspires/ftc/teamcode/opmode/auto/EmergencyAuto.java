@@ -22,13 +22,31 @@ public class EmergencyAuto extends LinearOpMode {
         waitForStart();
         if(opModeIsActive() && !isStopRequested()) {
             //bot.setLauncherShortShot();
-            drivetrain.moveStraight(-60);
-            drivetrain.turn(-1);
+            drivetrain.moveStraight(-57);
+            drivetrain.strafe(9);
             //bot.stickLaunch();
+            drivetrain.turn(-33);
+            // bot.intakeForward();
+            // bot.turnOnBlackWheel();
+            // sleep some time
+            // bot.turnOnBlackWheel();
+            drivetrain.moveStraight(-30);
+            drivetrain.moveStraight(30);
+            drivetrain.turn(33);
+            //launch balls
+            /*
+            drivetrain.moveStraight(-36);
             drivetrain.turn(-25);
             drivetrain.strafe(3);
-            //Turn On Intake
-            drivetrain.moveStraight(-36);
+            // turn on intake
+            // bot.intakeForward();
+            // bot.turnOnBlackWheel();
+            // sleep some time
+            // bot.turnOnBlackWheel();
+            drivetrain.strafe(3);
+            drivetrain.strafe(-6);
+            drivetrain.moveStraight(36); */
+
         }
 
     }
