@@ -119,6 +119,9 @@ public class Drivetrain extends Component {
         // The `while (opModeIsActive() && (leftFrontDrive.isBusy() || ...))` loop
         // is typically included in the LinearOpMode that calls this method.
 
+//        abstract void	setTargetPositionTolerance(int tolerance)	Sets the target positioning tolerance of this motor
+//        abstract int	getTargetPositionTolerance()	Returns the current target positioning tolerance of this motor
+
         while ((leftBackDrive.isBusy() || rightBackDrive.isBusy() || leftFrontDrive.isBusy() || rightFrontDrive.isBusy()) && !(opMode instanceof LinearOpMode && ((LinearOpMode) opMode).isStopRequested())) {
 
         }
