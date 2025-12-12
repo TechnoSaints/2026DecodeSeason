@@ -14,7 +14,7 @@ public abstract class Bot extends Component {
 
     private ServoSimple kicker;
 
-    double kickerLoadPosition = 0.57;
+    private double kickerLoadPosition = 0.57;
     private double kickerLaunchPosition = 0.26;
 
     private double kickerGatePosition = 0.37;
@@ -25,10 +25,6 @@ public abstract class Bot extends Component {
         launcher = new Launcher(telemetry, opMode.hardwareMap);
         intake = new RollerMotor(opMode.hardwareMap, telemetry,"intake");
         kicker = new ServoSimple(opMode.hardwareMap, telemetry,"kicker");
-
-    }
-
-    public void shoot(){
 
     }
 
@@ -51,11 +47,6 @@ public abstract class Bot extends Component {
 
     public void intakeForward() {
         intake.forward();
-    }
-    public void launcherStop()
-    {
-
-        launcher.stop();
     }
 
     public void intakeReverse() {
