@@ -40,7 +40,7 @@ public class Drivetrain extends Component {
 
     // *** ADDED CONSTANTS FOR ENCODER CALCULATIONS ***
     // These values are placeholders; you must verify them for your specific robot hardware.
-    static final double COUNTS_PER_MOTOR_REV = 537.7;  // Gobilda 19.2:1 Yellow Jacket motors
+    static final double COUNTS_PER_MOTOR_REV = 537.7;
     static final double DRIVE_GEAR_REDUCTION = 1.0;     // No external gear reduction
     static final double WHEEL_DIAMETER_INCHES = 4.09448819;   // Diameter of your robot's wheels
     static final double ticksPerInch = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
