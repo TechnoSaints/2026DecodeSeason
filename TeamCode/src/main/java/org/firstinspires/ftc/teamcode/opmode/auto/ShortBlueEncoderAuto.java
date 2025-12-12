@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.opmode.auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.common.Drivetrain;
@@ -11,8 +10,8 @@ import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda3
 import org.firstinspires.ftc.teamcode.opmode.teleop.TeleopBot;
 
 
-@Autonomous(name = "RedShortEncoderAuto", group = "Linear OpMode")
-public class EmergencyAuto extends LinearOpMode {
+@Autonomous(name = "BlueShortEncoderAuto", group = "Linear OpMode")
+public class ShortBlueEncoderAuto extends LinearOpMode {
     private static Drivetrain drivetrain;
     protected ElapsedTime controlTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     private static TeleopBot bot;
@@ -23,45 +22,75 @@ public class EmergencyAuto extends LinearOpMode {
         bot = new TeleopBot(this, telemetry);
         waitForStart();
         if(opModeIsActive() && !isStopRequested()) {
-            // moves to launch spot
+
+            //Turn on Motors
             bot.setLauncherShortShot();
-            //moves back 57 inches
+
+            //Move To Launch Spot
             drivetrain.moveStraight(-57);
             drivetrain.log();
-            // corrects for drift
-            drivetrain.turn(-1);
+            drivetrain.turn(2.5);
             telemetry.update();
-            //strafes right to aim
-            drivetrain.strafe(10);
+            drivetrain.strafe(-10);
+
+            //Launches First Ball
             drivetrain.log();
             telemetry.update();
             controlTimer.reset();
             bot.stickLaunch();
+            while(controlTimer.milliseconds() < 1250 && opModeIsActive()) {
+                idle();
+            }
+
+            //Loads Second Ball
+            bot.stickLoad();
+            bot.turnOnBlackWheel();
+            controlTimer.reset();
             while(controlTimer.milliseconds() < 1000 && opModeIsActive()) {
                 idle();
             }
 
-            // launches first 3 preloaded balls
-
-            /*
-            sleep(200);
-            bot.stickLoad();
-            bot.turnOnBlackWheel();
-            sleep(500);
+            //Launches Second  Ball
             bot.turnOffBlackWheel();
             bot.stickLaunch();
-            sleep(200);
-            drivetrain.turn(-33);
+            controlTimer.reset();
+            while(controlTimer.milliseconds() < 1250 && opModeIsActive()) {
+                idle();
+            }
+
+            //Loads Third Ball
+            bot.stickLoad();
+            bot.turnOnBlackWheel();
+            controlTimer.reset();
+            while(controlTimer.milliseconds() < 1000 && opModeIsActive()) {
+                idle();
+            }
+
+            //Launches Third Ball
+            bot.turnOffBlackWheel();
+            bot.stickLaunch();
+            controlTimer.reset();
+            while(controlTimer.milliseconds() < 1250 && opModeIsActive()) {
+                idle();
+            }
+
+            //Moves To First Line
+            drivetrain.turn(33);
+            bot.intakeForward();
+            bot.stickLoad();
+            drivetrain.strafe(-5);
+            bot.turnOnBlackWheel();
+            controlTimer.reset();
+            while(controlTimer.milliseconds() < 1000 && opModeIsActive()) {
+                idle();
+            }
+            drivetrain.moveStraightSlow(-36);
+            while(controlTimer.milliseconds() < 10000 && opModeIsActive()) {
+                idle();
+            }
+            bot.turnOffBlackWheel();
+
             /*
-            drivetrain.log();
-            telemetry.update();
-            // bot.intakeForward();
-            // bot.turnOnBlackWheel();
-            // sleep some time
-            // bot.turnOnBlackWheel();
-            drivetrain.moveStraight(-30);
-            drivetrain.log();
-            telemetry.update();
             drivetrain.moveStraight(30);
             drivetrain.log();
             telemetry.update();

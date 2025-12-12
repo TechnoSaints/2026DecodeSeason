@@ -34,6 +34,7 @@ public class Drivetrain extends Component {
     static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
     static final double DRIVE_SPEED = 0.6; // Default autonomous drive speed
+    static final double Drive_Slow_Speed = 0.125;
 
     public Drivetrain(OpMode opMode, HardwareMap hardwareMap, Telemetry telemetry, DrivetrainData drivetrainData, MotorData motorData) {
         super(telemetry);
@@ -84,6 +85,24 @@ public class Drivetrain extends Component {
         moveByEncoder(0, 0, inches, DRIVE_SPEED);
     }
 
+    public void moveStraightSlow(double inches) {
+        // Simple implementation assuming forward is positive axial for all wheels
+        moveByEncoder(inches, 0, 0, Drive_Slow_Speed);
+    }
+
+    // *** ADDED METHOD 2: Strafe (Lateral) ***
+    public void strafeSlow(double inches) {
+        // Simple implementation for strafing
+        moveByEncoder(0, inches, 0, Drive_Slow_Speed);
+    }
+
+    // *** ADDED METHOD 3: Turn (Yaw) ***
+    public void turnSlow(double inches) {
+        // Turning is treated as an arc/distance for simplicity in this encoder example
+        // (You might want a separate angular PID turn for actual field navigation)
+        moveByEncoder(0, 0, inches, Drive_Slow_Speed);
+    }
+
     // Core method for encoder movements
     private void moveByEncoder(double axialInches, double strafeInches, double yawInches, double speed) {
         int leftFrontTarget;
@@ -126,10 +145,12 @@ public class Drivetrain extends Component {
 //        abstract void	setTargetPositionTolerance(int tolerance)	Sets the target positioning tolerance of this motor
 //        abstract int	getTargetPositionTolerance()	Returns the current target positioning tolerance of this motor
 
-        while ((leftBackDrive.isBusy() || rightBackDrive.isBusy() || leftFrontDrive.isBusy() || rightFrontDrive.isBusy()) && !(opMode instanceof LinearOpMode && ((LinearOpMode) opMode).isStopRequested())) {
+        while ((leftBackDrive.isBusy() && rightBackDrive.isBusy() && leftFrontDrive.isBusy() && rightFrontDrive.isBusy()) && !(opMode instanceof LinearOpMode && ((LinearOpMode) opMode).isStopRequested())) {
 
         }
     }
+
+
 
 
     public void creepDirection(double axial, double strafe, double yaw) {
