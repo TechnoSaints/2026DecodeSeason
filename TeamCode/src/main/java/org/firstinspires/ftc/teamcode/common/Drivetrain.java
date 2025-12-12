@@ -1,10 +1,13 @@
 package org.firstinspires.ftc.teamcode.common;
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.DrivetrainData;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.MotorData;
 
@@ -122,6 +125,129 @@ public class Drivetrain extends Component {
         rightBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
     }
 
+    public void moveForwardForDistance(double distance){
+        moveForwardForDistance(distance, maxMediumPower);
+    }
+
+    public double getHeadingError(double targetHeading) {
+        return (targetHeading - getHeading());
+    }
+
+    public double getSteeringCorrection(double headingError, double gain) {
+        // Determine the heading current error
+
+        // Normalize the error to be within +/- 180 degrees
+        while (headingError > 180) headingError -= 360;
+        while (headingError <= -180) headingError += 360;
+
+        // Multiply the error by the gain to determine the required steering correction/  Limit the result to +/- 1.0
+        return Range.clip(headingError * gain, -1, 1);
+    }
+
+    private void moveForwardForDistance(double distance, double driveSpeed) {
+        int targetCounts = (int) (-distance * ticksPerInch);
+        int leftFrontTarget = 0;
+        int leftBackTarget = 0;
+        int rightFrontTarget = 0;
+        int rightBackTarget = 0;
+        double turnSpeed = 0;
+        double headingError = 0;
+        double targetHeading = pinpoint.getHeading(AngleUnit.DEGREES);
+
+        leftFrontTarget = leftFrontDrive.getCurrentPosition() + targetCounts;
+        leftBackTarget = leftBackDrive.getCurrentPosition() + targetCounts;
+        rightFrontTarget = rightFrontDrive.getCurrentPosition() + targetCounts;
+        rightBackTarget = rightBackDrive.getCurrentPosition() + targetCounts;
+
+        leftFrontDrive.setTargetPosition(leftFrontTarget);
+        leftBackDrive.setTargetPosition(leftBackTarget);
+        rightFrontDrive.setTargetPosition(rightFrontTarget);
+        rightBackDrive.setTargetPosition(rightBackTarget);
+
+        setRunToPosition();
+
+        while (leftFrontDrive.isBusy() && leftBackDrive.isBusy() && rightFrontDrive.isBusy() && rightBackDrive.isBusy() && !(opMode instanceof LinearOpMode && ((LinearOpMode) opMode).isStopRequested())) {
+            //while (leftFrontDrive.isBusy()) {
+            headingError = getHeadingError(targetHeading);
+            // Determine required steering to keep on heading
+            turnSpeed = getSteeringCorrection(headingError, driveGain);
+
+            // if driving in reverse, the motor correction also needs to be reversed
+            if (distance < 0)
+                turnSpeed *= -1.0;
+
+            // Apply the turning correction to the current driving speed.
+            moveDirection(driveSpeed, 0.0, 0.0);
+            //           log();
+        }
+        stop();
+        setRunUsingEncoder();
+    }
+
+    public void strafeRightForDistance(double distance) {
+        int targetCounts = (int) (-distance * ticksPerInch);
+        int leftFrontTarget = 0;
+        int leftBackTarget = 0;
+        int rightFrontTarget = 0;
+        int rightBackTarget = 0;
+        double strafeSpeed = maxMediumPower;
+
+        leftFrontTarget = leftFrontDrive.getCurrentPosition() + targetCounts;
+        leftBackTarget = leftBackDrive.getCurrentPosition() - targetCounts;
+        rightFrontTarget = rightFrontDrive.getCurrentPosition() - targetCounts;
+        rightBackTarget = rightBackDrive.getCurrentPosition() + targetCounts;
+
+        leftFrontDrive.setTargetPosition(leftFrontTarget);
+        leftBackDrive.setTargetPosition(leftBackTarget);
+        rightFrontDrive.setTargetPosition(rightFrontTarget);
+        rightBackDrive.setTargetPosition(rightBackTarget);
+
+        setRunToPosition();
+
+        while (leftFrontDrive.isBusy() && leftBackDrive.isBusy() && rightFrontDrive.isBusy() && rightBackDrive.isBusy() && !(opMode instanceof LinearOpMode && ((LinearOpMode) opMode).isStopRequested())) {
+            moveDirection(0, strafeSpeed, 0);
+        }
+        stop();
+        setRunUsingEncoder();
+    }
+
+    public void turnToHeading(double targetHeading) {
+        double turnSpeed = maxMediumPower;
+        double headingError = getHeadingError(targetHeading);
+
+        // keep looping while we are still active, and not on heading.
+        while (Math.abs(headingError) > headingThreshold) {
+            headingError = getHeadingError(targetHeading);
+
+            // This section doesn't seem to work...
+
+
+            // Determine required steering to keep on heading
+            turnSpeed = getSteeringCorrection(headingError, turnGain);
+
+            // Clip the speed to the maximum permitted value.
+            turnSpeed = Range.clip(turnSpeed, -maxMediumPower, maxMediumPower);
+
+            // Pivot in place by applying the turning correction
+            moveDirection(0, 0, -turnSpeed);
+
+            /*if (getHeadingError(targetHeading) > headingError){
+                moveDirection(0, 0, -turnSpeed);
+            }
+            while (Math.abs(headingError) > headingThreshold && opMode.opModeIsActive() && !opMode.isStopRequested())
+            {*/
+            telemetry.addData("headingError: ", headingError);
+            telemetry.addData("turnSpeed: ", turnSpeed);
+            telemetry.addData("targetHeading", targetHeading);
+            telemetry.addData("currentPosition", getHeading());
+            telemetry.update();
+            //}
+        }
+        leftFrontDrive.setVelocity(0.0);
+        leftBackDrive.setVelocity(0.0);
+        rightFrontDrive.setVelocity(0.0);
+        rightBackDrive.setVelocity(0.0);
+    }
     private void log() {
         telemetry.addData("leftFrontDrive Position: ", leftFrontDrive.getCurrentPosition());
         telemetry.addData("leftFrontDrive Target: ", leftFrontDrive.getTargetPosition());
