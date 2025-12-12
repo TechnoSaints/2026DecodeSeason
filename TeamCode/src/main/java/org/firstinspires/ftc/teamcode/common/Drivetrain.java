@@ -1,12 +1,8 @@
 package org.firstinspires.ftc.teamcode.common;
 
-import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.IMU;
-import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.DrivetrainData;
@@ -20,8 +16,6 @@ public class Drivetrain extends Component {
     private final double maxFastPower;
     private final double maxMediumPower;
     private final double maxSlowPower;
-    private IMU imu = null;
-    LinearOpMode opMode = null;
 
     private double currentPower;
 
@@ -40,16 +34,6 @@ public class Drivetrain extends Component {
         leftBackDrive.setDirection(drivetrainData.leftRearMotorDirection);
         rightFrontDrive.setDirection(drivetrainData.rightFrontMotorDirection);
         rightBackDrive.setDirection(drivetrainData.rightRearMotorDirection);
-
-
-        RevHubOrientationOnRobot.LogoFacingDirection logoDirection = RevHubOrientationOnRobot.LogoFacingDirection.UP;
-        RevHubOrientationOnRobot.UsbFacingDirection usbDirection =  RevHubOrientationOnRobot.UsbFacingDirection.FORWARD;
-        RevHubOrientationOnRobot orientationOnRobot = new RevHubOrientationOnRobot(logoDirection, usbDirection);
-
-        imu = opMode.hardwareMap.get(IMU.class, "imu");
-        imu.initialize(new IMU.Parameters(orientationOnRobot));
-        imu.resetYaw();
-
         setBrakingOn();
     }
 
@@ -102,19 +86,6 @@ public class Drivetrain extends Component {
         leftBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         rightFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         rightBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-    }
-
-    public void turnToHeading(double targetHeading){
-        double turnSpeed = Constants.maxAutoCorrectionTurnSpeed;
-        double headingError = getHeadingError(targetHeading);
-
-        while (Math.abs(headingError) > Constants.autoHeadingThreshold) {
-            headingError = getHeadingError(targetHeading);
-            turnSpeed = getSteeringCorrection(headingError, Constants.autoTurnGain);
-            turnSpeed = Range.clip(turnSpeed, -Constants.maxAutoCorrectionTurnSpeed, Constants.maxAutoCorrectionTurnSpeed);
-            move direction(0,0,turnSpeed);
-        }
-        stop();
     }
 
     private void log() {
