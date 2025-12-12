@@ -9,7 +9,6 @@ import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.DrivetrainData;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.MotorData;
 
@@ -108,32 +107,14 @@ public class Drivetrain extends Component {
     public void turnToHeading(double targetHeading){
         double turnSpeed = Constants.maxAutoCorrectionTurnSpeed;
         double headingError = getHeadingError(targetHeading);
+
         while (Math.abs(headingError) > Constants.autoHeadingThreshold) {
             headingError = getHeadingError(targetHeading);
             turnSpeed = getSteeringCorrection(headingError, Constants.autoTurnGain);
             turnSpeed = Range.clip(turnSpeed, -Constants.maxAutoCorrectionTurnSpeed, Constants.maxAutoCorrectionTurnSpeed);
-            moveDirection(0,0,turnSpeed);
+            move direction(0,0,turnSpeed);
         }
         stop();
-    }
-
-    public double getHeadingError(double targetHeading) {
-        return (targetHeading - getHeading());
-    }
-
-    public double getHeading() {
-        return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
-    }
-
-    public double getSteeringCorrection(double headingError, double gain) {
-        // Determine the heading current error
-
-        // Normalize the error to be within +/- 180 degrees
-        while (headingError > 180) headingError -= 360;
-        while (headingError <= -180) headingError += 360;
-
-        // Multiply the error by the gain to determine the required steering correction/  Limit the result to +/- 1.0
-        return Range.clip(headingError * gain, -1, 1);
     }
 
     private void log() {
@@ -152,5 +133,4 @@ public class Drivetrain extends Component {
     public void setToSlowTeleopPower() {
         currentPower = maxSlowPower;
     }
-
 }
