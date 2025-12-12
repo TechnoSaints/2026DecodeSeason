@@ -22,4 +22,5 @@ public class TeleopNoOdo extends LinearOpMode {
         while (opModeIsActive() && !isStopRequested()) {
             bot.processGamepadInput(gamepad1);
             bot.update();
+            sleep(25);
     }}}
