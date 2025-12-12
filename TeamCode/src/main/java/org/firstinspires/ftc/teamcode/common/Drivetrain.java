@@ -41,6 +41,7 @@ public class Drivetrain extends Component {
     static final double WHEEL_DIAMETER_INCHES = 4.09448819;   // Diameter of your robot's wheels
     static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
+
     static final double DRIVE_SPEED = 0.6; // Default autonomous drive speed
 
     public Drivetrain(HardwareMap hardwareMap, Telemetry telemetry, DrivetrainData drivetrainData, MotorData motorData) {

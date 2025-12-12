@@ -21,8 +21,8 @@ public class EncoderTest extends LinearOpMode {
         drivetrain = new Drivetrain(hardwareMap, telemetry, drivetrainData, motorData);
         waitForStart();
         drivetrain.moveForwardForDistance(12);
-        drivetrain.turnToHeading(40);
-        drivetrain.strafeRightForDistance(5);
+        //drivetrain.turnToHeading(40);
+       // drivetrain.strafeRightForDistance(5);
         sleep(2000);
         drivetrain.stop();
     }
