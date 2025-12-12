@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.common;
 
+import com.pedropathing.follower.Follower;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -21,7 +22,12 @@ public class Drivetrain extends Component {
     private final double maxFastPower;
     private final double maxMediumPower;
     private final double maxSlowPower;
+    private Follower follower;
+    private HardwareMap hardwareMap;
     private GoBildaPinpointDriver pinpoint;
+    private final double headingThreshold = 0.5;
+    private final double driveGain = 0.03;
+    private final double turnGain = 0.02;
 
     private double currentPower;
 
