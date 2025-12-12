@@ -11,6 +11,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.DrivetrainData;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.MotorData;
+import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
 public class Drivetrain extends Component {
     private final DcMotorEx leftFrontDrive;
@@ -20,6 +21,7 @@ public class Drivetrain extends Component {
     private final double maxFastPower;
     private final double maxMediumPower;
     private final double maxSlowPower;
+    private GoBildaPinpointDriver pinpoint;
 
     private double currentPower;
 
