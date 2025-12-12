@@ -49,7 +49,12 @@ public class Drivetrain extends Component {
     public void creepDirection(double axial, double strafe, double yaw) {
         moveDirection(axial * maxSlowPower, strafe * maxSlowPower, yaw * maxSlowPower);
     }
-
+    private void setRunMode(DcMotor.RunMode mode) {
+        leftFrontDrive.setMode(mode);
+        rightFrontDrive.setMode(mode);
+        leftBackDrive.setMode(mode);
+        rightBackDrive.setMode(mode);
+    }
     public void moveDirection(double axial, double strafe, double yaw) {
         // Calculate wheel powers.
         double leftFrontPower = axial + strafe + yaw;
