@@ -36,7 +36,6 @@ public class Drivetrain extends Component {
     private final double headingThreshold = 0.5;
     private final double driveGain = 0.03;
     private final double turnGain = 0.02;
-    private double ticksPerInch;
     private static OpMode opMode;
 
     // *** ADDED CONSTANTS FOR ENCODER CALCULATIONS ***
@@ -44,7 +43,7 @@ public class Drivetrain extends Component {
     static final double COUNTS_PER_MOTOR_REV = 537.7;  // Gobilda 19.2:1 Yellow Jacket motors
     static final double DRIVE_GEAR_REDUCTION = 1.0;     // No external gear reduction
     static final double WHEEL_DIAMETER_INCHES = 4.09448819;   // Diameter of your robot's wheels
-    static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
+    static final double ticksPerInch = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
     static final double DRIVE_SPEED = 0.6; // Default autonomous drive speed
 
@@ -113,10 +112,10 @@ public class Drivetrain extends Component {
         int rightBackTarget;
 
         // Calculate targets based on the current position and desired change in inches
-        leftFrontTarget = leftFrontDrive.getCurrentPosition() + (int) ((axialInches + strafeInches + yawInches) * COUNTS_PER_INCH);
-        rightFrontTarget = rightFrontDrive.getCurrentPosition() + (int) ((axialInches - strafeInches - yawInches) * COUNTS_PER_INCH);
-        leftBackTarget = leftBackDrive.getCurrentPosition() + (int) ((axialInches - strafeInches + yawInches) * COUNTS_PER_INCH);
-        rightBackTarget = rightBackDrive.getCurrentPosition() + (int) ((axialInches + strafeInches - yawInches) * COUNTS_PER_INCH);
+        leftFrontTarget = leftFrontDrive.getCurrentPosition() + (int) ((axialInches + strafeInches + yawInches) * ticksPerInch);
+        rightFrontTarget = rightFrontDrive.getCurrentPosition() + (int) ((axialInches - strafeInches - yawInches) * ticksPerInch);
+        leftBackTarget = leftBackDrive.getCurrentPosition() + (int) ((axialInches - strafeInches + yawInches) * ticksPerInch);
+        rightBackTarget = rightBackDrive.getCurrentPosition() + (int) ((axialInches + strafeInches - yawInches) * ticksPerInch);
 
 
         telemetry.addData("leftFrontTarget", leftFrontTarget);
