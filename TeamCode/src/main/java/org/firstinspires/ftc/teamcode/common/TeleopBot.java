@@ -18,7 +18,6 @@ public class TeleopBot extends Bot {
     private double driveStrafe = 0.0;
     private double driveYaw = 0.0;
     private int kickerState = 1;
-    private boolean kickerWaiting = false;
     private ElapsedTime kickerTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     private ElapsedTime buttonTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     private int buttonDelay = 350;
