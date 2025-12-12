@@ -137,6 +137,10 @@ public class Drivetrain extends Component {
         rightBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
     }
 
+    public double getHeading(){
+        return pinpoint.getHeading(AngleUnit.DEGREES);
+    }
+
     public void moveForwardForDistance(double distance){
         moveForwardForDistance(distance, maxMediumPower);
     }
