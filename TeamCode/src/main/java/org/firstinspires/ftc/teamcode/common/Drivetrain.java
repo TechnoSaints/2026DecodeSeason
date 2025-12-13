@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.common;
 
+import com.pedropathing.control.PIDFController;
 import com.pedropathing.follower.Follower;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -7,6 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -23,14 +25,14 @@ public class Drivetrain extends Component {
     private final double maxFastPower;
     private final double maxMediumPower;
     private final double maxSlowPower;
-    private Follower follower;
-    private HardwareMap hardwareMap;
-    private GoBildaPinpointDriver pinpoint;
+    private IMU imu;
+
     private final double headingThreshold = 0.5;
     private final double driveGain = 0.03;
     private final double turnGain = 0.02;
     private double ticksPerInch;
-    private static OpMode opMode;
+    private static LinearOpMode opMode;
+    private PIDFController pidf;
 
     private double currentPower;
 
@@ -46,6 +48,7 @@ public class Drivetrain extends Component {
 
     public Drivetrain(HardwareMap hardwareMap, Telemetry telemetry, DrivetrainData drivetrainData, MotorData motorData) {
         super(telemetry);
+        this.opMode = opMode;
         maxFastPower = drivetrainData.maxFastTeleopPower;
         maxMediumPower = drivetrainData.maxMediumTeleopPower;
         maxSlowPower = drivetrainData.maxSlowTeleopPower;
@@ -60,8 +63,6 @@ public class Drivetrain extends Component {
         rightFrontDrive.setDirection(drivetrainData.rightFrontMotorDirection);
         rightBackDrive.setDirection(drivetrainData.rightRearMotorDirection);
 
-        pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint");
-        pinpoint.resetPosAndIMU();
         setBrakingOn();
 
         setRunMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -142,7 +143,7 @@ public class Drivetrain extends Component {
     }
 
     public double getHeading(){
-        return pinpoint.getHeading(AngleUnit.DEGREES);
+        return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
     }
 
     public void moveForwardForDistance(double distance){
@@ -172,7 +173,6 @@ public class Drivetrain extends Component {
         int rightBackTarget = 0;
         double turnSpeed = 0;
         double headingError = 0;
-        double targetHeading = pinpoint.getHeading(AngleUnit.DEGREES);
 
         leftFrontTarget = leftFrontDrive.getCurrentPosition() + targetCounts;
         leftBackTarget = leftBackDrive.getCurrentPosition() + targetCounts;
