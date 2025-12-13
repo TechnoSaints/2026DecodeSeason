@@ -36,6 +36,12 @@ public class Drivetrain extends Component {
     static final double DRIVE_SPEED = 0.6; // Default autonomous drive speed
     static final double Drive_Slow_Speed = 0.125;
 
+    static final double ROBOT_TRACK_WIDTH_INCHES = 14.5; // Example: distance between left and right wheels
+
+    // Calculated constant: Inches traveled by one wheel to turn 1 full degree (2 * PI * R / 360)
+    static final double INCHES_PER_DEGREE = (Math.PI * ROBOT_TRACK_WIDTH_INCHES) / 360.0;
+
+
     public Drivetrain(OpMode opMode, HardwareMap hardwareMap, Telemetry telemetry, DrivetrainData drivetrainData, MotorData motorData) {
         super(telemetry);
         maxFastPower = drivetrainData.maxFastTeleopPower;
@@ -80,8 +86,14 @@ public class Drivetrain extends Component {
 
     // *** ADDED METHOD 3: Turn (Yaw) ***
     public void turn(double inches) {
-        // Turning is treated as an arc/distance for simplicity in this encoder example
-        // (You might want a separate angular PID turn for actual field navigation)
+        // This is the code to turn in degrees
+
+        /* double turnInches = degrees * INCHES_PER_DEGREE;
+
+        // Pass this calculated arc length to the core movement method as yawInches
+        moveByEncoder(0, 0, turnInches, Drive_Speed); */
+
+
         moveByEncoder(0, 0, inches, DRIVE_SPEED);
     }
 

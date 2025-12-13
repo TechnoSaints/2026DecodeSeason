@@ -27,11 +27,12 @@ public class ShortBlueEncoderAuto extends LinearOpMode {
             bot.setLauncherShortShot();
 
             //Move To Launch Spot
-            drivetrain.moveStraight(-58);
+            drivetrain.moveStraight(-30);
             drivetrain.log();
             drivetrain.turn(2.25);
             telemetry.update();
             drivetrain.strafe(-10);
+            drivetrain.moveStraight(-27);
 
             //Launches First Ball
             drivetrain.log();
