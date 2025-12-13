@@ -8,8 +8,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.common.TeleopBot;
 @Config
-@Autonomous(name = "BlueFar9800", group = "Linear OpMode")
-public class BlueFar9800 extends LinearOpMode {
+@Autonomous(name = "Far9800", group = "Linear OpMode")
+public class Far9800 extends LinearOpMode {
     private TeleopBot bot;
 
     @Override
@@ -20,10 +20,7 @@ public class BlueFar9800 extends LinearOpMode {
         waitForStart();
         while (opModeIsActive() && !isStopRequested()) {
             bot.move(-0.5,0,0);
-            sleep(750);
-            bot.move(0,0,0);
-            bot.move(0,0.5,0);
-            sleep(1000);
+            sleep(400);
             bot.move(0,0,0);
             bot.update();
         }}}

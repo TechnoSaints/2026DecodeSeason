@@ -21,16 +21,20 @@ public class BlueClose9800 extends LinearOpMode {
         while (opModeIsActive() && !isStopRequested()) {
             bot.setLauncherShortShot();
             bot.kickerGate();
-            bot.intakeForward();
+            bot.intakeReverse();
             bot.move(0.5,0,0);
-            sleep(2000);
+            sleep(750);
             bot.move(0,0,0);
+            sleep(500);
             bot.kickerLoad();
             sleep(3000);
             bot.kickerLaunch();
-            bot.move(0,0.5,0);
-            sleep(1000);
+            sleep(1500);
+            bot.move(0.5,0.7,0);
+            sleep(1500);
             bot.move(0,0,0);
+            bot.intakeStop();
+            bot.launcherStop();
             bot.update();
         }}}
 

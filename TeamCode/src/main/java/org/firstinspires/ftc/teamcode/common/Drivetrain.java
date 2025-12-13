@@ -26,7 +26,6 @@ public class Drivetrain extends Component {
     private final double maxFastPower;
     private final double maxMediumPower;
     private final double maxSlowPower;
-    private IMU imu;
 
     private final double headingThreshold = 0.5;
     private final double driveGain = 0.03;
@@ -72,20 +71,12 @@ public class Drivetrain extends Component {
         RevHubOrientationOnRobot.LogoFacingDirection logoDirection = RevHubOrientationOnRobot.LogoFacingDirection.LEFT;
         RevHubOrientationOnRobot.UsbFacingDirection usbDirection = RevHubOrientationOnRobot.UsbFacingDirection.UP;
         RevHubOrientationOnRobot orientationOnRobot = new RevHubOrientationOnRobot(logoDirection, usbDirection);
-
-        imu = hardwareMap.get(IMU.class, "imu");
-        imu.initialize(new IMU.Parameters(orientationOnRobot));
-        imu.resetYaw();
     }
 
     protected void setToFastPower() {
         currentPower = maxFastPower;
     }
 
-    public void turnForDistance(double distance) {
-        double targetHeading = getHeading() + distance;
-        turnToHeading(targetHeading);
-    }
 
     public void creepDirection(double axial, double strafe, double yaw) {
         moveDirection(axial * maxSlowPower, strafe * maxSlowPower, yaw * maxSlowPower);
@@ -169,17 +160,7 @@ public class Drivetrain extends Component {
         rightBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
     }
 
-    public double getHeading(){
-        return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
-    }
 
-    public void moveForwardForDistance(double distance){
-        moveForwardForDistance(distance, maxMediumPower);
-    }
-
-    public double getHeadingError(double targetHeading) {
-        return (targetHeading - getHeading());
-    }
 
     public double getSteeringCorrection(double headingError, double gain) {
         // Determine the heading current error
@@ -192,108 +173,6 @@ public class Drivetrain extends Component {
         return Range.clip(headingError * gain, -1, 1);
     }
 
-    private void moveForwardForDistance(double distance, double driveSpeed) {
-        int targetCounts = (int) (-distance * ticksPerInch);
-        int leftFrontTarget = 0;
-        int leftBackTarget = 0;
-        int rightFrontTarget = 0;
-        int rightBackTarget = 0;
-        double turnSpeed = 0;
-        double headingError = 0;
-        double targetHeading = getHeading();
-
-        leftFrontTarget = leftFrontDrive.getCurrentPosition() + targetCounts;
-        leftBackTarget = leftBackDrive.getCurrentPosition() + targetCounts;
-        rightFrontTarget = rightFrontDrive.getCurrentPosition() + targetCounts;
-        rightBackTarget = rightBackDrive.getCurrentPosition() + targetCounts;
-
-        leftFrontDrive.setTargetPosition(leftFrontTarget);
-        leftBackDrive.setTargetPosition(leftBackTarget);
-        rightFrontDrive.setTargetPosition(rightFrontTarget);
-        rightBackDrive.setTargetPosition(rightBackTarget);
-
-        //while (leftFrontDrive.isBusy()) {
-        headingError = getHeadingError(targetHeading);
-        // Determine required steering to keep on heading
-        turnSpeed = getSteeringCorrection(headingError, driveGain);
-
-        // if driving in reverse, the motor correction also needs to be reversed
-        if (distance < 0)
-            turnSpeed *= -1.0;
-
-        // Apply the turning correction to the current driving speed.
-        moveDirection(driveSpeed, 0.0, 0.0);
-        //           log();
-
-        setRunToPosition();
-
-        leftBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        leftFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        stop();
-        setRunUsingEncoder();
-    }
-
-    public void strafeRightForDistance(double distance) {
-        int targetCounts = (int) (-distance * ticksPerInch);
-        int leftFrontTarget = 0;
-        int leftBackTarget = 0;
-        int rightFrontTarget = 0;
-        int rightBackTarget = 0;
-        double strafeSpeed = maxMediumPower;
-
-        leftFrontTarget = leftFrontDrive.getCurrentPosition() + targetCounts;
-        leftBackTarget = leftBackDrive.getCurrentPosition() - targetCounts;
-        rightFrontTarget = rightFrontDrive.getCurrentPosition() - targetCounts;
-        rightBackTarget = rightBackDrive.getCurrentPosition() + targetCounts;
-
-        leftFrontDrive.setTargetPosition(leftFrontTarget);
-        leftBackDrive.setTargetPosition(leftBackTarget);
-        rightFrontDrive.setTargetPosition(rightFrontTarget);
-        rightBackDrive.setTargetPosition(rightBackTarget);
-
-        setRunToPosition();
-        stop();
-        setRunUsingEncoder();
-    }
-
-    public void turnToHeading(double targetHeading) {
-        double turnSpeed = maxMediumPower;
-        double headingError = getHeadingError(targetHeading);
-
-        // keep looping while we are still active, and not on heading.
-        while (Math.abs(headingError) > headingThreshold) {
-            headingError = getHeadingError(targetHeading);
-
-            // This section doesn't seem to work...
-
-
-            // Determine required steering to keep on heading
-            turnSpeed = getSteeringCorrection(headingError, turnGain);
-
-            // Clip the speed to the maximum permitted value.
-            turnSpeed = Range.clip(turnSpeed, -maxMediumPower, maxMediumPower);
-
-            // Pivot in place by applying the turning correction
-            moveDirection(0, 0, -turnSpeed);
-
-            /*if (getHeadingError(targetHeading) > headingError){
-                moveDirection(0, 0, -turnSpeed);
-            }
-            while (Math.abs(headingError) > headingThreshold && opMode.opModeIsActive() && !opMode.isStopRequested())
-            {*/
-            telemetry.addData("headingError: ", headingError);
-            telemetry.addData("turnSpeed: ", turnSpeed);
-            telemetry.update();
-            //}
-        }
-        leftFrontDrive.setVelocity(0.0);
-        leftBackDrive.setVelocity(0.0);
-        rightFrontDrive.setVelocity(0.0);
-        rightBackDrive.setVelocity(0.0);
-    }
     private void log() {
         telemetry.addData("leftFrontDrive Position: ", leftFrontDrive.getCurrentPosition());
         telemetry.addData("leftFrontDrive Target: ", leftFrontDrive.getTargetPosition());
