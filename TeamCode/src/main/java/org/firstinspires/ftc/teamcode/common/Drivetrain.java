@@ -9,6 +9,12 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.TouchSensor;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
+
 import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.DrivetrainData;
@@ -25,6 +31,10 @@ public class Drivetrain extends Component {
     private final double maxMediumPower;
     private final double maxSlowPower;
     private static OpMode opMode;
+
+    private IMU imu;
+
+    private double robotHeading = 0;
 
     // *** ADDED CONSTANTS FOR ENCODER CALCULATIONS ***
     // These values are placeholders; you must verify them for your specific robot hardware.
@@ -62,7 +72,81 @@ public class Drivetrain extends Component {
         // *** ENABLE ENCODERS FOR AUTONOMOUS MODES ***
         setRunMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        imu = hardwareMap.get(IMU.class, "imu");
+        RevHubOrientationOnRobot.LogoFacingDirection logoDirection = RevHubOrientationOnRobot.LogoFacingDirection.LEFT; // Adjust based on actual hub mounting
+        RevHubOrientationOnRobot.UsbFacingDirection usbDirection = RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD; // Adjust based on actual hub mounting
+        RevHubOrientationOnRobot orientationOnRobot = new RevHubOrientationOnRobot(logoDirection, usbDirection);
+
+        imu.initialize(new IMU.Parameters(orientationOnRobot));
+        imu.resetYaw(); // Reset the heading at the start of autonomous
     }
+
+    // Method to retrieve the current robot heading (yaw)
+    public double getHeading() {
+        // Get the robot's current orientation
+        YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
+
+        // Extract the yaw angle in the desired unit (e.g., DEGREES or RADIANS)
+        // Counter-clockwise is typically positive for yaw in the robot coordinate system
+        double yawAngle = orientation.getYaw(AngleUnit.DEGREES);
+
+        // Store the heading if needed elsewhere in the class (optional)
+        this.robotHeading = yawAngle;
+
+        return yawAngle;
+    }
+
+    // Inside the Drivetrain class
+    public void turnToAngle(double targetAngle, double power) {
+        double currentAngle = getHeading();
+        double angleError = targetAngle - currentAngle;
+
+        // Normalize the angle error to be within -180 to 180 degrees
+        while (angleError > 180) angleError -= 360;
+        while (angleError <= -180) angleError += 360;
+
+        // Use a proportional constant (Kp) to determine motor power
+        // This value (e.g., 0.05) needs tuning for your specific robot
+        final double Kp = 0.05;
+
+        // Keep turning while the OpMode is active and the error is significant
+        while (/*opMode.opModeIsActive() && */ Math.abs(angleError) > 2.0) { // Tolerance of 2 degrees
+            double turnPower = angleError * Kp;
+
+            // Cap the power to a reasonable value
+            if (Math.abs(turnPower) > power) {
+                turnPower = Math.signum(turnPower) * power;
+            }
+
+            // Set motor powers for turning in place (adjust signs if necessary for your chassis)
+            leftFrontDrive.setPower(-turnPower);
+            rightFrontDrive.setPower(turnPower);
+            leftBackDrive.setPower(-turnPower);
+            rightBackDrive.setPower(turnPower);
+
+            // Update the angle error
+            currentAngle = getHeading();
+            angleError = targetAngle - currentAngle;
+            while (angleError > 180) angleError -= 360;
+            while (angleError <= -180) angleError += 360;
+
+            // Optional: Add telemetry for tuning
+            opMode.telemetry.addData("Target Angle", targetAngle);
+            opMode.telemetry.addData("Current Angle", currentAngle);
+            opMode.telemetry.addData("Angle Error", angleError);
+            opMode.telemetry.update();
+        }
+
+        // Stop all motors after the turn is complete
+        leftFrontDrive.setPower(0);
+        rightFrontDrive.setPower(0);
+        leftBackDrive.setPower(0);
+        rightBackDrive.setPower(0);
+    }
+
+
+
 
     // Helper method to set run mode for all motors
     private void setRunMode(DcMotor.RunMode mode) {
