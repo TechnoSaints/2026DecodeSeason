@@ -19,7 +19,7 @@ public abstract class Bot extends Component {
     private double kickerLoadPosition = 0.57;
     private double kickerLaunchPosition = 0.26;
 
-    private double kickerGatePosition = 0.37;
+    private double kickerGatePosition = 0.40;
 
 
     public Bot(OpMode opMode, Telemetry telemetry) {
