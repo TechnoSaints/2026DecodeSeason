@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.common;
 import com.pedropathing.control.PIDFController;
 import com.pedropathing.follower.Follower;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -63,10 +64,27 @@ public class Drivetrain extends Component {
         rightFrontDrive.setDirection(drivetrainData.rightFrontMotorDirection);
         rightBackDrive.setDirection(drivetrainData.rightRearMotorDirection);
 
+        stopAndResetEncoders();
+        setRunUsingEncoder();
         setBrakingOn();
+        setToFastPower();
 
-        setRunMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        RevHubOrientationOnRobot.LogoFacingDirection logoDirection = RevHubOrientationOnRobot.LogoFacingDirection.LEFT;
+        RevHubOrientationOnRobot.UsbFacingDirection usbDirection = RevHubOrientationOnRobot.UsbFacingDirection.FORWARD;
+        RevHubOrientationOnRobot orientationOnRobot = new RevHubOrientationOnRobot(logoDirection, usbDirection);
+
+        imu = opMode.hardwareMap.get(IMU.class, "imu");
+        imu.initialize(new IMU.Parameters(orientationOnRobot));
+        imu.resetYaw();
+    }
+
+    protected void setToFastPower() {
+        currentPower = maxFastPower;
+    }
+
+    public void turnForDistance(double distance) {
+        double targetHeading = getHeading() + distance;
+        turnToHeading(targetHeading);
     }
 
     public void creepDirection(double axial, double strafe, double yaw) {
@@ -110,8 +128,6 @@ public class Drivetrain extends Component {
         leftBackDrive.setPower(0.0);
         rightFrontDrive.setPower(0.0);
         rightBackDrive.setPower(0.0);
-        // Stop also typically involves setting the mode back to RUN_USING_ENCODER in autonomous
-        setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     private void setRunToPosition(){
@@ -133,6 +149,13 @@ public class Drivetrain extends Component {
         leftBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+    }
+
+    private void stopAndResetEncoders() {
+        leftFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     private void setBrakingOff() {
@@ -173,6 +196,7 @@ public class Drivetrain extends Component {
         int rightBackTarget = 0;
         double turnSpeed = 0;
         double headingError = 0;
+        double targetHeading = getHeading();
 
         leftFrontTarget = leftFrontDrive.getCurrentPosition() + targetCounts;
         leftBackTarget = leftBackDrive.getCurrentPosition() + targetCounts;
@@ -186,7 +210,7 @@ public class Drivetrain extends Component {
 
         setRunToPosition();
 
-        while (leftFrontDrive.isBusy() && leftBackDrive.isBusy() && rightFrontDrive.isBusy() && rightBackDrive.isBusy() && !(opMode instanceof LinearOpMode && ((LinearOpMode) opMode).isStopRequested())) {
+        while (leftFrontDrive.isBusy() && leftBackDrive.isBusy() && rightFrontDrive.isBusy() && rightBackDrive.isBusy() && !opMode.isStopRequested()) {
             //while (leftFrontDrive.isBusy()) {
             headingError = getHeadingError(targetHeading);
             // Determine required steering to keep on heading
@@ -224,7 +248,7 @@ public class Drivetrain extends Component {
 
         setRunToPosition();
 
-        while (leftFrontDrive.isBusy() && leftBackDrive.isBusy() && rightFrontDrive.isBusy() && rightBackDrive.isBusy() && !(opMode instanceof LinearOpMode && ((LinearOpMode) opMode).isStopRequested())) {
+        while (leftFrontDrive.isBusy() && leftBackDrive.isBusy() && rightFrontDrive.isBusy() && rightBackDrive.isBusy() && !opMode.isStopRequested()) {
             moveDirection(0, strafeSpeed, 0);
         }
         stop();
@@ -258,8 +282,6 @@ public class Drivetrain extends Component {
             {*/
             telemetry.addData("headingError: ", headingError);
             telemetry.addData("turnSpeed: ", turnSpeed);
-            telemetry.addData("targetHeading", targetHeading);
-            telemetry.addData("currentPosition", getHeading());
             telemetry.update();
             //}
         }
@@ -275,13 +297,4 @@ public class Drivetrain extends Component {
         telemetry.update();
     }
 
-    public void setToFastTeleopPower() {
-        currentPower = maxFastPower;
-    }
-
-    public void setToMediumTeleopPower(){currentPower = maxMediumPower;}
-
-    public void setToSlowTeleopPower() {
-        currentPower = maxSlowPower;
-    }
 }
