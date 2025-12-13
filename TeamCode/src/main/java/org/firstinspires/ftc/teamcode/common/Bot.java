@@ -51,6 +51,10 @@ public abstract class Bot extends Component {
         launcher.setLongShot();
     }
 
+    public void setLauncherMediumShot() {
+        launcher.setMediumShot();
+    }
+
     public void launcherStop() {
         launcher.stop();
     }

@@ -133,10 +133,10 @@ public class Drivetrain extends Component {
         leftBackDrive.setPower(Math.abs(speed));
         rightBackDrive.setPower(Math.abs(speed));
 
-        leftFrontDrive.setTargetPositionTolerance(20);
-        rightFrontDrive.setTargetPositionTolerance(20);
-        leftBackDrive.setTargetPositionTolerance(20);
-        rightBackDrive.setTargetPositionTolerance(20);
+        leftFrontDrive.setTargetPositionTolerance(10);
+        rightFrontDrive.setTargetPositionTolerance(10);
+        leftBackDrive.setTargetPositionTolerance(10);
+        rightBackDrive.setTargetPositionTolerance(10);
         // Note: In a real autonomous OpMode, you must add a loop
         // to wait for the motors to reach the target position.
         // The `while (opModeIsActive() && (leftFrontDrive.isBusy() || ...))` loop

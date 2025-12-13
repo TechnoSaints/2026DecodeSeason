@@ -29,8 +29,8 @@ public class LauncherDouble extends Component {
     private double launchPositionFactor = 0.05;
     private final double maxLaunchPosition = 1.0;
     private final double minLaunchPosition = 0.0;
-    private double shortShotVelocityFactor, longShotVelocityFactor;
-    private double shortShotPosition, longShotPosition;
+    private double shortShotVelocityFactor, longShotVelocityFactor, mediumShotVelocityFactor;
+    private double shortShotPosition, longShotPosition, mediumShotPosition;
 
     public LauncherDouble(HardwareMap hardwareMap, Telemetry telemetry) {
         super(telemetry);
@@ -59,6 +59,12 @@ public class LauncherDouble extends Component {
     {
         setVelocityFactor(longShotVelocityFactor);
         setLaunchPosition(longShotPosition);
+    }
+
+    public void setMediumShot()
+    {
+        setVelocityFactor(mediumShotVelocityFactor);
+        setLaunchPosition(mediumShotPosition);
     }
 
     public void stop()

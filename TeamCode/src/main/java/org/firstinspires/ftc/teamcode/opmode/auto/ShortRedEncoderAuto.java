@@ -73,7 +73,7 @@ public class ShortRedEncoderAuto extends LinearOpMode {
             while(controlTimer.milliseconds() < 1000 && opModeIsActive()) {
                 idle();
             }
-
+/*
             //Moves To First Line
             drivetrain.turn(-35);
             bot.intakeForward();
