@@ -70,10 +70,10 @@ public class Drivetrain extends Component {
         setToFastPower();
 
         RevHubOrientationOnRobot.LogoFacingDirection logoDirection = RevHubOrientationOnRobot.LogoFacingDirection.LEFT;
-        RevHubOrientationOnRobot.UsbFacingDirection usbDirection = RevHubOrientationOnRobot.UsbFacingDirection.FORWARD;
+        RevHubOrientationOnRobot.UsbFacingDirection usbDirection = RevHubOrientationOnRobot.UsbFacingDirection.UP;
         RevHubOrientationOnRobot orientationOnRobot = new RevHubOrientationOnRobot(logoDirection, usbDirection);
 
-        imu = opMode.hardwareMap.get(IMU.class, "imu");
+        imu = hardwareMap.get(IMU.class, "imu");
         imu.initialize(new IMU.Parameters(orientationOnRobot));
         imu.resetYaw();
     }
@@ -119,6 +119,10 @@ public class Drivetrain extends Component {
         rightFrontDrive.setPower(rightFrontPower * maxFastPower);
         leftBackDrive.setPower(leftBackPower * maxFastPower);
         rightBackDrive.setPower(rightBackPower * maxFastPower);
+
+        leftBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+
 //        log();
     }
 
@@ -208,22 +212,26 @@ public class Drivetrain extends Component {
         rightFrontDrive.setTargetPosition(rightFrontTarget);
         rightBackDrive.setTargetPosition(rightBackTarget);
 
+        //while (leftFrontDrive.isBusy()) {
+        headingError = getHeadingError(targetHeading);
+        // Determine required steering to keep on heading
+        turnSpeed = getSteeringCorrection(headingError, driveGain);
+
+        // if driving in reverse, the motor correction also needs to be reversed
+        if (distance < 0)
+            turnSpeed *= -1.0;
+
+        // Apply the turning correction to the current driving speed.
+        moveDirection(driveSpeed, 0.0, 0.0);
+        //           log();
+
         setRunToPosition();
 
-        while (leftFrontDrive.isBusy() && leftBackDrive.isBusy() && rightFrontDrive.isBusy() && rightBackDrive.isBusy() && !opMode.isStopRequested()) {
-            //while (leftFrontDrive.isBusy()) {
-            headingError = getHeadingError(targetHeading);
-            // Determine required steering to keep on heading
-            turnSpeed = getSteeringCorrection(headingError, driveGain);
+        leftBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-            // if driving in reverse, the motor correction also needs to be reversed
-            if (distance < 0)
-                turnSpeed *= -1.0;
-
-            // Apply the turning correction to the current driving speed.
-            moveDirection(driveSpeed, 0.0, 0.0);
-            //           log();
-        }
         stop();
         setRunUsingEncoder();
     }
@@ -247,10 +255,6 @@ public class Drivetrain extends Component {
         rightBackDrive.setTargetPosition(rightBackTarget);
 
         setRunToPosition();
-
-        while (leftFrontDrive.isBusy() && leftBackDrive.isBusy() && rightFrontDrive.isBusy() && rightBackDrive.isBusy() && !opMode.isStopRequested()) {
-            moveDirection(0, strafeSpeed, 0);
-        }
         stop();
         setRunUsingEncoder();
     }

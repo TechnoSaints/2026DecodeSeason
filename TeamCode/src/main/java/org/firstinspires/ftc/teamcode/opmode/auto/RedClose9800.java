@@ -4,14 +4,12 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.common.TeleopBot;
-@Disabled
     @Config
-    @Autonomous(name = "Red9800", group = "Linear OpMode")
-    public class TimerRed9800 extends LinearOpMode {
+    @Autonomous(name = "RedClose9800", group = "Linear OpMode")
+    public class RedClose9800 extends LinearOpMode {
         private TeleopBot bot;
 
         @Override
@@ -21,23 +19,18 @@ import org.firstinspires.ftc.teamcode.common.TeleopBot;
 
             waitForStart();
             while (opModeIsActive() && !isStopRequested()) {
-                bot.move(-0.5,0,0);
-                sleep(1000);
-                bot.move(0,0,0);
-                bot.move(0,0.5,0);
-                sleep(1500);
-                bot.move(0,0,0);
-         /*       bot.move(-0.5,0,0);
-                sleep(1000);
-                bot.move(0,0,0);
                 bot.setLauncherShortShot();
-                sleep(1000);
-                bot.kickerLoad();
+                bot.kickerGate();
+                bot.intakeForward();
+                bot.move(0.5,0,0);
                 sleep(2000);
-                bot.move(0,0.5,0);
-                sleep(750);
-                bot.move(0,0,0); */
-
-
+                bot.move(0,0,0);
+                bot.kickerLoad();
+                sleep(3000);
+                bot.kickerLaunch();
+                bot.move(0,-0.5,0);
+                sleep(1000);
+                bot.move(0,0,0);
+                bot.update();
                 bot.update();
             }}}

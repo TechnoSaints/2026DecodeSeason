@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.pedropathing.util.Timer;
 
 import org.firstinspires.ftc.teamcode.common.AutoBot;
-
+@Disabled
 @Autonomous
 
 public class PedroTest extends OpMode{

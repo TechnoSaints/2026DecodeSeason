@@ -4,15 +4,12 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.common.TeleopBot;
-
-@Disabled
 @Config
-@Autonomous(name = "Blue9800", group = "Linear OpMode")
-public class TimerBlue9800 extends LinearOpMode {
+@Autonomous(name = "BlueClose9800", group = "Linear OpMode")
+public class BlueClose9800 extends LinearOpMode {
     private TeleopBot bot;
 
     @Override
@@ -22,11 +19,17 @@ public class TimerBlue9800 extends LinearOpMode {
 
         waitForStart();
         while (opModeIsActive() && !isStopRequested()) {
-            bot.move(-0.5,0,0);
-            sleep(1000);
+            bot.setLauncherShortShot();
+            bot.kickerGate();
+            bot.intakeForward();
+            bot.move(0.5,0,0);
+            sleep(2000);
             bot.move(0,0,0);
-            bot.move(0,-0.5,0);
-            sleep(1500);
+            bot.kickerLoad();
+            sleep(3000);
+            bot.kickerLaunch();
+            bot.move(0,0.5,0);
+            sleep(1000);
             bot.move(0,0,0);
             bot.update();
         }}}
