@@ -15,6 +15,9 @@ public class LauncherSettings {
     public static double maxPosition = 0.7;
     public static double minPosition = 0.0;
 
+    // Time to allow servos to get to launch position, in milliseconds
+    public static double timeToPosition = 500.0;
+
     private static final WeightedObservedPoints velocityFactors = new WeightedObservedPoints();
     private static final WeightedObservedPoints launchPositions = new WeightedObservedPoints();
     private static final PolynomialCurveFitter velocityFactorFitter = PolynomialCurveFitter.create(2);
