@@ -20,7 +20,6 @@ public class LauncherDouble extends Component {
     private final double maxVelocityFactor = launcherData.maxVelocityFactor;
     private MotorData motorData = new GoBilda6000DcMotorData();
     private final int maxTicksPerSecond = motorData.maxTicksPerSec;
-
     private double targetVelocityFactor = 0.0;
     private int targetVelocity = 0;
     private double velocityFactorIncrement = 0.05;
@@ -105,7 +104,6 @@ public class LauncherDouble extends Component {
         setMotorsTargetVelocity(targetVelocity);
     }
 
-
     public void setLaunchPosition(double launchPosition) {
         targetLaunchPosition = launchPosition;
         if (targetLaunchPosition >= maxLaunchPosition)
@@ -116,6 +114,13 @@ public class LauncherDouble extends Component {
             targetLaunchPosition = minLaunchPosition;
         }
         setServosTargetLaunchPosition(targetLaunchPosition);
+    }
+
+    // Take distance from the goal in inches and automatically sets motor velocity and position
+    public void autoSetVelocityAndPosition(double distance)
+    {
+        setVelocityFactor(LauncherSettings.getVelocityFactor(distance));
+        setLaunchPosition(LauncherSettings.getLaunchPosition(distance));
     }
     private void setMotorsTargetVelocity(int targetVelocity)
     {
