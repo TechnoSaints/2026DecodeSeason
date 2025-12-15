@@ -1,10 +1,9 @@
 package org.firstinspires.ftc.teamcode.common;
 
-import com.qualcomm.hardware.rev.RevTouchSensor;
+import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.common.servos.ServoSimple;
 
 public abstract class Bot extends Component {
     private LauncherDouble launcher;
@@ -13,6 +12,7 @@ public abstract class Bot extends Component {
     private ServoSimple kicker;
     private double kickerLoadPosition = 0.45;
     private double kickerLaunchPosition = 0.55;
+    private Limelight3A limeLight;
 
     public Bot(OpMode opMode, Telemetry telemetry) {
         super(telemetry);
@@ -21,6 +21,15 @@ public abstract class Bot extends Component {
         topRoller = new RollerCRServo(opMode.hardwareMap, telemetry, "topRoller");
         bottomRoller = new RollerCRServo(opMode.hardwareMap, telemetry, "bottomRoller");
         kicker = new ServoSimple(opMode.hardwareMap, telemetry, "kicker");
+        limeLight = opMode.hardwareMap.get(Limelight3A.class, "limelight");
+
+        // Set pipeline
+        limeLight.pipelineSwitch(0);
+
+        /*
+         * Starts polling for data.  If you neglect to call start(), getLatestResult() will return null.
+         */
+        limeLight.start();
     }
 
     public void setLauncherShortShot() {

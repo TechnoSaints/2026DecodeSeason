@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda6000DcMotorData;
@@ -20,7 +21,6 @@ public class LauncherDouble extends Component {
     private final double maxVelocityFactor = launcherData.maxVelocityFactor;
     private MotorData motorData = new GoBilda6000DcMotorData();
     private final int maxTicksPerSecond = motorData.maxTicksPerSec;
-
     private double targetVelocityFactor = 0.0;
     private int targetVelocity = 0;
     private double velocityFactorIncrement = 0.05;
@@ -30,6 +30,8 @@ public class LauncherDouble extends Component {
     private final double minLaunchPosition = 0.0;
     private double shortShotVelocityFactor, longShotVelocityFactor;
     private double shortShotPosition, longShotPosition;
+    private ElapsedTime positionTimer = new ElapsedTime();
+    private double timeToPosition;
 
     public LauncherDouble(HardwareMap hardwareMap, Telemetry telemetry) {
         super(telemetry);
@@ -38,6 +40,7 @@ public class LauncherDouble extends Component {
         shortShotPosition = LauncherSettings.shortShotPosition;
         longShotVelocityFactor = LauncherSettings.longShotVelocityFactor;
         longShotPosition = LauncherSettings.longShotPosition;
+        timeToPosition = LauncherSettings.timeToPosition;
 
         motorL = hardwareMap.get(DcMotorEx.class, "launcherMotorL");
         motorR = hardwareMap.get(DcMotorEx.class, "launcherMotorR");
@@ -105,7 +108,6 @@ public class LauncherDouble extends Component {
         setMotorsTargetVelocity(targetVelocity);
     }
 
-
     public void setLaunchPosition(double launchPosition) {
         targetLaunchPosition = launchPosition;
         if (targetLaunchPosition >= maxLaunchPosition)
@@ -117,6 +119,13 @@ public class LauncherDouble extends Component {
         }
         setServosTargetLaunchPosition(targetLaunchPosition);
     }
+
+    // Take distance from the goal in inches and automatically sets motor velocity and position
+    public void autoSetVelocityAndPosition(double distance)
+    {
+        setVelocityFactor(LauncherSettings.getVelocityFactor(distance));
+        setLaunchPosition(LauncherSettings.getLaunchPosition(distance));
+    }
     private void setMotorsTargetVelocity(int targetVelocity)
     {
         motorL.setVelocity(targetVelocity);
@@ -127,8 +136,13 @@ public class LauncherDouble extends Component {
     {
         servoL.setPosition(targetLaunchPosition);
         servoR.setPosition(targetLaunchPosition);
+        positionTimer.reset();
     }
 
+    public boolean isBusy()
+    {
+        return(motorL.isBusy() || motorR.isBusy() || (positionTimer.milliseconds() < timeToPosition));
+    }
     private void resetEncoders() {
         motorL.setDirection(DcMotor.Direction.FORWARD);
         motorR.setDirection(DcMotor.Direction.REVERSE);

@@ -1,18 +1,17 @@
 package org.firstinspires.ftc.teamcode.opmode.auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
-import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
-import org.firstinspires.ftc.teamcode.opmode.Paths;
+import org.firstinspires.ftc.teamcode.opmode.FieldLocationsTest;
+import org.firstinspires.ftc.teamcode.opmode.PathsTest;
 
-@Autonomous(name = "\uD83D\uDD34shortRedAuto", group = "Red")
+@Autonomous(name = "\uD83D\uDD34shortRedAutoTest", group = "Red")
 //@Disabled
-public class ShortRedAuto extends AutoOpMode {
+public class ShortRedAutoTest extends AutoOpMode {
 
     @Override
     public void init() {
-        FieldLocations.buildPoses("red", "short");
+        FieldLocationsTest.buildPoses("red", "short");
         super.init();
     }
 
@@ -20,7 +19,7 @@ public class ShortRedAuto extends AutoOpMode {
         switch (pathState) {
             // Move start to short shot
             case 0:
-                bot.followPath(Paths.startToShortShot, false);
+                bot.followPath(PathsTest.startToShortShot, false);
                 setPathState(1);
                 break;
 
@@ -34,7 +33,7 @@ public class ShortRedAuto extends AutoOpMode {
 
             // Move to stack1 setup
             case 2:
-                bot.followPath(Paths.shortShotToStack1Setup, false);
+                bot.followPath(PathsTest.shortShotToStack1Setup, false);
                 setPathState(3);
                 break;
 
@@ -42,7 +41,7 @@ public class ShortRedAuto extends AutoOpMode {
             case 3:
                 if (!bot.followerIsBusy()) {
                     // Turn on rollers
-                    bot.followPath(Paths.stack1SetupToStack1Finish, false);
+                    bot.followPath(PathsTest.stack1SetupToStack1Finish, false);
                     setPathState(4);
                 }
                 break;
@@ -56,7 +55,7 @@ public class ShortRedAuto extends AutoOpMode {
 
             // Move to short shot
             case 5:
-                bot.followPath(Paths.stack1FinishToShortShot, false);
+                bot.followPath(PathsTest.stack1FinishToShortShot, false);
                 setPathState(6);
                 break;
 
@@ -72,14 +71,11 @@ public class ShortRedAuto extends AutoOpMode {
             case 7:
 
                 setPathState(8);
-
                 break;
 
             // Stop opmode
             case 8:
-
                 setPathState(-1);
-
                 requestOpModeStop();
                 break;
         }
