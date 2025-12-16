@@ -7,8 +7,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public abstract class Bot extends Component {
     private LauncherDouble launcher;
-    private RollerMotor intake;
-    private RollerCRServo topRoller, bottomRoller;
+    private RollerMotor intake, bottomRoller;
+    private RollerCRServo topRoller;
     private ServoSimple kicker;
     private double kickerLoadPosition = 0.45;
     private double kickerLaunchPosition = 0.55;
@@ -18,18 +18,18 @@ public abstract class Bot extends Component {
         super(telemetry);
         launcher = new LauncherDouble(opMode.hardwareMap, telemetry);
         intake = new RollerMotor(opMode.hardwareMap, telemetry, "intake");
-        topRoller = new RollerCRServo(opMode.hardwareMap, telemetry, "topRoller");
-        bottomRoller = new RollerCRServo(opMode.hardwareMap, telemetry, "bottomRoller");
-        kicker = new ServoSimple(opMode.hardwareMap, telemetry, "kicker");
-        limeLight = opMode.hardwareMap.get(Limelight3A.class, "limelight");
+        topRoller = new RollerCRServo(opMode.hardwareMap, telemetry, "upperRoller");
+        bottomRoller = new RollerMotor(opMode.hardwareMap, telemetry, "lowerRoller");
+//        kicker = new ServoSimple(opMode.hardwareMap, telemetry, "kicker");
+//        limeLight = opMode.hardwareMap.get(Limelight3A.class, "limelight");
 
         // Set pipeline
-        limeLight.pipelineSwitch(0);
+      //  limeLight.pipelineSwitch(0);
 
         /*
          * Starts polling for data.  If you neglect to call start(), getLatestResult() will return null.
          */
-        limeLight.start();
+      //  limeLight.start();
     }
 
     public void setLauncherShortShot() {
