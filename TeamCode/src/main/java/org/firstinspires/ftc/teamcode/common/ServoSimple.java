@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.hardware.ServoImplEx;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class ServoSimple extends Component {
-
     protected final ServoImplEx servo;
 
     public ServoSimple(HardwareMap hardwareMap, Telemetry telemetry, String servoName) {
