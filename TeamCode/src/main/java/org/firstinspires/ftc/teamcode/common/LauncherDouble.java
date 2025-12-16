@@ -42,10 +42,10 @@ public class LauncherDouble extends Component {
         longShotPosition = LauncherSettings.longShotPosition;
         timeToPosition = LauncherSettings.timeToPosition;
 
-        motorL = hardwareMap.get(DcMotorEx.class, "launcherMotorL");
-        motorR = hardwareMap.get(DcMotorEx.class, "launcherMotorR");
-        servoL = hardwareMap.get(Servo.class, "launcherServoR");
-        servoR = hardwareMap.get(Servo.class, "launcherServoL");
+        motorL = hardwareMap.get(DcMotorEx.class, "leftLauncher");
+        motorR = hardwareMap.get(DcMotorEx.class, "rightLauncher");
+        servoL = hardwareMap.get(Servo.class, "leftAimer");
+        servoR = hardwareMap.get(Servo.class, "rightAimer");
 
         resetEncoders();
         setVelocityFactor(targetVelocity);
