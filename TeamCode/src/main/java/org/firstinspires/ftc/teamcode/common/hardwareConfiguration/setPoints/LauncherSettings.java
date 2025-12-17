@@ -18,8 +18,8 @@ public class LauncherSettings {
 
     private static final WeightedObservedPoints velocityFactors = new WeightedObservedPoints();
     private static final WeightedObservedPoints launchPositions = new WeightedObservedPoints();
-    private static final PolynomialCurveFitter velocityFactorFitter = PolynomialCurveFitter.create(2);
-    private static final PolynomialCurveFitter launchPositionFitter = PolynomialCurveFitter.create(2);
+    private static final PolynomialCurveFitter velocityFactorFitter = PolynomialCurveFitter.create(4);
+    private static final PolynomialCurveFitter launchPositionFitter = PolynomialCurveFitter.create(4);
     private static double[] velocityFactorCoefficients, launchPositionCoefficients;
 
     public static void init() {
@@ -78,7 +78,7 @@ public class LauncherSettings {
     }
 
     private static double calculateY(double[] coefficients, double x) {
-        return (coefficients[0] + coefficients[1] * x + coefficients[2] * x * x);
+        return (coefficients[0] + coefficients[1] * x + coefficients[2] * x * x + coefficients[3] * x * x * x + coefficients[4] * x * x * x * x);
     }
 
     public static double getVelocityFactor(double distance) {

@@ -27,6 +27,20 @@ public abstract class Bot extends Component {
 
     public void stopStorage(){storage.stop();}
 
+    public void setPosition(double position){
+        launcher.setPosition(position);
+    }
+
+    public void setSpeed(double power){
+        if (power > 0){
+            power = 0;
+        }
+        else if (power < -1){
+            power = -1;
+        }
+        launcher.setVelocity(-power);
+    }
+
     public int getState(){
         return storage.getState();
     }

@@ -103,13 +103,13 @@ public class Launcher extends Component {
         preloadFromDistance(distanceFromLauncher(pose, red));
     }
 
-    private void setVelocity(double power) {
+    public void setVelocity(double power) {
         targetVelocity = maxVelocity * power;
         leftLauncher.setVelocity(targetVelocity);
         rightLauncher.setVelocity(targetVelocity);
     }
 
-    private void setPosition(double position) {
+    public void setPosition(double position) {
         telemetry.addData("Original position", position);
         if (position > maxPosition) {
             targetPosition = maxPosition;

@@ -20,25 +20,25 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.common.Drivetrain;
 import org.firstinspires.ftc.teamcode.common.LauncherDouble;
+import org.firstinspires.ftc.teamcode.common.Storage;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.DrivetrainData;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda435DcMotorData;
 import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
 @Config
-@TeleOp(name = "LauncherDoubleTuner - Odo", group = "Tuning")
+@TeleOp(name = "LauncherDoubleTuner - Odo", group = "01Tuning")
 
 public class LauncherDoubleTunerWIthOdo extends LinearOpMode {
 
     private LauncherDouble launcher;
-    private double velocityFactorIncrement = 0.1;
+    private double velocityFactorIncrement = 0.05;
     private double targetVelocityFactor = 0.0;
     private double positionIncrement = 0.05;
     private double targetLaunchPosition = 0.5;
     private GoBildaPinpointDriver pinpoint;
     private Drivetrain drivetrain;
-    private DcMotorEx intake, lowerRoller;
-    private CRServo upperRoller;
+    private Storage storage;
 
     @Override
     public void runOpMode() {
@@ -55,34 +55,40 @@ public class LauncherDoubleTunerWIthOdo extends LinearOpMode {
         pinpoint.resetPosAndIMU();
         pinpoint.setPosition(new Pose2D(DistanceUnit.INCH, 0,0, AngleUnit.DEGREES, -45));
         pinpoint.update();
-        intake = hardwareMap.get(DcMotorEx.class, "intake");
-        lowerRoller = hardwareMap.get(DcMotorEx.class, "lowerRoller");
-        upperRoller = hardwareMap.get(CRServo.class, "upperRoller");
-        lowerRoller.setDirection(DcMotorSimple.Direction.REVERSE);
+        storage = new Storage(telemetry, hardwareMap);
         waitForStart();
 
         while (opModeIsActive() && !isStopRequested()) {
-            if (gamepad1.y) {
+            if (gamepad1.right_trigger > 0.7 && targetVelocityFactor < 1) {
                 targetVelocityFactor += velocityFactorIncrement;
-            } else if (gamepad1.a) {
+            } else if (gamepad1.left_trigger > 0.7 && targetVelocityFactor > 0) {
                 targetVelocityFactor -= velocityFactorIncrement;
             }
-            if (gamepad1.b) {
+            if (gamepad1.right_bumper && targetLaunchPosition < 1) {
                 targetLaunchPosition += positionIncrement;
-            } else if (gamepad1.x) {
+            } else if (gamepad1.left_bumper && targetLaunchPosition > 0) {
                 targetLaunchPosition -= positionIncrement;
             }
-            if (gamepad1.right_bumper){
-                intake.setPower(1);
-                lowerRoller.setPower(1);
-                upperRoller.setPower(1);
+            if (gamepad1.left_stick_button){
+                storage.intakeBalls();
             }
-            else if (gamepad1.left_bumper){
-                intake.setPower(0);
-                lowerRoller.setPower(0);
-                upperRoller.setPower(0);
+            else if (gamepad1.right_stick_button){
+                storage.shootBalls();
             }
-            drivetrain.moveDirection(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
+            else if (gamepad1.ps){
+                storage.stop();
+            }
+            if (gamepad1.options){
+                storage.manualForward();
+            }
+            else if (gamepad1.share){
+                storage.manualBackward();
+            }
+            if (gamepad1.cross){
+                storage.findBalls();
+            }
+            storage.updateStorage();
+            drivetrain.moveDirection(-gamepad1.left_stick_y * 0.8, gamepad1.left_stick_x * 0.8, gamepad1.right_stick_x * 0.8);
             pinpoint.update();
             Pose2D pose = pinpoint.getPosition();
             Pose2D target = new Pose2D(DistanceUnit.INCH, 1,1, AngleUnit.DEGREES, 0);
@@ -92,7 +98,7 @@ public class LauncherDoubleTunerWIthOdo extends LinearOpMode {
             telemetry.addData("Heading (degree)", pose.getHeading(AngleUnit.DEGREES));
             double distance = Math.sqrt(Math.pow(pose.getX(DistanceUnit.INCH)-target.getX(DistanceUnit.INCH),2)+Math.pow(pose.getY(DistanceUnit.INCH)-target.getY(DistanceUnit.INCH),2));
             telemetry.addData("Distance from target: ", distance);
-            launcher.setVelocityFactor(targetVelocityFactor);
+            launcher.setVelocityFactor(-targetVelocityFactor);
             launcher.setLaunchPosition(targetLaunchPosition);
             telemetry.addData("targetVelocityFactor in launcherDoubleTest: ", targetVelocityFactor);
             telemetry.addData("targetLaunchPosition in launcherDoubleTest: ", targetLaunchPosition);

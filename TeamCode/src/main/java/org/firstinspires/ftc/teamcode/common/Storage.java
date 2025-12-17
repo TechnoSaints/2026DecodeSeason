@@ -230,6 +230,18 @@ public class Storage extends Component {
         }
     }
 
+    public void manualForward(){
+        intake.setPower(1);
+        lowerRoller.setPower(1);
+        upperRoller.setPower(1);
+    }
+
+    public void manualBackward(){
+        intake.setPower(-1);
+        lowerRoller.setPower(-1);
+        upperRoller.setPower(-1);
+    }
+
     public void log() {
         telemetry.addData("State", state);
         telemetry.addData("Balls", Arrays.toString(balls));

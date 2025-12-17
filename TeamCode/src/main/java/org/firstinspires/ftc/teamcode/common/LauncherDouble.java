@@ -25,7 +25,7 @@ public class LauncherDouble extends Component {
     private double velocityFactorIncrement = 0.05;
     private double targetLaunchPosition = 0.5;
     private double launchPositionFactor = 0.05;
-    private final double maxLaunchPosition = 1.0;
+    private final double maxLaunchPosition = 0.25;
     private final double minLaunchPosition = 0.0;
     private double shortShotVelocityFactor, longShotVelocityFactor;
     private double shortShotPosition, longShotPosition;

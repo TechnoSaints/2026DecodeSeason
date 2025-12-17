@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.common;
 
+import androidx.annotation.NonNull;
+
 import com.arcrobotics.ftclib.controller.PIDFController;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.Pose;
@@ -157,6 +159,9 @@ public class Drivetrain extends Component {
     public void moveDirection(double axial, double strafe, double yaw) {
         // Ensure that manual movement methods put motors back into the correct mode for teleop
         setRunMode(DcMotor.RunMode.RUN_USING_ENCODER); // Or RUN_WITHOUT_ENCODER if that's preferred for teleop control
+        axial = -axial;
+        strafe = -strafe;
+        yaw = -yaw;
 
         // Calculate wheel powers.
         double leftFrontPower = axial + strafe + yaw;
