@@ -7,7 +7,6 @@ import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
 import org.firstinspires.ftc.teamcode.opmode.Paths;
 
 @Autonomous(name = "\uD83D\uDD34shortRedAuto", group = "Red")
-@Disabled
 public class ShortRedAuto extends AutoOpMode {
 
     @Override
