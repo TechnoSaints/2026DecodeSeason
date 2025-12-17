@@ -6,22 +6,23 @@ import org.apache.commons.math3.fitting.WeightedObservedPoints;
 import java.util.Arrays;
 
 public class LauncherSettings {
-    public static double shortShotVelocityFactor = 1;
-    public static double shortShotPosition = 0.1;
+    public static double shortShotVelocityFactor = 0.4;
+    public static double shortShotPosition = 0.8;
     public static double mediumShotVelocityFactor = 0.5;
     public static double mediumShotPosition = 0.8;
-    public static double longShotVelocityFactor = 1;
-    public static double longShotPosition = 0.5;
-
+    public static double longShotVelocityFactor = 0.55;
+    public static double longShotPosition = 0.8;
     public static double maxPosition = 0.7;
     public static double minPosition = 0.0;
+
+    // Time to allow servos to get to launch position, in milliseconds
+    public static double timeToPosition = 500.0;
 
     private static final WeightedObservedPoints velocityFactors = new WeightedObservedPoints();
     private static final WeightedObservedPoints launchPositions = new WeightedObservedPoints();
     private static final PolynomialCurveFitter velocityFactorFitter = PolynomialCurveFitter.create(4);
     private static final PolynomialCurveFitter launchPositionFitter = PolynomialCurveFitter.create(4);
     private static double[] velocityFactorCoefficients, launchPositionCoefficients;
-
     public static void init() {
 
         // Set your empirical data here
@@ -58,9 +59,7 @@ public class LauncherSettings {
         launchPositionCoefficients = launchPositionFitter.fit(launchPositions.toList());
 /*
         System.out.println("Fitted coefficients (a, b, c) for velocity: " + Arrays.toString(velocityFactorCoefficients));
-
         System.out.println("Fitted coefficients (a, b, c) for Position: " + Arrays.toString(launchPositionCoefficients));
-
 
         // The resulting equation is y = coefficients[0] + coefficients[1]*x + coefficients[2]*x^2
         // You can now use this equation to predict y values for new x values.
@@ -78,11 +77,10 @@ public class LauncherSettings {
     }
 
     private static double calculateY(double[] coefficients, double x) {
-        return (coefficients[0] + coefficients[1] * x + coefficients[2] * x * x + coefficients[3] * x * x * x + coefficients[4] * x * x * x * x);
+        return (coefficients[0] + coefficients[1] * x + coefficients[2] * x * x);
     }
 
     public static double getVelocityFactor(double distance) {
-        init();
         return (calculateY(velocityFactorCoefficients, distance));
     }
 
@@ -90,4 +88,5 @@ public class LauncherSettings {
         return (calculateY(launchPositionCoefficients, distance));
     }
 }
+
 

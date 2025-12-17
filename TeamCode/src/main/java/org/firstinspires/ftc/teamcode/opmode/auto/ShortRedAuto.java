@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
 import org.firstinspires.ftc.teamcode.opmode.Paths;
 
 @Autonomous(name = "\uD83D\uDD34shortRedAuto", group = "Red")
-//@Disabled
+@Disabled
 public class ShortRedAuto extends AutoOpMode {
     private Pose launchPose = FieldLocations.shortShotPose;
 
@@ -83,14 +83,11 @@ public class ShortRedAuto extends AutoOpMode {
             case 7:
 
                 setPathState(8);
-
                 break;
 
             // Stop opmode
             case 8:
-
                 setPathState(-1);
-
                 requestOpModeStop();
                 break;
         }
