@@ -74,9 +74,9 @@ public class TeleopBot extends Bot {
 
     public void processGamepadInput(Gamepad gamepad) {
         if (gamepad.dpad_up) {
-            drivetrain.creepDirection(-1.0, 0.0, 0.0);
-        } else if (gamepad.dpad_down) {
             drivetrain.creepDirection(1.0, 0.0, 0.0);
+        } else if (gamepad.dpad_down) {
+            drivetrain.creepDirection(-1.0, 0.0, 0.0);
         } else if (gamepad.dpad_left) {
             drivetrain.creepDirection(0.0, -1.0, 0.0);
         } else if (gamepad.dpad_right) {
@@ -100,6 +100,10 @@ public class TeleopBot extends Bot {
         if (gamepad.right_bumper)
         {
             setLauncherLongShot();
+        }
+
+        if (gamepad.left_trigger > 0.2 && buttonPushable()) {
+            reverseLauncer();
         }
 
         if (gamepad.right_trigger > 0.2 && buttonPushable())

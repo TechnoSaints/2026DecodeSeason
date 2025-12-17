@@ -29,7 +29,7 @@ public class LongBlueEncoderAuto extends LinearOpMode {
             //Move To Launch Spot
             drivetrain.moveStraight(3);
             drivetrain.log();
-            drivetrain.turn(-5.75);
+            drivetrain.turn(-5.9);
             telemetry.update();
          //   drivetrain.strafe(10);
 
@@ -37,7 +37,7 @@ public class LongBlueEncoderAuto extends LinearOpMode {
             drivetrain.log();
             telemetry.update();
             controlTimer.reset();
-            while(controlTimer.milliseconds() < 1000 && opModeIsActive()) {
+            while(controlTimer.milliseconds() < 10000 && opModeIsActive()) {
                 idle();
             }
             bot.stickLaunch();
@@ -77,6 +77,7 @@ public class LongBlueEncoderAuto extends LinearOpMode {
             while(controlTimer.milliseconds() < 2000 && opModeIsActive()) {
                 idle();
             }
+            drivetrain.moveStraight(24);
 /*
             //Moves To First Line
             drivetrain.turn(-35);

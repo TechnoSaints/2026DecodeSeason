@@ -96,7 +96,6 @@ public class Drivetrain extends Component {
 
         return yawAngle;
     }
-
     // Inside the Drivetrain class
     public void turnToAngle(double targetAngle, double power) {
         double currentAngle = getHeading();
@@ -119,6 +118,7 @@ public class Drivetrain extends Component {
                 turnPower = Math.signum(turnPower) * power;
             }
 
+
             // Set motor powers for turning in place (adjust signs if necessary for your chassis)
             leftFrontDrive.setPower(-turnPower);
             rightFrontDrive.setPower(turnPower);
@@ -135,7 +135,11 @@ public class Drivetrain extends Component {
             opMode.telemetry.addData("Target Angle", targetAngle);
             opMode.telemetry.addData("Current Angle", currentAngle);
             opMode.telemetry.addData("Angle Error", angleError);
+            opMode.telemetry.addData("Turn Power", turnPower);
             opMode.telemetry.update();
+            while ((leftBackDrive.isBusy() && rightBackDrive.isBusy() && leftFrontDrive.isBusy() && rightFrontDrive.isBusy()) && !(opMode instanceof LinearOpMode && ((LinearOpMode) opMode).isStopRequested())) {
+
+            }
         }
 
         // Stop all motors after the turn is complete

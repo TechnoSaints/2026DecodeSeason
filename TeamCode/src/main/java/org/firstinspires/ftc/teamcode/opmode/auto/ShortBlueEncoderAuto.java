@@ -29,7 +29,7 @@ public class ShortBlueEncoderAuto extends LinearOpMode {
             //Move To Launch Spot
             drivetrain.moveStraight(-30);
             drivetrain.log();
-            drivetrain.turn(2.25);
+            drivetrain.turn(1.75);
             telemetry.update();
             drivetrain.strafe(-10);
             drivetrain.moveStraight(-27);
@@ -102,6 +102,50 @@ public class ShortBlueEncoderAuto extends LinearOpMode {
             drivetrain.turn(-33);
             drivetrain.log();
             telemetry.update();
+
+            //Launches First Ball from Spike
+            drivetrain.log();
+            telemetry.update();
+            controlTimer.reset();
+            while(controlTimer.milliseconds() < 1000 && opModeIsActive()) {
+                idle();
+            }
+            bot.stickLaunch();
+            while(controlTimer.milliseconds() < 2000 && opModeIsActive()) {
+                idle();
+            }
+
+            //Loads Second Ball
+            bot.stickLoad();
+            bot.turnOnBlackWheel();
+            controlTimer.reset();
+            while(controlTimer.milliseconds() < 1000 && opModeIsActive()) {
+                idle();
+            }
+
+            //Launches Second  Ball
+            bot.turnOffBlackWheel();
+            bot.stickLaunch();
+            controlTimer.reset();
+            while(controlTimer.milliseconds() < 2000 && opModeIsActive()) {
+                idle();
+            }
+
+            //Loads Third Ball
+            bot.stickLoad();
+            bot.turnOnBlackWheel();
+            controlTimer.reset();
+            while(controlTimer.milliseconds() < 1000 && opModeIsActive()) {
+                idle();
+            }
+
+            //Launches Third Ball
+            bot.turnOffBlackWheel();
+            bot.stickLaunch();
+            controlTimer.reset();
+            while(controlTimer.milliseconds() < 2000 && opModeIsActive()) {
+                idle();
+            }
             //launch balls
             /*
             drivetrain.moveStraight(-36);

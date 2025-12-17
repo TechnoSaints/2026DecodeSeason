@@ -47,6 +47,8 @@ public abstract class Bot extends Component {
         launcher.setShortShot();
     }
 
+    public void reverseLauncer() {launcher.reverse();}
+
     public void setLauncherLongShot() {
         launcher.setLongShot();
     }

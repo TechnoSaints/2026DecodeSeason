@@ -55,6 +55,12 @@ public class LauncherDouble extends Component {
         setLaunchPosition(shortShotPosition);
     }
 
+    public void reverse() {
+        setVelocityFactor(-.9);
+        setLaunchPosition(shortShotPosition);
+
+    }
+
     public void setLongShot()
     {
         setVelocityFactor(longShotVelocityFactor);
