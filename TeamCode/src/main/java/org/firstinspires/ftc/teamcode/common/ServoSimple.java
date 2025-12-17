@@ -1,16 +1,11 @@
-package org.firstinspires.ftc.teamcode.common.servos;
+package org.firstinspires.ftc.teamcode.common;
 
-import com.arcrobotics.ftclib.hardware.ServoEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.ServoImpl;
 import com.qualcomm.robotcore.hardware.ServoImplEx;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.common.Component;
 
 public class ServoSimple extends Component {
-
     protected final ServoImplEx servo;
 
     public ServoSimple(HardwareMap hardwareMap, Telemetry telemetry, String servoName) {

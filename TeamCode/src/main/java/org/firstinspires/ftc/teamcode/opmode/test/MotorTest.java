@@ -6,22 +6,23 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-@Disabled
-
 @Config
 @TeleOp(name = "MotorTest", group = "Test")
 public class MotorTest extends LinearOpMode {
 
-    private DcMotor motor;
-  @Override
+    private DcMotor motor1, motor2;
+
+    @Override
     public void runOpMode() {
-        motor = hardwareMap.get(DcMotor.class, "intake");
+        motor1 = hardwareMap.get(DcMotor.class, "motor1");
+        motor2 = hardwareMap.get(DcMotor.class, "motor2");
 
 
-      waitForStart();
+        waitForStart();
 
         while (opModeIsActive() && !isStopRequested()) {
-            motor.setPower(gamepad1.right_stick_y);
+            motor1.setPower(1.0);
+            motor2.setPower(1.0);
         }
     }
 }
