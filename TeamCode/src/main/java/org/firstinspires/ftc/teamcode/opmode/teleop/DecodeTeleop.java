@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 
 @TeleOp(name="Decode TeleOp", group="TeleOp")
@@ -18,9 +19,12 @@ public class DecodeTeleop extends LinearOpMode
     double targetTicksPerSec = 0;
     int ticksPerSecondIncrement = 100;
 
+    private ElapsedTime runtime = new ElapsedTime();
 
-    public void runOpMode()
-    {
+    private double servoMovementTime = 0.5;
+
+
+    public void runOpMode() throws InterruptedException {
         // Init hardware
         DcMotor frontLeftMotor = hardwareMap.get(DcMotorEx.class, "frontLeftMotor");
         DcMotor frontRightMotor = hardwareMap.get(DcMotorEx.class, "frontRightMotor");
@@ -52,7 +56,7 @@ public class DecodeTeleop extends LinearOpMode
         frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
+        wheelMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         // Reversing back left motor
         backLeftMotor.setDirection(DcMotor.Direction.REVERSE);
         waitForStart();
@@ -115,21 +119,38 @@ public class DecodeTeleop extends LinearOpMode
             backRightMotor.setPower(rightBackPower);
 
 
-            if (gamepad1.right_trigger > 0.5 && !isShooting)
+            if (gamepad1.right_trigger > 0.5)
             {
                 isShooting = true;
-                leftServo.setPosition(1.0);
-                rightServo.setPosition(0.0);
-                wheelMotor.setPower(0.63);
+                wheelMotor.setPower(0.60);
+            }
+            if (gamepad1.y)
+            {
+                isShooting = true;
+                wheelMotor.setPower(0.80);
             }
             if (gamepad1.right_bumper)
             {
-                wheelMotor.setPower(0.0);
-                leftServo.setPosition(0.0);
-                rightServo.setPosition(1.0);
+                //wheelMotor.setPower(0.0);
+                if (isShooting)
+                {
+                    runtime.reset();
+                    leftServoPosition = 0.5;
+                    rightServoPosition = 0.0;
+                    leftServo.setPosition(0.5);
+                    rightServo.setPosition(0.0);
+                    sleep(150);
+                }
+                leftServoPosition = 0.25;
+                rightServoPosition = 0.25;
+                leftServo.setPosition(0.25);
+                rightServo.setPosition(0.25);
+            }
+            if (gamepad1.x)
+            {
+                wheelMotor.setPower(0);
                 isShooting = false;
             }
-
 
             //Telemetry
             telemetry.addData("Left Front Power", "%.2f", leftFrontPower);
@@ -140,7 +161,6 @@ public class DecodeTeleop extends LinearOpMode
             telemetry.addData("Left Servo Position", "%.2f", leftServoPosition);
             telemetry.addData("Right Servo Position", "%.2f", rightServoPosition);
             telemetry.update();
-
         }
 
 

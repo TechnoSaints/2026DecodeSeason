@@ -1,11 +1,9 @@
 package org.firstinspires.ftc.teamcode.opmode.tuning;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@Disabled
 
 @TeleOp(name = "Servo Tuner Double", group = "Tuning")
 
@@ -26,8 +24,8 @@ public class ServoTunerDouble extends LinearOpMode {
 
         // Connect to servo (Assume Robot Left Hand)
         // Change the text in quotes to match any servo name on your robot.
-        servo1 = hardwareMap.get(Servo.class, "handlerArm");
-        servo2 = hardwareMap.get(Servo.class, "handlerWrist");
+        servo1 = hardwareMap.get(Servo.class, "leftServo");
+        servo2 = hardwareMap.get(Servo.class, "rightServo");
 
         // Wait for the start button
         telemetry.addData(">", "Press Start to tune servos.");

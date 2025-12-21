@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@Autonomous(name="Decode Auto", group="Autonomous")
-public class DecodeAuto extends LinearOpMode
+@Autonomous(name="Decode Auto Blue Long", group="Autonomous")
+public class DecodeAutoBlueLong extends LinearOpMode
 {
 
     @Override
@@ -37,59 +37,55 @@ public class DecodeAuto extends LinearOpMode
         backLeftMotor.setDirection(DcMotor.Direction.REVERSE);
 
         waitForStart();
-        //Movement forward
-        frontLeftMotor.setPower(0.5);
-        frontRightMotor.setPower(0.5);
-        backRightMotor.setPower(0.5);
-        backLeftMotor.setPower(0.5);
-        sleep(1200);
-        frontRightMotor.setPower(0);
-        frontLeftMotor.setPower(0);
-        backRightMotor.setPower(0);
-        backLeftMotor.setPower(0);
 
-        sleep(1000);
-        //Turning to shoot
+
+        wheelMotor.setPower(0.90);
+
         frontLeftMotor.setPower(-0.3);
+        backLeftMotor.setPower(-0.3);
+        frontRightMotor.setPower(-0.3);
+        backRightMotor.setPower(-0.3);
+        sleep(700);
+        frontLeftMotor.setPower(0);
+        backLeftMotor.setPower(0);
+        frontRightMotor.setPower(0);
+        backRightMotor.setPower(0);
+
+        frontLeftMotor.setPower(-0.3);
+        backLeftMotor.setPower(0.3);
+        frontRightMotor.setPower(0.3);
+        backRightMotor.setPower(-0.3);
+        sleep(400);
+        frontLeftMotor.setPower(0);
+        backLeftMotor.setPower(0);
+        frontRightMotor.setPower(0);
+        backRightMotor.setPower(0);
+
+        frontLeftMotor.setPower(-0.3);
+        backLeftMotor.setPower(-0.3);
         frontRightMotor.setPower(0.3);
         backRightMotor.setPower(0.3);
-        backLeftMotor.setPower(-0.3);
-        sleep(350);
+        sleep(180);
         frontLeftMotor.setPower(0);
+        backLeftMotor.setPower(0);
         frontRightMotor.setPower(0);
         backRightMotor.setPower(0);
-        backLeftMotor.setPower(0);
 
         for (int i = 0; i < 3; i++)
         {
             leftServo.setPosition(1.0);
             rightServo.setPosition(0.0);
-            wheelMotor.setPower(0.60);
             sleep(3000);
-            wheelMotor.setPower(0.0);
+            //wheelMotor.setPower(0.0);
             leftServo.setPosition(0.0);
             rightServo.setPosition(1.0);
-            sleep(1000);
+            sleep(2000);
         }
-
-        frontLeftMotor.setPower(-0.3);
-        frontRightMotor.setPower(0.3);
-        backRightMotor.setPower(0.3);
-        backLeftMotor.setPower(-0.3);
-        sleep(1000);
-        frontLeftMotor.setPower(0);
-        frontRightMotor.setPower(0);
-        backRightMotor.setPower(0);
-        backLeftMotor.setPower(0);
-
-        frontLeftMotor.setPower(0.3);
-        frontRightMotor.setPower(0.3);
-        backLeftMotor.setPower(0.3);
-        backRightMotor.setPower(0.3);
-        sleep(900);
     }
 
 }
+
+
 
 
 
