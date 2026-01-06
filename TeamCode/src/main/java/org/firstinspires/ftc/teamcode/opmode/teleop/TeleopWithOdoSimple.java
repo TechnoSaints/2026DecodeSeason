@@ -90,10 +90,6 @@ public abstract class TeleopWithOdoSimple extends LinearOpMode {
                 gamepad1.setLedColor(255, 0 , 0, 120000);
             }
 
-            if (gamepad1.ps){
-                bot.resetOdo();
-            }
-
             bot.updateStorage();
 
             // Detects motif (not for now)

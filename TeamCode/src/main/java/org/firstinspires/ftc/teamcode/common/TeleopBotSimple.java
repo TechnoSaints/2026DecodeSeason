@@ -66,10 +66,6 @@ public class TeleopBotSimple extends Component {
         drivetrain.startTeleopDrive();
     }
 
-    public void resetOdo(){
-        drivetrain.resetOdo();
-    }
-
     public void preloadLauncher(boolean red){
         launcher.preloadFromDistance(launcher.distanceFromLauncher(new Pose2D(DistanceUnit.INCH,0,0, AngleUnit.DEGREES, 0), red)); //temp
     }

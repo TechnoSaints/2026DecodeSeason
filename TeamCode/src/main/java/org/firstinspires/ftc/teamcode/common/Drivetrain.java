@@ -229,11 +229,6 @@ public class Drivetrain extends Component {
         follower.update();
     }
 
-    public void resetOdo(){
-        follower = Constants.createFollower(hardwareMap);
-        setOdoStartingPose(FieldLocations.redBaseStartPose);
-    }
-
     public void startTeleopDrive(){
         follower.startTeleopDrive();
     }

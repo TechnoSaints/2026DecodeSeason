@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.Drivetra
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda435DcMotorData;
 
 @Config
-@Autonomous(name="Far Blue Leave")
+@Autonomous(name="\uD83D\uDD35Far Blue Leave", group = "leave")
 public class FarBlueLeave extends LinearOpMode {
     private Drivetrain drivetrain;
     private GoBilda435DcMotorData motorData;
