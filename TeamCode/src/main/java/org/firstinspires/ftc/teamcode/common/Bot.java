@@ -18,8 +18,8 @@ public abstract class Bot extends Component {
         super(telemetry);
         launcher = new LauncherDouble(opMode.hardwareMap, telemetry);
         intake = new RollerMotor(opMode.hardwareMap, telemetry, "intake");
-        topRoller = new RollerCRServo(opMode.hardwareMap, telemetry, "upperRoller");
-        bottomRoller = new RollerMotor(opMode.hardwareMap, telemetry, "lowerRoller");
+     //   topRoller = new RollerCRServo(opMode.hardwareMap, telemetry, "upperRoller");
+       // bottomRoller = new RollerMotor(opMode.hardwareMap, telemetry, "lowerRoller");
 //        kicker = new ServoSimple(opMode.hardwareMap, telemetry, "kicker");
 //        limeLight = opMode.hardwareMap.get(Limelight3A.class, "limelight");
 

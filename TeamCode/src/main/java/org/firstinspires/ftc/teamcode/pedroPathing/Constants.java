@@ -46,14 +46,14 @@ public class Constants {
             .useVoltageCompensation(true);
 
     public static PinpointConstants localizerConstants = new PinpointConstants()
-            .forwardPodY(-4.125)
-            .strafePodX(-3.4375)
+            .forwardPodY(5.5)
+            .strafePodX(4.87)
             .distanceUnit(DistanceUnit.INCH)
             .hardwareMapName("pinpoint")
             .encoderResolution(
-                    GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD
+                    GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_SWINGARM_POD
             )
-            .forwardEncoderDirection(GoBildaPinpointDriver.EncoderDirection.FORWARD)
+            .forwardEncoderDirection(GoBildaPinpointDriver.EncoderDirection.REVERSED)
             .strafeEncoderDirection(GoBildaPinpointDriver.EncoderDirection.FORWARD);
 
     public static PathConstraints pathConstraints = new PathConstraints(
