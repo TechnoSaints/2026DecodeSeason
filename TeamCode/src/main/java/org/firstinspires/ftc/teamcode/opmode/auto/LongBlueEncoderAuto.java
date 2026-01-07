@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmode.auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -9,7 +10,7 @@ import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.Drivetra
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda312DcMotorData;
 import org.firstinspires.ftc.teamcode.opmode.teleop.TeleopBot;
 
-
+@Disabled
 @Autonomous(name = "BlueLongEncoderAuto", group = "Linear OpMode")
 public class LongBlueEncoderAuto extends LinearOpMode {
     private static Drivetrain drivetrain;
