@@ -1,18 +1,16 @@
 package org.firstinspires.ftc.teamcode.opmode.auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
 import org.firstinspires.ftc.teamcode.opmode.Paths;
-@Disabled
-@Autonomous(name = "\uD83D\uDD34shortRedAuto", group = "Red")
+@Autonomous(name = "\uD83D\uDD34longRedAuto", group = "Red")
 //@Disabled
-public class ShortRedAuto extends AutoOpMode {
+public class LongRedAuto extends AutoOpMode {
 
     @Override
     public void init() {
-        FieldLocations.buildPoses("red", "short");
+        FieldLocations.buildPoses("red", "long");
         super.init();
     }
 
@@ -20,24 +18,24 @@ public class ShortRedAuto extends AutoOpMode {
         switch (pathState) {
             // Move start to short shot
             case 0:
-                bot.followPath(Paths.startToShortShot, false);
+                bot.followPath(Paths.longStartToShortShot, false);
                 setPathState(1);
                 break;
 
-            // Shoot three balls after move is finished
+                // Shoot three balls after move is finished
             case 1:
                 if (!bot.followerIsBusy()) {
-                    // Shoot balls
+                    //Launch Balls
                     setPathState(2);
                 }
                 break;
 
             // Move to stack1 setup
             case 2:
-                bot.followPath(Paths.shortShotToStack1Setup, false);
+                bot.followPath(Paths.shortShotToStack3Setup, false);
                 setPathState(3);
                 break;
-
+/*
             // Turn on rollers and move to stack1 finish after move is finished
             case 3:
                 if (!bot.followerIsBusy()) {
@@ -74,7 +72,7 @@ public class ShortRedAuto extends AutoOpMode {
                 setPathState(8);
 
                 break;
-
+*/
             // Stop opmode
             case 8:
 

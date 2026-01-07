@@ -12,17 +12,17 @@ import java.lang.reflect.Field;
 
 public class Paths {
 
-    public static PathChain startToShortShot, shortShotToStack1Setup, stack1SetupToStack1Finish, stack1FinishToShortShot;
+    public static PathChain longStartToShortShot, shortShotToStack3Setup, stack1SetupToStack1Finish, stack1FinishToShortShot;
 
     public static void buildPaths(Follower follower) {
-        startToShortShot = follower.pathBuilder()
-                .addPath(new BezierLine(FieldLocations.startPose, FieldLocations.shortShotPose))
-                .setLinearHeadingInterpolation(FieldLocations.startPose.getHeading(), FieldLocations.shortShotPose.getHeading())
+        longStartToShortShot = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.longStartPose, FieldLocations.shortShotPose))
+                .setLinearHeadingInterpolation(FieldLocations.longStartPose.getHeading(), FieldLocations.shortShotPose.getHeading())
                 .build();
 
-        shortShotToStack1Setup = follower.pathBuilder()
-                .addPath(new BezierLine(FieldLocations.shortShotPose, FieldLocations.stack1SetupPose))
-                .setLinearHeadingInterpolation(FieldLocations.shortShotPose.getHeading(), FieldLocations.stack1SetupPose.getHeading())
+        shortShotToStack3Setup = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.shortShotPose, FieldLocations.stack3SetupPose))
+                .setLinearHeadingInterpolation(FieldLocations.shortShotPose.getHeading(), FieldLocations.stack3SetupPose.getHeading())
                 .build();
 
         stack1SetupToStack1Finish = follower.pathBuilder()
