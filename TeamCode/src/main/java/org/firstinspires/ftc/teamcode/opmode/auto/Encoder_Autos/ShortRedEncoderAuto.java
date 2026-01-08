@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmode.auto;
+package org.firstinspires.ftc.teamcode.opmode.auto.Encoder_Autos;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -11,8 +11,8 @@ import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda3
 import org.firstinspires.ftc.teamcode.opmode.teleop.TeleopBot;
 
 @Disabled
-@Autonomous(name = "RedLongEncoderAuto", group = "Linear OpMode")
-public class LongRedEncoderAuto extends LinearOpMode {
+@Autonomous(name = "RedShortEncoderAuto", group = "Linear OpMode")
+public class ShortRedEncoderAuto extends LinearOpMode {
     private static Drivetrain drivetrain;
     protected ElapsedTime controlTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     private static TeleopBot bot;
@@ -25,24 +25,21 @@ public class LongRedEncoderAuto extends LinearOpMode {
         if(opModeIsActive() && !isStopRequested()) {
 
             //Turn on Motors
-            bot.setLauncherLongShot();
+            bot.setLauncherShortShot();
 
             //Move To Launch Spot
-            drivetrain.moveStraight(3);
+            drivetrain.moveStraight(-30);
             drivetrain.log();
-            drivetrain.turn(5.8);
+            drivetrain.turn(-1);
             telemetry.update();
-         //   drivetrain.strafe(10);
+            drivetrain.strafe(10);
+            drivetrain.moveStraight(-27);
 
             //Launches First Ball
             drivetrain.log();
             telemetry.update();
             controlTimer.reset();
-            while(controlTimer.milliseconds() < 10000 && opModeIsActive()) {
-                idle();
-            }
             bot.stickLaunch();
-            controlTimer.reset();
             while(controlTimer.milliseconds() < 1000 && opModeIsActive()) {
                 idle();
             }
@@ -75,10 +72,9 @@ public class LongRedEncoderAuto extends LinearOpMode {
             bot.turnOffBlackWheel();
             bot.stickLaunch();
             controlTimer.reset();
-            while(controlTimer.milliseconds() < 2000 && opModeIsActive()) {
+            while(controlTimer.milliseconds() < 1000 && opModeIsActive()) {
                 idle();
             }
-            drivetrain.moveStraight(24);
 /*
             //Moves To First Line
             drivetrain.turn(-35);
@@ -120,4 +116,3 @@ public class LongRedEncoderAuto extends LinearOpMode {
 
     }
 }
-
