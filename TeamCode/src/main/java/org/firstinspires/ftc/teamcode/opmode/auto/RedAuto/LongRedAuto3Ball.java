@@ -20,28 +20,32 @@ public class LongRedAuto3Ball extends AutoOpMode {
             // Move start to short shot
             case 0:
                 bot.followPath(Paths.startToLongShot, false);
+                bot.setLauncherLongShot();
+                bot.stickLoad();
                 setPathState(1);
                 break;
 
             // Shoot three balls after move is finished
             case 1:
                 if (!bot.followerIsBusy()) {
-                    // Shoot balls
+                    bot.stickLaunch();
                     setPathState(2);
                 }
                 break;
 
             // Move to stack1 setup
             case 2:
-                bot.followPath(Paths.longShotToParking, false);
-                setPathState(3);
+                    bot.followPath(Paths.longShotToParking, true);
+                    setPathState(3);
                 break;
 
             // Stop opmode
             case 3:
-                setPathState(-1);
-                requestOpModeStop();
-                break;
+                if (!bot.followerIsBusy()) {
+                    setPathState(-1);
+                    requestOpModeStop();
+                    break;
+                }
         }
     }
 }

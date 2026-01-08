@@ -15,11 +15,11 @@ public class FieldLocations {
     public final static Pose stack1FinishRightPose = new Pose(135, 84, Math.toRadians(180));
     public final static Pose stack2SetupRightPose = new Pose(98, 60.0, Math.toRadians(180));
     public final static Pose stack2FinishRightPose = new Pose(135.0, 60.0, Math.toRadians(180));
-    public final static Pose stack3SetupRightPose = new Pose(98, 36.0, Math.toRadians(0));
-    public final static Pose stack3FinishRightPose = new Pose(135.0, 36.0, Math.toRadians(0));
-    public final static Pose longShotRightPose = new Pose(86.0, 21.0, Math.toRadians(67.5));
+    public final static Pose stack3SetupRightPose = new Pose(98, 36.0, Math.toRadians(180));
+    public final static Pose stack3FinishRightPose = new Pose(135.0, 36.0, Math.toRadians(180));
+    public final static Pose longShotRightPose = new Pose(88.0, 21.0, Math.toRadians(67.5));
     public final static Pose longStartRightPose = new Pose(90.0, 8.0, Math.toRadians(90));
-    public final static Pose baseRightPose = new Pose(36.0, 36.0, Math.toRadians(90));
+    public final static Pose baseRightPose = new Pose(36, 36, Math.toRadians(90));
 
     // Left side poses
     public final static Pose goalLeftPose =
