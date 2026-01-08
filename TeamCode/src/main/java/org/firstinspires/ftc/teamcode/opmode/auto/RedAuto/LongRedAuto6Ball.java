@@ -1,17 +1,17 @@
-package org.firstinspires.ftc.teamcode.opmode.auto;
+package org.firstinspires.ftc.teamcode.opmode.auto.RedAuto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
 import org.firstinspires.ftc.teamcode.opmode.Paths;
+import org.firstinspires.ftc.teamcode.opmode.auto.AutoOpMode;
 
-@Autonomous(name = "\uD83D\uDD34shortRedAuto", group = "Red")
-public class ShortRedAuto extends AutoOpMode {
+@Autonomous(name = "\uD83D\uDD34longRedAuto3Ball", group = "Red")
+public class LongRedAuto6Ball extends AutoOpMode {
 
     @Override
     public void init() {
-        FieldLocations.buildPoses("red", "short");
+        FieldLocations.buildPoses("red", "long");
         super.init();
     }
 
@@ -19,7 +19,7 @@ public class ShortRedAuto extends AutoOpMode {
         switch (pathState) {
             // Move start to short shot
             case 0:
-                bot.followPath(Paths.startToShortShot, false);
+                bot.followPath(Paths.startToLongShot, false);
                 setPathState(1);
                 break;
 
@@ -33,7 +33,7 @@ public class ShortRedAuto extends AutoOpMode {
 
             // Move to stack1 setup
             case 2:
-                bot.followPath(Paths.shortShotToStack1Setup, false);
+                bot.followPath(Paths.longShotToStack3Setup, false);
                 setPathState(3);
                 break;
 
@@ -41,7 +41,7 @@ public class ShortRedAuto extends AutoOpMode {
             case 3:
                 if (!bot.followerIsBusy()) {
                     // Turn on rollers
-                    bot.followPath(Paths.stack1SetupToStack1Finish, false);
+                    bot.followPath(Paths.stack3SetupToStack3Finish, false);
                     setPathState(4);
                 }
                 break;
@@ -55,7 +55,7 @@ public class ShortRedAuto extends AutoOpMode {
 
             // Move to short shot
             case 5:
-                bot.followPath(Paths.stack1FinishToShortShot, false);
+                bot.followPath(Paths.stack3FinishTolongShot, false);
                 setPathState(6);
                 break;
 
