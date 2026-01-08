@@ -6,7 +6,7 @@ import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
 import org.firstinspires.ftc.teamcode.opmode.Paths;
 import org.firstinspires.ftc.teamcode.opmode.auto.AutoOpMode;
 
-@Autonomous(name = "\uD83D\uDD34shortRedAuto6Ball", group = "Red")
+@Autonomous(name = "\uD83D\uDD34shortRedAuto9Ball", group = "Red")
 public class ShortRedAuto9Ball extends AutoOpMode {
 
     @Override
@@ -103,8 +103,9 @@ public class ShortRedAuto9Ball extends AutoOpMode {
 
             // Do more stuff
             case 12:
-
-                setPathState(13);
+                if (!bot.followerIsBusy()) {
+                    setPathState(13);
+                }
                 break;
 
             // Stop opmode
