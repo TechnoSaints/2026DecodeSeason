@@ -27,8 +27,8 @@ public class LauncherDouble extends Component {
     private double velocityFactorIncrement = 0.05;
     private double targetLaunchPosition = 0.5;
     private double launchPositionFactor = 0.05;
-    private final double maxLaunchPosition = 1.0;
-    private final double minLaunchPosition = 0.0;
+    private final double maxLaunchPosition = 10;
+    private final double minLaunchPosition = -10;
     private double shortShotVelocityFactor, longShotVelocityFactor, mediumShotVelocityFactor;
     private double shortShotPosition, longShotPosition, mediumShotPosition;
 
@@ -137,7 +137,6 @@ public class LauncherDouble extends Component {
 
     private void setServosTargetLaunchPosition(double targetLaunchPosition)
     {
-        launchServo.setPosition(targetLaunchPosition);
         launchServo.setPosition(targetLaunchPosition);
     }
 
