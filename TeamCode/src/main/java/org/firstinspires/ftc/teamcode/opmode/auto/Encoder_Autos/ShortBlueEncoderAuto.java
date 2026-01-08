@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmode.auto;
+package org.firstinspires.ftc.teamcode.opmode.auto.Encoder_Autos;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -10,8 +10,8 @@ import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda3
 import org.firstinspires.ftc.teamcode.opmode.teleop.TeleopBot;
 
 
-@Autonomous(name = "RedShortEncoderAuto", group = "Linear OpMode")
-public class ShortRedEncoderAuto extends LinearOpMode {
+@Autonomous(name = "BlueShortEncoderAuto", group = "Linear OpMode")
+public class ShortBlueEncoderAuto extends LinearOpMode {
     private static Drivetrain drivetrain;
     protected ElapsedTime controlTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     private static TeleopBot bot;
@@ -29,17 +29,20 @@ public class ShortRedEncoderAuto extends LinearOpMode {
             //Move To Launch Spot
             drivetrain.moveStraight(-30);
             drivetrain.log();
-            drivetrain.turn(-1);
+            drivetrain.turn(1.75);
             telemetry.update();
-            drivetrain.strafe(10);
+            drivetrain.strafe(-10);
             drivetrain.moveStraight(-27);
 
             //Launches First Ball
             drivetrain.log();
             telemetry.update();
             controlTimer.reset();
-            bot.stickLaunch();
             while(controlTimer.milliseconds() < 1000 && opModeIsActive()) {
+                idle();
+            }
+            bot.stickLaunch();
+            while(controlTimer.milliseconds() < 2000 && opModeIsActive()) {
                 idle();
             }
 
@@ -55,7 +58,7 @@ public class ShortRedEncoderAuto extends LinearOpMode {
             bot.turnOffBlackWheel();
             bot.stickLaunch();
             controlTimer.reset();
-            while(controlTimer.milliseconds() < 1000 && opModeIsActive()) {
+            while(controlTimer.milliseconds() < 2000 && opModeIsActive()) {
                 idle();
             }
 
@@ -71,14 +74,15 @@ public class ShortRedEncoderAuto extends LinearOpMode {
             bot.turnOffBlackWheel();
             bot.stickLaunch();
             controlTimer.reset();
-            while(controlTimer.milliseconds() < 1000 && opModeIsActive()) {
+            while(controlTimer.milliseconds() < 2000 && opModeIsActive()) {
                 idle();
             }
-/*
+
             //Moves To First Line
-            drivetrain.turn(-35);
+            drivetrain.turn(33);
             bot.intakeForward();
-            drivetrain.strafe(-6);
+            bot.stickLoad();
+            drivetrain.strafe(-7.5);
             bot.turnOnBlackWheel();
             controlTimer.reset();
             while(controlTimer.milliseconds() < 1000 && opModeIsActive()) {
@@ -90,13 +94,58 @@ public class ShortRedEncoderAuto extends LinearOpMode {
             }
             bot.turnOffBlackWheel();
 
-            /*
-            drivetrain.moveStraight(30);
+            //Return from Spike 1 to Shoot
+            drivetrain.moveStraight(36);
+            drivetrain.strafe(7.5);
             drivetrain.log();
             telemetry.update();
-            drivetrain.turn(33);
+            drivetrain.turn(-33);
             drivetrain.log();
             telemetry.update();
+
+            //Launches First Ball from Spike
+            drivetrain.log();
+            telemetry.update();
+            controlTimer.reset();
+            while(controlTimer.milliseconds() < 1000 && opModeIsActive()) {
+                idle();
+            }
+            bot.stickLaunch();
+            while(controlTimer.milliseconds() < 2000 && opModeIsActive()) {
+                idle();
+            }
+
+            //Loads Second Ball
+            bot.stickLoad();
+            bot.turnOnBlackWheel();
+            controlTimer.reset();
+            while(controlTimer.milliseconds() < 1000 && opModeIsActive()) {
+                idle();
+            }
+
+            //Launches Second  Ball
+            bot.turnOffBlackWheel();
+            bot.stickLaunch();
+            controlTimer.reset();
+            while(controlTimer.milliseconds() < 2000 && opModeIsActive()) {
+                idle();
+            }
+
+            //Loads Third Ball
+            bot.stickLoad();
+            bot.turnOnBlackWheel();
+            controlTimer.reset();
+            while(controlTimer.milliseconds() < 1000 && opModeIsActive()) {
+                idle();
+            }
+
+            //Launches Third Ball
+            bot.turnOffBlackWheel();
+            bot.stickLaunch();
+            controlTimer.reset();
+            while(controlTimer.milliseconds() < 2000 && opModeIsActive()) {
+                idle();
+            }
             //launch balls
             /*
             drivetrain.moveStraight(-36);

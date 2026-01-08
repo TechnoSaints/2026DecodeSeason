@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmode.auto;
+package org.firstinspires.ftc.teamcode.opmode.auto.Encoder_Autos;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -10,8 +10,8 @@ import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda3
 import org.firstinspires.ftc.teamcode.opmode.teleop.TeleopBot;
 
 
-@Autonomous(name = "BlueLongEncoderAuto", group = "Linear OpMode")
-public class LongBlueEncoderAuto extends LinearOpMode {
+@Autonomous(name = "RedLongEncoderAuto", group = "Linear OpMode")
+public class LongRedEncoderAuto extends LinearOpMode {
     private static Drivetrain drivetrain;
     protected ElapsedTime controlTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     private static TeleopBot bot;
@@ -29,7 +29,7 @@ public class LongBlueEncoderAuto extends LinearOpMode {
             //Move To Launch Spot
             drivetrain.moveStraight(3);
             drivetrain.log();
-            drivetrain.turn(-5.9);
+            drivetrain.turn(5.8);
             telemetry.update();
          //   drivetrain.strafe(10);
 
