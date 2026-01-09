@@ -98,9 +98,10 @@ public class TeleopPedro extends OpMode {
             slowModeMultiplier -= 0.25;
         }
 
-        telemetryM.debug("position", follower.getPose());
-        telemetryM.debug("velocity", follower.getVelocity());
-        telemetryM.debug("heading", follower.getHeading());
-        telemetryM.debug("automatedDrive", automatedDrive);
+        telemetryM.addData("position", follower.getPose());
+        telemetryM.addData("velocity", follower.getVelocity());
+        telemetryM.addData("heading", follower.getHeading());
+        telemetryM.addData("automatedDrive", automatedDrive);
+        telemetryM.update();
     }
 }
