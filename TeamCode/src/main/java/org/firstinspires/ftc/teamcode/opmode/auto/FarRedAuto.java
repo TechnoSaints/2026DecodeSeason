@@ -115,6 +115,7 @@ public class FarRedAuto extends AutoOpMode {
                 requestOpModeStop();
                 break;
         }
+        bot.updateLauncher(launchPose, true, false);
         telemetry.addData("Path State", pathState);
     }
 }

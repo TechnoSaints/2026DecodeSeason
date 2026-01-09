@@ -31,13 +31,13 @@ public abstract class Bot extends Component {
     }
 
     public void setSpeed(double power){
-        if (power < 0){
+        if (power > 0){
             power = 0;
         }
-        else if (power > 1){
-            power = 1;
+        else if (power < -1){
+            power = -1;
         }
-        launcher.setVelocity(power);
+        launcher.setVelocity(-power);
     }
 
     public int getState(){
