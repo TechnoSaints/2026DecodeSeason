@@ -26,7 +26,6 @@ public class FarBlueAuto extends AutoOpMode {
             // Move start to short shot
             case 0:
                 bot.followPath(Paths.startToLongShot, false);
-                bot.setSpeed(-0.85);
                 setPathState(1);
                 break;
 
@@ -42,8 +41,7 @@ public class FarBlueAuto extends AutoOpMode {
                     }
                 }*/
                 if (/*!bot.isBusy()*/false){
-                    bot.intakeBalls();
-                    timer.reset();
+                    bot.setSpeed(0.85);
                     setPathState(2);
                 }
                 break;
@@ -52,19 +50,19 @@ public class FarBlueAuto extends AutoOpMode {
 
             // Move to stack1 setup
             case 2:
-                if (timer.milliseconds() > 1000) {
-                    bot.stopStorage();
-                    bot.stopLauncher();
-                    bot.followPath(Paths.longShotToStack3Setup, false);
+                if (!bot.isBusy()){
+                    bot.intakeBalls();
+                    timer.reset();
                     setPathState(3);
                 }
                 break;
 
             // Turn on rollers and move to stack1 finish after move is finished
             case 3:
-                if (!bot.followerIsBusy()) {
-                    // Turn on rollers
-                    bot.followPath(Paths.stack3SetupToStack3Finish, false);
+                if (timer.milliseconds() > 1000) {
+                    bot.stopStorage();
+                    bot.stopLauncher();
+                    bot.followPath(Paths.longShotToStack3Setup, false);
                     setPathState(4);
                 }
                 break;
@@ -72,14 +70,18 @@ public class FarBlueAuto extends AutoOpMode {
             // Do additional stuff, if needed, after move is finished
             case 4:
                 if (!bot.followerIsBusy()) {
+                    // Turn on rollers
+                    bot.followPath(Paths.stack3SetupToStack3Finish, false);
                     setPathState(5);
                 }
                 break;
 
             // Move to long shot
             case 5:
-                bot.followPath(Paths.stack3FinishToLongShot, false);
-                setPathState(6);
+                if (!bot.followerIsBusy()) {
+                    bot.followPath(Paths.stack3FinishToLongShot, false);
+                    setPathState(6);
+                }
                 break;
 
             // Shoot three balls
