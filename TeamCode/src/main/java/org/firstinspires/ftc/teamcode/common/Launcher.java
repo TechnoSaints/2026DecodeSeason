@@ -132,6 +132,10 @@ public class Launcher extends Component {
         return (Math.abs(getVelocity()-targetVelocity) < 50 && Math.abs(getPosition()-targetPosition) <= 0.02);
     }
 
+    public boolean motorBusy(){
+        return (Math.abs(leftLauncher.getVelocity()-targetVelocity) > 50) || (Math.abs(-rightLauncher.getVelocity()-targetVelocity) > 50);
+    }
+
     public void teleopDistanceLog(Pose2D pose, boolean red){
         telemetry.addData("Distance from launcher", distanceFromLauncher(pose, red));
     }

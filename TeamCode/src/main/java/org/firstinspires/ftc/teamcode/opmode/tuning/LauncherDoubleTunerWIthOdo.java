@@ -19,6 +19,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.common.Drivetrain;
+import org.firstinspires.ftc.teamcode.common.Launcher;
 import org.firstinspires.ftc.teamcode.common.LauncherDouble;
 import org.firstinspires.ftc.teamcode.common.Storage;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.DrivetrainData;
@@ -31,7 +32,7 @@ import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
 public class LauncherDoubleTunerWIthOdo extends LinearOpMode {
 
-    private LauncherDouble launcher;
+    private Launcher launcher;
     private double velocityFactorIncrement = 0.05;
     private double targetVelocityFactor = 0.0;
     private double positionIncrement = 0.05;
@@ -43,9 +44,9 @@ public class LauncherDoubleTunerWIthOdo extends LinearOpMode {
     @Override
     public void runOpMode() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        launcher = new LauncherDouble(hardwareMap, telemetry);
-        launcher.setVelocityFactor(targetVelocityFactor);
-        launcher.setLaunchPosition(targetLaunchPosition);
+        launcher = new Launcher(telemetry, hardwareMap);
+        launcher.setVelocity(targetVelocityFactor);
+        launcher.setPosition(targetLaunchPosition);
         drivetrain = new Drivetrain(this, hardwareMap, telemetry, new DrivetrainData(), new GoBilda435DcMotorData());
         pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint");
         pinpoint.setOffsets(-2.5,-4.5, DistanceUnit.INCH);
@@ -93,13 +94,14 @@ public class LauncherDoubleTunerWIthOdo extends LinearOpMode {
             Pose2D pose = pinpoint.getPosition();
             Pose2D target = new Pose2D(DistanceUnit.INCH, 1,1, AngleUnit.DEGREES, 0);
 
+            telemetry.addData("Launcher is busy?", launcher.motorBusy());
             telemetry.addData("X (inches)", pose.getX(DistanceUnit.INCH));
             telemetry.addData("Y (inches)", pose.getY(DistanceUnit.INCH));
             telemetry.addData("Heading (degree)", pose.getHeading(AngleUnit.DEGREES));
             double distance = Math.sqrt(Math.pow(pose.getX(DistanceUnit.INCH)-target.getX(DistanceUnit.INCH),2)+Math.pow(pose.getY(DistanceUnit.INCH)-target.getY(DistanceUnit.INCH),2));
             telemetry.addData("Distance from target: ", distance);
-            launcher.setVelocityFactor(-targetVelocityFactor);
-            launcher.setLaunchPosition(targetLaunchPosition);
+            launcher.setVelocity(-targetVelocityFactor);
+            launcher.setPosition(targetLaunchPosition);
             telemetry.addData("targetVelocityFactor in launcherDoubleTest: ", targetVelocityFactor);
             telemetry.addData("targetLaunchPosition in launcherDoubleTest: ", targetLaunchPosition);
             launcher.log();

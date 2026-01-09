@@ -61,8 +61,9 @@ public abstract class Bot extends Component {
 
 
     public boolean isBusy() {
-        return (false);
+        return launcher.motorBusy();
     }
+    public boolean launcherIsReady(){return launcher.ready();}
     public void update() {
         storage.updateStorage();
         launcher.log();

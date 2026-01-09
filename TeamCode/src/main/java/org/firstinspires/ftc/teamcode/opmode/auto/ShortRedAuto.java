@@ -8,14 +8,13 @@ import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
 import org.firstinspires.ftc.teamcode.opmode.Paths;
 
 @Autonomous(name = "\uD83D\uDD34shortRedAuto", group = "Red")
-@Disabled
 public class ShortRedAuto extends AutoOpMode {
     private Pose launchPose = FieldLocations.shortShotPose;
 
     @Override
     public void init() {
-        FieldLocations.buildPoses("red", "short");
         super.init();
+        FieldLocations.buildPoses("red", "short");
     }
 
     protected void autonomousPathUpdate() {
@@ -38,6 +37,7 @@ public class ShortRedAuto extends AutoOpMode {
                     }
                 }*/
                 if (!bot.followerIsBusy()){
+                    telemetry.addLine("first move finished");
                     setPathState(2);
                 }
                 break;
@@ -91,7 +91,8 @@ public class ShortRedAuto extends AutoOpMode {
                 requestOpModeStop();
                 break;
         }
-        bot.updateLauncher(launchPose, true, false);
+        //bot.updateLauncher(launchPose, true, false);
+        bot.update();
         telemetry.addData("Path State", pathState);
     }
 }

@@ -38,8 +38,8 @@ public class Paths {
                 .build();
 
         longShotToStack3Setup = follower.pathBuilder()
-                .addPath(new BezierLine(FieldLocations.shortShotPose, FieldLocations.stack1SetupPose))
-                .setLinearHeadingInterpolation(FieldLocations.shortShotPose.getHeading(), FieldLocations.stack1SetupPose.getHeading())
+                .addPath(new BezierLine(FieldLocations.longShotPose, FieldLocations.stack3SetupPose))
+                .setLinearHeadingInterpolation(FieldLocations.longShotPose.getHeading(), FieldLocations.stack3SetupPose.getHeading())
                 .build();
 
         stack3FinishToLongShot = follower.pathBuilder()

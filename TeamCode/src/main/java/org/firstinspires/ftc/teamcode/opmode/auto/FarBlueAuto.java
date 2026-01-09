@@ -2,32 +2,31 @@ package org.firstinspires.ftc.teamcode.opmode.auto;
 
 import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
 import org.firstinspires.ftc.teamcode.opmode.Paths;
 
-@Autonomous(name = "\uD83D\uDD34Far Red Auto", group = "Red")
-public class FarRedAuto extends AutoOpMode {
+@Autonomous(name = "\uD83D\uDD35Far Blue Auto", group = "Blue")
+public class FarBlueAuto extends AutoOpMode {
     private Pose launchPose = FieldLocations.longShotPose;
     private ElapsedTime timer;
 
     @Override
     public void init() {
-        FieldLocations.buildPoses("red", "long");
+        FieldLocations.buildPoses("blue", "long");
         super.init();
         timer = new ElapsedTime();
         timer.reset();
-        bot.setPosition(0.15);
+        bot.setPosition(0.225);
     }
 
     protected void autonomousPathUpdate(){
         switch (pathState) {
             // Move start to short shot
             case 0:
-                bot.setSpeed(0.8);
                 bot.followPath(Paths.startToLongShot, false);
+                bot.setSpeed(-0.85);
                 setPathState(1);
                 break;
 
@@ -42,7 +41,7 @@ public class FarRedAuto extends AutoOpMode {
                         bot.shootBalls();
                     }
                 }*/
-                if (!bot.isBusy()){
+                if (/*!bot.isBusy()*/false){
                     bot.intakeBalls();
                     timer.reset();
                     setPathState(2);
@@ -87,7 +86,7 @@ public class FarRedAuto extends AutoOpMode {
             case 6:
                 if (!bot.followerIsBusy()) {
                     // Shoot three balls
-                    setPathState(10);
+                    setPathState(7);
                 }
                 break;
 
@@ -99,23 +98,74 @@ public class FarRedAuto extends AutoOpMode {
 
             // Move off launch line
             case 8:
-                bot.followPath(Paths.longShotToBase, false);
+                bot.followPath(Paths.longShotToStack2Setup, false);
                 setPathState(9);
                 break;
 
             case 9:
-                if (!bot.followerIsBusy()){
+                if (!bot.followerIsBusy()) {
+                    // Turn on rollers
+                    bot.followPath(Paths.stack2SetupToStack2Finish, false);
                     setPathState(10);
                 }
                 break;
 
-            // Stop opmode
+            // Do additional stuff, if needed, after move is finished
             case 10:
+                if (!bot.followerIsBusy()) {
+                    setPathState(11);
+                }
+                break;
+
+            // Move to long shot
+            case 11:
+                bot.followPath(Paths.stack2FinishToLongShot, false);
+                setPathState(12);
+                break;
+
+            // Shoot three balls
+            case 12:
+                if (!bot.followerIsBusy()) {
+                    // Shoot three balls
+                    setPathState(13);
+                }
+                break;
+
+            case 13:
+                if (!bot.followerIsBusy()) {
+                    // Turn on rollers
+                    bot.followPath(Paths.stack1SetupToStack1Finish, false);
+                    setPathState(14);
+                }
+                break;
+
+            // Do additional stuff, if needed, after move is finished
+            case 14:
+                if (!bot.followerIsBusy()) {
+                    setPathState(15);
+                }
+                break;
+
+            // Move to long shot
+            case 15:
+                bot.followPath(Paths.stack1FinishToLongShot, false);
+                setPathState(16);
+                break;
+
+            // Shoot three balls
+            case 16:
+                if (!bot.followerIsBusy()) {
+                    // Shoot three balls
+                    setPathState(17);
+                }
+                break;
+
+            // Stop opmode
+            case 17:
                 setPathState(-1);
                 requestOpModeStop();
                 break;
         }
-        bot.updateLauncher(launchPose, true, false);
         telemetry.addData("Path State", pathState);
     }
 }

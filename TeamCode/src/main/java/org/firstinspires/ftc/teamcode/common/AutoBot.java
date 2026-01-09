@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
 public class AutoBot extends Bot {
-    private final Follower follower;
+    private Follower follower;
 
     public AutoBot(OpMode opMode, Telemetry telemetry) {
         super(opMode, telemetry);
@@ -51,9 +51,9 @@ public class AutoBot extends Bot {
         launcher.update(launchPose, red, changeTarget);
     }
 
-    public void update(boolean red) {
+    public void update() {
         super.update();
-        launcher.distanceFromLauncher(follower.getPose(), red);
+        //launcher.distanceFromLauncher(follower.getPose(), red);
         follower.update();
     }
 }
