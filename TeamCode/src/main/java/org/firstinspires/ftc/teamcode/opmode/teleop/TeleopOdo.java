@@ -4,75 +4,60 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.pedropathing.follower.Follower;
+import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.opmode.teleop.AutoAim.AutoAimHelper;
+import org.firstinspires.ftc.teamcode.opmode.teleop.AutoAim.AutoAimValues;
+import org.firstinspires.ftc.teamcode.opmode.teleop.TeleopBots.TeleopBotWithOdo;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
 @Config
-@TeleOp(name = "TeleopGame", group = "Linear OpMode")
-public class TeleopOdo extends LinearOpMode {
+@TeleOp(name = "TeleopOdo", group = "OpMode")
+public class TeleopOdo extends OpMode {
 
-    private TeleopBot bot;
+    private TeleopBotWithOdo bot;
     private Follower follower;
 
-    private double lastHeading = 0;
-    private long lastTime = 0;
+    private AutoAimHelper aim;
+    private Pose startingPose = new Pose(124, 124, Math.toRadians(45));
+    private boolean isRedAlliance = true;
 
     @Override
-    public void runOpMode() {
-        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        bot = new TeleopBot(this, telemetry);
+    public void init() {
         follower = Constants.createFollower(hardwareMap);
+        follower.setStartingPose(startingPose);
+        follower.update();
 
-        waitForStart();
+        AutoAimValues values = new AutoAimValues();
+        aim = new AutoAimHelper(values, isRedAlliance);
+    }
 
+    @Override
+    public void start() {
+        follower.startTeleopDrive();
+    }
 
-        lastHeading = follower.getPose().getHeading();
-        lastTime = System.nanoTime();
+    @Override
+    public void loop() {
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+        bot = new TeleopBotWithOdo(this, telemetry);
 
-        while (opModeIsActive() && !isStopRequested()) {
+        bot.processGamepadInput(gamepad1);
+        follower.update();
 
-            bot.processGamepadInput(gamepad1);
-            follower.update();
+        Pose pose = follower.getPose();
+        double turn = aim.computeTurn(pose);
 
-            // --- Pose Data ---
-            double x = follower.getPose().getX();
-            double y = follower.getPose().getY();
-            double headingRad = follower.getPose().getHeading();
-            double headingDeg = Math.toDegrees(headingRad);
-
-            // --- Translational Velocity ---
-            double vx = follower.getVelocity().getXComponent();
-            double vy = follower.getVelocity().getYComponent();
-            double speed = follower.getVelocity().getMagnitude();
-
-            // Direction robot is moving (not facing)
-            double motionDirectionDeg = Math.toDegrees(follower.getVelocity().getTheta());
-
-            // --- Angular Velocity Calculation ---
-            long currentTime = System.nanoTime();
-            double deltaT = (currentTime - lastTime) / 1e9; // seconds
-            double omega = (headingRad - lastHeading) / deltaT; // rad/s
-
-            lastHeading = headingRad;
-            lastTime = currentTime;
-
-            // --- Telemetry Output ---
-            telemetry.addLine("=== Pinpoint Odometry (Pedro) ===");
-            telemetry.addData("X", "%.2f in", x);
-            telemetry.addData("Y", "%.2f in", y);
-            telemetry.addData("Heading", "%.2f°", headingDeg);
-
-            telemetry.addLine("--- Velocity ---");
-            telemetry.addData("VX", "%.2f in/s", vx);
-            telemetry.addData("VY", "%.2f in/s", vy);
-            telemetry.addData("Speed", "%.2f in/s", speed);
-            telemetry.addData("Velocity Direction", "%.2f°", motionDirectionDeg);
-            telemetry.addData("Angular Vel", "%.3f rad/s", omega);
-
-            telemetry.update();
-            bot.update();
+        if (gamepad1.touchpad) {
+            bot.autoAim(turn);
         }
+
+        aim.log(telemetry, pose);
+        telemetry.update();
+        bot.update();
+
     }
 }

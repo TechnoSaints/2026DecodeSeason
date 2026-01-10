@@ -1,5 +1,5 @@
 
-package org.firstinspires.ftc.teamcode.opmode.teleop;
+package org.firstinspires.ftc.teamcode.opmode.teleop.ArchivedCode;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.common.TeleopBotSimple;
 
 @Config
 @TeleOp(name = "GameTeleop", group = "Linear OpMode")
-public class TeleopNoOdo extends LinearOpMode {
+public class SimpleTeleop extends LinearOpMode {
     private TeleopBotSimple bot;
 
     @Override

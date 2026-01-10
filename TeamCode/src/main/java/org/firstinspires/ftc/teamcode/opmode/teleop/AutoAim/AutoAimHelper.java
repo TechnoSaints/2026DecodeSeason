@@ -1,8 +1,7 @@
-package org.firstinspires.ftc.teamcode.pedroPathing;
+package org.firstinspires.ftc.teamcode.opmode.teleop.AutoAim;
 
 import com.pedropathing.geometry.Pose;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.pedroPathing.AutoAimValues;
 
 /**
  * Pure math helper for auto-aiming at a goal.

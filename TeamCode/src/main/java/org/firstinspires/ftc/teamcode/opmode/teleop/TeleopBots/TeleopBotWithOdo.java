@@ -1,6 +1,7 @@
-package org.firstinspires.ftc.teamcode.opmode.teleop;
+package org.firstinspires.ftc.teamcode.opmode.teleop.TeleopBots;
 
 
+import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -10,9 +11,8 @@ import org.firstinspires.ftc.teamcode.common.Bot;
 import org.firstinspires.ftc.teamcode.common.Drivetrain;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.DrivetrainData;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda435DcMotorData;
-import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
-public class TeleopBot extends Bot {
+public class TeleopBotWithOdo extends Bot {
     private final Drivetrain drivetrain;
 
     private double driveAxial = 0.0;
@@ -27,7 +27,7 @@ public class TeleopBot extends Bot {
     private ElapsedTime buttonTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     private int buttonDelay = 350;
 
-    public TeleopBot(OpMode opMode, Telemetry telemetry) {
+    public TeleopBotWithOdo(OpMode opMode, Telemetry telemetry) {
         super(opMode, telemetry);
         drivetrain = new Drivetrain(opMode, opMode.hardwareMap, telemetry, new DrivetrainData(), new GoBilda435DcMotorData());
         buttonTimer.reset();
@@ -68,8 +68,8 @@ public class TeleopBot extends Bot {
         stopPusher();
     }
 
-    public void autoAim() {
-
+    public void autoAim(double turnValue) {
+        drivetrain.moveDirection(driveAxial, driveStrafe, turnValue);
     }
 
     public void processGamepadInput(Gamepad gamepad) {
@@ -156,7 +156,12 @@ public class TeleopBot extends Bot {
         {
             stickLoad();
         }
+
     }
 
-    //h
+    public void log() {
+
+    }
+
+
 }

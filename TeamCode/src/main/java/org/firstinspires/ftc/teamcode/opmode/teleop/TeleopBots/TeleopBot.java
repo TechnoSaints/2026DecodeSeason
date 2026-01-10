@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmode.teleop;
+package org.firstinspires.ftc.teamcode.opmode.teleop.TeleopBots;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.common.Drivetrain;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.DrivetrainData;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda435DcMotorData;
 
-public class TeleopBotWithOdo extends Bot {
+public class TeleopBot extends Bot {
     private final Drivetrain drivetrain;
 
     private double driveAxial = 0.0;
@@ -26,7 +26,7 @@ public class TeleopBotWithOdo extends Bot {
     private ElapsedTime buttonTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     private int buttonDelay = 350;
 
-    public TeleopBotWithOdo(OpMode opMode, Telemetry telemetry) {
+    public TeleopBot(OpMode opMode, Telemetry telemetry) {
         super(opMode, telemetry);
         drivetrain = new Drivetrain(opMode, opMode.hardwareMap, telemetry, new DrivetrainData(), new GoBilda435DcMotorData());
         buttonTimer.reset();
@@ -157,4 +157,5 @@ public class TeleopBotWithOdo extends Bot {
         }
     }
 
+    //h
 }

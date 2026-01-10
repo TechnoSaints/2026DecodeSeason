@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.common.Drivetrain;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.DrivetrainData;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda312DcMotorData;
-import org.firstinspires.ftc.teamcode.opmode.teleop.TeleopBot;
+import org.firstinspires.ftc.teamcode.opmode.teleop.TeleopBots.TeleopBot;
 
 @Disabled
 @Autonomous(name = "BlueLongEncoderAuto", group = "Linear OpMode")
