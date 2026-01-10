@@ -1,23 +1,17 @@
 
 package org.firstinspires.ftc.teamcode.opmode.teleop;
 
-import com.qualcomm.hardware.limelightvision.LLResult;
-import com.qualcomm.hardware.limelightvision.Limelight3A;
-import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
-import com.qualcomm.hardware.limelightvision.LLResult;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.common.TeleopBotSimple;
 
-@Disabled
 @Config
 @TeleOp(name = "GameTeleop", group = "Linear OpMode")
-public class TeleopNoOdoSimple extends LinearOpMode {
+public class TeleopNoOdo extends LinearOpMode {
     private TeleopBotSimple bot;
 
     @Override
