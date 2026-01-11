@@ -50,6 +50,7 @@ public class ShortRedAuto extends AutoOpMode {
             // Do additional stuff, if needed, after move is finished
             case 4:
                 if (!bot.followerIsBusy()) {
+
                     setPathState(5);
                 }
                 break;
