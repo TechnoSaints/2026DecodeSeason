@@ -30,6 +30,7 @@ public class TeleopOdo extends OpMode {
         follower = Constants.createFollower(hardwareMap);
         follower.setStartingPose(startingPose);
         follower.update();
+        bot = new TeleopBotWithOdo(this, telemetry);
 
         AutoAimValues values = new AutoAimValues();
         aim = new AutoAimHelper(values, isRedAlliance);
@@ -43,15 +44,15 @@ public class TeleopOdo extends OpMode {
     @Override
     public void loop() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        bot = new TeleopBotWithOdo(this, telemetry);
 
         bot.processGamepadInput(gamepad1);
         follower.update();
 
+
         Pose pose = follower.getPose();
         double turn = aim.computeTurn(pose);
 
-        if (gamepad1.touchpad) {
+        if (gamepad1.aWasPressed()) {
             bot.autoAim(turn);
         }
 

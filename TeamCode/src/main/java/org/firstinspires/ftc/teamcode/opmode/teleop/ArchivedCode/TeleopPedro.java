@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmode.teleop.AutoAim;
+package org.firstinspires.ftc.teamcode.opmode.teleop.ArchivedCode;
 import com.bylazar.configurables.annotations.Configurable;
 import com.bylazar.telemetry.PanelsTelemetry;
 import com.bylazar.telemetry.TelemetryManager;

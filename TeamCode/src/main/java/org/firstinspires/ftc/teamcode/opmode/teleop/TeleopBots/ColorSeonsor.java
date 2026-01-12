@@ -11,10 +11,15 @@ import org.firstinspires.ftc.teamcode.common.Bot;
 import org.firstinspires.ftc.teamcode.common.Drivetrain;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.DrivetrainData;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda435DcMotorData;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-public class TeleopBotWithOdo extends Bot {
+public class ColorSeonsor extends Bot {
     private final Drivetrain drivetrain;
 
+    private DistanceSensor intakeSensor;
+    private DistanceSensor topSensor;
+    private DistanceSensor shotSensor;
 
     private double driveAxial = 0.0;
     private double driveStrafe = 0.0;
@@ -28,9 +33,14 @@ public class TeleopBotWithOdo extends Bot {
     private ElapsedTime buttonTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     private int buttonDelay = 350;
 
-    public TeleopBotWithOdo(OpMode opMode, Telemetry telemetry) {
+    public ColorSeonsor(OpMode opMode, Telemetry telemetry) {
         super(opMode, telemetry);
         drivetrain = new Drivetrain(opMode, opMode.hardwareMap, telemetry, new DrivetrainData(), new GoBilda435DcMotorData());
+
+        intakeSensor = opMode.hardwareMap.get(DistanceSensor.class, "intakeSensor");
+        topSensor    = opMode.hardwareMap.get(DistanceSensor.class, "topSensor");
+        shotSensor  = opMode.hardwareMap.get(DistanceSensor.class, "shotSensor");
+
         buttonTimer.reset();
     }
 
@@ -71,6 +81,25 @@ public class TeleopBotWithOdo extends Bot {
 
     public void autoAim(double turnValue) {
         drivetrain.moveDirection(driveAxial, driveStrafe, turnValue);
+    }
+
+    private boolean isBallPresent(DistanceSensor sensor) {
+        double distanceMm = sensor.getDistance(DistanceUnit.MM);
+
+        // Ball is present if something is close
+        return distanceMm < 40.0; // tune this
+    }
+
+    public boolean intakeHasBall() {
+        return isBallPresent(intakeSensor);
+    }
+
+    public boolean topHasBall() {
+        return isBallPresent(topSensor);
+    }
+
+    public boolean shortHasBall() {
+        return isBallPresent(shotSensor);
     }
 
     public void processGamepadInput(Gamepad gamepad) {
@@ -161,8 +190,10 @@ public class TeleopBotWithOdo extends Bot {
     }
 
     public void log() {
+        telemetry.addData("Intake dist (mm)", intakeSensor.getDistance(DistanceUnit.MM));
+        telemetry.addData("Top dist (mm)", topSensor.getDistance(DistanceUnit.MM));
+        telemetry.addData("Short dist (mm)", shotSensor.getDistance(DistanceUnit.MM));
 
+        telemetry.update();
     }
-
-
 }

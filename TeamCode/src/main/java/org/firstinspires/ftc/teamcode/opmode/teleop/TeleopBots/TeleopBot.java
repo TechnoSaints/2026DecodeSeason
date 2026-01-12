@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.opmode.teleop.TeleopBots;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -13,7 +14,6 @@ import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda4
 
 public class TeleopBot extends Bot {
     private final Drivetrain drivetrain;
-
     private double driveAxial = 0.0;
     private double driveStrafe = 0.0;
     private double driveYaw = 0.0;
@@ -42,6 +42,7 @@ public class TeleopBot extends Bot {
     public void moveBot(double driveAxial, double driveStrafe, double driveYaw) {
         drivetrain.moveDirection(driveAxial, driveStrafe, driveYaw);
     }
+
 
     public void fullStop() {
         drivetrain.moveDirection(0,0,0);

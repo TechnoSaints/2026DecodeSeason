@@ -16,6 +16,7 @@ public abstract class Bot extends Component {
     private LauncherDouble launcher;
 
     private intakeMotor intake;
+
     private pusherCRServo pusher;
 
     private ServoSimple stick;
