@@ -26,7 +26,7 @@ public class FarBlueAuto extends AutoOpMode {
             // Move start to short shot
             case 0:
                 bot.followPath(Paths.startToLongShot, false);
-                bot.setSpeed(-0.85);
+                bot.setSpeed(-0.8);
                 setPathState(1);
                 break;
 
@@ -41,18 +41,16 @@ public class FarBlueAuto extends AutoOpMode {
                         bot.shootBalls();
                     }
                 }*/
-                if (/*!bot.isBusy()*/false){
+                if (!bot.isBusy()){
                     bot.intakeBalls();
                     timer.reset();
                     setPathState(2);
                 }
                 break;
 
-
-
             // Move to stack1 setup
             case 2:
-                if (timer.milliseconds() > 1000) {
+                if (timer.milliseconds() > 2000) {
                     bot.stopStorage();
                     bot.stopLauncher();
                     bot.followPath(Paths.longShotToStack3Setup, false);

@@ -2,8 +2,11 @@ package org.firstinspires.ftc.teamcode.common;
 
 import com.arcrobotics.ftclib.geometry.Pose2d;
 import com.pedropathing.geometry.Pose;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -32,8 +35,12 @@ public class Launcher extends Component {
         rightLauncher = hardwareMap.get(DcMotorEx.class, "rightLauncher");
         leftAimer = hardwareMap.get(Servo.class, "leftAimer");
         rightAimer = hardwareMap.get(Servo.class, "rightAimer");
+        rightLauncher.setDirection(DcMotorSimple.Direction.REVERSE);
         leftLauncher.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         rightLauncher.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        PIDFCoefficients pidfCoefficients = new PIDFCoefficients(515, 0, 0, 12.03);
+        leftLauncher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfCoefficients);
+        rightLauncher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfCoefficients);
         setVelocity(0);
         setPosition(0.5);
     }
@@ -105,7 +112,7 @@ public class Launcher extends Component {
 
     public void setVelocity(double power) {
         targetVelocity = maxVelocity * power;
-        leftLauncher.setVelocity(targetVelocity);
+        leftLauncher.setVelocity(-targetVelocity);
         rightLauncher.setVelocity(targetVelocity);
     }
 

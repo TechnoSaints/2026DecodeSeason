@@ -13,7 +13,6 @@ public abstract class Bot extends Component {
         super(telemetry);
         launcher = new Launcher(telemetry, opMode.hardwareMap);
         storage = new Storage(telemetry, opMode.hardwareMap);
-        findBalls();
     }
 
     public void stopLauncher(){
@@ -31,13 +30,13 @@ public abstract class Bot extends Component {
     }
 
     public void setSpeed(double power){
-        if (power > 0){
+        if (power < 0){
             power = 0;
         }
-        else if (power < -1){
-            power = -1;
+        else if (power > 1){
+            power = 1;
         }
-        launcher.setVelocity(-power);
+        launcher.setVelocity(power);
     }
 
     public int getState(){
@@ -46,9 +45,6 @@ public abstract class Bot extends Component {
 
     public char[] getBalls() { return storage.getBalls();}
 
-    public void findBalls(){
-        storage.findBalls();
-    }
 //    public void kickerLaunch()
 //    {
 //        kicker.setPositionTicks(kickerLaunchPosition);

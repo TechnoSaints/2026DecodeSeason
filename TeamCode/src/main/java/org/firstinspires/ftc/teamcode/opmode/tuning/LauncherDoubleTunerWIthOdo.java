@@ -85,9 +85,6 @@ public class LauncherDoubleTunerWIthOdo extends LinearOpMode {
             else if (gamepad1.share){
                 storage.manualBackward();
             }
-            if (gamepad1.cross){
-                storage.findBalls();
-            }
             storage.updateStorage();
             drivetrain.moveDirection(-gamepad1.left_stick_y * 0.8, gamepad1.left_stick_x * 0.8, gamepad1.right_stick_x * 0.8);
             pinpoint.update();

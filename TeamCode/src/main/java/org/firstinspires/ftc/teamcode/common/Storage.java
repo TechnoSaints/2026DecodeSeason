@@ -8,6 +8,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
+import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -19,7 +21,8 @@ import java.util.Arrays;
 public class Storage extends Component {
     private CRServo upperRoller;
     private DcMotorEx intake, lowerRoller;
-    private TouchSensor ball0,  ball1, ball2;
+    private TouchSensor ball0;
+    private NormalizedColorSensor ball1, ball2;
     public int state = 0;
     private ElapsedTime timer;
     private static final int INTAKE_DELAY_MS = 250;
@@ -37,22 +40,24 @@ public class Storage extends Component {
         lowerRoller.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intake = hardwareMap.get(DcMotorEx.class, "intake");
         ball0 = hardwareMap.get(TouchSensor.class, "ball0");
-        ball1 = hardwareMap.get(TouchSensor.class, "ball1");
-        ball2 = hardwareMap.get(TouchSensor.class, "ball2");
+        ball1 = hardwareMap.get(NormalizedColorSensor.class, "colorBall1");
+        ball2 = hardwareMap.get(NormalizedColorSensor.class, "colorBall2");
+        ball1.setGain(2);
+        ball2.setGain(2);
         timer = new ElapsedTime();
     }
 
 
     public void intakeBalls() {
         if (state <= 0) {
-            if (balls[0] == 'X' && balls[1] == 'X' && balls[2] == 'X') {
-                state = 1;
-            }
-            else if (balls[0] != 'X' && balls[1] == 'X' && balls[2] == 'X') {
+            if (balls[0] != 'X' && balls[1] == 'X' && balls[2] == 'X') {
                 state = 4;
             }
             else if (balls[0] != 'X' && balls[1] != 'X' && balls[2] == 'X') {
                 state = 6;
+            }
+            else {
+                state = 1;
             }
         }
     }
@@ -67,15 +72,12 @@ public class Storage extends Component {
                 break;
             case 2:
                 if (ball0.isPressed()){
-                    timer.reset();
                     state = 3;
                 }
                 break;
             case 3:
-                if (timer.milliseconds() > INTAKE_DELAY_MS){
-                    balls[0] = 'O';
-                    state = 4;
-                }
+                balls[0] = 'O';
+                state = 4;
                 break;
             case 4:
                 intake.setPower(1);
@@ -84,7 +86,7 @@ public class Storage extends Component {
                 state = 5;
                 break;
             case 5:
-                if (ball1.isPressed()) {
+                if (ballFind(ball1)) {
                     balls[1] = 'O';
                     state = 6;
                 }
@@ -96,44 +98,45 @@ public class Storage extends Component {
                 state = 7;
                 break;
             case 7:
-                if (ball2.isPressed()){
+                if (ballFind(ball2)){
                     balls[2] = 'O';
                     state = 0;
                 }
                 break;
             case -1:
-            intake.setPower(0);
+                /*intake.setPower(0);
                 lowerRoller.setPower(0);
+                upperRoller.setPower(1);
+                state = -2;*/
+                intake.setPower(1);
+                lowerRoller.setPower(1);
                 upperRoller.setPower(1);
                 state = -2;
                 break;
             case -2:
-                if (!ball0.isPressed()) {
-                    intake.setPower(0); //garrett was here
-                    lowerRoller.setPower(1);
-                    upperRoller.setPower(1);
-                    state = -3;
+                if (!ball0.isPressed() && !ballFind(ball1) && !ballFind(ball2)) {
+                    balls[0] = 'X';
+                    balls[1] = 'X';
+                    balls[2] = 'X';
+                    state = 0;
                 }
                     break;
             case -3:
                 if (ball0.isPressed()){
-                    timer.reset();
                     state = -4;
                 }
                 break;
             case -4:
-                if (timer.milliseconds() > SHOOT_DELAY_MS){
-                    state = -5;
-                }
+                state = -5;
                 break;
             case -5:
                 intake.setPower(1);
                 lowerRoller.setPower(0.5);
                 upperRoller.setPower(0);
                 state = -6;
-                        break;
+                break;
             case -6:
-                if (ball1.isPressed()) {
+                if (true) {
                     state = 0;
                     balls[2] = 'X';
                 }
@@ -154,15 +157,12 @@ public class Storage extends Component {
                 break;
             case -9:
                 if (ball0.isPressed()){
-                    timer.reset();
                     state = -10;
                 }
                 break;
             case -10:
-                if (timer.milliseconds() > SHOOT_DELAY_MS){
-                    balls[1] = 'X';
-                    state = 0;
-                }
+                balls[1] = 'X';
+                state = 0;
                 break;
             case -11:
                 intake.setPower(0);
@@ -186,16 +186,16 @@ public class Storage extends Component {
         }
     }
 
+    public boolean ballFind(NormalizedColorSensor sensor){
+        float r, g, b;
+        r = sensor.getNormalizedColors().red;
+        g = sensor.getNormalizedColors().green;
+        b = sensor.getNormalizedColors().blue;
+        return (r >= 0.01 || b >= 0.01 || g >= 0.01);
+    }
+
     public void shootBalls() {
-        if (state >= 0) {
-            if (balls[0] != 'X' && balls[1] != 'X' && balls[2] != 'X') {
-                state = -1;
-            } else if (balls[0] != 'X' && balls[1] != 'X' && balls[2] == 'X') {
-                state = -7;
-            } else if (balls[0] != 'X' && balls[1] == 'X' && balls[2] == 'X') {
-                state = -11;
-            }
-        }
+        state = -1;
     }
     
     public void stop(){
@@ -211,20 +211,17 @@ public class Storage extends Component {
     public void findBalls(){
         if (ball0.isPressed()){
             balls[0] = 'O';
-        }
-        else {
+        } else {
             balls[0] = 'X';
         }
-        if (ball1.isPressed()){
+        if (ballFind(ball1)){
             balls[1] = 'O';
-        }
-        else {
+        } else {
             balls[1] = 'X';
         }
-        if (ball2.isPressed()){
+        if (ballFind(ball2)){
             balls[2] = 'O';
-        }
-        else {
+        } else {
             balls[2] = 'X';
         }
     }
