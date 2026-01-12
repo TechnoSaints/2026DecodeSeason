@@ -5,7 +5,6 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.Pose;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -29,7 +28,7 @@ public class TeleopOdo extends OpMode {
     public void init() {
         follower = Constants.createFollower(hardwareMap);
         follower.setStartingPose(startingPose);
-        follower.update();
+
         bot = new TeleopBotWithOdo(this, telemetry);
 
         AutoAimValues values = new AutoAimValues();
@@ -37,28 +36,30 @@ public class TeleopOdo extends OpMode {
     }
 
     @Override
-    public void start() {
-        follower.startTeleopDrive();
-    }
-
-    @Override
     public void loop() {
-        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+        telemetry = new MultipleTelemetry(
+                telemetry,
+                FtcDashboard.getInstance().getTelemetry()
+        );
 
-        bot.processGamepadInput(gamepad1);
+        // --- ODOMETRY ONLY ---
         follower.update();
-
-
         Pose pose = follower.getPose();
-        double turn = aim.computeTurn(pose);
 
-        if (gamepad1.aWasPressed()) {
+        // --- NORMAL TELEOP DRIVE ---
+        bot.processGamepadInput(gamepad1);
+
+        // --- AUTO AIM (HOLD A) ---
+        if (gamepad1.a) {
+            double turn = aim.computeTurn(pose);
             bot.autoAim(turn);
         }
 
+        // --- TELEMETRY ---
         aim.log(telemetry, pose);
         telemetry.update();
-        bot.update();
 
+        // --- APPLY MOTOR POWERS ---
+        bot.update();
     }
 }
