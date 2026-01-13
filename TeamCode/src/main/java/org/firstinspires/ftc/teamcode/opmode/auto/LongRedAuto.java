@@ -133,7 +133,7 @@ public class LongRedAuto extends AutoOpMode {
 
             case 15:
                 if (controlTimer.milliseconds() > 1250) {
-                    bot.followPath(Paths.longShotToEndFarPose, 0.85f, true);
+                    bot.followPath(Paths.longShotToEndFar, 0.85f, true);
                     bot.kickerGate();
                     bot.intakeStop();
                     bot.launcherStop();

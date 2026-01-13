@@ -13,7 +13,7 @@ import java.lang.reflect.Field;
 
 public class Paths {
 
-    public static PathChain longStartToLongShot, longShotToStack3Setup, stack3SetupToStack3Finish, stack3FinishToLongShot, longShotToStack2Setup, stack2SetupToStack2Finish, stack2FinishToShortShot, longShotToEndFarPose, goalStartToShortShot, shortShotToStack1Setup;
+    public static PathChain longStartToLongShot, longShotToStack3Setup, stack3SetupToStack3Finish, stack3FinishToLongShot, longShotToStack2Setup, stack2SetupToStack2Finish, stack2FinishToShortShot, longShotToEndFar, goalStartToShortShot, shortShotToStack1Setup, stack1SetupToStack1Finish, stack1FinishToShortShot, shortShotToEndClose;
 
     public static void buildPaths(Follower follower) {
         longStartToLongShot = follower.pathBuilder()
@@ -51,7 +51,7 @@ public class Paths {
                 .setLinearHeadingInterpolation(FieldLocations.stack2FinishPose.getHeading(), FieldLocations.longShotPose.getHeading())
                 .build();
 
-        longShotToEndFarPose = follower.pathBuilder()
+        longShotToEndFar = follower.pathBuilder()
                 .addPath(new BezierLine(FieldLocations.longShotPose, FieldLocations.endFarPose))
                 .setLinearHeadingInterpolation(FieldLocations.longShotPose.getHeading(), FieldLocations.endFarPose.getHeading())
                 .build();
@@ -62,6 +62,18 @@ public class Paths {
         shortShotToStack1Setup = follower.pathBuilder()
                 .addPath(new BezierLine(FieldLocations.shortShotPose, FieldLocations.stack1SetupPose))
                 .setLinearHeadingInterpolation(FieldLocations.shortShotPose.getHeading(), FieldLocations.stack1SetupPose.getHeading())
+                .build();
+        stack1SetupToStack1Finish = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.stack1SetupPose, FieldLocations.stack1FinishPose))
+                .setLinearHeadingInterpolation(FieldLocations.stack1SetupPose.getHeading(), FieldLocations.stack1FinishPose.getHeading())
+                .build();
+        stack1FinishToShortShot = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.stack1FinishPose, FieldLocations.shortShotPose))
+                .setLinearHeadingInterpolation(FieldLocations.stack1FinishPose.getHeading(), FieldLocations.shortShotPose.getHeading())
+                .build();
+        shortShotToEndClose = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.shortShotPose, FieldLocations.endClosePose))
+                .setLinearHeadingInterpolation(FieldLocations.shortShotPose.getHeading(), FieldLocations.endClosePose.getHeading())
                 .build();
 
 

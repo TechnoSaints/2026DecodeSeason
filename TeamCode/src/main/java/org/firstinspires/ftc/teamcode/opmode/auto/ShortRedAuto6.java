@@ -21,8 +21,8 @@ public class ShortRedAuto6 extends AutoOpMode {
             case 0:
                 bot.kickerGate();
                 bot.intakeReverse();
-                bot.setLauncherShortShot();
-                bot.followPath(Paths.goalStartPosetoShortShotPose, 0.85f, true);
+                bot.setLauncherLongShot();
+                bot.followPath(Paths.goalStartToShortShot, 0.85f, true);
                 setPathState(1);
                 break;
 
@@ -43,7 +43,7 @@ public class ShortRedAuto6 extends AutoOpMode {
 
                 // Move to stack1 setup
             case 3:
-                if (controlTimer.milliseconds() > 1750) {
+                if (controlTimer.milliseconds() > 2000) {
                     bot.followPath(Paths.shortShotToStack1Setup, 0.85f, true);
                     bot.kickerGate();
                     setPathState(4);
@@ -54,7 +54,7 @@ public class ShortRedAuto6 extends AutoOpMode {
             case 4:
                 if (!bot.followerIsBusy()) {
                     // Turn on rollers
-                    bot.followPath(Paths.stack3SetupToStack3Finish, 0.85f, true);
+                    bot.followPath(Paths.stack1SetupToStack1Finish, 0.85f, true);
                     setPathState(5);
                 }
                 break;
@@ -68,7 +68,7 @@ public class ShortRedAuto6 extends AutoOpMode {
 
             // Move to short shot
             case 6:
-                bot.followPath(Paths.stack3FinishToShortShot, 0.85f, true);
+                bot.followPath(Paths.stack1FinishToShortShot, 0.85f, true);
                 setPathState(7);
                 break;
 
@@ -89,66 +89,24 @@ public class ShortRedAuto6 extends AutoOpMode {
                 }
                 break;
 
-            // Do more stuff
             case 9:
                 if (controlTimer.milliseconds() > 1250) {
-                    bot.followPath(Paths.shortShotToStack2Setup, 0.85f, true);
+                    bot.followPath(Paths.shortShotToEndClose, 0.85f, true);
                     bot.kickerGate();
+                    bot.intakeStop();
+                    bot.launcherStop();
                     setPathState(10);
                 }
                 break;
 
             case 10:
-                bot.followPath(Paths.stack2SetupToStack2Finish, 0.85f, true);
-                setPathState(11);
-                break;
-
-            case 11:
                 if (!bot.followerIsBusy()) {
-                    setPathState(12);
-                }
-                break;
-
-            case 12:
-                bot.followPath(Paths.stack2FinishToShortShot, 0.85f, true);
-                setPathState(13);
-                break;
-
-            case 13:
-                if (!bot.followerIsBusy()) {
-                    bot.kickerLoad();
-                    controlTimer.reset();
-                    setPathState(14);
-                }
-                break;
-
-            case 14:
-                if (controlTimer.milliseconds() > 2000) {
-                    bot.kickerLaunch();
-                    controlTimer.reset();
-                    setPathState(15);
-                }
-                break;
-
-
-            case 15:
-                if (controlTimer.milliseconds() > 1250) {
-                    bot.followPath(Paths.shortShotToEndFarPose, 0.85f, true);
-                    bot.kickerGate();
-                    bot.intakeStop();
-                    bot.launcherStop();
-                    setPathState(16);
-                }
-                break;
-
-            case 16:
-                if (!bot.followerIsBusy()) {
-                    setPathState(17);
+                    setPathState(11);
                 }
                 break;
 
             // Stop opmode
-            case 17:
+            case 11:
 
                 setPathState(-1);
 
