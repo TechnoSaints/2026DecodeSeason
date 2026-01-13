@@ -12,6 +12,8 @@ public class AutoAimHelper {
     private AutoAimValues values;
     private boolean isRedAlliance;
 
+    boolean aiming;
+
     private double dx, dy, targetHeading, headingError, turnOutput;
 
     /**
@@ -29,18 +31,32 @@ public class AutoAimHelper {
      * @param pose current robot pose
      * @return turn output [-MAX_TURN, MAX_TURN]
      */
-    public double computeTurn(Pose pose) {
+    public void aimingAngleCalculation(Pose pose) {
         double goalX = values.getGoalX(isRedAlliance);
         double goalY = values.getGoalY(isRedAlliance);
 
         dx = goalX - pose.getX();
         dy = goalY - pose.getY();
 
-        targetHeading = Math.atan2(dy, dx);
+        if (Math.hypot(dx, dy) < 1e-6) {
+            aiming = false;
+            return;
+        }
+
+        //Try to add Math.Pi/2
+        targetHeading = (Math.PI / 2 - Math.atan2(dy, dx));
+
+        //Make sure to test
+        aiming = true;
+    }
+
+    public double computeTurn(Pose pose) {
+        if (!aiming) return 0;
+
         headingError = angleWrap(targetHeading - pose.getHeading());
 
         if (Math.abs(headingError) < values.AIM_DEADBAND) {
-            turnOutput = 0;
+            aiming = false;
             return 0;
         }
 
@@ -69,7 +85,7 @@ public class AutoAimHelper {
         telemetry.addData("dy", "%.2f", dy);
 
         telemetry.addData("Target Heading (deg)", "%.2f", Math.toDegrees(targetHeading));
-        telemetry.addData("Error (deg)", "%.2f", Math.toDegrees(headingError));
+        telemetry.addData("Heading Error (deg)", "%.2f", Math.toDegrees(headingError));
         telemetry.addData("Turn Output", "%.3f", turnOutput);
     }
 

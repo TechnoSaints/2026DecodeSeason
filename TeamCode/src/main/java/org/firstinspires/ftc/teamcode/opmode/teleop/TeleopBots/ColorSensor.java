@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmode.teleop.TeleopBots;
 
 
-import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -14,7 +13,7 @@ import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda4
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-public class ColorSeonsor extends Bot {
+public class ColorSensor extends Bot {
     private final Drivetrain drivetrain;
 
     private DistanceSensor intakeSensor;
@@ -33,13 +32,13 @@ public class ColorSeonsor extends Bot {
     private ElapsedTime buttonTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     private int buttonDelay = 350;
 
-    public ColorSeonsor(OpMode opMode, Telemetry telemetry) {
+    public ColorSensor(OpMode opMode, Telemetry telemetry) {
         super(opMode, telemetry);
         drivetrain = new Drivetrain(opMode, opMode.hardwareMap, telemetry, new DrivetrainData(), new GoBilda435DcMotorData());
 
         intakeSensor = opMode.hardwareMap.get(DistanceSensor.class, "intakeSensor");
-        topSensor    = opMode.hardwareMap.get(DistanceSensor.class, "topSensor");
-        shotSensor  = opMode.hardwareMap.get(DistanceSensor.class, "shotSensor");
+        topSensor = opMode.hardwareMap.get(DistanceSensor.class, "topSensor");
+        shotSensor = opMode.hardwareMap.get(DistanceSensor.class, "shotSensor");
 
         buttonTimer.reset();
     }

@@ -21,6 +21,8 @@ public class TeleopOdo extends OpMode {
     private Follower follower;
 
     private AutoAimHelper aim;
+
+    private boolean aHeld = false;
     private Pose startingPose = new Pose(124, 124, Math.toRadians(45));
     private boolean isRedAlliance = true;
 
@@ -42,24 +44,26 @@ public class TeleopOdo extends OpMode {
                 FtcDashboard.getInstance().getTelemetry()
         );
 
-        // --- ODOMETRY ONLY ---
         follower.update();
         Pose pose = follower.getPose();
 
-        // --- NORMAL TELEOP DRIVE ---
         bot.processGamepadInput(gamepad1);
 
-        // --- AUTO AIM (HOLD A) ---
-        if (gamepad1.a) {
-            double turn = aim.computeTurn(pose);
+        if (gamepad1.a && !aHeld) {
+            aim.aimingAngleCalculation(pose);
+        }
+
+        double turn = aim.computeTurn(pose);
+        if (turn != 0) {
             bot.autoAim(turn);
         }
 
-        // --- TELEMETRY ---
+        aHeld = gamepad1.a;
+
+
         aim.log(telemetry, pose);
         telemetry.update();
 
-        // --- APPLY MOTOR POWERS ---
         bot.update();
     }
 }
