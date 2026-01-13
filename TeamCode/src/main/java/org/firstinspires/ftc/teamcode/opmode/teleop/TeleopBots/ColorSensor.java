@@ -32,7 +32,7 @@ public class ColorSensor extends Bot {
     private ElapsedTime buttonTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     private int buttonDelay = 350;
 
-    private boolean[] ballPlacement;
+    private boolean[] ballPlacement = new boolean[3];
 
     public ColorSensor(OpMode opMode, Telemetry telemetry) {
         super(opMode, telemetry);

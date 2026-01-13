@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.opmode.teleop.TeleopBots.TeleopBot;
+import org.firstinspires.ftc.teamcode.opmode.teleop.TeleopBots.TeleopBotBasic;
 
 @Disabled
 @Config
@@ -16,13 +16,13 @@ import org.firstinspires.ftc.teamcode.opmode.teleop.TeleopBots.TeleopBot;
 
 public class BotTest extends LinearOpMode {
 
-    private TeleopBot bot;
+    private TeleopBotBasic bot;
     private Servo servo;
 
     @Override
     public void runOpMode() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        bot = new TeleopBot(this, telemetry);
+        bot = new TeleopBotBasic(this, telemetry);
 
         waitForStart();
 

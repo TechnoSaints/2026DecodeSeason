@@ -12,21 +12,21 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 
-import org.firstinspires.ftc.teamcode.opmode.teleop.TeleopBots.TeleopBot;
+import org.firstinspires.ftc.teamcode.opmode.teleop.TeleopBots.TeleopBotBasic;
 
 @Disabled
 @Config
 @TeleOp(name = "TeleopPin", group = "Linear OpMode")
 public class SensorGoBildaPinpoint extends LinearOpMode {
 
-    private TeleopBot bot;
+    private TeleopBotBasic bot;
 
     GoBildaPinpointDriver pinpoint;
 
     @Override
     public void runOpMode() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        bot = new TeleopBot(this, telemetry);
+        bot = new TeleopBotBasic(this, telemetry);
         pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint");
         configurePinpoint();
         pinpoint.setPosition(new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0));

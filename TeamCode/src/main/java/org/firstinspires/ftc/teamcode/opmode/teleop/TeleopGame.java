@@ -7,14 +7,14 @@ import com.pedropathing.follower.Follower;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.opmode.teleop.TeleopBots.TeleopBot;
+import org.firstinspires.ftc.teamcode.opmode.teleop.TeleopBots.ColorSensor;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
 @Config
 @TeleOp(name = "TeleopGame", group = "Linear OpMode")
 public class TeleopGame extends LinearOpMode {
 
-    private TeleopBot bot;
+    private ColorSensor bot;
     private Follower follower;
 
     private double lastHeading = 0;
@@ -23,7 +23,7 @@ public class TeleopGame extends LinearOpMode {
     @Override
     public void runOpMode() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        bot = new TeleopBot(this, telemetry);
+        bot = new ColorSensor(this, telemetry);
         follower = Constants.createFollower(hardwareMap);
 
         waitForStart();
@@ -59,8 +59,7 @@ public class TeleopGame extends LinearOpMode {
             lastHeading = headingRad;
             lastTime = currentTime;
 
-            // --- Telemetry Output ---
-            telemetry.addLine("=== Pinpoint Odometry (Pedro) ===");
+          /*  telemetry.addLine("=== Pinpoint Odometry (Pedro) ===");
             telemetry.addData("X", "%.2f in", x);
             telemetry.addData("Y", "%.2f in", y);
             telemetry.addData("Heading", "%.2f°", headingDeg);
@@ -70,8 +69,9 @@ public class TeleopGame extends LinearOpMode {
             telemetry.addData("VY", "%.2f in/s", vy);
             telemetry.addData("Speed", "%.2f in/s", speed);
             telemetry.addData("Velocity Direction", "%.2f°", motionDirectionDeg);
-            telemetry.addData("Angular Vel", "%.3f rad/s", omega);
+            telemetry.addData("Angular Vel", "%.3f rad/s", omega); */
 
+            bot.log();
             telemetry.update();
             bot.update();
         }

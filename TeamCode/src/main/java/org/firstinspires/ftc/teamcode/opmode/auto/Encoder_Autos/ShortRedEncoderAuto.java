@@ -8,19 +8,19 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.common.Drivetrain;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.DrivetrainData;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda312DcMotorData;
-import org.firstinspires.ftc.teamcode.opmode.teleop.TeleopBots.TeleopBot;
+import org.firstinspires.ftc.teamcode.opmode.teleop.TeleopBots.TeleopBotBasic;
 
 @Disabled
 @Autonomous(name = "RedShortEncoderAuto", group = "Linear OpMode")
 public class ShortRedEncoderAuto extends LinearOpMode {
     private static Drivetrain drivetrain;
     protected ElapsedTime controlTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
-    private static TeleopBot bot;
+    private static TeleopBotBasic bot;
     @Override
     public void runOpMode() {
 
         drivetrain = new Drivetrain(this, hardwareMap, telemetry, new DrivetrainData(), new GoBilda312DcMotorData());
-        bot = new TeleopBot(this, telemetry);
+        bot = new TeleopBotBasic(this, telemetry);
         waitForStart();
         if(opModeIsActive() && !isStopRequested()) {
 

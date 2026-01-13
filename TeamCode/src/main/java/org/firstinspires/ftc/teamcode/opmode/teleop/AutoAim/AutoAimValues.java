@@ -9,7 +9,7 @@ public class AutoAimValues {
     // ===== TUNING =====
     public double AIM_KP = 2.5;
     public double MAX_TURN = 0.6;
-    public double AIM_DEADBAND = Math.toRadians(1.5); //Degrees
+    public double AIM_DEADBAND = Math.toRadians(3); //Degrees
 
     // ===== FIELD GOALS =====
     public double RED_GOAL_X = 144;
