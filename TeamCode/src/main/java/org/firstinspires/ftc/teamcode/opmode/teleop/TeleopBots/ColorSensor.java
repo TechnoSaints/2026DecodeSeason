@@ -76,7 +76,7 @@ public class ColorSensor extends Bot {
         double distanceMm = sensor.getDistance(DistanceUnit.MM);
 
         // Ball is present if something is close
-        return distanceMm < 40.0; // tune this
+        return distanceMm < 100.00; // tune this
     }
 
     public boolean intakeHasBall() {

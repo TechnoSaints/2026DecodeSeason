@@ -17,7 +17,7 @@ public abstract class Bot extends Component {
 
     private intakeMotor intake;
 
-    private pusherCRServo pusher;
+    private blackWheel pusher;
 
     private ServoSimple stick;
 
@@ -37,7 +37,7 @@ public abstract class Bot extends Component {
         super(telemetry);
         launcher = new LauncherDouble(opMode.hardwareMap,telemetry);
         intake = new intakeMotor(opMode.hardwareMap, telemetry,"intake");
-        pusher = new pusherCRServo(opMode.hardwareMap, telemetry,"pusher");
+        pusher = new blackWheel(opMode.hardwareMap, telemetry);
         stick = new ServoSimple(opMode.hardwareMap, telemetry,"stick");
 
     }
