@@ -19,9 +19,6 @@ public class DecodeTeleop extends LinearOpMode
     double targetTicksPerSec = 0;
     int ticksPerSecondIncrement = 100;
 
-    private ElapsedTime runtime = new ElapsedTime();
-
-    private double servoMovementTime = 0.5;
 
 
     public void runOpMode() throws InterruptedException {
@@ -122,29 +119,21 @@ public class DecodeTeleop extends LinearOpMode
             if (gamepad1.right_trigger > 0.5)
             {
                 isShooting = true;
-                wheelMotor.setPower(0.60);
+                wheelMotor.setPower(0.7);
+                leftServo.setPosition(0.0);
+                rightServo.setPosition(0.4);
             }
             if (gamepad1.y)
             {
                 isShooting = true;
                 wheelMotor.setPower(0.80);
+                leftServo.setPosition(0.0);
+                rightServo.setPosition(0.4);
             }
-            if (gamepad1.right_bumper)
+            if (gamepad1.right_bumper && isShooting)
             {
-                //wheelMotor.setPower(0.0);
-                if (isShooting)
-                {
-                    runtime.reset();
-                    leftServoPosition = 0.5;
-                    rightServoPosition = 0.0;
-                    leftServo.setPosition(0.5);
-                    rightServo.setPosition(0.0);
-                    sleep(150);
-                }
-                leftServoPosition = 0.25;
-                rightServoPosition = 0.25;
-                leftServo.setPosition(0.25);
-                rightServo.setPosition(0.25);
+                leftServo.setPosition(0.6);
+                rightServo.setPosition(0.0);
             }
             if (gamepad1.x)
             {
@@ -167,5 +156,7 @@ public class DecodeTeleop extends LinearOpMode
     }
 
 }
+
+
 
 
