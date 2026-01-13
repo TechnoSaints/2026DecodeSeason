@@ -32,6 +32,8 @@ public class ColorSensor extends Bot {
     private ElapsedTime buttonTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     private int buttonDelay = 350;
 
+    private boolean[] ballPlacement;
+
     public ColorSensor(OpMode opMode, Telemetry telemetry) {
         super(opMode, telemetry);
         drivetrain = new Drivetrain(opMode, opMode.hardwareMap, telemetry, new DrivetrainData(), new GoBilda435DcMotorData());
@@ -57,9 +59,6 @@ public class ColorSensor extends Bot {
     public void fullStop() {
         drivetrain.moveDirection(0,0,0);
     }
-    public void launcherTurnOn() {
-        setLauncherShortShot();
-    }
 
     public void stickL() {
         stickLaunch();
@@ -68,15 +67,6 @@ public class ColorSensor extends Bot {
         stickLoad();
     }
 
-
-
-    public void turnOnBlackWheel() {
-        pusherStart();
-    }
-
-    public void turnOffBlackWheel() {
-        stopPusher();
-    }
 
     public void autoAim(double turnValue) {
         drivetrain.moveDirection(driveAxial, driveStrafe, turnValue);

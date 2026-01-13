@@ -47,17 +47,6 @@ public class TeleopBot extends Bot {
     public void fullStop() {
         drivetrain.moveDirection(0,0,0);
     }
-    public void launcherTurnOn() {
-        setLauncherShortShot();
-    }
-
-    public void stickL() {
-        stickLaunch();
-    }
-    public void stickReset() {
-        stickLoad();
-    }
-
 
 
     public void turnOnBlackWheel() {
@@ -66,10 +55,6 @@ public class TeleopBot extends Bot {
 
     public void turnOffBlackWheel() {
         stopPusher();
-    }
-
-    public void autoAim() {
-
     }
 
     public void processGamepadInput(Gamepad gamepad) {
