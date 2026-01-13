@@ -46,8 +46,8 @@ public class Constants {
             .useVoltageCompensation(true);
 
     public static PinpointConstants localizerConstants = new PinpointConstants()
-            .forwardPodY(-7)
-            .strafePodX(2.25)
+            .forwardPodY(-2)
+            .strafePodX(-6.5)
             .distanceUnit(DistanceUnit.INCH)
             .hardwareMapName("pinpoint")
             .encoderResolution(
@@ -59,7 +59,7 @@ public class Constants {
     public static PathConstraints pathConstraints = new PathConstraints(
             0.995,
             500,
-            0.75,
+            1.3,
             1
     );
 

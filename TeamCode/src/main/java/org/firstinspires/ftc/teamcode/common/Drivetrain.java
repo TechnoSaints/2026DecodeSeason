@@ -63,6 +63,11 @@ public class Drivetrain extends Component {
         rightFrontDrive.setDirection(drivetrainData.rightFrontMotorDirection);
         rightBackDrive.setDirection(drivetrainData.rightRearMotorDirection);
 
+        leftFrontDrive.setTargetPositionTolerance(5);
+        leftBackDrive.setTargetPositionTolerance(5);
+        rightFrontDrive.setTargetPositionTolerance(5);
+        rightBackDrive.setTargetPositionTolerance(5);
+
         stopAndResetEncoders();
         setRunUsingEncoder();
         setBrakingOn();
