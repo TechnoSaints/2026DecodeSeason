@@ -88,6 +88,7 @@ public abstract class Bot extends Component {
         pusher.stop();
     }
 
+    public void tickBlackWheel(int ticks) {pusher.runForwardInTicks(ticks);}
 
     public void stickLaunch()
     {
