@@ -17,7 +17,7 @@ public class TeleopGame extends LinearOpMode {
 
     private TeleopBotBasic bot;
 
-    private SortingSystem feeder;
+    //private SortingSystem feeder;
 
 
     private Follower follower;
@@ -33,7 +33,7 @@ public class TeleopGame extends LinearOpMode {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         bot = new TeleopBotBasic(this, telemetry);
         follower = Constants.createFollower(hardwareMap);
-        feeder = new SortingSystem(this, telemetry);
+        //feeder = new SortingSystem(this, telemetry);
 
 
         waitForStart();
@@ -80,7 +80,8 @@ public class TeleopGame extends LinearOpMode {
             telemetry.addData("Speed", "%.2f in/s", speed);
             telemetry.addData("Velocity Direction", "%.2f°", motionDirectionDeg);
             telemetry.addData("Angular Vel", "%.3f rad/s", omega); */
-
+        //    feeder.log();
+         //   feeder.update();
             telemetry.update();
             bot.update();
         }

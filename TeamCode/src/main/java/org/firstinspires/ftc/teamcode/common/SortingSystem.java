@@ -127,7 +127,7 @@ public class SortingSystem extends Component {
 
     /* ---------------- CORE LOGIC ---------------- */
 
-    private void updateStateMachine() {
+    public void updateStateMachine() {
 
         if (!autoEnabled || manualOverride) {
             pusher.stop();
@@ -206,7 +206,7 @@ public class SortingSystem extends Component {
 
     /* ---------------- BALL COUNT LOGIC ---------------- */
 
-    private void updateBallCount() {
+    public void updateBallCount() {
 
         boolean intakeNow = intakeHasBall();
         boolean shotNow   = shotHasBall();
@@ -247,7 +247,7 @@ public class SortingSystem extends Component {
         return Math.max(min, Math.min(max, val));
     }
 
-    private void log() {
+    public void log() {
         telemetry.addData("Feed State", feedState);
         telemetry.addData("Ball Count", ballCount);
         telemetry.addData("Intake", intakeHasBall());
