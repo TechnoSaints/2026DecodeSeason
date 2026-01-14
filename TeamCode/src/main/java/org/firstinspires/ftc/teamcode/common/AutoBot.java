@@ -51,6 +51,10 @@ public class AutoBot extends Bot {
         launcher.update(launchPose, red, changeTarget);
     }
 
+    public void setMaxPower(double maxPower){
+        follower.setMaxPower(maxPower);
+    }
+
     public void update() {
         super.update();
         //launcher.distanceFromLauncher(follower.getPose(), red);

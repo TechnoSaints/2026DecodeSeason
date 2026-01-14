@@ -35,7 +35,6 @@ public class Launcher extends Component {
         rightLauncher = hardwareMap.get(DcMotorEx.class, "rightLauncher");
         leftAimer = hardwareMap.get(Servo.class, "leftAimer");
         rightAimer = hardwareMap.get(Servo.class, "rightAimer");
-        rightLauncher.setDirection(DcMotorSimple.Direction.REVERSE);
         leftLauncher.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         rightLauncher.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         PIDFCoefficients pidfCoefficients = new PIDFCoefficients(515, 0, 0, 12.03);
@@ -112,7 +111,7 @@ public class Launcher extends Component {
 
     public void setVelocity(double power) {
         targetVelocity = maxVelocity * power;
-        leftLauncher.setVelocity(-targetVelocity);
+        leftLauncher.setVelocity(targetVelocity);
         rightLauncher.setVelocity(targetVelocity);
     }
 
@@ -136,7 +135,7 @@ public class Launcher extends Component {
     public double getPosition(){ return leftAimer.getPosition(); }
 
     public boolean ready(){
-        return (Math.abs(getVelocity()-targetVelocity) < 50 && Math.abs(getPosition()-targetPosition) <= 0.02);
+        return ((getVelocity()-targetVelocity) < 50 && Math.abs(getPosition()-targetPosition) <= 0.02);
     }
 
     public boolean motorBusy(){

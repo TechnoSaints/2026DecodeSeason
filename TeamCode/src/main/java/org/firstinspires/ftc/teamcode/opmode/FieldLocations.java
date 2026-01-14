@@ -44,7 +44,7 @@ public class FieldLocations {
             new Pose(12, 36, Math.toRadians(180));
 
     public final static Pose longShotLeftPose =
-            new Pose(144 - longShotRightPose.getX() + 2, longShotRightPose.getY() - 2, Math.toRadians(116));
+            new Pose(144 - longShotRightPose.getX() + 2, longShotRightPose.getY() - 2, Math.toRadians(115));
 
     public final static Pose longStartLeftPose =
             new Pose(144 - longStartRightPose.getX(), longStartRightPose.getY(), Math.toRadians(90));

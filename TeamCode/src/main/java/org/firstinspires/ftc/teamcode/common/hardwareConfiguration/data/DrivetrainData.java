@@ -6,6 +6,7 @@ public class DrivetrainData {
     public double maxFastTeleopPower = 0.80;
     public double maxMediumTeleopPower = 0.45;
     public double maxSlowTeleopPower = 0.45;
+    public double maxAutoPower = 1;
     public double wheelDiameterMM = 104.0;
     public double wheelDiameterInches = wheelDiameterMM / 25.4;
     public double wheelCircumferenceInches = Math.PI * wheelDiameterInches;

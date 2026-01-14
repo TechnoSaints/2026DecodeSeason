@@ -18,15 +18,15 @@ public class FarBlueAuto extends AutoOpMode {
         super.init();
         timer = new ElapsedTime();
         timer.reset();
-        bot.setPosition(0.225);
+        bot.setPosition(0.2125);
     }
 
     protected void autonomousPathUpdate(){
         switch (pathState) {
             // Move start to short shot
             case 0:
-                bot.followPath(Paths.startToLongShot, false);
-                bot.setSpeed(-0.8);
+                bot.followPath(Paths.startToLongShot, true);
+                bot.setSpeed(0.85);
                 setPathState(1);
                 break;
 
@@ -42,7 +42,7 @@ public class FarBlueAuto extends AutoOpMode {
                     }
                 }*/
                 if (!bot.isBusy()){
-                    bot.intakeBalls();
+                    bot.shootBalls();
                     timer.reset();
                     setPathState(2);
                 }
@@ -53,7 +53,7 @@ public class FarBlueAuto extends AutoOpMode {
                 if (timer.milliseconds() > 2000) {
                     bot.stopStorage();
                     bot.stopLauncher();
-                    bot.followPath(Paths.longShotToStack3Setup, false);
+                    bot.followPath(Paths.longShotToStack3Setup, true);
                     setPathState(3);
                 }
                 break;
@@ -62,21 +62,24 @@ public class FarBlueAuto extends AutoOpMode {
             case 3:
                 if (!bot.followerIsBusy()) {
                     // Turn on rollers
-                    bot.followPath(Paths.stack3SetupToStack3Finish, false);
+                    bot.intakeBalls();
+                    bot.setMaxPower(0.25);
+                    bot.followPath(Paths.stack3SetupToStack3Finish, true);
                     setPathState(4);
                 }
                 break;
 
             // Do additional stuff, if needed, after move is finished
             case 4:
-                if (!bot.followerIsBusy()) {
+                if (!bot.followerIsBusy() && bot.getState() == 0) {
+                    bot.setMaxPower(1);
                     setPathState(5);
                 }
                 break;
 
             // Move to long shot
             case 5:
-                bot.followPath(Paths.stack3FinishToLongShot, false);
+                bot.followPath(Paths.stack3FinishToLongShot, true);
                 setPathState(6);
                 break;
 
@@ -84,26 +87,30 @@ public class FarBlueAuto extends AutoOpMode {
             case 6:
                 if (!bot.followerIsBusy()) {
                     // Shoot three balls
+                    bot.shootBalls();
+                    timer.reset();
                     setPathState(7);
                 }
                 break;
 
             // Do more stuff
             case 7:
-
-                setPathState(8);
+                if (timer.milliseconds() > 2000){
+                    setPathState(8);
+                }
                 break;
 
-            // Move off launch line
             case 8:
-                bot.followPath(Paths.longShotToStack2Setup, false);
+                bot.followPath(Paths.longShotToStack2Setup, true);
                 setPathState(9);
                 break;
 
             case 9:
                 if (!bot.followerIsBusy()) {
                     // Turn on rollers
-                    bot.followPath(Paths.stack2SetupToStack2Finish, false);
+                    bot.intakeBalls();
+                    bot.setSpeed(0.25);
+                    bot.followPath(Paths.stack2SetupToStack2Finish, true);
                     setPathState(10);
                 }
                 break;
@@ -117,7 +124,8 @@ public class FarBlueAuto extends AutoOpMode {
 
             // Move to long shot
             case 11:
-                bot.followPath(Paths.stack2FinishToLongShot, false);
+                bot.setSpeed(1);
+                bot.followPath(Paths.stack2FinishToLongShot, true);
                 setPathState(12);
                 break;
 
@@ -125,6 +133,7 @@ public class FarBlueAuto extends AutoOpMode {
             case 12:
                 if (!bot.followerIsBusy()) {
                     // Shoot three balls
+                    bot.shootBalls();
                     setPathState(13);
                 }
                 break;
@@ -132,7 +141,9 @@ public class FarBlueAuto extends AutoOpMode {
             case 13:
                 if (!bot.followerIsBusy()) {
                     // Turn on rollers
-                    bot.followPath(Paths.stack1SetupToStack1Finish, false);
+                    bot.intakeBalls();
+                    bot.setSpeed(0.25);
+                    bot.followPath(Paths.stack1SetupToStack1Finish, true);
                     setPathState(14);
                 }
                 break;
@@ -140,13 +151,14 @@ public class FarBlueAuto extends AutoOpMode {
             // Do additional stuff, if needed, after move is finished
             case 14:
                 if (!bot.followerIsBusy()) {
+                    bot.setSpeed(1);
                     setPathState(15);
                 }
                 break;
 
             // Move to long shot
             case 15:
-                bot.followPath(Paths.stack1FinishToLongShot, false);
+                bot.followPath(Paths.stack1FinishToLongShot, true);
                 setPathState(16);
                 break;
 
@@ -154,6 +166,7 @@ public class FarBlueAuto extends AutoOpMode {
             case 16:
                 if (!bot.followerIsBusy()) {
                     // Shoot three balls
+                    bot.shootBalls();
                     setPathState(17);
                 }
                 break;

@@ -1,28 +1,20 @@
 package org.firstinspires.ftc.teamcode.common;
 
-import android.graphics.Color;
-
 import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
-import com.qualcomm.robotcore.hardware.NormalizedRGBA;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-
 import java.util.Arrays;
 
 public class Storage extends Component {
     private CRServo upperRoller;
     private DcMotorEx intake, lowerRoller;
-    private TouchSensor ball0;
-    private NormalizedColorSensor ball1, ball2;
+    private NormalizedColorSensor ball0, ball1, ball2;
     public int state = 0;
     private ElapsedTime timer;
     private static final int INTAKE_DELAY_MS = 250;
@@ -39,7 +31,7 @@ public class Storage extends Component {
         lowerRoller.setDirection(DcMotorSimple.Direction.REVERSE);
         lowerRoller.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intake = hardwareMap.get(DcMotorEx.class, "intake");
-        ball0 = hardwareMap.get(TouchSensor.class, "ball0");
+        ball0 = hardwareMap.get(NormalizedColorSensor.class, "ball0");
         ball1 = hardwareMap.get(NormalizedColorSensor.class, "colorBall1");
         ball2 = hardwareMap.get(NormalizedColorSensor.class, "colorBall2");
         ball1.setGain(2);
@@ -65,13 +57,18 @@ public class Storage extends Component {
     public void updateStorage() {
         switch (state) {
             case 1:
-                intake.setPower(1); //garrett was here
-                lowerRoller.setPower(1);
-                upperRoller.setPower(1);
-                state = 2;
+                if (!ballFind(ball0)){
+                    intake.setPower(0.8); //garrett was here
+                    lowerRoller.setPower(0.7);
+                    upperRoller.setPower(0.25);
+                    state = 2;
+                }
+                else {
+                    state = 3;
+                }
                 break;
             case 2:
-                if (ball0.isPressed()){
+                if (ballFind(ball0)){
                     state = 3;
                 }
                 break;
@@ -80,7 +77,7 @@ public class Storage extends Component {
                 state = 4;
                 break;
             case 4:
-                intake.setPower(1);
+                intake.setPower(0.7);
                 lowerRoller.setPower(0.5);
                 upperRoller.setPower(0);
                 state = 5;
@@ -92,7 +89,7 @@ public class Storage extends Component {
                 }
                 break;
             case 6:
-                intake.setPower(1);
+                intake.setPower(0.7);
                 lowerRoller.setPower(0);
                 upperRoller.setPower(0);
                 state = 7;
@@ -114,74 +111,32 @@ public class Storage extends Component {
                 state = -2;
                 break;
             case -2:
-                if (!ball0.isPressed() && !ballFind(ball1) && !ballFind(ball2)) {
+                if (!ballFind(ball0)){
                     balls[0] = 'X';
+                }
+                if (!ballFind(ball1)){
                     balls[1] = 'X';
+                }
+                if (!ballFind(ball2)) {
                     balls[2] = 'X';
-                    state = 0;
                 }
                     break;
-            case -3:
-                if (ball0.isPressed()){
-                    state = -4;
-                }
-                break;
-            case -4:
-                state = -5;
-                break;
-            case -5:
-                intake.setPower(1);
-                lowerRoller.setPower(0.5);
-                upperRoller.setPower(0);
-                state = -6;
-                break;
-            case -6:
-                if (true) {
-                    state = 0;
-                    balls[2] = 'X';
-                }
-                break;
-            case -7:
-                intake.setPower(0);
-                lowerRoller.setPower(0);
-                upperRoller.setPower(1);
-                state = -8;
-                break;
-            case -8:
-                if (!ball0.isPressed()) {
-                    intake.setPower(0); //garrett was here
-                    lowerRoller.setPower(1);
-                    upperRoller.setPower(1);
-                    state = -9;
-                }
-                break;
-            case -9:
-                if (ball0.isPressed()){
-                    state = -10;
-                }
-                break;
-            case -10:
-                balls[1] = 'X';
-                state = 0;
-                break;
-            case -11:
-                intake.setPower(0);
-                lowerRoller.setPower(0);
-                upperRoller.setPower(1);
-                state = -12;
-                break;
-            case -12:
-                if (!ball0.isPressed()) {
-                    upperRoller.setPower(0);
-                    balls[0] = 'X';
-                    state = 0;
-                }
-                break;
-
             case 0:
                 intake.setPower(0);
                 lowerRoller.setPower(0);
                 upperRoller.setPower(0);
+                break;
+            // Manual eject
+            case -3:
+                intake.setPower(-1);
+                lowerRoller.setPower(-1);
+                upperRoller.setPower(-1);
+                break;
+            // Manual intake
+            case -4:
+                intake.setPower(1);
+                lowerRoller.setPower(1);
+                upperRoller.setPower(1);
                 break;
         }
     }
@@ -209,7 +164,7 @@ public class Storage extends Component {
     public char[] getBalls(){ return balls; }
 
     public void findBalls(){
-        if (ball0.isPressed()){
+        if (ballFind(ball0)){
             balls[0] = 'O';
         } else {
             balls[0] = 'X';
@@ -227,15 +182,11 @@ public class Storage extends Component {
     }
 
     public void manualForward(){
-        intake.setPower(1);
-        lowerRoller.setPower(1);
-        upperRoller.setPower(1);
+        state = -4;
     }
 
     public void manualBackward(){
-        intake.setPower(-1);
-        lowerRoller.setPower(-1);
-        upperRoller.setPower(-1);
+        state = -3;
     }
 
     public void log() {

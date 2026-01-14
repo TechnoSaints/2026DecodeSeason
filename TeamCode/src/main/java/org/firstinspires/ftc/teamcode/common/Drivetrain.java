@@ -157,10 +157,7 @@ public class Drivetrain extends Component {
 
     public void moveDirection(double axial, double strafe, double yaw) {
         // Ensure that manual movement methods put motors back into the correct mode for teleop
-        setRunMode(DcMotor.RunMode.RUN_USING_ENCODER); // Or RUN_WITHOUT_ENCODER if that's preferred for teleop control
-        axial = -axial;
-        strafe = -strafe;
-        yaw = -yaw;
+        setRunMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER); // Or RUN_WITHOUT_ENCODER if that's preferred for teleop control
 
         // Calculate wheel powers.
         double leftFrontPower = axial + strafe + yaw;
