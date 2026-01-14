@@ -44,7 +44,7 @@ public class AutoAimHelper {
         }
 
         //Try to add Math.Pi/2
-        targetHeading = (Math.PI / 2 + Math.atan2(dy, dx));
+        targetHeading = (Math.PI / 2 - Math.atan2(dy, dx));
 
         //Make sure to test
         aiming = true;

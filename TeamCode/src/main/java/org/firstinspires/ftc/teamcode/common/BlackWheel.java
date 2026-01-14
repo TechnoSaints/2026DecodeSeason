@@ -5,24 +5,20 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda312DcMotorData;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda6000DcMotorData;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.LauncherData;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.MotorData;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints.LauncherSettings;
 
 @Config
-public class blackWheel extends Component {
+public class BlackWheel extends Component {
     private final DcMotorEx pusher;
     private MotorData motorData = new GoBilda312DcMotorData();
 
     private double onPower = .3;
     private final int maxTicksPerSecond = motorData.maxTicksPerSec;
 
-    public blackWheel(HardwareMap hardwareMap, Telemetry telemetry) {
+    public BlackWheel(HardwareMap hardwareMap, Telemetry telemetry) {
         super(telemetry);
         pusher = hardwareMap.get(DcMotorEx.class, "pusher");
         pusher.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -59,6 +55,22 @@ public class blackWheel extends Component {
         pusher.setPower(0.0);
     }
 
+    public int getCurrentPosition() {
+        return pusher.getCurrentPosition();
+    }
+
+    public int getTargetPosition() {
+        return pusher.getTargetPosition();
+    }
+
+    public boolean isBusy() {
+        return pusher.isBusy();
+    }
+
+    public void resetEncoder() {
+        setRunMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
 
 
     public void log() {

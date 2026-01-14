@@ -7,15 +7,23 @@ import com.pedropathing.follower.Follower;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.opmode.teleop.TeleopBots.ColorSensor;
+import org.firstinspires.ftc.teamcode.opmode.teleop.TeleopBots.TeleopBotBasic;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
+import org.firstinspires.ftc.teamcode.common.SortingSystem;
 
 @Config
 @TeleOp(name = "TeleopGame", group = "Linear OpMode")
 public class TeleopGame extends LinearOpMode {
 
-    private ColorSensor bot;
+    private TeleopBotBasic bot;
+
+    private SortingSystem feeder;
+
+
     private Follower follower;
+
+
+
 
     private double lastHeading = 0;
     private long lastTime = 0;
@@ -23,8 +31,10 @@ public class TeleopGame extends LinearOpMode {
     @Override
     public void runOpMode() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        bot = new ColorSensor(this, telemetry);
+        bot = new TeleopBotBasic(this, telemetry);
         follower = Constants.createFollower(hardwareMap);
+        feeder = new SortingSystem(this, telemetry);
+
 
         waitForStart();
 
@@ -71,7 +81,6 @@ public class TeleopGame extends LinearOpMode {
             telemetry.addData("Velocity Direction", "%.2f°", motionDirectionDeg);
             telemetry.addData("Angular Vel", "%.3f rad/s", omega); */
 
-            bot.log();
             telemetry.update();
             bot.update();
         }
