@@ -4,12 +4,13 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
 import org.firstinspires.ftc.teamcode.opmode.teleop.TeleopOdoBase;
-import org.firstinspires.ftc.teamcode.opmode.teleop.TeleopWithOdoSimple;
 
-@TeleOp(name = "Blue Far Teleop - After Auto", group = "2 Preset")
-public class BlueFarTeleop extends TeleopOdoBase {
+@TeleOp(name = "Unknown Start Position Teleop (emergency)", group = "1 Game")
+public class UnknownTeleop extends TeleopOdoBase {
 
-    public BlueFarTeleop() {
+    public UnknownTeleop() {
+        // Arbitrary start until we can build actual poses
         FieldLocations.buildPoses("blue", "long", true);
+        super.noStart = true;
     }
 }

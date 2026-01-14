@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.opmode.test;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 @Config
+@Disabled
 @TeleOp(name = "WheelDirectionTest")
 public class WheelDirectionTest extends LinearOpMode {
     DcMotor frontleft, frontright, rearleft, rearright;

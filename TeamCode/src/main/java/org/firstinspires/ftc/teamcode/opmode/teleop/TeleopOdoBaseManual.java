@@ -9,11 +9,11 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
-import org.firstinspires.ftc.teamcode.common.TeleopBot;
+import org.firstinspires.ftc.teamcode.common.TeleopBotOld;
 
 @Config
 public class TeleopOdoBaseManual extends LinearOpMode {
-    private TeleopBot bot;
+    private TeleopBotOld bot;
     protected boolean red;
     protected Pose2D startPose;
     private ElapsedTime buttonTimer, buttonTimer2;
@@ -25,7 +25,7 @@ public class TeleopOdoBaseManual extends LinearOpMode {
         buttonTimer = new ElapsedTime();
         buttonTimer2 = new ElapsedTime();
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        bot = new TeleopBot(this, telemetry);
+        bot = new TeleopBotOld(this, telemetry);
 
         waitForStart();
         buttonTimer.reset();
@@ -70,7 +70,7 @@ public class TeleopOdoBaseManual extends LinearOpMode {
             telemetry.addData("X (inches)", pose.getX(DistanceUnit.INCH));
             telemetry.addData("Y (inches)", pose.getY(DistanceUnit.INCH));
             telemetry.addData("Heading (degree)", pose.getHeading(AngleUnit.DEGREES));
-            bot.teleopUpdate(red);
+            bot.update(red);
             telemetry.update();
         }
     }

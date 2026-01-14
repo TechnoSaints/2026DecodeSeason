@@ -43,6 +43,14 @@ public abstract class Bot extends Component {
         return storage.getState();
     }
 
+    public void storageManualIntake(){
+        storage.manualForward();
+    }
+
+    public void storageManualEject(){
+        storage.manualBackward();
+    }
+
     public char[] getBalls() { return storage.getBalls();}
 
 //    public void kickerLaunch()

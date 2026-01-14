@@ -41,7 +41,7 @@ public class Launcher extends Component {
         leftLauncher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfCoefficients);
         rightLauncher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfCoefficients);
         setVelocity(0);
-        setPosition(0.5);
+        setPosition(0.25);
     }
 
     public void stopLauncher() {
@@ -147,12 +147,10 @@ public class Launcher extends Component {
     }
 
     public void log(){
-        telemetry.addData("targetVelocity:  ", targetVelocity);
+        telemetry.addData("Target Velocity in Launcher:  ", targetVelocity);
         telemetry.addData("Actual Velocity L:  ", leftLauncher.getVelocity());
         telemetry.addData("Actual Velocity R:  ", rightLauncher.getVelocity());
-        telemetry.addData("targetLaunchPosition:  ", targetPosition);
-        telemetry.addData("Actual Position L:  ", leftAimer.getPosition());
-        telemetry.addData("Actual Position R:  ", rightAimer.getPosition());
+        telemetry.addData("Target Launch Position in Launcher:  ", targetPosition);
         if (ready()){
             telemetry.addLine("Launcher is ready");
         }

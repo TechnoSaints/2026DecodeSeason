@@ -6,9 +6,9 @@ import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
 import org.firstinspires.ftc.teamcode.opmode.teleop.TeleopOdoBase;
 import org.firstinspires.ftc.teamcode.opmode.teleop.TeleopWithOdoSimple;
 
-//@TeleOp(name = "Red Goal Teleop - Odo Simple", group = "1Odo")
-//public class RedFarTeleop extends TeleopOdoBase {
-//    public RedFarTeleop() {
-//        super.red = true;
-//    }
-//}
+@TeleOp(name = "Red Far Teleop - After Auto", group = "2 Preset")
+public class RedFarTeleop extends TeleopOdoBase {
+    public RedFarTeleop() {
+        FieldLocations.buildPoses("red", "long", true);
+    }
+}

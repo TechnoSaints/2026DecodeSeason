@@ -3,21 +3,20 @@ package org.firstinspires.ftc.teamcode.opmode.teleop;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
-import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.common.TeleopBot;
+import org.firstinspires.ftc.teamcode.common.TeleopBotOld;
 
 @Config
 @TeleOp(name = "Teleop - No Odo", group = "Linear OpMode")
 public class TeleopNoOdo extends LinearOpMode {
-    private TeleopBot bot;
+    private TeleopBotOld bot;
 
     @Override
     public void runOpMode() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        bot = new TeleopBot(this, telemetry);
+        bot = new TeleopBotOld(this, telemetry);
 
         waitForStart();
         while (opModeIsActive() && !isStopRequested()) {

@@ -14,41 +14,33 @@ import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.common.Drivetrain;
 import org.firstinspires.ftc.teamcode.common.Launcher;
 import org.firstinspires.ftc.teamcode.common.Storage;
+import org.firstinspires.ftc.teamcode.common.TeleopBot;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.DrivetrainData;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda435DcMotorData;
+import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
 
 @Config
-@TeleOp(name = "Teleop-21528", group = "001 Game")
 
 public class TeleopOdoBase extends LinearOpMode {
-    private Launcher launcher;
     private double velocityFactorIncrement = 0.05;
     private double targetVelocityFactor = 0.0;
     private double positionIncrement = 0.05;
     private double targetLaunchPosition = 0.5;
-    private GoBildaPinpointDriver pinpoint;
-    private Drivetrain drivetrain;
-    private Storage storage;
+    private TeleopBot bot;
     private ElapsedTime timer;
+    private boolean autonomous = false;
+    protected boolean noStart = false;
+
 
     @Override
     public void runOpMode() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        launcher = new Launcher(telemetry, hardwareMap);
-        launcher.setVelocity(targetVelocityFactor);
-        launcher.setPosition(targetLaunchPosition);
-        drivetrain = new Drivetrain(this, hardwareMap, telemetry, new DrivetrainData(), new GoBilda435DcMotorData());
-        pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint");
-        pinpoint.setOffsets(-2.5,-4.5, DistanceUnit.INCH);
-        pinpoint.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
-        pinpoint.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD,
-                GoBildaPinpointDriver.EncoderDirection.FORWARD);
-        pinpoint.resetPosAndIMU();
-        pinpoint.setPosition(new Pose2D(DistanceUnit.INCH, 0,0, AngleUnit.DEGREES, -45));
-        pinpoint.update();
-        storage = new Storage(telemetry, hardwareMap);
+        bot = new TeleopBot(this, telemetry);
+        bot.setSpeed(targetVelocityFactor);
+        bot.setPosition(targetLaunchPosition);
         timer = new ElapsedTime();
         waitForStart();
+        bot.startTeleopDrive();
         timer.reset();
 
         while (opModeIsActive() && !isStopRequested()) {
@@ -65,37 +57,70 @@ public class TeleopOdoBase extends LinearOpMode {
                 targetLaunchPosition -= positionIncrement;
             }
             if (gamepad1.leftStickButtonWasPressed()){
-                storage.intakeBalls();
+                bot.intakeBalls();
             }
             else if (gamepad1.rightStickButtonWasPressed()){
-                storage.shootBalls();
+                bot.shootBalls();
             }
             else if (gamepad1.psWasPressed()){
-                storage.stop();
+                bot.stopStorage();
             }
-            if (gamepad1.options){
-                storage.manualForward();
+            if (gamepad1.optionsWasPressed()){
+                bot.storageManualIntake();
             }
-            else if (gamepad1.share){
-                storage.manualBackward();
+            else if (gamepad1.shareWasPressed()){
+                bot.storageManualEject();
             }
-            storage.updateStorage();
-            drivetrain.moveDirection(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
-            pinpoint.update();
-            Pose2D pose = pinpoint.getPosition();
-            Pose2D target = new Pose2D(DistanceUnit.INCH, 1,1, AngleUnit.DEGREES, 0);
+            if (gamepad1.crossWasPressed()){
+                bot.moveToFarShot();
+                autonomous = true;
+            }
+            if (gamepad1.circleWasPressed()){
+                bot.startTeleopDrive();
+                autonomous = false;
+            }
+            if (!autonomous){
+                if (gamepad1.dpad_up){
+                    bot.handleTeleopDrive(0.25, 0, 0);
+                }
+                else if (gamepad1.dpad_down){
+                    bot.handleTeleopDrive(-0.25, 0, 0);
+                }
+                else if (gamepad1.dpad_left){
+                    bot.handleTeleopDrive(0, -0.25, 0);
+                }
+                else if (gamepad1.dpad_right){
+                    bot.handleTeleopDrive(0, 0.25, 0);
+                }
+                else {
+                    bot.handleTeleopDrive(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
+                }
+            }
+            if (gamepad1.touchpad){
+                if (!noStart){
+                    bot.resetOdo(FieldLocations.goalPose);
+                }
+                else if (gamepad1.triangle){
+                    bot.resetOdo(FieldLocations.goalLeftPose);
+                }
+                else if (gamepad1.square){
+                    bot.resetOdo(FieldLocations.goalRightPose);
+                }
+            }
+            else {
+                if (gamepad1.triangleWasPressed()){
+                    // In case touchpad wasn't pressed & triangle does something else
+                }
+                if (gamepad1.squareWasPressed()){
+                    // In case touchpad wasn't pressed & square does something else
+                }
+            }
 
-            telemetry.addData("Launcher is busy?", launcher.motorBusy());
-            telemetry.addData("X (inches)", pose.getX(DistanceUnit.INCH));
-            telemetry.addData("Y (inches)", pose.getY(DistanceUnit.INCH));
-            telemetry.addData("Heading (degree)", pose.getHeading(AngleUnit.DEGREES));
-            double distance = Math.sqrt(Math.pow(pose.getX(DistanceUnit.INCH)-target.getX(DistanceUnit.INCH),2)+Math.pow(pose.getY(DistanceUnit.INCH)-target.getY(DistanceUnit.INCH),2));
-            telemetry.addData("Distance from target: ", distance);
-            launcher.setVelocity(targetVelocityFactor);
-            launcher.setPosition(targetLaunchPosition);
-            telemetry.addData("targetVelocityFactor in launcherDoubleTest: ", targetVelocityFactor);
-            telemetry.addData("targetLaunchPosition in launcherDoubleTest: ", targetLaunchPosition);
-            launcher.log();
+            bot.setSpeed(targetVelocityFactor);
+            bot.setPosition(targetLaunchPosition);
+            telemetry.addData("Target Velocity in Teleop: ", targetVelocityFactor);
+            telemetry.addData("Target Velocity in Teleop: ", targetLaunchPosition);
+            bot.update();
             telemetry.update();
         }
     }

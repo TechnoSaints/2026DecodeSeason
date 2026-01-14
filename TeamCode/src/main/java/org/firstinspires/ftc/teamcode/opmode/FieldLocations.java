@@ -3,10 +3,13 @@ package org.firstinspires.ftc.teamcode.opmode;
 
 import com.pedropathing.geometry.Pose;
 
+import javax.annotation.Nullable;
+
 public class FieldLocations {
     public static Pose startPose, goalPose, goalStartPose, shortShotPose, stack1SetupPose, stack1FinishPose,
-            stack2SetupPose, stack2FinishPose, stack3SetupPose, stack3FinishPose, longShotPose, longStartPose, basePose;
-    // Right side poses
+            stack2SetupPose, stack2FinishPose, stack3SetupPose, stack3FinishPose, longShotPose, longStartPose, basePose,
+            farEndPose, nearEndPose, endPose;
+    // Right side
     public final static Pose goalRightPose = new Pose(132.0, 132.0, Math.toRadians(45));
     public final static Pose goalStartRightPose = new Pose(124.0, 124.0, Math.toRadians(45));
     public final static Pose shortShotRightPose = new Pose(84.0, 84.0, Math.toRadians(45));
@@ -20,7 +23,7 @@ public class FieldLocations {
     public final static Pose longStartRightPose = new Pose(88.0, 8.0, Math.toRadians(90));
     public final static Pose baseRightPose = new Pose(36.0, 36.0, Math.toRadians(90));
 
-    // Left side poses
+    // Left side
     public final static Pose goalLeftPose =
             new Pose(144 - goalRightPose.getX(), goalRightPose.getY(), Math.toRadians(135));
     public final static Pose goalStartLeftPose =
@@ -39,7 +42,7 @@ public class FieldLocations {
     public final static Pose stack2FinishLeftPose =
             new Pose(144 - stack2FinishRightPose.getX(), stack2FinishRightPose.getY(), Math.toRadians(180));
     public final static Pose stack3SetupLeftPose =
-            new Pose(36 + 6, 36, Math.toRadians(180));
+            new Pose(50, 36, Math.toRadians(180));
     public final static Pose stack3FinishLeftPose =
             new Pose(12, 36, Math.toRadians(180));
 
@@ -51,6 +54,8 @@ public class FieldLocations {
 
     public final static Pose baseLeftPose =
             new Pose(144 - baseRightPose.getX(), baseRightPose.getY(), Math.toRadians(90));
+
+    public static Pose farLeftEndPose, farRightEndPose, nearLeftEndPose, nearRightEndPose;
 
 
     public static void buildPoses(String side, String shortLong) {
@@ -90,6 +95,14 @@ public class FieldLocations {
             startPose = longStartPose;
         } else {
             throw new RuntimeException("shortLong = " + shortLong);
+        }
+    }
+
+    public static void buildPoses(String side, String shortLong, boolean teleop) {
+        buildPoses(side, shortLong);
+
+        if (teleop){
+            startPose = endPose;
         }
     }
 }
