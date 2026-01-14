@@ -21,8 +21,8 @@ public abstract class Bot extends Component {
 
     private ServoSimple stick;
 
-    private double kickerLoadPosition = 0;
-    private double kickerLaunchPosition = 0.1;
+    private double kickerLoadPosition = 0.25;
+    private double kickerLaunchPosition = 0.35;
 
     // Limelight
     public double TURN_KP = 0.03;               // Adjustable turn gain
