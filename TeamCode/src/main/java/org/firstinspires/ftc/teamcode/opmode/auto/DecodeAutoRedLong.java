@@ -38,6 +38,9 @@ public class DecodeAutoRedLong extends LinearOpMode
 
         waitForStart();
 
+
+        wheelMotor.setPower(0.85);
+
         frontLeftMotor.setPower(0.3);
         backLeftMotor.setPower(0.3);
         frontRightMotor.setPower(0.3);
@@ -62,28 +65,28 @@ public class DecodeAutoRedLong extends LinearOpMode
         backLeftMotor.setPower(0.3);
         frontRightMotor.setPower(-0.3);
         backRightMotor.setPower(-0.3);
-        sleep(350);
+        sleep(450);
         frontLeftMotor.setPower(0);
         backLeftMotor.setPower(0);
         frontRightMotor.setPower(0);
         backRightMotor.setPower(0);
 
+        sleep(2000);
         for (int i = 0; i < 3; i++)
         {
-            leftServo.setPosition(1.0);
+            leftServo.setPosition(0.6);
             rightServo.setPosition(0.0);
-            wheelMotor.setPower(0.90);
             sleep(3000);
             //wheelMotor.setPower(0.0);
             leftServo.setPosition(0.0);
-            rightServo.setPosition(1.0);
+            rightServo.setPosition(0.6);
             sleep(2000);
         }
         frontLeftMotor.setPower(0.3);
         backLeftMotor.setPower(0.3);
         frontRightMotor.setPower(0.3);
         backRightMotor.setPower(0.3);
-        sleep(200);
+        sleep(500);
         frontLeftMotor.setPower(0);
         backLeftMotor.setPower(0);
         frontRightMotor.setPower(0);

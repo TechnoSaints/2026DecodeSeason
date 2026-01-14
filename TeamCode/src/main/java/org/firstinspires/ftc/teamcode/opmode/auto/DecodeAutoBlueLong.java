@@ -39,7 +39,7 @@ public class DecodeAutoBlueLong extends LinearOpMode
         waitForStart();
 
 
-        wheelMotor.setPower(0.90);
+        wheelMotor.setPower(1.0);
 
         frontLeftMotor.setPower(-0.3);
         backLeftMotor.setPower(-0.3);
@@ -73,14 +73,15 @@ public class DecodeAutoBlueLong extends LinearOpMode
 
         for (int i = 0; i < 3; i++)
         {
-            leftServo.setPosition(1.0);
+            leftServo.setPosition(0.4);
             rightServo.setPosition(0.0);
             sleep(3000);
-            //wheelMotor.setPower(0.0);
+
             leftServo.setPosition(0.0);
-            rightServo.setPosition(1.0);
+            rightServo.setPosition(0.4);
             sleep(2000);
         }
+
     }
 
 }

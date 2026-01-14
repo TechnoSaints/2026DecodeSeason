@@ -48,16 +48,16 @@ public class DecodeAutoRed extends LinearOpMode
         backRightMotor.setPower(0);
         backLeftMotor.setPower(0);
 
-
+         sleep(2000);
         for (int i = 0; i < 3; i++)
         {
-            leftServo.setPosition(1.0);
+            leftServo.setPosition(0.6);
             rightServo.setPosition(0.0);
             wheelMotor.setPower(0.6);
             sleep(3000);
             //wheelMotor.setPower(0.0);
             leftServo.setPosition(0.0);
-            rightServo.setPosition(1.0);
+            rightServo.setPosition(0.6);
             sleep(1000);
         }
 
