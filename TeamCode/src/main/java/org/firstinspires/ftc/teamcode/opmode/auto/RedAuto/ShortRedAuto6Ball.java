@@ -19,6 +19,7 @@ public class ShortRedAuto6Ball extends AutoOpMode {
 
     public void shootBalls() {
         // Make sure everything is default positions
+        bot.setLauncherShortShot();
         bot.stickLoad();
         bot.stopPusher();
 
@@ -55,16 +56,18 @@ public class ShortRedAuto6Ball extends AutoOpMode {
 
             case 1:
                 if (!bot.followerIsBusy()) {
+                    bot.setLauncherShortShot();
                     controlTimer.reset();
                     bot.stickLoad();
                     bot.stopPusher();
-                    bot.stickLaunch();
                     setPathState(2);
                 }
                 break;
 
+                //Shoot First Ball
             case 2:
-                if (controlTimer.milliseconds() > 250) {
+                if (controlTimer.milliseconds() > 2000) {
+                    bot.stickLaunch();
                     controlTimer.reset();
                     bot.stickLoad();
                     bot.pusherStart();
@@ -72,11 +75,12 @@ public class ShortRedAuto6Ball extends AutoOpMode {
                 }
                 break;
 
+                //Shoot Second Ball
             case 3:
-                if (controlTimer.milliseconds() > 750) {
-                    controlTimer.reset();
+                if (controlTimer.milliseconds() > 500) {
                     bot.stopPusher();
                     bot.stickLaunch();
+                    controlTimer.reset();
                     setPathState(4);
                 }
                 break;
@@ -88,10 +92,13 @@ public class ShortRedAuto6Ball extends AutoOpMode {
                     setPathState(4);
                 }
                 break;
+
+                //Shoot Third Ball
             case 5:
                 if (controlTimer.milliseconds() > 750) {
                     controlTimer.reset();
                     bot.stickLaunch();
+                    bot.stopPusher();
                     setPathState(6);
                 }
                 break;
@@ -107,6 +114,7 @@ public class ShortRedAuto6Ball extends AutoOpMode {
                 bot.followPath(Paths.shortShotToStack1Setup, false);
                 setPathState(8);
                 break;
+
             // Turn on rollers and move to stack1 finish after move is finished
             case 8:
                 if (!bot.followerIsBusy()) {
@@ -118,6 +126,7 @@ public class ShortRedAuto6Ball extends AutoOpMode {
                     setPathState(9);
                 }
                 break;
+
             case 9:
                 if (controlTimer.milliseconds() > 1500) {
                     controlTimer.reset();
@@ -126,7 +135,7 @@ public class ShortRedAuto6Ball extends AutoOpMode {
                     setPathState(10);
                 }
                 break;
-
+/*
             case 10:
                 bot.followPath(Paths.stack1FinishToShortShot, false);
                 setPathState(11);
@@ -181,8 +190,8 @@ public class ShortRedAuto6Ball extends AutoOpMode {
                     setPathState(17);
                 }
                 break;
-            // Stop opmode
-            case 17:
+            // Stop opmode */
+            case 10:
                 setPathState(-1);
                 requestOpModeStop();
                 break;

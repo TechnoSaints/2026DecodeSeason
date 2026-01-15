@@ -6,8 +6,8 @@ import org.apache.commons.math3.fitting.WeightedObservedPoints;
 import java.util.Arrays;
 
 public class LauncherSettings {
-    public static double shortShotVelocityFactor = .55;
-    public static double shortShotPosition = 0.2;
+    public static double shortShotVelocityFactor = .5;
+    public static double shortShotPosition = .35;
     public static double mediumShotVelocityFactor = 0.5;
     public static double mediumShotPosition = 0.28;
     public static double longShotVelocityFactor = 0.55;
