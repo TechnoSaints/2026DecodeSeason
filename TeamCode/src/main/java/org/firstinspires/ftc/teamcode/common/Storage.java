@@ -4,11 +4,14 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
 import java.util.Arrays;
 
 public class Storage extends Component {
@@ -57,10 +60,10 @@ public class Storage extends Component {
     public void updateStorage() {
         switch (state) {
             case 1:
-                if (!ballFind(ball0)){
-                    intake.setPower(0.8); //garrett was here
-                    lowerRoller.setPower(0.7);
-                    upperRoller.setPower(0.25);
+                if (!ballFind0(ball0)){
+                    intake.setPower(0.7); //garrett was here
+                    lowerRoller.setPower(0.6);
+                    upperRoller.setPower(0.1);
                     state = 2;
                 }
                 else {
@@ -68,7 +71,7 @@ public class Storage extends Component {
                 }
                 break;
             case 2:
-                if (ballFind(ball0)){
+                if (ballFind0(ball0)){
                     state = 3;
                 }
                 break;
@@ -78,7 +81,7 @@ public class Storage extends Component {
                 break;
             case 4:
                 intake.setPower(0.7);
-                lowerRoller.setPower(0.5);
+                lowerRoller.setPower(0.4);
                 upperRoller.setPower(0);
                 state = 5;
                 break;
@@ -89,7 +92,7 @@ public class Storage extends Component {
                 }
                 break;
             case 6:
-                intake.setPower(0.7);
+                intake.setPower(0.6);
                 lowerRoller.setPower(0);
                 upperRoller.setPower(0);
                 state = 7;
@@ -105,20 +108,18 @@ public class Storage extends Component {
                 lowerRoller.setPower(0);
                 upperRoller.setPower(1);
                 state = -2;*/
-                intake.setPower(1);
-                lowerRoller.setPower(1);
-                upperRoller.setPower(1);
+                intake.setPower(0.7);
+                lowerRoller.setPower(0.7);
+                upperRoller.setPower(0.7);
                 state = -2;
                 break;
             case -2:
-                if (!ballFind(ball0)){
-                    balls[0] = 'X';
+                findBalls();
+                if (balls[0] == 'O' || balls[1] == 'O' || balls[2] == 'O'){
+                   timer.reset();
                 }
-                if (!ballFind(ball1)){
-                    balls[1] = 'X';
-                }
-                if (!ballFind(ball2)) {
-                    balls[2] = 'X';
+                else if (balls[0] == 'X' && balls[1] == 'X' && balls[2] == 'X' && timer.milliseconds() > 1000){
+                    state = 0;
                 }
                     break;
             case 0:
@@ -141,12 +142,20 @@ public class Storage extends Component {
         }
     }
 
+    public boolean ballFind0(NormalizedColorSensor sensor){
+        if (((DistanceSensor) sensor).getDistance(DistanceUnit.CM) < 1){
+            return true;
+        }
+        else if (sensor.getNormalizedColors().alpha < 0.1){
+            return (((DistanceSensor) sensor).getDistance(DistanceUnit.CM) <= 8);
+        }
+        else {
+            return false;
+        }
+    }
+    
     public boolean ballFind(NormalizedColorSensor sensor){
-        float r, g, b;
-        r = sensor.getNormalizedColors().red;
-        g = sensor.getNormalizedColors().green;
-        b = sensor.getNormalizedColors().blue;
-        return (r >= 0.01 || b >= 0.01 || g >= 0.01);
+        return (sensor.getNormalizedColors().red > 0.01 || sensor.getNormalizedColors().green > 0.01 || sensor.getNormalizedColors().blue > 0.01);
     }
 
     public void shootBalls() {
@@ -164,7 +173,7 @@ public class Storage extends Component {
     public char[] getBalls(){ return balls; }
 
     public void findBalls(){
-        if (ballFind(ball0)){
+        if (ballFind0(ball0)){
             balls[0] = 'O';
         } else {
             balls[0] = 'X';

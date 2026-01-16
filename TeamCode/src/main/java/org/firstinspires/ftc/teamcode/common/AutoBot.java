@@ -8,20 +8,31 @@ import com.pedropathing.paths.PathChain;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.DrivetrainData;
 import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
 public class AutoBot extends Bot {
     private Follower follower;
+    private DrivetrainData drivetrainData;
 
     public AutoBot(OpMode opMode, Telemetry telemetry) {
         super(opMode, telemetry);
+        drivetrainData = new DrivetrainData();
         follower = Constants.createFollower(opMode.hardwareMap);
         follower.setStartingPose(FieldLocations.startPose);
     }
 
-    public void followPath(PathChain path, boolean holdEnd) {
-        follower.followPath(path, holdEnd);
+    public void followPath(PathChain path, double maxSpeed) {
+        if (maxSpeed == 0){
+            maxSpeed = drivetrainData.maxAutoPower;
+        }
+        follower.setMaxPower(maxSpeed);
+        followPath(path);
+    }
+
+    public void followPath(PathChain path) {
+        follower.followPath(path, true);
     }
 
     public Follower getFollower() {
@@ -37,7 +48,7 @@ public class AutoBot extends Bot {
                 .setLinearHeadingInterpolation(getFollower().getPose().getHeading(), targetPose.getHeading())
                 .build();
 
-        followPath(targetPath, true);
+        followPath(targetPath, 0.8);
     }
     public boolean followerIsBusy() {
         return (follower.isBusy());

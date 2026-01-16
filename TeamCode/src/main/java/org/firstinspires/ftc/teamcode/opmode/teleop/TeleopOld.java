@@ -25,7 +25,7 @@ public class TeleopOld extends LinearOpMode {
     private double velocityFactorIncrement = 0.05;
     private double targetVelocityFactor = 0.0;
     private double positionIncrement = 0.05;
-    private double targetLaunchPosition = 0.5;
+    private double targetLaunchPosition = 0.2;
     private GoBildaPinpointDriver pinpoint;
     private Drivetrain drivetrain;
     private Storage storage;
@@ -64,10 +64,10 @@ public class TeleopOld extends LinearOpMode {
             } else if (gamepad1.leftBumperWasPressed() && targetLaunchPosition > 0) {
                 targetLaunchPosition -= positionIncrement;
             }
-            if (gamepad1.leftStickButtonWasPressed()){
+            if (gamepad1.left_stick_button){
                 storage.intakeBalls();
             }
-            else if (gamepad1.rightStickButtonWasPressed()){
+            else if (gamepad1.right_stick_button){
                 storage.shootBalls();
             }
             else if (gamepad1.psWasPressed()){
@@ -80,7 +80,21 @@ public class TeleopOld extends LinearOpMode {
                 storage.manualBackward();
             }
             storage.updateStorage();
-            drivetrain.moveDirection(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
+            if (gamepad1.dpad_left){
+                drivetrain.moveDirection(0, -0.3, 0);
+            }
+            else if (gamepad1.dpad_right){
+                drivetrain.moveDirection(0, 0.3, 0);
+            }
+            else if (gamepad1.dpad_down){
+                drivetrain.moveDirection(-0.25, 0, 0);
+            }
+            else if (gamepad1.dpad_up){
+                drivetrain.moveDirection(0.25, 0, 0);
+            }
+            else {
+                drivetrain.moveDirection(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
+            }
             pinpoint.update();
             Pose2D pose = pinpoint.getPosition();
             Pose2D target = new Pose2D(DistanceUnit.INCH, 1,1, AngleUnit.DEGREES, 0);

@@ -15,11 +15,11 @@ public class FieldLocations {
     public final static Pose shortShotRightPose = new Pose(84.0, 84.0, Math.toRadians(45));
     public final static Pose stack1SetupRightPose = new Pose(108.0, 84.0, Math.toRadians(0));
     public final static Pose stack1FinishRightPose = new Pose(135.0, 84.0, Math.toRadians(0));
-    public final static Pose stack2SetupRightPose = new Pose(108.0, 60.0, Math.toRadians(0));
+    public final static Pose stack2SetupRightPose = new Pose(100.0, 60.0, Math.toRadians(0));
     public final static Pose stack2FinishRightPose = new Pose(135.0, 60.0, Math.toRadians(0));
-    public final static Pose stack3SetupRightPose = new Pose(108.0, 36.0, Math.toRadians(0));
+    public final static Pose stack3SetupRightPose = new Pose(100.0, 36.0, Math.toRadians(0));
     public final static Pose stack3FinishRightPose = new Pose(135.0, 36.0, Math.toRadians(0));
-    public final static Pose longShotRightPose = new Pose(86.0, 21.0, Math.toRadians(57));
+    public final static Pose longShotRightPose = new Pose(84.0, 20.5, Math.toRadians(66));
     public final static Pose longStartRightPose = new Pose(88.0, 8.0, Math.toRadians(90));
     public final static Pose baseRightPose = new Pose(36.0, 36.0, Math.toRadians(90));
 
@@ -37,17 +37,17 @@ public class FieldLocations {
             new Pose(144 - stack1FinishRightPose.getX() + 7.25, stack1FinishRightPose.getY(), Math.toRadians(180));
 
     public final static Pose stack2SetupLeftPose =
-            new Pose(144 - stack2SetupRightPose.getX() + 6, stack2SetupRightPose.getY(), Math.toRadians(180));
+            new Pose(55, stack2SetupRightPose.getY() - 1, Math.toRadians(180));
 
     public final static Pose stack2FinishLeftPose =
-            new Pose(144 - stack2FinishRightPose.getX(), stack2FinishRightPose.getY(), Math.toRadians(180));
+            new Pose(12, stack2FinishRightPose.getY() - 1, Math.toRadians(180));
     public final static Pose stack3SetupLeftPose =
-            new Pose(50, 36, Math.toRadians(180));
+            new Pose(50, 35, Math.toRadians(180));
     public final static Pose stack3FinishLeftPose =
-            new Pose(12, 36, Math.toRadians(180));
+            new Pose(12, 35, Math.toRadians(180));
 
     public final static Pose longShotLeftPose =
-            new Pose(144 - longShotRightPose.getX() + 2, longShotRightPose.getY() - 2, Math.toRadians(115));
+            new Pose(60, 19, Math.toRadians(115));
 
     public final static Pose longStartLeftPose =
             new Pose(144 - longStartRightPose.getX(), longStartRightPose.getY(), Math.toRadians(90));
@@ -55,7 +55,7 @@ public class FieldLocations {
     public final static Pose baseLeftPose =
             new Pose(144 - baseRightPose.getX(), baseRightPose.getY(), Math.toRadians(90));
 
-    public static Pose farLeftEndPose, farRightEndPose, nearLeftEndPose, nearRightEndPose;
+    public static Pose farLeftEndPose, farRightEndPose, nearLeftEndPose, nearRightEndPose, shortEndPose, longEndPose;
 
 
     public static void buildPoses(String side, String shortLong) {
@@ -88,6 +88,7 @@ public class FieldLocations {
         } else {
             throw new RuntimeException("side = " + side);
         }
+        endPose = basePose;
 
         if (shortLong.equals("short")) {
             startPose = goalStartPose;
@@ -100,7 +101,6 @@ public class FieldLocations {
 
     public static void buildPoses(String side, String shortLong, boolean teleop) {
         buildPoses(side, shortLong);
-
         if (teleop){
             startPose = endPose;
         }

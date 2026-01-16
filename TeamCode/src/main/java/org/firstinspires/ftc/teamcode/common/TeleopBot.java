@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
+import org.firstinspires.ftc.teamcode.opmode.Paths;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
 public class TeleopBot extends Bot {
@@ -44,6 +45,7 @@ public class TeleopBot extends Bot {
                 .addPath(new BezierLine(getFollower().getPose(), FieldLocations.longShotPose))
                 .setLinearHeadingInterpolation(getFollower().getPose().getHeading(), FieldLocations.longShotPose.getHeading())
                 .build();
+        follower.followPath(targetPath, true);
     }
 
     public void startTeleopDrive(){
@@ -55,6 +57,10 @@ public class TeleopBot extends Bot {
     }
     public boolean followerIsBusy() {
         return (follower.isBusy());
+    }
+
+    public void buildPaths(){
+        Paths.buildPaths(getFollower());
     }
 
     public void resetOdo(Pose resetPose){

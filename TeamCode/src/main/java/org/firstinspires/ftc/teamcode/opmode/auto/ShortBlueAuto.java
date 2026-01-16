@@ -21,7 +21,7 @@ public class ShortBlueAuto extends AutoOpMode {
         switch (pathState) {
             // Move start to short shot
             case 0:
-                bot.followPath(Paths.startToShortShot, false);
+                bot.followPath(Paths.startToShortShot, 0.8);
                 setPathState(1);
                 break;
 
@@ -45,7 +45,7 @@ public class ShortBlueAuto extends AutoOpMode {
 
             // Move to stack1 setup
             case 2:
-                bot.followPath(Paths.shortShotToStack1Setup, false);
+                bot.followPath(Paths.shortShotToStack1Setup, 0.8);
                 setPathState(3);
                 break;
 
@@ -53,7 +53,7 @@ public class ShortBlueAuto extends AutoOpMode {
             case 3:
                 if (!bot.followerIsBusy()) {
                     // Turn on rollers
-                    bot.followPath(Paths.stack1SetupToStack1Finish, false);
+                    bot.followPath(Paths.stack1SetupToStack1Finish, 0.8);
                     setPathState(4);
                 }
                 break;
@@ -67,7 +67,7 @@ public class ShortBlueAuto extends AutoOpMode {
 
             // Move to short shot
             case 5:
-                bot.followPath(Paths.stack1FinishToShortShot, false);
+                bot.followPath(Paths.stack1FinishToShortShot, 0.8);
                 setPathState(6);
                 break;
 
@@ -91,7 +91,7 @@ public class ShortBlueAuto extends AutoOpMode {
                 requestOpModeStop();
                 break;
         }
-        //bot.updateLauncher(launchPose, true, false);
+        //bot.updateLauncher(launchPose, true, 0.8);
         bot.update();
         telemetry.addData("Path State", pathState);
     }
