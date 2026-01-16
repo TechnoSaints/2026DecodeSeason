@@ -15,7 +15,7 @@ public class BlackWheel extends Component {
     private final DcMotorEx pusher;
     private MotorData motorData = new GoBilda312DcMotorData();
 
-    private double onPower = -.65;
+    private double onPower = -.5;
     private final int maxTicksPerSecond = motorData.maxTicksPerSec;
 
     public BlackWheel(HardwareMap hardwareMap, Telemetry telemetry) {
