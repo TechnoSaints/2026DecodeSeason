@@ -46,23 +46,27 @@ public class ShortRedAuto6Ball extends AutoOpMode {
 
     protected void autonomousPathUpdate() {
         switch (pathState) {
-            // Move start to short shot
-            // Move start to short shot
+
+                //Move From Start To Short Shot
+
             case 0:
+                bot.setLauncherShortShot();
+                bot.stickLoad();
+                bot.stopPusher();
                 bot.followPath(Paths.startToShortShot, false);
                 setPathState(1);
                 break;
 
+                //Shooting The First Shot
             case 1:
                 if (!bot.followerIsBusy()) {
                     controlTimer.reset();
-                    bot.stickLoad();
-                    bot.stopPusher();
                     bot.stickLaunch();
                     setPathState(2);
                 }
                 break;
 
+                //Turning on Black Wheel and Resetting Stick
             case 2:
                 if (controlTimer.milliseconds() > 250) {
                     controlTimer.reset();
@@ -72,22 +76,27 @@ public class ShortRedAuto6Ball extends AutoOpMode {
                 }
                 break;
 
+                //Launching Second Ball
             case 3:
                 if (controlTimer.milliseconds() > 750) {
                     controlTimer.reset();
-                    bot.stopPusher();
+                    bot.pusherReverse();
                     bot.stickLaunch();
                     setPathState(4);
                 }
                 break;
+
+                //Resetting Stick and Turning On Black Wheel
             case 4:
                 if (controlTimer.milliseconds() > 250) {
                     controlTimer.reset();
                     bot.stickLoad();
                     bot.pusherStart();
-                    setPathState(4);
+                    setPathState(5);
                 }
                 break;
+
+                //Launching Third Ball
             case 5:
                 if (controlTimer.milliseconds() > 750) {
                     controlTimer.reset();
@@ -95,33 +104,41 @@ public class ShortRedAuto6Ball extends AutoOpMode {
                     setPathState(6);
                 }
                 break;
+
+                //Resetting Stick
             case 6:
                 if (controlTimer.milliseconds() > 250) {
                     controlTimer.reset();
                     bot.stickLoad();
-                    setPathState(7);
                 }
                 break;
-                // Move to stack1 setup
+
+                //Move to Stack 1 Setup and Clear Launcher
             case 7:
-                bot.followPath(Paths.shortShotToStack1Setup, false);
-                setPathState(8);
+                if (controlTimer.milliseconds() > 250) {
+                    bot.stickLaunch();
+                    bot.followPath(Paths.shortShotToStack1Setup, false);
+                    setPathState(8);
+                }
                 break;
-            // Turn on rollers and move to stack1 finish after move is finished
+
+                //Turn on Intake and Move to Stack 1 Finish after Stack 1 Setup Move is Finished
             case 8:
                 if (!bot.followerIsBusy()) {
-                    controlTimer.reset();
-                    // Turn on rollers
+                    bot.stickLoad();
                     bot.intakeForward();
                     bot.pusherStart();
                     bot.followPath(Paths.stack1SetupToStack1Finish, false);
+                    controlTimer.reset();
                     setPathState(9);
                 }
                 break;
+
+                //Stop The Intake Reverse the Pusher to Clear Jam
             case 9:
                 if (controlTimer.milliseconds() > 1500) {
                     controlTimer.reset();
-                    bot.stopPusher();
+                    bot.pusherReverse();
                     bot.intakeStop();
                     setPathState(10);
                 }
@@ -132,59 +149,100 @@ public class ShortRedAuto6Ball extends AutoOpMode {
                 setPathState(11);
                 break;
 
+                //Launch the 4th Ball and Stop Pusher
             case 11:
                 if (!bot.followerIsBusy()) {
                     controlTimer.reset();
-                    bot.stickLoad();
-                    bot.stopPusher();
-                    bot.stickLaunch();
-                    setPathState(12);
+                    if(controlTimer.milliseconds() > 250) {
+                        controlTimer.reset();
+                        bot.stickLoad();
+                        bot.stopPusher();
+                        bot.stickLaunch();
+                        setPathState(12);
+                    }
                 }
                 break;
 
+                //Turn on Intake In the Case Ball Left and Reset Stick
             case 12:
                 if (controlTimer.milliseconds() > 250) {
                     controlTimer.reset();
                     bot.stickLoad();
+                    bot.intakeForward();
                     bot.pusherStart();
                     setPathState(13);
                 }
                 break;
 
+                //Reverse Pusher to Clear Jam and Stop Intake
             case 13:
                 if (controlTimer.milliseconds() > 750) {
                     controlTimer.reset();
-                    bot.stopPusher();
-                    bot.stickLaunch();
+                    bot.pusherReverse();
+                    bot.intakeStop();
                     setPathState(14);
                 }
                 break;
+
+                //Shoot 5th Ball, Start the Pusher, and Turn On Intake in Case Ball Left
             case 14:
                 if (controlTimer.milliseconds() > 250) {
+                    bot.stickLaunch();
                     controlTimer.reset();
-                    bot.stickLoad();
                     bot.pusherStart();
+                    bot.intakeForward();
                     setPathState(15);
                 }
                 break;
+
+                //Resetting the Stick, Reverse the Pusher to Clear Jam, and Turn Off Intake
             case 15:
-                if (controlTimer.milliseconds() > 750) {
+                if (controlTimer.milliseconds() > 1000) {
+                    bot.stickLoad();
+                    bot.pusherReverse();
+                    bot.intakeStop();
                     controlTimer.reset();
-                    bot.stickLaunch();
                     setPathState(16);
                 }
                 break;
+
+                //Launch The 6th Ball and Start the Pusher and Intake in Case of Leftover Ball
             case 16:
                 if (controlTimer.milliseconds() > 250) {
+                    bot.stickLaunch();
                     controlTimer.reset();
-                    bot.stickLoad();
+                    bot.pusherStart();
+                    bot.intakeForward();
                     setPathState(17);
                 }
                 break;
-            // Stop opmode
+
+                //Clear Jam Just in Case and Resetting the Stick
             case 17:
-                setPathState(-1);
-                requestOpModeStop();
+                if (controlTimer.milliseconds() > 750) {
+                    bot.stickLoad();
+                    bot.pusherReverse();
+                    controlTimer.reset();
+                    setPathState(18);
+                }
+                break;
+
+                //Launch a Leftover Ball and Travel for Move Bonus
+            case 18:
+                if (controlTimer.milliseconds() > 250) {
+                    bot.stickLaunch();
+                    controlTimer.reset();
+                    bot.followPath(Paths.shortShotToStack1Setup, false);
+                    setPathState(19);
+                }
+                break;
+
+                //Stop Opmode
+            case 19:
+                if (!bot.followerIsBusy()) {
+                    setPathState(-1);
+                    requestOpModeStop();
+                }
                 break;
         }
     }
