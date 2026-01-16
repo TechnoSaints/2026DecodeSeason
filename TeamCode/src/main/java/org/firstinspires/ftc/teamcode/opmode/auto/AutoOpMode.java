@@ -51,6 +51,7 @@ public abstract class AutoOpMode extends OpMode {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+
     }
     protected void setPathState(int pState)
     {
@@ -58,5 +59,6 @@ public abstract class AutoOpMode extends OpMode {
     }
 
     protected abstract void autonomousPathUpdate();
+
 }
 
