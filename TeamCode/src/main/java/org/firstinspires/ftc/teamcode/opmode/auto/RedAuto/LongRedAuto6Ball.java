@@ -1,11 +1,12 @@
 package org.firstinspires.ftc.teamcode.opmode.auto.RedAuto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
 import org.firstinspires.ftc.teamcode.opmode.Paths;
 import org.firstinspires.ftc.teamcode.opmode.auto.AutoOpMode;
-
+@Disabled
 @Autonomous(name = "\uD83D\uDD34longRedAuto6Ball", group = "Red")
 public class LongRedAuto6Ball extends AutoOpMode {
 
