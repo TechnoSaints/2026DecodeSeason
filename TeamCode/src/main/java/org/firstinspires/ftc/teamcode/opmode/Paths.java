@@ -13,7 +13,7 @@ import java.lang.reflect.Field;
 
 public class Paths {
 
-    public static PathChain longStartToLongShot, longShotToStack3Setup, stack3SetupToStack3Finish, stack3FinishToLongShot, longShotToStack2Setup, stack2SetupToStack2Finish, stack2FinishToShortShot, longShotToEndFar, goalStartToShortShot, shortShotToStack1Setup, stack1SetupToStack1Finish, stack1FinishToShortShot, shortShotToEndClose;
+    public static PathChain longStartToLongShot, longShotToStack3Setup, stack3SetupToStack3Finish, stack3FinishToLongShot, longShotToStack2Setup, stack2SetupToStack2Finish, stack2FinishToLongShot, longShotToEndFar, goalStartToShortShot, shortShotToStack1Setup, stack1SetupToStack1Finish, stack1FinishToShortShot, shortShotToEndClose;
 
     public static void buildPaths(Follower follower) {
         longStartToLongShot = follower.pathBuilder()
@@ -46,7 +46,7 @@ public class Paths {
                 .setLinearHeadingInterpolation(FieldLocations.stack2SetupPose.getHeading(), FieldLocations.stack2FinishPose.getHeading())
                 .build();
 
-        stack2FinishToShortShot = follower.pathBuilder()
+        stack2FinishToLongShot = follower.pathBuilder()
                 .addPath(new BezierLine(FieldLocations.stack2FinishPose, FieldLocations.longShotPose))
                 .setLinearHeadingInterpolation(FieldLocations.stack2FinishPose.getHeading(), FieldLocations.longShotPose.getHeading())
                 .build();

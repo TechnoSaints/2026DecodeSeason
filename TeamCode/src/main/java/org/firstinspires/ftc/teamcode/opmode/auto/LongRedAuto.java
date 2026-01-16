@@ -43,7 +43,7 @@ public class LongRedAuto extends AutoOpMode {
 
                 // Move to stack1 setup
             case 3:
-                if (controlTimer.milliseconds() > 1750) {
+                if (controlTimer.milliseconds() > 2250) {
                     bot.followPath(Paths.longShotToStack3Setup, 0.85f, true);
                     bot.kickerGate();
                     setPathState(4);
@@ -68,7 +68,7 @@ public class LongRedAuto extends AutoOpMode {
 
             // Move to short shot
             case 6:
-                bot.followPath(Paths.stack3FinishToLongShot, 0.85f, true);
+                bot.followPath(Paths.stack3FinishToLongShot, 0.7f, true);
                 setPathState(7);
                 break;
 
@@ -91,7 +91,7 @@ public class LongRedAuto extends AutoOpMode {
 
             // Do more stuff
             case 9:
-                if (controlTimer.milliseconds() > 1250) {
+                if (controlTimer.milliseconds() > 1500) {
                     bot.followPath(Paths.longShotToStack2Setup, 0.85f, true);
                     bot.kickerGate();
                     setPathState(10);
@@ -110,7 +110,7 @@ public class LongRedAuto extends AutoOpMode {
                 break;
 
             case 12:
-                bot.followPath(Paths.stack2FinishToShortShot, 0.85f, true);
+                bot.followPath(Paths.stack2FinishToLongShot, 0.85f, true);
                 setPathState(13);
                 break;
 
@@ -132,7 +132,7 @@ public class LongRedAuto extends AutoOpMode {
 
 
             case 15:
-                if (controlTimer.milliseconds() > 1250) {
+                if (controlTimer.milliseconds() > 1500) {
                     bot.followPath(Paths.longShotToEndFar, 0.85f, true);
                     bot.kickerGate();
                     bot.intakeStop();
