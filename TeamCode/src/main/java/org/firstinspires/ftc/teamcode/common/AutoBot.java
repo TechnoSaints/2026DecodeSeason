@@ -20,8 +20,8 @@ public class AutoBot extends Bot {
         follower.setStartingPose(FieldLocations.startPose);
     }
 
-    public void followPath(PathChain path, boolean holdEnd) {
-        follower.followPath(path, holdEnd);
+    public void followPath(PathChain path, float maxPower, boolean holdEnd) {
+        follower.followPath(path, maxPower, holdEnd);
     }
 
     public Follower getFollower() {
@@ -37,7 +37,7 @@ public class AutoBot extends Bot {
                 .setLinearHeadingInterpolation(getFollower().getPose().getHeading(), targetPose.getHeading())
                 .build();
 
-        followPath(targetPath, true);
+        followPath(targetPath, 0.7f, true);
     }
     public boolean followerIsBusy() {
         return (follower.isBusy());
