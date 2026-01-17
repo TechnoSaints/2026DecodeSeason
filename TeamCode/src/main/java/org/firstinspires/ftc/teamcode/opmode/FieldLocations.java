@@ -10,7 +10,7 @@ public class FieldLocations {
     // Right side poses
     public final static Pose goalRightPose = new Pose(132.0, 132.0, Math.toRadians(45));
     public final static Pose goalStartRightPose = new Pose(124, 124.0, Math.toRadians(40));
-    public final static Pose shortShotRightPose = new Pose(85, 72, Math.toRadians(49.5));
+    public final static Pose shortShotRightPose = new Pose(76, 72, Math.toRadians(49.5));
     public final static Pose stack1SetupRightPose = new Pose(98, 84, Math.toRadians(180));
     public final static Pose stack1FinishRightPose = new Pose(130, 84, Math.toRadians(180));
     public final static Pose stack2SetupRightPose = new Pose(98, 60.0, Math.toRadians(180));
@@ -22,36 +22,18 @@ public class FieldLocations {
     public final static Pose baseRightPose = new Pose(36, 36, Math.toRadians(90));
 
     // Left side poses
-    public final static Pose goalLeftPose =
-            new Pose(144 - goalRightPose.getX(), goalRightPose.getY(), Math.toRadians(135));
-    public final static Pose goalStartLeftPose =
-            new Pose(144 - goalStartRightPose.getX(), goalStartRightPose.getY(), Math.toRadians(140));
-    public final static Pose shortShotLeftPose =
-            new Pose(144 - shortShotRightPose.getX(), shortShotRightPose.getY(), Math.toRadians(130.5));
-    public final static Pose stack1SetupLeftPose =
-            new Pose(144 - stack1SetupRightPose.getX(), stack1SetupRightPose.getY(), Math.toRadians(0));
-
-    public final static Pose stack1FinishLeftPose =
-            new Pose(144 - stack1FinishRightPose.getX(), stack1FinishRightPose.getY(), Math.toRadians(0));
-
-    public final static Pose stack2SetupLeftPose =
-            new Pose(144 - stack2SetupRightPose.getX(), stack2SetupRightPose.getY(), Math.toRadians(0));
-
-    public final static Pose stack2FinishLeftPose =
-            new Pose(144 - stack2FinishRightPose.getX(), stack2FinishRightPose.getY(), Math.toRadians(0));
-    public final static Pose stack3SetupLeftPose =
-            new Pose(144 - stack3SetupRightPose.getX(), stack3SetupRightPose.getY(), Math.toRadians(0));
-    public final static Pose stack3FinishLeftPose =
-            new Pose(144 - stack3FinishRightPose.getX(), stack3FinishRightPose.getY(), Math.toRadians(0));
-
-    public final static Pose longShotLeftPose =
-            new Pose(144 - longShotRightPose.getX(), longShotRightPose.getY(), Math.toRadians(112.5));
-
-    public final static Pose longStartLeftPose =
-            new Pose(144 - longStartRightPose.getX(), longStartRightPose.getY(), Math.toRadians(90));
-
-    public final static Pose baseLeftPose =
-            new Pose(144 - baseRightPose.getX(), baseRightPose.getY(), Math.toRadians(90));
+    public final static Pose goalLeftPose = new Pose(144 - goalRightPose.getX(), goalRightPose.getY(), Math.toRadians(135));
+    public final static Pose goalStartLeftPose = new Pose(144 - goalStartRightPose.getX(), goalStartRightPose.getY(), Math.toRadians(140));
+    public final static Pose shortShotLeftPose = new Pose(70, 84, Math.toRadians(130.5));
+    public final static Pose stack1SetupLeftPose = new Pose(144 - stack1SetupRightPose.getX(), stack1SetupRightPose.getY(), Math.toRadians(0));
+    public final static Pose stack1FinishLeftPose = new Pose(144 - stack1FinishRightPose.getX(), stack1FinishRightPose.getY(), Math.toRadians(0));
+    public final static Pose stack2SetupLeftPose = new Pose(144 - stack2SetupRightPose.getX(), stack2SetupRightPose.getY(), Math.toRadians(0));
+    public final static Pose stack2FinishLeftPose = new Pose(144 - stack2FinishRightPose.getX(), stack2FinishRightPose.getY(), Math.toRadians(0));
+    public final static Pose stack3SetupLeftPose = new Pose(144 - stack3SetupRightPose.getX(), stack3SetupRightPose.getY(), Math.toRadians(0));
+    public final static Pose stack3FinishLeftPose = new Pose(144 - stack3FinishRightPose.getX(), stack3FinishRightPose.getY(), Math.toRadians(0));
+    public final static Pose longShotLeftPose = new Pose(144 - longShotRightPose.getX(), longShotRightPose.getY(), Math.toRadians(112.5));
+    public final static Pose longStartLeftPose = new Pose(144 - longStartRightPose.getX(), longStartRightPose.getY(), Math.toRadians(90));
+    public final static Pose baseLeftPose = new Pose(144 - baseRightPose.getX(), baseRightPose.getY(), Math.toRadians(90));
 
 
     public static void buildPoses(String side, String shortLong) {

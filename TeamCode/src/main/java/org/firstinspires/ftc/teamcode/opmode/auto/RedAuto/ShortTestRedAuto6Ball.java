@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
 import org.firstinspires.ftc.teamcode.opmode.Paths;
 import org.firstinspires.ftc.teamcode.opmode.auto.AutoOpMode;
 
-@Autonomous(name = "\uD83D\uDD34TEST RED AUTO", group = "Red")
+@Autonomous(name = "\uD83D\uDD34Short Red Auto", group = "Red")
 public class ShortTestRedAuto6Ball extends AutoOpMode {
 
     @Override
@@ -26,7 +26,7 @@ public class ShortTestRedAuto6Ball extends AutoOpMode {
                 bot.setLauncherShortShot();
                 bot.stickLoad();
                 bot.stopPusher();
-                bot.followPath(Paths.startToShortShot, true);
+                bot.followPath(Paths.startToShortShot, 0.7f, true);
                 setPathState(1);
                 break;
 
@@ -91,7 +91,7 @@ public class ShortTestRedAuto6Ball extends AutoOpMode {
             case 7:
                 if (controlTimer.milliseconds() > 250) {
                     bot.stickLaunch(); //Just In Case A Extra Ball Was There
-                    bot.followPath(Paths.shortShotToStack1Setup, true);
+                    bot.followPath(Paths.shortShotToStack1Setup, 0.5f, true);
                     bot.intakeForward();
                     setPathState(8);
                 }
@@ -102,7 +102,7 @@ public class ShortTestRedAuto6Ball extends AutoOpMode {
                 if (!bot.followerIsBusy()) {
                     bot.stickLoad();
                     bot.pusherStart();
-                    bot.followPath(Paths.stack1SetupToStack1Finish, true);
+                    bot.followPath(Paths.stack1SetupToStack1Finish, 0.7f, true);
                     controlTimer.reset();
                     setPathState(9);
                 }
@@ -118,7 +118,7 @@ public class ShortTestRedAuto6Ball extends AutoOpMode {
 
                 //Returning To Shooting Position
             case 10:
-                bot.followPath(Paths.stack1FinishToShortShot, true);
+                bot.followPath(Paths.stack1FinishToShortShot, 0.7f, true);
                 setPathState(11);
                 break;
 
@@ -182,24 +182,31 @@ public class ShortTestRedAuto6Ball extends AutoOpMode {
 
                 //Launch 6th Ball and Travel for Move Bonus
             case 17:
-                if (controlTimer.milliseconds() > 1500) {
-                    bot.stickLaunch();
+                if (controlTimer.milliseconds() > 250) {
+                    bot.pusherStart();
                     controlTimer.reset();
                     setPathState(18);
                 }
                 break;
 
             case 18:
-                if (controlTimer.milliseconds() > 250) {
-                    bot.stickLoad();
+                if (controlTimer.milliseconds() > 1500) {
+                    bot.stickLaunch();
                     controlTimer.reset();
-                    bot.followPath(Paths.shortShotToStack2Setup, true);
+                    setPathState(19);
+                }
+                break;
+
+            case 19:
+                if (controlTimer.milliseconds() > 250) {
+                    controlTimer.reset();
+                    bot.followPath(Paths.shortShotToStack2Setup, 0.5f, true);
                     setPathState(19);
                 }
                 break;
 
                 //Stop Opmode
-            case 19:
+            case 20:
                 if (!bot.followerIsBusy()) {
                     setPathState(-1);
                     requestOpModeStop();

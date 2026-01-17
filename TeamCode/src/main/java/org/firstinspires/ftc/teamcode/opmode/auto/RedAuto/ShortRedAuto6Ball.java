@@ -3,11 +3,12 @@ package org.firstinspires.ftc.teamcode.opmode.auto.RedAuto;
 import static android.os.SystemClock.sleep;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
 import org.firstinspires.ftc.teamcode.opmode.Paths;
 import org.firstinspires.ftc.teamcode.opmode.auto.AutoOpMode;
-
+@Disabled
 @Autonomous(name = "\uD83D\uDD34shortRedAuto6Ball", group = "Red")
 public class ShortRedAuto6Ball extends AutoOpMode {
 
@@ -17,32 +18,7 @@ public class ShortRedAuto6Ball extends AutoOpMode {
         super.init();
     }
 
-    public void shootBalls() {
-        // Make sure everything is default positions
-        bot.stickLoad();
-        bot.stopPusher();
 
-        // launch first ball
-        bot.stickLaunch();
-        sleep(100);
-        bot.stickLoad();
-
-        // launch 2nd ball
-        bot.pusherStart();
-        sleep(750);
-        bot.stopPusher();
-        bot.stickLaunch();
-        sleep(100);
-        bot.stickLoad();
-
-        // launch 3rd ball
-        sleep(100);
-        bot.pusherStart();
-        sleep(750);
-        bot.stickLaunch();
-        sleep(100);
-        bot.stickLoad();
-    }
 
     protected void autonomousPathUpdate() {
         switch (pathState) {
@@ -216,29 +192,26 @@ public class ShortRedAuto6Ball extends AutoOpMode {
                     setPathState(17);
                 }
                 break;
-/*
+
                 //Clear Jam Just in Case and Resetting the Stick
             case 17:
                 if (controlTimer.milliseconds() > 750) {
-                    bot.stickLoad();
-                    bot.pusherReverse();
-                    controlTimer.reset();
+                    bot.followPath(Paths.shortShotToStack1Setup, 0.8f, true);
                     setPathState(18);
                 }
                 break;
-
+/*
                 //Launch a Leftover Ball and Travel for Move Bonus
             case 18:
                 if (controlTimer.milliseconds() > 250) {
                     bot.stickLaunch();
                     controlTimer.reset();
-                    bot.followPath(Paths.shortShotToStack1Setup, false);
                     setPathState(19);
                 }
                 break; */
 
                 //Stop Opmode
-            case 17:
+            case 18:
                 if (!bot.followerIsBusy()) {
                     setPathState(-1);
                     requestOpModeStop();
