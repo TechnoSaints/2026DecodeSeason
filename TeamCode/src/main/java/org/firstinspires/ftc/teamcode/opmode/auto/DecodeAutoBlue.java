@@ -37,6 +37,7 @@ public class DecodeAutoBlue extends LinearOpMode
         backLeftMotor.setDirection(DcMotor.Direction.REVERSE);
 
         waitForStart();
+        //hi
 
 
         wheelMotor.setPower(0.6);
