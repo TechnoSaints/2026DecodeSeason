@@ -39,6 +39,8 @@ public class AutoBot extends Bot {
         return (follower);
     }
 
+    public void brakeLauncher(){launcher.brakeLauncher();}
+
 
     public void moveManualInches(double axial, double strafe, double heading) {
         Pose targetPose = new Pose(getFollower().getPose().getX() - axial, getFollower().getPose().getY() - strafe, getFollower().getPose().getHeading() + Math.toRadians(heading));

@@ -30,13 +30,12 @@ public class Launcher extends Component {
         maxPosition = LauncherSettings.maxPosition;
         minPosition = LauncherSettings.minPosition;
 
-        //InitAprilTag(hardwareMap);
         leftLauncher = hardwareMap.get(DcMotorEx.class, "leftLauncher");
         rightLauncher = hardwareMap.get(DcMotorEx.class, "rightLauncher");
         leftAimer = hardwareMap.get(Servo.class, "leftAimer");
         rightAimer = hardwareMap.get(Servo.class, "rightAimer");
-        leftLauncher.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        rightLauncher.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         PIDFCoefficients pidfCoefficients = new PIDFCoefficients(515, 0, 0, 12.03);
         leftLauncher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfCoefficients);
         rightLauncher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfCoefficients);
@@ -44,8 +43,28 @@ public class Launcher extends Component {
         setPosition(0.25);
     }
 
+    private void setRunMode(DcMotor.RunMode runMode){
+        leftLauncher.setMode(runMode);
+        rightLauncher.setMode(runMode);
+    }
+
+    private void setZeroPowerBehavior(DcMotor.ZeroPowerBehavior zeroPowerBehavior){
+        leftLauncher.setZeroPowerBehavior(zeroPowerBehavior);
+        rightLauncher.setZeroPowerBehavior(zeroPowerBehavior);
+    }
+
     public void stopLauncher() {
         setVelocity(0);
+    }
+
+    public void brakeLauncher(){
+        setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        setVelocity(0);
+        if (ready()){
+            leftLauncher.setTargetPosition(leftLauncher.getCurrentPosition());
+            rightLauncher.setTargetPosition(leftLauncher.getCurrentPosition());
+            setRunMode(DcMotor.RunMode.RUN_TO_POSITION);
+        }
     }
 
     public double distanceFromLauncher(Pose2D botPose, boolean red){

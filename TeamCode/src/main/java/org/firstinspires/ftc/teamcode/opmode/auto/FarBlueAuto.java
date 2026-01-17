@@ -52,7 +52,7 @@ public class FarBlueAuto extends AutoOpMode {
             // Move to stack1 setup
             case 2:
                 if (timer.milliseconds() > 2000) {
-                    bot.setSpeed(0);
+                    bot.brakeLauncher();
                     bot.followPath(Paths.longShotToStack3Setup, 0.8);
                     setPathState(3);
                 }
@@ -95,7 +95,7 @@ public class FarBlueAuto extends AutoOpMode {
             // Do more stuff
             case 7:
                 if (timer.milliseconds() > 2000){
-                    bot.stopLauncher();
+                    bot.brakeLauncher();
                     setPathState(8);
                 }
                 break;
