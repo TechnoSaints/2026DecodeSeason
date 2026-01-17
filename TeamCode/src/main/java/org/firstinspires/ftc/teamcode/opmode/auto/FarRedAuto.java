@@ -152,7 +152,7 @@ public class FarRedAuto extends AutoOpMode {
                 break;
         }
         telemetry.addData("Path State", pathState);
-        telemetry.update(); mjhgfdw1
+        telemetry.update();
     }
 }
 
