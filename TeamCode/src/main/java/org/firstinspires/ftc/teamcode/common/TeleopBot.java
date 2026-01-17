@@ -48,6 +48,14 @@ public class TeleopBot extends Bot {
         follower.followPath(targetPath, true);
     }
 
+    public void park(){
+        PathChain targetPath = follower.pathBuilder()
+                .addPath(new BezierLine(getFollower().getPose(), FieldLocations.basePose))
+                .setLinearHeadingInterpolation(getFollower().getPose().getHeading(), FieldLocations.basePose.getHeading())
+                .build();
+        follower.followPath(targetPath, true);
+    }
+
     public void startTeleopDrive(){
         follower.startTeleopDrive(true);
     }

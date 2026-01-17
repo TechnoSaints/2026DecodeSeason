@@ -114,6 +114,8 @@ public class TeleopOdoBase extends OpMode {
             }
             if (gamepad1.squareWasPressed()){
                 // In case touchpad wasn't pressed & square does something else
+                bot.park();
+                autonomous = true;
             }
             if (gamepad1.crossWasPressed()){
                 bot.moveToFarShot();
