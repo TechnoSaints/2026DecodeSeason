@@ -8,12 +8,12 @@ import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
 import org.firstinspires.ftc.teamcode.opmode.Paths;
 import org.firstinspires.ftc.teamcode.opmode.auto.AutoOpMode;
 
-@Autonomous(name = "\uD83D\uDD34shortRedAuto6Ball", group = "Red")
-public class ShortRedAuto6Ball extends AutoOpMode {
+@Autonomous(name = "\uD83D\uDD34shortBlueAuto6Ball", group = "Red")
+public class ShortBlueAuto6Ball extends AutoOpMode {
 
     @Override
     public void init() {
-        FieldLocations.buildPoses("red", "short");
+        FieldLocations.buildPoses("blue", "short");
         super.init();
     }
 
@@ -210,7 +210,7 @@ public class ShortRedAuto6Ball extends AutoOpMode {
 
                 //Launch The 6th Ball and Start the Pusher and Intake in Case of Leftover Ball
             case 16:
-                if (controlTimer.milliseconds() > 5000) {
+                if (controlTimer.milliseconds() > 3000) {
                     bot.stickLaunch();
                     controlTimer.reset();
                     setPathState(17);

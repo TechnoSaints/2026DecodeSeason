@@ -20,7 +20,7 @@ public class LongRedAuto6Ball extends AutoOpMode {
         switch (pathState) {
             // Move start to short shot
             case 0:
-                bot.followPath(Paths.startToLongShot, false);
+                bot.followPath(Paths.startToLongShot, 0.7f, true);
                 setPathState(1);
                 break;
 
@@ -34,7 +34,7 @@ public class LongRedAuto6Ball extends AutoOpMode {
 
             // Move to stack1 setup
             case 2:
-                bot.followPath(Paths.longShotToStack3Setup, false);
+                bot.followPath(Paths.longShotToStack3Setup, 0.7f, true);
                 setPathState(3);
                 break;
 
@@ -42,7 +42,7 @@ public class LongRedAuto6Ball extends AutoOpMode {
             case 3:
                 if (!bot.followerIsBusy()) {
                     // Turn on rollers
-                    bot.followPath(Paths.stack3SetupToStack3Finish, false);
+                    bot.followPath(Paths.stack3SetupToStack3Finish, 0.5f, true);
                     setPathState(4);
                 }
                 break;
@@ -56,7 +56,7 @@ public class LongRedAuto6Ball extends AutoOpMode {
 
             // Move to short shot
             case 5:
-                bot.followPath(Paths.stack3FinishTolongShot, false);
+                bot.followPath(Paths.stack3FinishTolongShot, 0.7f, true);
                 setPathState(6);
                 break;
 

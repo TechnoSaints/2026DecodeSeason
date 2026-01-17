@@ -21,7 +21,7 @@ public class LongRedAuto3Ball extends AutoOpMode {
         switch (pathState) {
             // Move start to short shot
             case 0:
-                bot.followPath(Paths.startToLongShot, false);
+                bot.followPath(Paths.startToLongShot, 0.6f, false);
                 bot.setLauncherLongShot();
                 bot.stickLoad();
                 setPathState(1);
@@ -37,7 +37,7 @@ public class LongRedAuto3Ball extends AutoOpMode {
 
             // Move to stack1 setup
             case 2:
-                    bot.followPath(Paths.longShotToParking, true);
+                    bot.followPath(Paths.longShotToParking, 0.8f, false);
                     setPathState(3);
                 break;
 

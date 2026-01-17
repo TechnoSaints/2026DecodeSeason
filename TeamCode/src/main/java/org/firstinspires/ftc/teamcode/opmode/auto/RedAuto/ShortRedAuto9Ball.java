@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.opmode.auto.RedAuto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
 import org.firstinspires.ftc.teamcode.opmode.Paths;
 import org.firstinspires.ftc.teamcode.opmode.auto.AutoOpMode;
 
+@Disabled
 @Autonomous(name = "\uD83D\uDD34shortRedAuto9Ball", group = "Red")
 public class ShortRedAuto9Ball extends AutoOpMode {
 
@@ -19,7 +21,7 @@ public class ShortRedAuto9Ball extends AutoOpMode {
         switch (pathState) {
             // Move start to short shot
             case 0:
-                bot.followPath(Paths.startToShortShot, false);
+                bot.followPath(Paths.startToShortShot, 0.7f, true);
                 setPathState(1);
                 break;
 
@@ -33,7 +35,7 @@ public class ShortRedAuto9Ball extends AutoOpMode {
 
             // Move to stack1 setup
             case 2:
-                bot.followPath(Paths.shortShotToStack1Setup, false);
+                bot.followPath(Paths.shortShotToStack1Setup, 0.7f, true);
                 setPathState(3);
                 break;
 
@@ -41,7 +43,7 @@ public class ShortRedAuto9Ball extends AutoOpMode {
             case 3:
                 if (!bot.followerIsBusy()) {
                     // Turn on rollers
-                    bot.followPath(Paths.stack1SetupToStack1Finish, false);
+                    bot.followPath(Paths.stack1SetupToStack1Finish, 0.5f, false);
                     setPathState(4);
                 }
                 break;
@@ -55,7 +57,7 @@ public class ShortRedAuto9Ball extends AutoOpMode {
 
             // Move to short shot
             case 5:
-                bot.followPath(Paths.stack1FinishToShortShot, false);
+                bot.followPath(Paths.stack1FinishToShortShot, 0.7f, true);
                 setPathState(6);
                 break;
 
@@ -75,7 +77,7 @@ public class ShortRedAuto9Ball extends AutoOpMode {
 
             //Go To Stack 2
             case 8:
-                bot.followPath(Paths.shortShotToStack2Setup, false);
+                bot.followPath(Paths.shortShotToStack2Setup, 0.7f, true);
                 setPathState(9);
                 break;
 
@@ -84,7 +86,7 @@ public class ShortRedAuto9Ball extends AutoOpMode {
             case 9:
                 if (!bot.followerIsBusy()) {
                     // Turn on rollers
-                    bot.followPath(Paths.stack2SetupToStack2Finish, false);
+                    bot.followPath(Paths.stack2SetupToStack2Finish, 0.5f, true);
                     setPathState(10);
                 }
                 break;
@@ -97,7 +99,7 @@ public class ShortRedAuto9Ball extends AutoOpMode {
 
             // Move to short shot
             case 11:
-                bot.followPath(Paths.stack2FinishToShortShot, false);
+                bot.followPath(Paths.stack2FinishToShortShot, 0.7f, true);
                 setPathState(12);
                 break;
 

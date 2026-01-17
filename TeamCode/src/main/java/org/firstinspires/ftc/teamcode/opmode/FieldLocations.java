@@ -10,9 +10,9 @@ public class FieldLocations {
     // Right side poses
     public final static Pose goalRightPose = new Pose(132.0, 132.0, Math.toRadians(45));
     public final static Pose goalStartRightPose = new Pose(124, 124.0, Math.toRadians(40));
-    public final static Pose shortShotRightPose = new Pose(85, 72, Math.toRadians(52));
+    public final static Pose shortShotRightPose = new Pose(85, 72, Math.toRadians(49.5));
     public final static Pose stack1SetupRightPose = new Pose(98, 84, Math.toRadians(180));
-    public final static Pose stack1FinishRightPose = new Pose(125, 84, Math.toRadians(180));
+    public final static Pose stack1FinishRightPose = new Pose(130, 84, Math.toRadians(180));
     public final static Pose stack2SetupRightPose = new Pose(98, 60.0, Math.toRadians(180));
     public final static Pose stack2FinishRightPose = new Pose(125, 60.0, Math.toRadians(180));
     public final static Pose stack3SetupRightPose = new Pose(98, 36.0, Math.toRadians(180));
@@ -23,11 +23,11 @@ public class FieldLocations {
 
     // Left side poses
     public final static Pose goalLeftPose =
-            new Pose(144 - goalRightPose.getX(), goalRightPose.getY(), 135);
+            new Pose(144 - goalRightPose.getX(), goalRightPose.getY(), Math.toRadians(135));
     public final static Pose goalStartLeftPose =
-            new Pose(144 - goalStartRightPose.getX(), goalStartRightPose.getY(), 135);
+            new Pose(144 - goalStartRightPose.getX(), goalStartRightPose.getY(), Math.toRadians(130));
     public final static Pose shortShotLeftPose =
-            new Pose(144 - shortShotRightPose.getX(), shortShotRightPose.getY(), 135);
+            new Pose(144 - shortShotRightPose.getX(), shortShotRightPose.getY(), Math.toRadians(139.5));
     public final static Pose stack1SetupLeftPose =
             new Pose(144 - stack1SetupRightPose.getX(), stack1SetupRightPose.getY(), 180);
 
@@ -77,7 +77,7 @@ public class FieldLocations {
             stack2SetupPose = stack2SetupLeftPose;
             stack2FinishPose = stack2FinishLeftPose;
             stack3SetupPose = stack3SetupLeftPose;
-            stack2FinishPose = stack3FinishLeftPose;
+            stack3FinishPose = stack3FinishLeftPose;
             longShotPose = longShotLeftPose;
             longStartPose = longStartLeftPose;
             basePose = baseRightPose;
