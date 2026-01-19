@@ -64,13 +64,14 @@ public class FarRedAuto extends AutoOpMode {
                     // Turn on rollers
                     bot.intakeBalls();
                     bot.followPath(Paths.stack3SetupToStack3Finish, 0.25);
+                    timer.reset();
                     setPathState(4);
                 }
                 break;
 
             // Do additional stuff, if needed, after move is finished
             case 4:
-                if (!bot.followerIsBusy() && bot.getState() == 0) {
+                if (!bot.followerIsBusy() && (bot.getState() == 0 || timer.milliseconds() > 5000)) {
                     setPathState(5);
                 }
                 break;
@@ -110,13 +111,14 @@ public class FarRedAuto extends AutoOpMode {
                     // Turn on rollers
                     bot.intakeBalls();
                     bot.followPath(Paths.stack2SetupToStack2Finish,0.25);
+                    timer.reset();
                     setPathState(11);
                 }
                 break;
 
             // Move to long shot
             case 11:
-                if (!bot.followerIsBusy() && bot.getState() == 0){
+                if (!bot.followerIsBusy() && (bot.getState() == 0 || timer.milliseconds() > 5000)){
                     bot.followPath(Paths.stack2FinishToLongShot, 0.8);
                     bot.setSpeed(launcherSpeed);
                     setPathState(12);

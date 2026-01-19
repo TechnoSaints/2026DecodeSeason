@@ -39,6 +39,8 @@ public abstract class Bot extends Component {
         launcher.setVelocity(power);
     }
 
+    public void brakeLauncher(){launcher.brakeLauncher();}
+
     public int getState(){
         return storage.getState();
     }
