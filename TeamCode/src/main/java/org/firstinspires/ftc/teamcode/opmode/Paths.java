@@ -9,7 +9,7 @@ public class Paths {
     public static PathChain testX, testY, testRotation, doubleTest, tripleTest;
     public static PathChain returnX, returnY, returnRotation, returnDoubleTest;
 
-    public static PathChain startToShortShot, shortShotToStack1Setup, stack1FinishToShortShot;
+    public static PathChain startToShortShot, shortShotToStack1Setup, shortShotToStack2Setup, stack2FinishToShortShot, stack1FinishToShortShot;
     public static PathChain startToLongShot, longShotToStack3Setup, stack3FinishToLongShot, longShotToStack2Setup, stack2FinishToLongShot, longShotToStack1Setup, stack1FinishToLongShot, longShotToBase;
 
     public static PathChain stack1SetupToStack1Finish, stack2SetupToStack2Finish, stack3SetupToStack3Finish;
@@ -24,6 +24,16 @@ public class Paths {
         shortShotToStack1Setup = follower.pathBuilder()
                 .addPath(new BezierLine(FieldLocations.shortShotPose, FieldLocations.stack1SetupPose))
                 .setLinearHeadingInterpolation(FieldLocations.shortShotPose.getHeading(), FieldLocations.stack1SetupPose.getHeading())
+                .build();
+
+        shortShotToStack2Setup = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.shortShotPose, FieldLocations.stack2SetupPose))
+                .setLinearHeadingInterpolation(FieldLocations.shortShotPose.getHeading(), FieldLocations.stack2SetupPose.getHeading())
+                .build();
+
+        stack2FinishToShortShot = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.stack2FinishPose, FieldLocations.shortShotPose))
+                .setLinearHeadingInterpolation(FieldLocations.stack2FinishPose.getHeading(), FieldLocations.shortShotPose.getHeading())
                 .build();
 
         stack1FinishToShortShot = follower.pathBuilder()
@@ -71,6 +81,7 @@ public class Paths {
                 .addPath(new BezierLine(FieldLocations.longShotPose, FieldLocations.basePose))
                 .setLinearHeadingInterpolation(FieldLocations.longShotPose.getHeading(), FieldLocations.basePose.getHeading())
                 .build();
+
 
 
         // Common (setup to finish)
