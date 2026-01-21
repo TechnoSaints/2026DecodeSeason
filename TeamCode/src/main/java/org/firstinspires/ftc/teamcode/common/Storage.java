@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -18,6 +19,7 @@ public class Storage extends Component {
     private CRServo upperRoller;
     private DcMotorEx intake, lowerRoller;
     private NormalizedColorSensor ball0, ball1, ball2;
+    private Servo gate;
     public int state = 0;
     private ElapsedTime timer;
     private static final int INTAKE_DELAY_MS = 250;
@@ -37,6 +39,7 @@ public class Storage extends Component {
         ball0 = hardwareMap.get(NormalizedColorSensor.class, "ball0");
         ball1 = hardwareMap.get(NormalizedColorSensor.class, "colorBall1");
         ball2 = hardwareMap.get(NormalizedColorSensor.class, "colorBall2");
+        //gate = hardwareMap.get(Servo.class, "gate");
         ball1.setGain(2);
         ball2.setGain(2);
         timer = new ElapsedTime();
@@ -123,6 +126,7 @@ public class Storage extends Component {
                 }
                     break;
             case 0:
+                gate.;
                 intake.setPower(0);
                 lowerRoller.setPower(0);
                 upperRoller.setPower(0);

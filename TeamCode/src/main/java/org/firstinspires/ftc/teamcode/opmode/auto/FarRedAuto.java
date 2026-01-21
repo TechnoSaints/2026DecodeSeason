@@ -137,18 +137,44 @@ public class FarRedAuto extends AutoOpMode {
             case 13:
                 if (timer.milliseconds() > 2000){
                     bot.stopLauncher();
-                    bot.followPath(Paths.longShotToBase);
+                    bot.followPath(Paths.longShotToStack1Setup);
                     setPathState(14);
                 }
                 break;
             case 14:
                 if (!bot.followerIsBusy()){
+                    bot.intakeBalls();
+                    bot.followPath(Paths.stack1SetupToStack1Finish, 0.25);
+                    timer.reset();
                     setPathState(15);
                 }
                 break;
+            case 15:
+                if (!bot.followerIsBusy() && (bot.getState() == 0 || timer.milliseconds() > 5000)){
+                    bot.stopStorage();
+                    bot.setSpeed(0.6);
+                    bot.setPosition(0);
+                    bot.followPath(Paths.stack1FinishToShortShot);
+                    setPathState(16);
+                }
+            case 16:
+                if (!bot.isBusy()){
+                    bot.shootBalls();
+                    timer.reset();
+                    setPathState(17);
+                }
+            case 17:
+                if (timer.milliseconds() > 2000) {
+                    bot.followPath(Paths.shortShotToStack1Setup);
+                    setPathState(18);
+                }
+            case 18:
+                if (!bot.followerIsBusy()){
+                    setPathState(30);
+                }
 
             // Stop opmode
-            case 15:
+            case 30:
                 setPathState(-1);
                 requestOpModeStop();
                 break;
