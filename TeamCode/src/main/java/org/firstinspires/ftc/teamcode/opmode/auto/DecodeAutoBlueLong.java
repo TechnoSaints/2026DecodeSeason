@@ -36,21 +36,12 @@ public class DecodeAutoBlueLong extends LinearOpMode
 
         backLeftMotor.setDirection(DcMotor.Direction.REVERSE);
 
+        // Our auto for Blue Long
+
         waitForStart();
 
-
         wheelMotor.setPower(1.0);
-
-        frontLeftMotor.setPower(-0.3);
-        backLeftMotor.setPower(-0.3);
-        frontRightMotor.setPower(-0.3);
-        backRightMotor.setPower(-0.3);
-        sleep(700);
-        frontLeftMotor.setPower(0);
-        backLeftMotor.setPower(0);
-        frontRightMotor.setPower(0);
-        backRightMotor.setPower(0);
-
+        // Strafing
         frontLeftMotor.setPower(-0.3);
         backLeftMotor.setPower(0.3);
         frontRightMotor.setPower(0.3);
@@ -61,6 +52,7 @@ public class DecodeAutoBlueLong extends LinearOpMode
         frontRightMotor.setPower(0);
         backRightMotor.setPower(0);
 
+        // Aligning to shoot
         frontLeftMotor.setPower(-0.3);
         backLeftMotor.setPower(-0.3);
         frontRightMotor.setPower(0.3);
@@ -71,14 +63,15 @@ public class DecodeAutoBlueLong extends LinearOpMode
         frontRightMotor.setPower(0);
         backRightMotor.setPower(0);
 
+        // Shoot logic
         for (int i = 0; i < 3; i++)
         {
-            leftServo.setPosition(0.4);
+            leftServo.setPosition(0.6);
             rightServo.setPosition(0.0);
             sleep(3000);
 
             leftServo.setPosition(0.0);
-            rightServo.setPosition(0.4);
+            rightServo.setPosition(0.6);
             sleep(2000);
         }
 

@@ -36,6 +36,9 @@ public class DecodeAutoRed extends LinearOpMode
 
         backLeftMotor.setDirection(DcMotor.Direction.REVERSE);
 
+
+        // Our autonomous for Red Short
+
         waitForStart();
         //Movement forward
         frontLeftMotor.setPower(0.5);
@@ -48,7 +51,10 @@ public class DecodeAutoRed extends LinearOpMode
         backRightMotor.setPower(0);
         backLeftMotor.setPower(0);
 
+
          sleep(2000);
+
+         // Shooter logic
         for (int i = 0; i < 3; i++)
         {
             leftServo.setPosition(0.6);
@@ -61,6 +67,7 @@ public class DecodeAutoRed extends LinearOpMode
             sleep(1000);
         }
 
+        // Adjusting to align with goal
         frontLeftMotor.setPower(-0.3);
         frontRightMotor.setPower(0.3);
         backRightMotor.setPower(0.3);
@@ -71,6 +78,7 @@ public class DecodeAutoRed extends LinearOpMode
         backRightMotor.setPower(0);
         backLeftMotor.setPower(0);
 
+        // Moving off of white line
         frontLeftMotor.setPower(0.3);
         frontRightMotor.setPower(0.3);
         backLeftMotor.setPower(0.3);

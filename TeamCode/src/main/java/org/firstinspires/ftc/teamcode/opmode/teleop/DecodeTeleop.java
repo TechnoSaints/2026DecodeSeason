@@ -115,28 +115,34 @@ public class DecodeTeleop extends LinearOpMode
             backLeftMotor.setPower(leftBackPower);
             backRightMotor.setPower(rightBackPower);
 
-
+            // Shooter Logic
             if (gamepad1.right_trigger > 0.5)
             {
+                // Short shot
                 isShooting = true;
-                wheelMotor.setPower(0.7);
+                wheelMotor.setPower(0.65);
                 leftServo.setPosition(0.0);
                 rightServo.setPosition(0.4);
+                // Revs up the motor and sets the servos to their right positions
             }
             if (gamepad1.y)
             {
+                // Long shot
                 isShooting = true;
                 wheelMotor.setPower(0.80);
                 leftServo.setPosition(0.0);
                 rightServo.setPosition(0.4);
+                // Also revs up motor and sets servos to correct position
             }
             if (gamepad1.right_bumper && isShooting)
             {
-                leftServo.setPosition(0.6);
+                // The fire button for both short and long shot
+                leftServo.setPosition(0.4);
                 rightServo.setPosition(0.0);
             }
             if (gamepad1.x)
             {
+                // Turns off the motor
                 wheelMotor.setPower(0);
                 isShooting = false;
             }

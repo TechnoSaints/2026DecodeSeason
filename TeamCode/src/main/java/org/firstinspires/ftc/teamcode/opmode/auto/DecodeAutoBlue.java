@@ -37,9 +37,9 @@ public class DecodeAutoBlue extends LinearOpMode
         backLeftMotor.setDirection(DcMotor.Direction.REVERSE);
 
         waitForStart();
-        //hi
 
 
+        // Our autonomous for Blue Short
         wheelMotor.setPower(0.6);
 
         //Movement forward
@@ -55,6 +55,8 @@ public class DecodeAutoBlue extends LinearOpMode
 
         sleep(2000);
 
+
+        // Shooter logic
         for (int i = 0; i < 3; i++)
         {
             leftServo.setPosition(0.6);
@@ -66,6 +68,7 @@ public class DecodeAutoBlue extends LinearOpMode
             sleep(1000);
         }
 
+        // Adjusting to align with goal
         frontLeftMotor.setPower(-0.3);
         frontRightMotor.setPower(0.3);
         backRightMotor.setPower(0.3);
@@ -76,6 +79,7 @@ public class DecodeAutoBlue extends LinearOpMode
         backRightMotor.setPower(0);
         backLeftMotor.setPower(0);
 
+        // Moving off of white line for leave points
         frontLeftMotor.setPower(-0.3);
         frontRightMotor.setPower(-0.3);
         backLeftMotor.setPower(-0.3);

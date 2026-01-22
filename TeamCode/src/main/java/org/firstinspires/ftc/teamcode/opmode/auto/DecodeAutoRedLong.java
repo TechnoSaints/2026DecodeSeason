@@ -36,11 +36,12 @@ public class DecodeAutoRedLong extends LinearOpMode
 
         backLeftMotor.setDirection(DcMotor.Direction.REVERSE);
 
+        // Our autonomous for Red Long
         waitForStart();
-
 
         wheelMotor.setPower(0.85);
 
+        // Movement forward
         frontLeftMotor.setPower(0.3);
         backLeftMotor.setPower(0.3);
         frontRightMotor.setPower(0.3);
@@ -51,6 +52,7 @@ public class DecodeAutoRedLong extends LinearOpMode
         frontRightMotor.setPower(0);
         backRightMotor.setPower(0);
 
+        // Strafing to position
         frontLeftMotor.setPower(0.3);
         backLeftMotor.setPower(-0.3);
         frontRightMotor.setPower(-0.3);
@@ -61,6 +63,7 @@ public class DecodeAutoRedLong extends LinearOpMode
         frontRightMotor.setPower(0);
         backRightMotor.setPower(0);
 
+        // Aligning with goal
         frontLeftMotor.setPower(0.3);
         backLeftMotor.setPower(0.3);
         frontRightMotor.setPower(-0.3);
@@ -71,6 +74,7 @@ public class DecodeAutoRedLong extends LinearOpMode
         frontRightMotor.setPower(0);
         backRightMotor.setPower(0);
 
+        // Shoot logic
         sleep(2000);
         for (int i = 0; i < 3; i++)
         {
@@ -82,6 +86,8 @@ public class DecodeAutoRedLong extends LinearOpMode
             rightServo.setPosition(0.6);
             sleep(2000);
         }
+
+        // Moving off of line
         frontLeftMotor.setPower(0.3);
         backLeftMotor.setPower(0.3);
         frontRightMotor.setPower(0.3);
@@ -91,6 +97,7 @@ public class DecodeAutoRedLong extends LinearOpMode
         backLeftMotor.setPower(0);
         frontRightMotor.setPower(0);
         backRightMotor.setPower(0);
+
     }
 
 }
