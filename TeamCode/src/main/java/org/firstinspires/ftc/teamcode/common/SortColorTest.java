@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.common;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.opMode;
 
 import android.graphics.Color;
 import com.acmerobotics.dashboard.config.Config;
@@ -12,12 +11,18 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 
 @Config
-@TeleOp(name = "Color Seonsor Tetst", group = "Linear OpMode")
+@TeleOp(name = "Color Sensor Test", group = "Linear OpMode")
 public class SortColorTest extends LinearOpMode {
 
     // Define the sensor
     ColorSensor colorSensor;
     DistanceSensor distanceSensor;
+
+    ColorSensor colorSensorTop;
+    DistanceSensor distanceSensorTop;
+
+    ColorSensor colorSensorShoot;
+    DistanceSensor distanceSensorShoot;
 
     // HSV values are useful for color detection
     float hsvValues[] = {0F, 0F, 0F};
@@ -31,9 +36,9 @@ public class SortColorTest extends LinearOpMode {
 
     @Override
     public void runOpMode() {
+        colorSensor = hardwareMap.get(ColorSensor.class, "intakeSensor");
+        distanceSensor = hardwareMap.get(DistanceSensor.class, "intakeSensor");
 
-        colorSensor = opMode.hardwareMap.get(ColorSensor.class, "intakeSensor");
-        distanceSensor = opMode.hardwareMap.get(DistanceSensor.class, "intakeSensor");
 
 
         // Optional: Turn the white LED on (consult the REV documentation for exact method if this one doesn't work)
