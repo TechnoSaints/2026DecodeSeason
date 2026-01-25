@@ -92,6 +92,14 @@ public class TeleopBot extends Bot {
             kickerGate();
             kickerState = 1;
         }
+
+
+        if (gamepad.options) {
+            kickerGate();
+            intakeReverse();
+            setLauncherShortShot();
+        }
+
     }
 
 }
