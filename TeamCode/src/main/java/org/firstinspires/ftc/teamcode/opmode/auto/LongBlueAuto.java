@@ -43,7 +43,7 @@ public class LongBlueAuto extends AutoOpMode {
 
                 // Move to stack1 setup
             case 3:
-                if (controlTimer.milliseconds() > 1750) {
+                if (controlTimer.milliseconds() > 2000) {
                     bot.followPath(Paths.longShotToStack3Setup, 0.85f, true);
                     bot.kickerGate();
                     setPathState(4);
@@ -82,7 +82,7 @@ public class LongBlueAuto extends AutoOpMode {
                 break;
 
             case 8:
-                if (controlTimer.milliseconds() > 2000) {
+                if (controlTimer.milliseconds() > 2250) {
                     bot.kickerLaunch();
                     controlTimer.reset();
                     setPathState(9);
@@ -123,7 +123,7 @@ public class LongBlueAuto extends AutoOpMode {
                 break;
 
             case 14:
-                if (controlTimer.milliseconds() > 2000) {
+                if (controlTimer.milliseconds() > 2250) {
                     bot.kickerLaunch();
                     controlTimer.reset();
                     setPathState(15);
