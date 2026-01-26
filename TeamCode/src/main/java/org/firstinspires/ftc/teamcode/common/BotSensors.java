@@ -29,11 +29,9 @@ public class BotSensors {
     public static int maxGreenHue = 163;
 
     public BotSensors(HardwareMap hardwareMap, OpMode opMode, Telemetry telemetry) {
-        super(telemetry);
         intakeColor = hardwareMap.get(ColorSensor.class, "intakeSensor");
         topColor = hardwareMap.get(ColorSensor.class, "topSensor");
         shotColor = hardwareMap.get(ColorSensor.class, "shotSensor");
-        this.opMode = opMode;
     }
 
     public boolean ballInIntake() {
