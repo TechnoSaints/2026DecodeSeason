@@ -56,6 +56,42 @@ public class LauncherDouble extends Component {
         setVelocityFactor(longShotVelocityFactor);
     }
 
+    public void setRPM(double d) {
+
+        setVelocityFactor(0.45);
+
+        if (d < 1.5) {
+            setVelocityFactor(0.4);
+        } else if ((d >= 1.5) && (d < 2.5)){
+            setVelocityFactor(0.5);
+        } else if ((d >= 2.5) && (d < 3.5)) {
+            setVelocityFactor(0.5);
+        } else if ((d >= 3.5) && (d < 4.5)) {
+            setVelocityFactor(0.5);
+        } else if ((d >= 4.5) && (d < 5.5)) {
+            setVelocityFactor(0.5);
+        } else if ((d >= 5.5) && (d < 6.5)) {
+            setVelocityFactor(0.5);
+        } else if ((d >= 6.5) && (d < 7.5)) {
+            setVelocityFactor(0.5);
+        } else if ((d >= 7.5) && (d < 8.5)) {
+            setVelocityFactor(0.5);
+        } else if ((d >= 8.5) && (d < 9.5)) {
+            setVelocityFactor(0.5);
+        } else if ((d >= 9.5) && (d < 10.5)) {
+            setVelocityFactor(0.5);
+        } else if ((d >= 10.5) && (d < 11.5)) {
+            setVelocityFactor(0.5);
+        } else if ((d >= 11.5) && (d < 12.5)) {
+            setVelocityFactor(0.5);
+        } else if ((d >= 12.5) && (d < 13.5)) {
+            setVelocityFactor(0.5);
+        } else if (d >= 13.5) {
+            setVelocityFactor(0.5);
+        }
+
+    }
+
     public void stop()
     {
         targetVelocityFactor = 0.0;
@@ -111,6 +147,10 @@ public class LauncherDouble extends Component {
         motorR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
     }
 
+    public boolean isBusy()
+    {
+        return (motorL.isBusy() || motorR.isBusy());
+    }
     public void log() {
         telemetry.addData("targetVelocityFactor:  ", targetVelocityFactor);
         telemetry.addData("maxTicksPerSecond:  ", maxTicksPerSecond);

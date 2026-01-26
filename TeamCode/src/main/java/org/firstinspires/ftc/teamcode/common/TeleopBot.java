@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.DrivetrainData;
@@ -18,19 +19,27 @@ public class TeleopBot extends Bot {
     private double driveStrafe = 0.0;
     private double driveYaw = 0.0;
     private int kickerState = 1;
+    private double d = 0;
     private ElapsedTime kickerTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     private ElapsedTime buttonTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     private int buttonDelay = 350;
+    private Pose2D goalPose;
+    private Pose2D currentPose;
 
-    public TeleopBot(OpMode opMode, Telemetry telemetry) {
+    public TeleopBot(OpMode opMode, Telemetry telemetry, Pose2D startPose, Pose2D goalPose) {
         super(opMode, telemetry);
         drivetrain = new Drivetrain(opMode.hardwareMap, telemetry, new DrivetrainData(), new GoBilda435DcMotorData());
+        this.goalPose = goalPose;
+        this.currentPose = startPose;
         pinpoint = opMode.hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint");
-        pinpoint.setOffsets(2.25,-7, DistanceUnit.INCH);
+        pinpoint.setOffsets(-2, -6.5, DistanceUnit.INCH);
         pinpoint.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
         pinpoint.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD,
                 GoBildaPinpointDriver.EncoderDirection.FORWARD);
         pinpoint.resetPosAndIMU();
+        //start Pose
+        pinpoint.setPosition(startPose);
+
         buttonTimer.reset();
     }
 
@@ -76,14 +85,27 @@ public class TeleopBot extends Bot {
             intakeReverse();
         } else if (gamepad.b) {
             intakeForward();
-        } else if (gamepad.y) {
+        } else if (gamepad.right_stick_button) {
             intakeStop();
         }
-        
-        if ((gamepad.x) && (kickerState == 1)) {
-            kickerLoad();
-            kickerState = 2;
-            kickerTimer.reset();
+
+        if ((gamepad.y) && (kickerState == 1)) {
+            pinpoint.update();
+            //get current Pose
+            currentPose = pinpoint.getPosition();
+            //Calculate Distance
+            d = Math.sqrt(
+                    (
+                            ((currentPose.getX(DistanceUnit.INCH) - goalPose.getX(DistanceUnit.INCH)) * (currentPose.getX(DistanceUnit.INCH) - goalPose.getX(DistanceUnit.INCH)))
+                                    + ((currentPose.getY(DistanceUnit.INCH) - goalPose.getY(DistanceUnit.INCH)) * (currentPose.getY(DistanceUnit.INCH) - goalPose.getY(DistanceUnit.INCH)))
+                    )
+            );
+            launcher.setRPM(d);
+            if (!launcher.isBusy()) {
+                kickerLoad();
+                kickerState = 2;
+                kickerTimer.reset();
+            }
         } else if ((gamepad.x) && (kickerState == 2) && (kickerTimer.milliseconds() > 250)) {
             kickerLaunch();
             kickerTimer.reset();
@@ -91,6 +113,39 @@ public class TeleopBot extends Bot {
         } else if ((kickerTimer.milliseconds() > 3000) && (kickerState == 3)) {
             kickerGate();
             kickerState = 1;
+        }
+
+        if ((gamepad.x) && (kickerState == 1)) {
+            pinpoint.update();
+            //get current Pose
+            currentPose = pinpoint.getPosition();
+            //Calculate Distance
+            d = Math.sqrt(
+                            (
+                                    ((currentPose.getX(DistanceUnit.INCH) - goalPose.getX(DistanceUnit.INCH)) * (currentPose.getX(DistanceUnit.INCH) - goalPose.getX(DistanceUnit.INCH)))
+                                            + ((currentPose.getY(DistanceUnit.INCH) - goalPose.getY(DistanceUnit.INCH)) * (currentPose.getY(DistanceUnit.INCH) - goalPose.getY(DistanceUnit.INCH)))
+                            )
+                    );
+            launcher.setRPM(d);
+            if (!launcher.isBusy()) {
+                kickerLoad();
+                kickerState = 2;
+                kickerTimer.reset();
+            }
+        } else if ((gamepad.x) && (kickerState == 2) && (kickerTimer.milliseconds() > 250)) {
+            kickerLaunch();
+            kickerTimer.reset();
+            kickerState = 3;
+        } else if ((kickerTimer.milliseconds() > 3000) && (kickerState == 3)) {
+            kickerGate();
+            kickerState = 1;
+        }
+
+
+        if (gamepad.options) {
+            kickerGate();
+            intakeReverse();
+            setLauncherShortShot();
         }
     }
 

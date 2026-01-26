@@ -6,17 +6,21 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.common.TeleopBot;
 
 @Config
-@TeleOp(name = "Please Work", group = "Linear OpMode")
-public class TeleopNoOdo extends LinearOpMode {
+@TeleOp(name = "\uD83D\uDD34LongRedTeleop", group = "Linear OpMode")
+public class LongRedTeleop extends LinearOpMode {
     private TeleopBot bot;
-
+    private final Pose2D startPose = new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0);
+    private final Pose2D goalPose = new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0);
     @Override
     public void runOpMode() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        bot = new TeleopBot(this, telemetry);
+        bot = new TeleopBot(this, telemetry, startPose, goalPose);
 
         waitForStart();
         while (opModeIsActive() && !isStopRequested()) {
