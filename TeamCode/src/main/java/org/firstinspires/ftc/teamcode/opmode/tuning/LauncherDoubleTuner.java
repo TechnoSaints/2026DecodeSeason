@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.MotorDat
 public class LauncherDoubleTuner extends LinearOpMode {
 
     private LauncherDouble launcher;
-    private double velocityFactorIncrement = 0.05;
+    private double velocityFactorIncrement = 0.01;
     private double targetVelocityFactor = 0.0;
     private MotorData motorData = new GoBilda6000DcMotorData();
     private final int maxTicksPerSecond = motorData.maxTicksPerSec;
