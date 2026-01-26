@@ -110,7 +110,7 @@ public class LauncherDouble extends Component {
         motorL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         motorR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
     }
-
+    
     public void log() {
         telemetry.addData("targetVelocityFactor:  ", targetVelocityFactor);
         telemetry.addData("maxTicksPerSecond:  ", maxTicksPerSecond);
