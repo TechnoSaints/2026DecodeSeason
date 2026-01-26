@@ -2,8 +2,11 @@ package org.firstinspires.ftc.teamcode.common;
 
 import android.graphics.Color;
 import com.acmerobotics.dashboard.config.Config;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 @Config
 public class BotSensors {
@@ -25,10 +28,12 @@ public class BotSensors {
     public static int minGreenHue = 150;
     public static int maxGreenHue = 163;
 
-    public BotSensors(HardwareMap hardwareMap) {
+    public BotSensors(HardwareMap hardwareMap, OpMode opMode, Telemetry telemetry) {
+        super(telemetry);
         intakeColor = hardwareMap.get(ColorSensor.class, "intakeSensor");
         topColor = hardwareMap.get(ColorSensor.class, "topSensor");
         shotColor = hardwareMap.get(ColorSensor.class, "shotSensor");
+        this.opMode = opMode;
     }
 
     public boolean ballInIntake() {
