@@ -17,7 +17,7 @@ public class BlueClose9800 extends LinearOpMode {
     @Override
     public void runOpMode() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        bot = new TeleopBot(this, telemetry);
+    //    bot = new TeleopBot(this, telemetry);
 
         waitForStart();
         while (opModeIsActive() && !isStopRequested()) {
