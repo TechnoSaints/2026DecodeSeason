@@ -1,9 +1,8 @@
-package org.firstinspires.ftc.teamcode.opmode.auto;
+package org.firstinspires.ftc.teamcode.opmode.auto.leave;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.common.Drivetrain;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.DrivetrainData;

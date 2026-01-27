@@ -6,6 +6,7 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -22,7 +23,7 @@ import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda4
 
 public class TeleopOld extends LinearOpMode {
     private Launcher launcher;
-    private double velocityFactorIncrement = 0.05;
+    private double velocityFactorIncrement = 0.005;
     private double targetVelocityFactor = 0.0;
     private double positionIncrement = 0.05;
     private double targetLaunchPosition = 0.2;
@@ -37,6 +38,7 @@ public class TeleopOld extends LinearOpMode {
         launcher = new Launcher(telemetry, hardwareMap);
         launcher.setVelocity(targetVelocityFactor);
         launcher.setPosition(targetLaunchPosition);
+        Servo gate = hardwareMap.get(Servo.class, "gate");
         drivetrain = new Drivetrain(this, hardwareMap, telemetry, new DrivetrainData(), new GoBilda435DcMotorData());
         pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint");
         pinpoint.setOffsets(-2.5,-4.5, DistanceUnit.INCH);
@@ -52,6 +54,11 @@ public class TeleopOld extends LinearOpMode {
         timer.reset();
 
         while (opModeIsActive() && !isStopRequested()) {
+            if (gamepad1.right_trigger > 0.7) {
+                gate.setPosition(0.69);
+            } else {
+                gate.setPosition(0.5);
+            }
             if (gamepad1.right_trigger > 0.7 && targetVelocityFactor < 1 && timer.milliseconds() >= 100) {
                 targetVelocityFactor += velocityFactorIncrement;
                 timer.reset();

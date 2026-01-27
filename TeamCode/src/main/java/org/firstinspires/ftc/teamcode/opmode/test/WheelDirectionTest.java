@@ -7,7 +7,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 @Config
-@Disabled
 @TeleOp(name = "WheelDirectionTest")
 public class WheelDirectionTest extends LinearOpMode {
     DcMotor frontleft, frontright, rearleft, rearright;

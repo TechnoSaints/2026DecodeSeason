@@ -36,7 +36,7 @@ public class Launcher extends Component {
         rightAimer = hardwareMap.get(Servo.class, "rightAimer");
         setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
         setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        PIDFCoefficients pidfCoefficients = new PIDFCoefficients(515, 0, 0, 12.03);
+        PIDFCoefficients pidfCoefficients = new PIDFCoefficients(290, 0, 0, 11);
         leftLauncher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfCoefficients);
         rightLauncher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfCoefficients);
         setVelocity(0);

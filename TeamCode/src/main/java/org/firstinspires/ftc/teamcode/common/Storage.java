@@ -24,6 +24,8 @@ public class Storage extends Component {
     private ElapsedTime timer;
     private static final int INTAKE_DELAY_MS = 250;
     private static final int SHOOT_DELAY_MS = 100;
+    private static final double GATE_OPEN_POSITION = 0.7;
+    private static final double GATE_CLOSE_POSITION = 0.5;
     private char[] balls = new char[3]; // these balls are massive - Nathaniel Hoaglen aden's king
 
     public Storage(Telemetry telemetry, HardwareMap hardwareMap) {
@@ -39,10 +41,18 @@ public class Storage extends Component {
         ball0 = hardwareMap.get(NormalizedColorSensor.class, "ball0");
         ball1 = hardwareMap.get(NormalizedColorSensor.class, "colorBall1");
         ball2 = hardwareMap.get(NormalizedColorSensor.class, "colorBall2");
-        //gate = hardwareMap.get(Servo.class, "gate");
+        gate = hardwareMap.get(Servo.class, "gate");
         ball1.setGain(2);
         ball2.setGain(2);
         timer = new ElapsedTime();
+    }
+
+    public void openGate(){
+        gate.setPosition(GATE_OPEN_POSITION);
+    }
+
+    public void closeGate(){
+        gate.setPosition(GATE_CLOSE_POSITION);
     }
 
 
@@ -63,10 +73,10 @@ public class Storage extends Component {
     public void updateStorage() {
         switch (state) {
             case 1:
-                if (!ballFind0(ball0)){
-                    intake.setPower(0.7); //garrett was here
-                    lowerRoller.setPower(0.6);
-                    upperRoller.setPower(0.1);
+                if (!ballFind(ball0)){
+                    intake.setPower(1); //garrett was here
+                    lowerRoller.setPower(1);
+                    upperRoller.setPower(1);
                     state = 2;
                 }
                 else {
@@ -74,7 +84,7 @@ public class Storage extends Component {
                 }
                 break;
             case 2:
-                if (ballFind0(ball0)){
+                if (ballFind(ball0)){
                     state = 3;
                 }
                 break;
@@ -83,8 +93,8 @@ public class Storage extends Component {
                 state = 4;
                 break;
             case 4:
-                intake.setPower(0.7);
-                lowerRoller.setPower(0.4);
+                intake.setPower(1);
+                lowerRoller.setPower(1);
                 upperRoller.setPower(0);
                 state = 5;
                 break;
@@ -95,7 +105,7 @@ public class Storage extends Component {
                 }
                 break;
             case 6:
-                intake.setPower(0.6);
+                intake.setPower(1);
                 lowerRoller.setPower(0);
                 upperRoller.setPower(0);
                 state = 7;
@@ -111,9 +121,9 @@ public class Storage extends Component {
                 lowerRoller.setPower(0);
                 upperRoller.setPower(1);
                 state = -2;*/
-                intake.setPower(0.7);
-                lowerRoller.setPower(0.7);
-                upperRoller.setPower(0.7);
+                intake.setPower(1);
+                lowerRoller.setPower(1);
+                upperRoller.setPower(1);
                 state = -2;
                 break;
             case -2:
@@ -126,7 +136,6 @@ public class Storage extends Component {
                 }
                     break;
             case 0:
-                gate.;
                 intake.setPower(0);
                 lowerRoller.setPower(0);
                 upperRoller.setPower(0);
@@ -146,20 +155,8 @@ public class Storage extends Component {
         }
     }
 
-    public boolean ballFind0(NormalizedColorSensor sensor){
-        if (((DistanceSensor) sensor).getDistance(DistanceUnit.CM) < 1){
-            return true;
-        }
-        else if (sensor.getNormalizedColors().alpha < 0.1){
-            return (((DistanceSensor) sensor).getDistance(DistanceUnit.CM) <= 8);
-        }
-        else {
-            return false;
-        }
-    }
-    
     public boolean ballFind(NormalizedColorSensor sensor){
-        return (sensor.getNormalizedColors().red > 0.01 || sensor.getNormalizedColors().green > 0.01 || sensor.getNormalizedColors().blue > 0.01);
+        return ((DistanceSensor) sensor).getDistance(DistanceUnit.CM) <=2;
     }
 
     public void shootBalls() {
@@ -177,7 +174,7 @@ public class Storage extends Component {
     public char[] getBalls(){ return balls; }
 
     public void findBalls(){
-        if (ballFind0(ball0)){
+        if (ballFind(ball0)){
             balls[0] = 'O';
         } else {
             balls[0] = 'X';

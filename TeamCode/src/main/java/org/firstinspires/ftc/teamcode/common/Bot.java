@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.common;
 
-import com.qualcomm.hardware.rev.RevTouchSensor;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -29,7 +28,7 @@ public abstract class Bot extends Component {
         launcher.setPosition(position);
     }
 
-    public void setSpeed(double power){
+    public void setLauncherSpeed(double power){
         if (power < 0){
             power = 0;
         }
@@ -37,6 +36,14 @@ public abstract class Bot extends Component {
             power = 1;
         }
         launcher.setVelocity(power);
+    }
+
+    public void openGate(){
+        storage.openGate();
+    }
+
+    public void closeGate(){
+        storage.closeGate();
     }
 
     public void brakeLauncher(){launcher.brakeLauncher();}

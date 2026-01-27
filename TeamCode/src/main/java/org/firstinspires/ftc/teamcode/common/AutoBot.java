@@ -24,11 +24,7 @@ public class AutoBot extends Bot {
     }
 
     public void followPath(PathChain path, double maxSpeed) {
-        if (maxSpeed == 0){
-            maxSpeed = drivetrainData.maxAutoPower;
-        }
-        follower.setMaxPower(maxSpeed);
-        followPath(path);
+        follower.followPath(path, maxSpeed, true);
     }
 
     public void followPath(PathChain path) {

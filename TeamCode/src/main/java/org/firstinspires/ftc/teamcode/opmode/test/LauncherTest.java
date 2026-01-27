@@ -12,10 +12,10 @@ public class LauncherTest extends LinearOpMode
     private Bot bot;
     public void runOpMode() throws InterruptedException {
         bot = new AutoBot(this, telemetry);
-        bot.setSpeed(-1);
+        bot.setLauncherSpeed(-1);
         waitForStart();
         while (opModeIsActive()){
-            bot.setSpeed(-gamepad1.right_trigger);
+            bot.setLauncherSpeed(-gamepad1.right_trigger);
         }
     }
 }

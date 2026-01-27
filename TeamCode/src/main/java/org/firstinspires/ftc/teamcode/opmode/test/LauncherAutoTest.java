@@ -18,7 +18,7 @@ public class LauncherAutoTest extends OpMode {
     public void loop(){
         switch (pathState){
             case 0:
-                bot.setSpeed(-1);
+                bot.setLauncherSpeed(-1);
                 pathState = 1;
                 try {
                     Thread.sleep(1000);
@@ -27,7 +27,7 @@ public class LauncherAutoTest extends OpMode {
                 }
                 break;
             case 1:
-                bot.setSpeed(-0.85);
+                bot.setLauncherSpeed(-0.85);
                 pathState = -1;
                 try {
                     Thread.sleep(1000);

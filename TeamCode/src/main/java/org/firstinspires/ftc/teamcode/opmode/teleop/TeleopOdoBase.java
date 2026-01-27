@@ -3,21 +3,12 @@ package org.firstinspires.ftc.teamcode.opmode.teleop;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
-import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
-import org.firstinspires.ftc.teamcode.common.Drivetrain;
 import org.firstinspires.ftc.teamcode.common.Launcher;
-import org.firstinspires.ftc.teamcode.common.Storage;
 import org.firstinspires.ftc.teamcode.common.TeleopBot;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.DrivetrainData;
-import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda435DcMotorData;
+import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints.LauncherSettings;
 import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
 
 @Config
@@ -26,7 +17,7 @@ public class TeleopOdoBase extends OpMode {
     private double velocityFactorIncrement = 0.05;
     private double targetVelocityFactor = 0.0;
     private double positionIncrement = 0.05;
-    private double targetLaunchPosition = 0.3;
+    private double targetLaunchPosition = LauncherSettings.longShotPosition;
     private TeleopBot bot;
     private ElapsedTime timer;
     private boolean autonomous = false;
@@ -36,7 +27,7 @@ public class TeleopOdoBase extends OpMode {
     public void init(){
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         bot = new TeleopBot(this, telemetry);
-        bot.setSpeed(targetVelocityFactor);
+        bot.setLauncherSpeed(targetVelocityFactor);
         bot.setPosition(targetLaunchPosition);
         timer = new ElapsedTime();
     }
@@ -49,17 +40,20 @@ public class TeleopOdoBase extends OpMode {
 
     @Override
     public void loop(){
-        if (gamepad1.right_trigger > 0.7 && targetVelocityFactor < 1 && timer.milliseconds() >= 100) {
-            targetVelocityFactor += velocityFactorIncrement;
-            timer.reset();
-        } else if (gamepad1.left_trigger > 0.7 && targetVelocityFactor > 0 && timer.milliseconds() >= 100) {
-            targetVelocityFactor -= velocityFactorIncrement;
-            timer.reset();
+        if (gamepad1.left_trigger > 0.7) {
+            targetVelocityFactor = 0;
         }
-        if (gamepad1.rightBumperWasPressed() && targetLaunchPosition < 0.25) {
-            targetLaunchPosition += positionIncrement;
-        } else if (gamepad1.leftBumperWasPressed() && targetLaunchPosition > 0.05) {
-            targetLaunchPosition -= positionIncrement;
+        if (gamepad1.right_trigger > 0.7) {
+            bot.openGate();
+        } else {
+            bot.closeGate();
+        }
+        if (gamepad1.rightBumperWasPressed()) {
+            targetLaunchPosition = LauncherSettings.longShotPosition;
+            targetVelocityFactor = LauncherSettings.longShotVelocityFactor;
+        } else if (gamepad1.leftBumperWasPressed()) {
+            targetLaunchPosition = LauncherSettings.shortShotPosition;
+            targetVelocityFactor = LauncherSettings.shortShotVelocityFactor;
         }
         if (gamepad1.leftStickButtonWasPressed()){
             bot.intakeBalls();
@@ -111,6 +105,7 @@ public class TeleopOdoBase extends OpMode {
         else {
             if (gamepad1.triangleWasPressed()){
                 // In case touchpad wasn't pressed & triangle does something else
+                bot.moveToShortShot();
             }
             if (gamepad1.squareWasPressed()){
                 // In case touchpad wasn't pressed & square does something else
@@ -127,7 +122,7 @@ public class TeleopOdoBase extends OpMode {
             }
         }
 
-        bot.setSpeed(targetVelocityFactor);
+        bot.setLauncherSpeed(targetVelocityFactor);
         bot.setPosition(targetLaunchPosition);
         telemetry.addData("Target Velocity in Teleop: ", targetVelocityFactor);
         telemetry.addData("Target Velocity in Teleop: ", targetLaunchPosition);

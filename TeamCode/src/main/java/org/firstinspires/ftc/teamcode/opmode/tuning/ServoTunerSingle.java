@@ -7,8 +7,6 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Disabled
-
 @TeleOp(name = "Servo Tuner Single", group = "Tuning")
 
 public class ServoTunerSingle extends LinearOpMode {
@@ -20,7 +18,6 @@ public class ServoTunerSingle extends LinearOpMode {
 
     // Define class members
     Servo servo;
-    CRServo continuous;
     double position = (MAX_POS - MIN_POS) / 2; // Start at halfway position
 
     @Override
@@ -28,8 +25,7 @@ public class ServoTunerSingle extends LinearOpMode {
 
         // Connect to servo (Assume Robot Left Hand)
         // Change the text in quotes to match any servo name on your robot.
-        servo = hardwareMap.get(Servo.class, "pusher");
-        continuous = hardwareMap.get(CRServo.class, "test");
+        servo = hardwareMap.get(Servo.class, "gate");
 
         // Wait for the start button
         telemetry.addData(">", "Press Start to tune servo.");
@@ -48,7 +44,6 @@ public class ServoTunerSingle extends LinearOpMode {
                     position = MIN_POS;
                 }
             }
-            continuous.setPower(gamepad1.right_trigger - gamepad1.left_trigger);
             // Display the current value
             telemetry.addData("Servo Position:", "%5.2f", position);
             telemetry.addLine("Right Bumper to Increase");
@@ -56,6 +51,7 @@ public class ServoTunerSingle extends LinearOpMode {
             telemetry.update();
             // Set the servo to the new position and pause;
             servo.setPosition(position);
+            sleep(CYCLE_MS);
         }
     }
 }

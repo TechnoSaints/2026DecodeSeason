@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda6000DcMotorData;
+import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints.LauncherSettings;
 /*
 * Tuned Coefficients:
 * F: 12.29
@@ -16,11 +17,13 @@ import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda6
 @TeleOp(name = "PIDF Test", group = "1PID")
 public class PIDFTest extends LinearOpMode {
     DcMotorEx leftLauncher, rightLauncher;
-    double highVelocity = 2500;
-    double lowVelocity = 1800;
+    double highVelocity = LauncherSettings.longShotVelocityFactor * GoBilda6000DcMotorData.maxTicksPerSec;
+    double lowVelocity = LauncherSettings.shortShotVelocityFactor * GoBilda6000DcMotorData.maxTicksPerSec;
     double curTargetVelocity = highVelocity;
     double F = 0;
     double P = 0;
+    double I = 0;
+    double D = 0;
     double[] stepSizes = {10, 1, 0.1, 0.01, 0.001, 0.0001};
     int stepIndex = 1;
     public void runOpMode(){
@@ -28,14 +31,14 @@ public class PIDFTest extends LinearOpMode {
         rightLauncher = hardwareMap.get(DcMotorEx.class, "rightLauncher");
         leftLauncher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightLauncher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        PIDFCoefficients pidfCoefficients = new PIDFCoefficients(P, 0, 0, F);
+        PIDFCoefficients pidfCoefficients = new PIDFCoefficients(P, I, D, F);
         leftLauncher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfCoefficients);
         rightLauncher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfCoefficients);
         telemetry.addLine("init complete");
         telemetry.update();
         waitForStart();
         while (opModeIsActive() && !isStopRequested()){
-            if (gamepad1.yWasPressed()){
+            if (gamepad1.shareWasPressed()){
                 if (curTargetVelocity == highVelocity){
                     curTargetVelocity = lowVelocity;
                 }
@@ -44,7 +47,7 @@ public class PIDFTest extends LinearOpMode {
                 }
             }
 
-            if (gamepad1.bWasPressed()){
+            if (gamepad1.optionsWasPressed()){
                 stepIndex = (stepIndex + 1) % stepSizes.length;
             }
 
@@ -60,7 +63,19 @@ public class PIDFTest extends LinearOpMode {
             if (gamepad1.dpadDownWasPressed()){
                 P -= stepSizes[stepIndex];
             }
-            pidfCoefficients = new PIDFCoefficients(P, 0, 0, F);
+            if (gamepad1.crossWasPressed()){
+                I -= stepSizes[stepIndex];
+            }
+            if (gamepad1.triangleWasPressed()){
+                I += stepSizes[stepIndex];
+            }
+            if (gamepad1.circleWasPressed()){
+                D += stepSizes[stepIndex];
+            }
+            if (gamepad1.squareWasPressed()){
+                D -= stepSizes[stepIndex];
+            }
+            pidfCoefficients = new PIDFCoefficients(P, I, D, F);
             leftLauncher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfCoefficients);
             rightLauncher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfCoefficients);
 
@@ -77,9 +92,11 @@ public class PIDFTest extends LinearOpMode {
             telemetry.addData("Right Current Velocity", curRightVelocity);
             telemetry.addData("Right Error", "%.2f", rightError);
             telemetry.addLine("---------------------------------------");
-            telemetry.addData("Tuning P", "%.4f (D-Pad U/D", P);
-            telemetry.addData("Tuning F", "%.4f (D-Pad L/R", F);
-            telemetry.addData("Step Size", "%.4f (B Button", stepSizes[stepIndex]);
+            telemetry.addData("Tuning P", "%.4f (D-Pad U/D)", P);
+            telemetry.addData("Tuning I", "%.4f (D-Pad U/D)", I);
+            telemetry.addData("Tuning D", "%.4f (Y/A", D);
+            telemetry.addData("Tuning F", "%.4f (B/X", F);
+            telemetry.addData("Step Size", "%.4f (PS", stepSizes[stepIndex]);
             telemetry.update();
         }
     }
