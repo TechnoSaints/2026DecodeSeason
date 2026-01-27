@@ -56,7 +56,9 @@ public class TeleopBotBasic extends Bot {
         stopPusher();
     }
 
-    public void processGamepadInput(Gamepad gamepad) {
+    public void setBlackWheelSpeed(double blackWheelSpeed) {setPusherSpeed(blackWheelSpeed);}
+
+    public void processGamepadInput(Gamepad gamepad) throws InterruptedException {
         if (gamepad.dpad_up) {
             drivetrain.creepDirection(1.0, 0.0, 0.0);
         } else if (gamepad.dpad_down) {
@@ -135,10 +137,7 @@ public class TeleopBotBasic extends Bot {
 
         if (gamepad.y)
         {
-            stickLaunch();
-        } else
-        {
-            stickLoad();
+            stickLaunchLoad();
         }
     }
 

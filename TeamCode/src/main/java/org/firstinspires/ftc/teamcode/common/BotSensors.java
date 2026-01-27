@@ -1,7 +1,10 @@
 package org.firstinspires.ftc.teamcode.common;
 
 import android.graphics.Color;
+
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -28,7 +31,10 @@ public class BotSensors {
     public static int minGreenHue = 150;
     public static int maxGreenHue = 163;
 
-    public BotSensors(HardwareMap hardwareMap, OpMode opMode, Telemetry telemetry) {
+    Telemetry telemetry;
+
+    public BotSensors(HardwareMap hardwareMap, OpMode opMode, Telemetry telem) {
+        telemetry = new MultipleTelemetry(telem, FtcDashboard.getInstance().getTelemetry());
         intakeColor = hardwareMap.get(ColorSensor.class, "intakeSensor");
         topColor = hardwareMap.get(ColorSensor.class, "topSensor");
         shotColor = hardwareMap.get(ColorSensor.class, "shotSensor");
@@ -53,15 +59,29 @@ public class BotSensors {
         updateHSV(intakeColor, hsvIntake);
         return isPurple(hsvIntake);
     }
+    public boolean intakeIsGreen() {
+        updateHSV(intakeColor, hsvIntake);
+        return isGreen(hsvIntake);
+    }
 
     public boolean topIsPurple() {
         updateHSV(topColor, hsvTop);
         return isPurple(hsvTop);
     }
 
+    public boolean topIsGreen() {
+        updateHSV(topColor, hsvTop);
+        return isGreen(hsvTop);
+    }
+
     public boolean shotIsPurple() {
         updateHSV(shotColor, hsvShot);
         return isPurple(hsvShot);
+    }
+
+    public boolean shotIsGreen() {
+        updateHSV(shotColor, hsvShot);
+        return isGreen(hsvShot);
     }
 
     private void updateHSV(ColorSensor sensor, float[] hsv) {
@@ -89,5 +109,35 @@ public class BotSensors {
 
     private boolean isBall(float[] hsv) {
         return (isGreen(hsv) || isPurple(hsv));
+    }
+
+
+    public void log() {
+        telemetry.addData("Intake", ballInIntake());
+        if (intakeIsPurple()) {
+            telemetry.addData("Intake is", "purple");
+        } else if (intakeIsGreen()) {
+            telemetry.addData("Intake is", "green");
+        } else {
+            telemetry.addData("Intake is", "empty");
+        }
+
+        telemetry.addData("Top", ballInTop());
+        if (topIsPurple()) {
+            telemetry.addData("Top is", "purple");
+        } else if (topIsGreen()) {
+            telemetry.addData("Top is", "green");
+        } else {
+            telemetry.addData("Top is", "empty");
+        }
+
+        telemetry.addData("Shot", ballInShot());
+        if (shotIsPurple()) {
+            telemetry.addData("Shot is", "purple");
+        } else if (shotIsGreen()) {
+            telemetry.addData("Shot is", "green");
+        } else {
+            telemetry.addData("Shot is", "empty");
+        }
     }
 }

@@ -55,6 +55,11 @@ public class BlackWheel extends Component {
         pusher.setPower(0.0);
     }
 
+    public void setSpeed(double speed)
+    {
+        pusher.setPower(speed);
+    }
+
     public int getCurrentPosition() {
         return pusher.getCurrentPosition();
     }

@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.common.BotSensors;
 import org.firstinspires.ftc.teamcode.opmode.teleop.AutoAim.AutoAimHelper;
 import org.firstinspires.ftc.teamcode.opmode.teleop.AutoAim.AutoAimValues;
 import org.firstinspires.ftc.teamcode.opmode.teleop.TeleopBots.TeleopBotWithOdo;
@@ -64,6 +65,7 @@ public class TeleopOdo extends OpMode {
 
 
         aim.log(telemetry, pose);
+
         telemetry.update();
 
         bot.update();

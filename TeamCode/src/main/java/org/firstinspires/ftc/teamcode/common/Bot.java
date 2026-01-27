@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.common;
 
+import static java.lang.Thread.sleep;
+
 import com.pedropathing.geometry.Pose;
 import com.pedropathing.follower.Follower;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -78,6 +80,7 @@ public abstract class Bot extends Component {
         pusher.forward();
     }
 
+    public void setPusherSpeed(double pusherSpeed) {pusher.setSpeed(pusherSpeed);}
     public void pusherReverse()
     {
         pusher.reverse();
@@ -99,6 +102,8 @@ public abstract class Bot extends Component {
     {
         stick.setPositionTicks(kickerLoadPosition);
     }
+
+    public void stickLaunchLoad() throws InterruptedException {stick.setPositionTicks(kickerLaunchPosition); sleep(50); stick.setPositionTicks(kickerLoadPosition);}
 
     public boolean isBusy() {
         return (false);

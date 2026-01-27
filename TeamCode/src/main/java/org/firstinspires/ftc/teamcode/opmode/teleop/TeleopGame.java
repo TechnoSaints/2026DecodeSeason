@@ -7,6 +7,7 @@ import com.pedropathing.follower.Follower;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.common.BotSensors;
 import org.firstinspires.ftc.teamcode.opmode.teleop.TeleopBots.TeleopBotBasic;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 import org.firstinspires.ftc.teamcode.common.SortingSystem;
@@ -23,7 +24,7 @@ public class TeleopGame extends LinearOpMode {
     private Follower follower;
 
 
-
+    private BotSensors colorSensor;
 
     private double lastHeading = 0;
     private long lastTime = 0;
@@ -33,6 +34,7 @@ public class TeleopGame extends LinearOpMode {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         bot = new TeleopBotBasic(this, telemetry);
         follower = Constants.createFollower(hardwareMap);
+        colorSensor = new BotSensors(hardwareMap, this, telemetry);
         //feeder = new SortingSystem(this, telemetry);
 
 
@@ -41,6 +43,8 @@ public class TeleopGame extends LinearOpMode {
 
         lastHeading = follower.getPose().getHeading();
         lastTime = System.nanoTime();
+
+        bot.setBlackWheelSpeed(-0.3);
 
         while (opModeIsActive() && !isStopRequested()) {
 
@@ -82,6 +86,14 @@ public class TeleopGame extends LinearOpMode {
             telemetry.addData("Angular Vel", "%.3f rad/s", omega); */
         //    feeder.log();
          //   feeder.update();
+
+            if (colorSensor.ballInShot()) {
+                bot.turnOffBlackWheel();
+            } else {
+                bot.turnOnBlackWheel();
+            }
+
+            colorSensor.log();
             telemetry.update();
             bot.update();
         }
