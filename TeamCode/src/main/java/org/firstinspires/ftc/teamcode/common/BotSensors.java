@@ -77,7 +77,10 @@ public class BotSensors {
 
     public boolean ballInMidwaySensor() {
         updateHSV(midwayColor, hsvMidway);
-        return isBall(hsvMidway, midwaySensor);
+        if (midwaySensor.getDistance(DistanceUnit.CM) <= 2) {
+            return (isGreen(hsvMidway) || isPurple(hsvMidway));
+        }
+        return false;
     }
 
     public boolean ballInFirstSensor() {
@@ -190,7 +193,7 @@ public class BotSensors {
 
     private boolean isBall(float[] hsv, DistanceSensor sensorName) {
         boolean distanceTrue = false;
-        if (sensorName.getDistance(DistanceUnit.CM) <= 2) {
+        if (sensorName.getDistance(DistanceUnit.CM) <= 5) {
             distanceTrue = true;
         }
         return (isGreen(hsv) || isPurple(hsv)) && distanceTrue;
