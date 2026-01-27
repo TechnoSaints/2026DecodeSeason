@@ -28,16 +28,16 @@ public class SortColorTest extends LinearOpMode {
     float hsvValues[] = {0F, 0F, 0F};
 
     // Define the range for purple and green hues (these are example values, calibrate them for your specific environment)
-    private int purpleHueMin = 165;
+    private int purpleHueMin = 200;
     private int purpleHueMax = 240;
     private int greenHueMin = 150;
     private int greenHueMax = 163;
-    private float saturationMin = 0.45f;
+    private float saturationMin = 0.35f;
 
     @Override
     public void runOpMode() {
-        colorSensor = hardwareMap.get(ColorSensor.class, "intakeSensor");
-        distanceSensor = hardwareMap.get(DistanceSensor.class, "intakeSensor");
+        colorSensor = hardwareMap.get(ColorSensor.class, "shotSensor");
+        distanceSensor = hardwareMap.get(DistanceSensor.class, "shotSensor");
 
 
 
