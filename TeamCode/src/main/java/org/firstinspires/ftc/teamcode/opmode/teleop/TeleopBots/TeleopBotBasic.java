@@ -56,6 +56,8 @@ public class TeleopBotBasic extends Bot {
         stopPusher();
     }
 
+    public void setBlackWheelSpeed(double blackWheelSpeed) {setPusherSpeed(blackWheelSpeed);}
+
     public void processGamepadInput(Gamepad gamepad) {
         if (gamepad.dpad_up) {
             drivetrain.creepDirection(1.0, 0.0, 0.0);

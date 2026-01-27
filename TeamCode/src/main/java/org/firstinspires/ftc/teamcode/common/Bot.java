@@ -78,6 +78,7 @@ public abstract class Bot extends Component {
         pusher.forward();
     }
 
+    public void setPusherSpeed(double pusherSpeed) {pusher.setSpeed(pusherSpeed);}
     public void pusherReverse()
     {
         pusher.reverse();
