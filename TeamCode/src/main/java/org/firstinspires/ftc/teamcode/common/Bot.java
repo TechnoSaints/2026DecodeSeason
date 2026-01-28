@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.common;
 
-import static java.lang.Thread.sleep;
-
 import com.pedropathing.geometry.Pose;
 import com.pedropathing.follower.Follower;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -23,8 +21,13 @@ public abstract class Bot extends Component {
 
     private ServoSimple stick;
 
-    private double kickerLoadPosition = 0.2;
-    private double kickerLaunchPosition = 0.27;
+    public boolean ballPass = false;
+
+
+    private double kickerLoadPosition = 0.16;
+    private double kickerLaunchPosition = 0.30;
+
+    private ElapsedTime pauseTimer = new ElapsedTime();
 
     // Limelight
     public double TURN_KP = 0.03;               // Adjustable turn gain
@@ -80,6 +83,7 @@ public abstract class Bot extends Component {
         pusher.forward();
     }
 
+
     public void setPusherSpeed(double pusherSpeed) {pusher.setSpeed(pusherSpeed);}
     public void pusherReverse()
     {
@@ -103,12 +107,21 @@ public abstract class Bot extends Component {
         stick.setPositionTicks(kickerLoadPosition);
     }
 
-    public void stickLaunchLoad() throws InterruptedException {stick.setPositionTicks(kickerLaunchPosition); sleep(50); stick.setPositionTicks(kickerLoadPosition);}
+    public void stickLaunchLoad()  {
+        pauseTimer.reset();
+        stick.setPositionTicks(kickerLaunchPosition);
+        while(pauseTimer.milliseconds() < 350)
+        {
+        }
+        ballPass = false;
+        stick.setPositionTicks(kickerLoadPosition);
+    }
 
     public boolean isBusy() {
         return (false);
     }
-    public void update() {
 
+    public void update() {
+        telemetry.addData("Ball Status", ballPass);
     }
 }

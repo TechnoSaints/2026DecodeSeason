@@ -28,6 +28,7 @@ public class TeleopGame extends LinearOpMode {
 
     private double lastHeading = 0;
     private long lastTime = 0;
+    private boolean ballInSensor = false;
 
     @Override
     public void runOpMode() {
@@ -87,11 +88,17 @@ public class TeleopGame extends LinearOpMode {
         //    feeder.log();
          //   feeder.update();
 
-            if (colorSensor.ballInShot()) {
-                bot.turnOffBlackWheel();
-            } else {
-                bot.turnOnBlackWheel();
+            if (colorSensor.ballInMidwaySensor()) {
+               bot.ballPass = true;
             }
+
+            if(bot.ballPass || colorSensor.ballInShot())
+            {
+                bot.stopPusher();
+            } else {
+                bot.pusherStart();
+            }
+
 
             colorSensor.log();
             telemetry.update();
