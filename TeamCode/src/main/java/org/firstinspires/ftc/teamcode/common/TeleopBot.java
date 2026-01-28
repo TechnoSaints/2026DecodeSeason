@@ -35,7 +35,7 @@ public class TeleopBot extends Bot {
         pinpoint.setOffsets(-2, -6.5, DistanceUnit.INCH);
         pinpoint.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
         pinpoint.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD,
-                GoBildaPinpointDriver.EncoderDirection.FORWARD);
+                GoBildaPinpointDriver.EncoderDirection.REVERSED);
         pinpoint.resetPosAndIMU();
         //start Pose
         pinpoint.setPosition(startPose);
@@ -90,22 +90,9 @@ public class TeleopBot extends Bot {
         }
 
         if ((gamepad.y) && (kickerState == 1)) {
-            pinpoint.update();
-            //get current Pose
-            currentPose = pinpoint.getPosition();
-            //Calculate Distance
-            d = Math.sqrt(
-                    (
-                            ((currentPose.getX(DistanceUnit.INCH) - goalPose.getX(DistanceUnit.INCH)) * (currentPose.getX(DistanceUnit.INCH) - goalPose.getX(DistanceUnit.INCH)))
-                                    + ((currentPose.getY(DistanceUnit.INCH) - goalPose.getY(DistanceUnit.INCH)) * (currentPose.getY(DistanceUnit.INCH) - goalPose.getY(DistanceUnit.INCH)))
-                    )
-            );
-            launcher.setRPM(d);
-            if (!launcher.isBusy()) {
                 kickerLoad();
                 kickerState = 2;
                 kickerTimer.reset();
-            }
         } else if ((gamepad.x) && (kickerState == 2) && (kickerTimer.milliseconds() > 250)) {
             kickerLaunch();
             kickerTimer.reset();
@@ -127,16 +114,16 @@ public class TeleopBot extends Bot {
                             )
                     );
             launcher.setRPM(d);
-            if (!launcher.isBusy()) {
-                kickerLoad();
-                kickerState = 2;
-                kickerTimer.reset();
-            }
-        } else if ((gamepad.x) && (kickerState == 2) && (kickerTimer.milliseconds() > 250)) {
+            kickerState = 2;
+        } else if ((kickerState == 2) && (!launcher.isBusy())) {
+            kickerLoad();
+            kickerState = 3;
+            kickerTimer.reset();
+        } else if ((gamepad.x) && (kickerState == 3) && (kickerTimer.milliseconds() > 250)) {
             kickerLaunch();
             kickerTimer.reset();
-            kickerState = 3;
-        } else if ((kickerTimer.milliseconds() > 3000) && (kickerState == 3)) {
+            kickerState = 4;
+        } else if ((kickerTimer.milliseconds() > 3000) && (kickerState == 4)) {
             kickerGate();
             kickerState = 1;
         }
