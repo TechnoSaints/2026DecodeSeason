@@ -45,7 +45,7 @@ public class BotSensors {
 
     Telemetry telemetry;
 
-    public BotSensors(HardwareMap hardwareMap, OpMode opMode, Telemetry telem) {
+    public BotSensors(HardwareMap hardwareMap, Telemetry telem) {
         telemetry = new MultipleTelemetry(telem, FtcDashboard.getInstance().getTelemetry());
         intakeColor = hardwareMap.get(ColorSensor.class, "intakeSensor");
         topColor = hardwareMap.get(ColorSensor.class, "topSensor");

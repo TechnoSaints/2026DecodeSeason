@@ -10,7 +10,7 @@ public class LauncherSettings {
     public static double shortShotPosition = .35;
     public static double mediumShotVelocityFactor = 0.5;
     public static double mediumShotPosition = 0.28;
-    public static double longShotVelocityFactor = 0.55;
+    public static double longShotVelocityFactor = 0.52;
     public static double longShotPosition = 0.15;
 
     private static final WeightedObservedPoints velocityFactors = new WeightedObservedPoints();

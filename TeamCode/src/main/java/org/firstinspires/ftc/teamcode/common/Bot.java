@@ -17,17 +17,22 @@ public abstract class Bot extends Component {
 
     private intakeMotor intake;
 
+    private BotSensors colorSensor;
+
     private BlackWheel pusher;
 
     private ServoSimple stick;
 
     public boolean ballPass = false;
 
+    public boolean check = true;
+
 
     private double kickerLoadPosition = 0.16;
-    private double kickerLaunchPosition = 0.30;
+    private double kickerLaunchPosition = .3;
 
     private ElapsedTime pauseTimer = new ElapsedTime();
+    private ElapsedTime pusherTime = new ElapsedTime();
 
     // Limelight
     public double TURN_KP = 0.03;               // Adjustable turn gain
@@ -44,6 +49,7 @@ public abstract class Bot extends Component {
         intake = new intakeMotor(opMode.hardwareMap, telemetry,"intake");
         pusher = new BlackWheel(opMode.hardwareMap, telemetry);
         stick = new ServoSimple(opMode.hardwareMap, telemetry,"stick");
+        colorSensor = new BotSensors(opMode.hardwareMap, telemetry);
 
     }
 
@@ -122,8 +128,34 @@ public abstract class Bot extends Component {
         while(pauseTimer.milliseconds() < 350)
         {
         }
-        ballPass = false;
         stick.setPositionTicks(kickerLoadPosition);
+    }
+
+    public void pusherUpdate(){
+        if (colorSensor.ballInTop()) {
+            pusherTime.reset();
+            check = false;
+        }
+
+        if (pusherTime.milliseconds() > 250 && check == false) {
+            ballPass = true;
+            check = true;
+        }
+
+        if(ballPass || colorSensor.ballInShot())
+        {
+            stopPusher();
+        } else {
+            pusherStart();
+        }
+
+        if((ballPass || colorSensor.ballInShot()) && (colorSensor.ballInFirstSensor()) && (!colorSensor.ballInTop()))
+        {
+            runUsingEncoder();
+            tickBlackWheel(-500);
+        } else {
+            noEncoder();
+        }
     }
 
     public boolean isBusy() {

@@ -25,8 +25,6 @@ public class TeleopGame extends LinearOpMode {
     private Follower follower;
 
 
-    private BotSensors colorSensor;
-
     private ElapsedTime pusherTime = new ElapsedTime();
 
     private double lastHeading = 0;
@@ -39,7 +37,6 @@ public class TeleopGame extends LinearOpMode {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         bot = new TeleopBotBasic(this, telemetry);
         follower = Constants.createFollower(hardwareMap);
-        colorSensor = new BotSensors(hardwareMap, this, telemetry);
         //feeder = new SortingSystem(this, telemetry);
 
 
@@ -91,33 +88,11 @@ public class TeleopGame extends LinearOpMode {
             telemetry.addData("Angular Vel", "%.3f rad/s", omega); */
         //    feeder.log();
          //   feeder.update();
-            if (colorSensor.ballInTop()) {
-                pusherTime.reset();
-                check = false;
-            }
-
-            if (pusherTime.milliseconds() > 250 && check == false) {
-                bot.ballPass = true;
-                check = true;
-            }
-
-            if(bot.ballPass || colorSensor.ballInShot())
-            {
-                bot.stopPusher();
-            } else {
-                bot.pusherStart();
-            }
-
-            if((bot.ballPass || colorSensor.ballInShot()) && (colorSensor.ballInFirstSensor()) && (!colorSensor.ballInTop()))
-            {
-                bot.runUsingEncoder();
-                bot.tickBlackWheel(-500);
-            } else {
-                bot.noEncoder();
-            }
 
 
-            telemetry.addData("Check (True Means Ball Has NOT Passed)", check);
+            bot.pusherUpdate();
+
+            telemetry.addData("Check (True Means Ball Has NOT Passed)", bot.check);
             telemetry.update();
             bot.update();
         }

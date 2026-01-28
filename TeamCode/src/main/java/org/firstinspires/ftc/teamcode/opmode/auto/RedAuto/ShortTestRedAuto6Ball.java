@@ -18,6 +18,7 @@ public class ShortTestRedAuto6Ball extends AutoOpMode {
     }
 
     protected void autonomousPathUpdate() {
+        bot.pusherUpdate();
         switch (pathState) {
 
                 //Move From Start To Short Shot
