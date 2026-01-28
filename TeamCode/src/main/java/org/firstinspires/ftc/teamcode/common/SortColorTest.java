@@ -36,8 +36,8 @@ public class SortColorTest extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        colorSensor = hardwareMap.get(ColorSensor.class, "topSensor");
-        distanceSensor = hardwareMap.get(DistanceSensor.class, "topSensor");
+        colorSensor = hardwareMap.get(ColorSensor.class, "midwaySensor");
+        distanceSensor = hardwareMap.get(DistanceSensor.class, "midwaySensor");
 
 
 

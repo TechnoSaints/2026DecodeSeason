@@ -6,6 +6,7 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.pedropathing.follower.Follower;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.common.BotSensors;
 import org.firstinspires.ftc.teamcode.opmode.teleop.TeleopBots.TeleopBotBasic;
@@ -26,9 +27,12 @@ public class TeleopGame extends LinearOpMode {
 
     private BotSensors colorSensor;
 
+    private ElapsedTime pusherTime = new ElapsedTime();
+
     private double lastHeading = 0;
     private long lastTime = 0;
     private boolean ballInSensor = false;
+    private boolean check = true;
 
     @Override
     public void runOpMode() {
@@ -87,9 +91,14 @@ public class TeleopGame extends LinearOpMode {
             telemetry.addData("Angular Vel", "%.3f rad/s", omega); */
         //    feeder.log();
          //   feeder.update();
+            if (colorSensor.ballInTop()) {
+                pusherTime.reset();
+                check = false;
+            }
 
-            if (colorSensor.ballInMidwaySensor()) {
-               bot.ballPass = true;
+            if (pusherTime.milliseconds() > 250 && check == false) {
+                bot.ballPass = true;
+                check = true;
             }
 
             if(bot.ballPass || colorSensor.ballInShot())
@@ -99,8 +108,16 @@ public class TeleopGame extends LinearOpMode {
                 bot.pusherStart();
             }
 
+            if((bot.ballPass || colorSensor.ballInShot()) && (colorSensor.ballInFirstSensor()) && (!colorSensor.ballInTop()))
+            {
+                bot.runUsingEncoder();
+                bot.tickBlackWheel(-500);
+            } else {
+                bot.noEncoder();
+            }
 
-            colorSensor.log();
+
+            telemetry.addData("Check (True Means Ball Has NOT Passed)", check);
             telemetry.update();
             bot.update();
         }

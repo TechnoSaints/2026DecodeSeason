@@ -23,8 +23,8 @@ public class BlackWheel extends Component {
         pusher = hardwareMap.get(DcMotorEx.class, "pusher");
         pusher.setDirection(DcMotorSimple.Direction.FORWARD);
         pusher.setTargetPositionTolerance(5);
-        setRunMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
+     //   setRunMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+      //  setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     private void setRunMode(DcMotor.RunMode mode) {
@@ -72,9 +72,13 @@ public class BlackWheel extends Component {
         return pusher.isBusy();
     }
 
-    public void resetEncoder() {
+    public void useEncoder() {
         setRunMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
+
+    public void noEncoder() {
+        setRunMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
 

@@ -77,7 +77,7 @@ public class BotSensors {
 
     public boolean ballInMidwaySensor() {
         updateHSV(midwayColor, hsvMidway);
-        if (midwaySensor.getDistance(DistanceUnit.CM) <= 2) {
+        if (midwaySensor.getDistance(DistanceUnit.CM) <= 3) {
             return (isGreen(hsvMidway) || isPurple(hsvMidway));
         }
         return false;
@@ -90,14 +90,14 @@ public class BotSensors {
 
     public boolean intakeIsPurple() {
         updateHSV(intakeColor, hsvIntake);
-        if(intakeSensor.getDistance(DistanceUnit.CM) <= 5) {
+        if(intakeSensor.getDistance(DistanceUnit.CM) <= 3) {
             return isPurple(hsvIntake);
         }
         return false;
     }
     public boolean intakeIsGreen() {
         updateHSV(intakeColor, hsvIntake);
-        if(intakeSensor.getDistance(DistanceUnit.CM) <= 5) {
+        if(intakeSensor.getDistance(DistanceUnit.CM) <= 3) {
             return isGreen(hsvIntake);
         }
         return false;
@@ -105,7 +105,7 @@ public class BotSensors {
 
     public boolean topIsPurple() {
         updateHSV(topColor, hsvTop);
-        if(topSensor.getDistance(DistanceUnit.CM) <= 5) {
+        if(topSensor.getDistance(DistanceUnit.CM) <= 3) {
             return isPurple(hsvTop);
         }
         return false;
@@ -113,7 +113,7 @@ public class BotSensors {
 
     public boolean topIsGreen() {
         updateHSV(topColor, hsvTop);
-        if(topSensor.getDistance(DistanceUnit.CM) <= 5) {
+        if(topSensor.getDistance(DistanceUnit.CM) <= 3) {
             return isGreen(hsvTop);
         }
         return false;
@@ -121,7 +121,7 @@ public class BotSensors {
 
     public boolean shotIsPurple() {
         updateHSV(shotColor, hsvShot);
-        if(shotSensor.getDistance(DistanceUnit.CM) <= 5) {
+        if(shotSensor.getDistance(DistanceUnit.CM) <= 3) {
             return isPurple(hsvShot);
         }
         return false;
@@ -129,7 +129,7 @@ public class BotSensors {
 
     public boolean shotIsGreen() {
         updateHSV(shotColor, hsvShot);
-        if(shotSensor.getDistance(DistanceUnit.CM) <= 5) {
+        if(shotSensor.getDistance(DistanceUnit.CM) <= 3) {
             return isGreen(hsvShot);
         }
         return false;
@@ -138,7 +138,7 @@ public class BotSensors {
 
     public boolean midwayIsPurple() {
         updateHSV(midwayColor, hsvMidway);
-        if(midwaySensor.getDistance(DistanceUnit.CM) <= 2) {
+        if(midwaySensor.getDistance(DistanceUnit.CM) <= 3) {
             return isPurple(hsvMidway);
         }
         return false;
@@ -146,7 +146,7 @@ public class BotSensors {
 
     public boolean midwayIsGreen() {
         updateHSV(midwayColor, hsvMidway);
-        if(midwaySensor.getDistance(DistanceUnit.CM) <= 2) {
+        if(midwaySensor.getDistance(DistanceUnit.CM) <= 3) {
             return isGreen(hsvMidway);
         }
         return false;
@@ -154,7 +154,7 @@ public class BotSensors {
 
     public boolean firstIsPurple() {
         updateHSV(firstColor, hsvFirst);
-        if(firstSensor.getDistance(DistanceUnit.CM) <= 5) {
+        if(firstSensor.getDistance(DistanceUnit.CM) <= 3) {
             return isPurple(hsvFirst);
         }
         return false;
@@ -236,6 +236,8 @@ public class BotSensors {
         } else {
             telemetry.addData("Midway is", "empty");
         }
+
+        telemetry.addData("Proximity", midwaySensor.getDistance(DistanceUnit.CM));
 
         telemetry.addData("Shot", ballInShot());
         if (shotIsPurple()) {

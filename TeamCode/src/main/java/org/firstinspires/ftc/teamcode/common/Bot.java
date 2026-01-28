@@ -83,6 +83,15 @@ public abstract class Bot extends Component {
         pusher.forward();
     }
 
+    public void runUsingEncoder()
+    {
+        pusher.useEncoder();
+    }
+
+    public void noEncoder()
+    {
+        pusher.noEncoder();
+    }
 
     public void setPusherSpeed(double pusherSpeed) {pusher.setSpeed(pusherSpeed);}
     public void pusherReverse()
