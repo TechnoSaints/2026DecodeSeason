@@ -119,7 +119,7 @@ public class TeleopBot extends Bot {
             kickerLoad();
             kickerState = 3;
             kickerTimer.reset();
-        } else if ((gamepad.x) && (kickerState == 3) && (kickerTimer.milliseconds() > 250)) {
+        } else if ((gamepad.x) && (kickerState == 3) && (kickerTimer.milliseconds() > 1000)) {
             kickerLaunch();
             kickerTimer.reset();
             kickerState = 4;
