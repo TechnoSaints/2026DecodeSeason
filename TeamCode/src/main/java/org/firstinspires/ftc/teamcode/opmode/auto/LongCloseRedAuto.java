@@ -5,13 +5,13 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
 import org.firstinspires.ftc.teamcode.opmode.Paths;
 
-@Autonomous(name = "\uD83D\uDD35longBlueAuto", group = "Blue")
-
-public class LongBlueAuto extends AutoOpMode {
+@Autonomous(name = "\uD83D\uDD34longCloseRedAuto", group = "Red")
+//@Disabled
+public class LongCloseRedAuto extends AutoOpMode {
 
     @Override
     public void init() {
-        FieldLocations.buildPoses("blue", "long");
+        FieldLocations.buildPoses("red", "long");
         super.init();
     }
 
@@ -22,7 +22,7 @@ public class LongBlueAuto extends AutoOpMode {
                 bot.kickerGate();
                 bot.intakeReverse();
                 bot.setLauncherShortShot();
-                bot.followPath(Paths.longStartToLongShot, 0.85f, true);
+                bot.followPath(Paths.longStartToMediumShot, 0.85f, true);
                 setPathState(1);
                 break;
 
@@ -43,8 +43,8 @@ public class LongBlueAuto extends AutoOpMode {
 
                 // Move to stack1 setup
             case 3:
-                if (controlTimer.milliseconds() > 2000) {
-                    bot.followPath(Paths.longShotToStack3Setup, 0.85f, true);
+                if (controlTimer.milliseconds() > 2250) {
+                    bot.followPath(Paths.mediumShotToStack3Setup, 0.85f, true);
                     bot.kickerGate();
                     setPathState(4);
                 }
@@ -68,7 +68,7 @@ public class LongBlueAuto extends AutoOpMode {
 
             // Move to short shot
             case 6:
-                bot.followPath(Paths.stack3FinishToLongShot, 0.7f, true);
+                bot.followPath(Paths.stack3FinishToMediumShot, 0.7f, true);
                 setPathState(7);
                 break;
 
@@ -82,7 +82,7 @@ public class LongBlueAuto extends AutoOpMode {
                 break;
 
             case 8:
-                if (controlTimer.milliseconds() > 2250) {
+                if (controlTimer.milliseconds() > 2000) {
                     bot.kickerLaunch();
                     controlTimer.reset();
                     setPathState(9);
@@ -91,8 +91,8 @@ public class LongBlueAuto extends AutoOpMode {
 
             // Do more stuff
             case 9:
-                if (controlTimer.milliseconds() > 1250) {
-                    bot.followPath(Paths.longShotToStack2Setup, 0.85f, true);
+                if (controlTimer.milliseconds() > 1500) {
+                    bot.followPath(Paths.mediumShotToStack2Setup, 0.85f, true);
                     bot.kickerGate();
                     setPathState(10);
                 }
@@ -110,7 +110,7 @@ public class LongBlueAuto extends AutoOpMode {
                 break;
 
             case 12:
-                bot.followPath(Paths.stack2FinishToLongShot, 0.85f, true);
+                bot.followPath(Paths.stack2FinishToMediumShot, 0.85f, true);
                 setPathState(13);
                 break;
 
@@ -123,7 +123,7 @@ public class LongBlueAuto extends AutoOpMode {
                 break;
 
             case 14:
-                if (controlTimer.milliseconds() > 2250) {
+                if (controlTimer.milliseconds() > 2000) {
                     bot.kickerLaunch();
                     controlTimer.reset();
                     setPathState(15);
@@ -132,8 +132,8 @@ public class LongBlueAuto extends AutoOpMode {
 
 
             case 15:
-                if (controlTimer.milliseconds() > 1250) {
-                    bot.followPath(Paths.longShotToEndFar, 0.85f, true);
+                if (controlTimer.milliseconds() > 1500) {
+                    bot.followPath(Paths.mediumShotToEndFar, 0.85f, true);
                     bot.kickerGate();
                     bot.intakeStop();
                     bot.launcherStop();
@@ -157,4 +157,3 @@ public class LongBlueAuto extends AutoOpMode {
         }
     }
 }
-

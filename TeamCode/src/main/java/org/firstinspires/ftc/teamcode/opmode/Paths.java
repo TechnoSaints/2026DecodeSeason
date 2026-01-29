@@ -13,12 +13,24 @@ import java.lang.reflect.Field;
 
 public class Paths {
 
-    public static PathChain longStartToLongShot, longShotToStack3Setup, stack3SetupToStack3Finish, stack3FinishToLongShot, longShotToStack2Setup, stack2SetupToStack2Finish, stack2FinishToLongShot, longShotToEndFar, goalStartToShortShot, shortShotToStack1Setup, stack1SetupToStack1Finish, stack1FinishToShortShot, shortShotToEndClose;
+    public static PathChain longStartToMediumShot, mediumShotToStack3Setup, stack3SetupToStack3Finish, stack3FinishToMediumShot, mediumShotToStack2Setup, stack2SetupToStack2Finish,
+            stack2FinishToMediumShot, mediumShotToEndFar, goalStartToShortShot, shortShotToStack1Setup, stack1SetupToStack1Finish, stack1FinishToShortShot, shortShotToEndClose,
+            stack3FinishToLongShot, longShotToStack2Setup, stack2FinishToLongShot, longShotToEndFar, longStartToLongShot, longShotToStack3Setup, longShotToHumanPlayerSetup, humanPlayerSetupToHumanPlayerFinish, humanPlayerFinishToLongShot;
 
     public static void buildPaths(Follower follower) {
+        longStartToMediumShot = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.longStartPose, FieldLocations.mediumShotPose))
+                .setLinearHeadingInterpolation(FieldLocations.longStartPose.getHeading(), FieldLocations.mediumShotPose.getHeading())
+                .build();
+
         longStartToLongShot = follower.pathBuilder()
                 .addPath(new BezierLine(FieldLocations.longStartPose, FieldLocations.longShotPose))
                 .setLinearHeadingInterpolation(FieldLocations.longStartPose.getHeading(), FieldLocations.longShotPose.getHeading())
+                .build();
+
+        mediumShotToStack3Setup = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.mediumShotPose, FieldLocations.stack3SetupPose))
+                .setLinearHeadingInterpolation(FieldLocations.mediumShotPose.getHeading(), FieldLocations.stack3SetupPose.getHeading())
                 .build();
 
         longShotToStack3Setup = follower.pathBuilder()
@@ -31,9 +43,18 @@ public class Paths {
                 .setLinearHeadingInterpolation(FieldLocations.stack3SetupPose.getHeading(), FieldLocations.stack3FinishPose.getHeading())
                 .build();
 
+        stack3FinishToMediumShot = follower.pathBuilder()
+                .addPath(new BezierCurve(FieldLocations.stack3FinishPose, FieldLocations.point, FieldLocations.mediumShotPose))
+                .setLinearHeadingInterpolation(FieldLocations.stack3FinishPose.getHeading(), FieldLocations.mediumShotPose.getHeading())
+                .build();
         stack3FinishToLongShot = follower.pathBuilder()
-                .addPath(new BezierCurve(FieldLocations.stack3FinishPose, FieldLocations.point, FieldLocations.longShotPose))
+                .addPath(new BezierLine(FieldLocations.stack3FinishPose, FieldLocations.longShotPose))
                 .setLinearHeadingInterpolation(FieldLocations.stack3FinishPose.getHeading(), FieldLocations.longShotPose.getHeading())
+                .build();
+
+        mediumShotToStack2Setup = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.mediumShotPose, FieldLocations.stack2SetupPose))
+                .setLinearHeadingInterpolation(FieldLocations.mediumShotPose.getHeading(), FieldLocations.stack2SetupPose.getHeading())
                 .build();
 
         longShotToStack2Setup = follower.pathBuilder()
@@ -46,15 +67,26 @@ public class Paths {
                 .setLinearHeadingInterpolation(FieldLocations.stack2SetupPose.getHeading(), FieldLocations.stack2FinishPose.getHeading())
                 .build();
 
+        stack2FinishToMediumShot = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.stack2FinishPose, FieldLocations.mediumShotPose))
+                .setLinearHeadingInterpolation(FieldLocations.stack2FinishPose.getHeading(), FieldLocations.mediumShotPose.getHeading())
+                .build();
+
         stack2FinishToLongShot = follower.pathBuilder()
                 .addPath(new BezierLine(FieldLocations.stack2FinishPose, FieldLocations.longShotPose))
                 .setLinearHeadingInterpolation(FieldLocations.stack2FinishPose.getHeading(), FieldLocations.longShotPose.getHeading())
+                .build();
+
+        mediumShotToEndFar = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.mediumShotPose, FieldLocations.endFarPose))
+                .setLinearHeadingInterpolation(FieldLocations.mediumShotPose.getHeading(), FieldLocations.endFarPose.getHeading())
                 .build();
 
         longShotToEndFar = follower.pathBuilder()
                 .addPath(new BezierLine(FieldLocations.longShotPose, FieldLocations.endFarPose))
                 .setLinearHeadingInterpolation(FieldLocations.longShotPose.getHeading(), FieldLocations.endFarPose.getHeading())
                 .build();
+
         goalStartToShortShot = follower.pathBuilder()
                 .addPath(new BezierLine(FieldLocations.goalStartPose, FieldLocations.shortShotPose))
                 .setLinearHeadingInterpolation(FieldLocations.goalStartPose.getHeading(), FieldLocations.shortShotPose.getHeading())
@@ -74,6 +106,21 @@ public class Paths {
         shortShotToEndClose = follower.pathBuilder()
                 .addPath(new BezierLine(FieldLocations.shortShotPose, FieldLocations.endClosePose))
                 .setLinearHeadingInterpolation(FieldLocations.shortShotPose.getHeading(), FieldLocations.endClosePose.getHeading())
+                .build();
+
+        longShotToHumanPlayerSetup = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.longShotPose, FieldLocations.humanPlayerSetupPose))
+                .setLinearHeadingInterpolation(FieldLocations.longShotPose.getHeading(), FieldLocations.humanPlayerSetupPose.getHeading())
+                .build();
+
+        humanPlayerSetupToHumanPlayerFinish = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.longShotPose, FieldLocations.humanPlayerFinishPose))
+                .setLinearHeadingInterpolation(FieldLocations.longShotPose.getHeading(), FieldLocations.humanPlayerFinishPose.getHeading())
+                .build();
+
+        humanPlayerFinishToLongShot = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.humanPlayerFinishPose, FieldLocations.longShotPose))
+                .setLinearHeadingInterpolation(FieldLocations.humanPlayerFinishPose.getHeading(), FieldLocations.longShotPose.getHeading())
                 .build();
 
 

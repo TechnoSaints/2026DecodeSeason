@@ -11,6 +11,7 @@ import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda6
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.MotorData;
 
 @Config
+@Disabled
 @TeleOp(name = "LauncherDoubleTuner", group = "Tuning")
 
 public class LauncherDoubleTuner extends LinearOpMode {

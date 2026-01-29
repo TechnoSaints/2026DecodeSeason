@@ -1,12 +1,11 @@
 package org.firstinspires.ftc.teamcode.opmode;
 
 
-import com.pedropathing.geometry.BezierPoint;
 import com.pedropathing.geometry.Pose;
 
 public class FieldLocations {
     public static Pose startPose, goalPose, goalStartPose, shortShotPose, stack1SetupPose, stack1FinishPose,
-            stack2SetupPose, stack2FinishPose, stack3SetupPose, stack3FinishPose, longShotPose, longStartPose, basePose, endFarPose, point, endClosePose;
+            stack2SetupPose, stack2FinishPose, stack3SetupPose, stack3FinishPose, mediumShotPose, longStartPose, basePose, endFarPose, point, endClosePose, longShotPose, humanPlayerSetupPose, humanPlayerFinishPose;
     // Right side poses
     public final static Pose goalRightPose = new Pose(132.0, 132.0, Math.toRadians(45));
     public final static Pose goalStartRightPose = new Pose(124.0, 124.0, Math.toRadians(217));
@@ -17,12 +16,16 @@ public class FieldLocations {
     public final static Pose stack2FinishRightPose = new Pose(121.0, 63.0, Math.toRadians(0));
     public final static Pose stack3SetupRightPose = new Pose(90.0, 40.0, Math.toRadians(0));
     public final static Pose stack3FinishRightPose = new Pose(121.0, 40.0, Math.toRadians(0));
-    public final static Pose longShotRightPose = new Pose(80.5, 72.5, Math.toRadians(230.5));
+    public final static Pose mediumShotRightPose = new Pose(80.5, 72.5, Math.toRadians(230.5));
+    public final static Pose longShotRightPose = new Pose(87,16,Math.toRadians(245));
     public final static Pose longStartRightPose = new Pose(90.0, 9.0, Math.toRadians(270));
     public final static Pose baseRightPose = new Pose(36.0, 36.0, Math.toRadians(90));
     public final static Pose endFarRightPose = new Pose(110.0, 72.0, Math.toRadians(330));
     public final static Pose endCloseRightPose = new Pose(90,135,0);
     public final static Pose pointRight = new Pose(80, 53, 150);
+    public final static Pose humanPlayerSetupRightPose = new Pose(132,24,Math.toRadians(315));
+    public final static Pose humanPlayerFinishRightPose = new Pose(132,13,Math.toRadians(315));
+
 
     // Left side poses
     public final static Pose goalLeftPose = new Pose(144 - goalRightPose.getX(), goalRightPose.getY(), Math.toRadians(135));
@@ -34,12 +37,16 @@ public class FieldLocations {
     public final static Pose stack2FinishLeftPose = new Pose(144 - stack2FinishRightPose.getX() - 12, stack2FinishRightPose.getY() - 8, Math.toRadians(180));
     public final static Pose stack3SetupLeftPose = new Pose(144 - stack3SetupRightPose.getX(), stack3SetupRightPose.getY() - 10, Math.toRadians(180));
     public final static Pose stack3FinishLeftPose = new Pose(144 - stack3FinishRightPose.getX() - 12, stack3FinishRightPose.getY() - 10, Math.toRadians(180));
+    public final static Pose mediumShotLeftPose = new Pose(144 - mediumShotRightPose.getX() - 1, mediumShotRightPose.getY() + 7, mediumShotRightPose.getHeading() + Math.toRadians(81.5));
     public final static Pose longShotLeftPose = new Pose(144 - longShotRightPose.getX() - 1, longShotRightPose.getY() + 7, longShotRightPose.getHeading() + Math.toRadians(81.5));
+
     public final static Pose longStartLeftPose = new Pose(144 - longStartRightPose.getX(), longStartRightPose.getY(), Math.toRadians(270));
     public final static Pose endFarLeftPose = new Pose(144 - endFarRightPose.getX(), endFarRightPose.getY() - 12, Math.toRadians(230));
     public final static Pose endCloseLeftPose = new Pose(144 - endCloseRightPose.getX(), endCloseRightPose.getY(), Math.toRadians(180));
     public final static Pose baseLeftPose = new Pose(144 - baseRightPose.getX(), baseRightPose.getY(), Math.toRadians(90));
     public final static Pose pointLeft = new Pose(144 - pointRight.getX(), pointRight.getY());
+    public final static Pose humanPlayerSetupLeftPose = new Pose(144 - humanPlayerSetupRightPose.getX(), humanPlayerSetupRightPose.getY(), Math.toRadians(0));
+    public final static Pose humanPlayerFinishLeftPose = new Pose(144 - humanPlayerFinishRightPose.getX(), humanPlayerFinishRightPose.getY(), Math.toRadians(0));
 
 
     public static void buildPoses(String side, String shortLong) {
@@ -53,12 +60,15 @@ public class FieldLocations {
             stack2FinishPose = stack2FinishRightPose;
             stack3SetupPose = stack3SetupRightPose;
             stack3FinishPose = stack3FinishRightPose;
+            mediumShotPose = mediumShotRightPose;
             longShotPose = longShotRightPose;
             longStartPose = longStartRightPose;
             endFarPose = endFarRightPose;
             endClosePose = endCloseRightPose;
             basePose = baseLeftPose;
             point = pointRight;
+            humanPlayerSetupPose = humanPlayerSetupRightPose;
+            humanPlayerFinishPose = humanPlayerFinishRightPose;
         } else if (side.equals("blue")) {
             goalPose = goalLeftPose;
             goalStartPose = goalStartLeftPose;
@@ -69,12 +79,16 @@ public class FieldLocations {
             stack2FinishPose = stack2FinishLeftPose;
             stack3SetupPose = stack3SetupLeftPose;
             stack3FinishPose = stack3FinishLeftPose;
+            mediumShotPose = mediumShotLeftPose;
             longShotPose = longShotLeftPose;
             longStartPose = longStartLeftPose;
             endFarPose = endFarLeftPose;
             endClosePose = endCloseLeftPose;
             basePose = baseRightPose;
             point = pointLeft;
+            humanPlayerSetupPose = humanPlayerSetupLeftPose;
+            humanPlayerFinishPose = humanPlayerFinishLeftPose;
+
         } else {
             throw new RuntimeException("side = " + side);
         }
