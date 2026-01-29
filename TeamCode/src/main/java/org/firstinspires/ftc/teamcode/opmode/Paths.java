@@ -9,11 +9,12 @@ import com.pedropathing.paths.PathChain;
 public class Paths {
 
     public static PathChain startToShortShot, shortShotToStack1Setup, shortShotToStack2Setup, stack2FinishToShortShot, stack1FinishToShortShot;
-    public static PathChain startToLongShot, longShotToStack3Setup, stack3FinishToLongShot, longShotToStack2Setup, stack2FinishToLongShot, longShotToStack1Setup, stack1FinishToLongShot, longShotToBase;
+    public static PathChain startToLongShot, longShotToStack3Setup, stack3FinishToLongShot, longShotToStack2Setup, stack2FinishToLongShot, longShotToStack1Setup, stack1FinishToLongShot, longShotToEnd;
 
     public static PathChain stack1SetupToStack1Finish, stack2SetupToStack2Finish, stack3SetupToStack3Finish;
     public static PathChain longShotToHumanStackSetup, humanStackSetupToHumanStackFinish, humanStackFinishToLongShot, stack2FinishToGate;
-    public static PathChain gateToShortShot, shortShotToBase, shortShotToHumanStackSetup, shortShotToStack3Setup;
+    public static PathChain gateToShortShot, shortShotToEnd, shortShotToHumanStackSetup, shortShotToStack3Setup;
+    public static PathChain stack3FinishToShortShot;
 
     public static void buildPaths(Follower follower) {
         // Short
@@ -42,9 +43,9 @@ public class Paths {
                 .setLinearHeadingInterpolation(FieldLocations.stack1FinishPose.getHeading(), FieldLocations.shortShotPose.getHeading())
                 .build();
 
-        shortShotToBase = follower.pathBuilder()
-                .addPath(new BezierLine(FieldLocations.shortShotPose, FieldLocations.basePose))
-                .setLinearHeadingInterpolation(FieldLocations.shortShotPose.getHeading(), FieldLocations.basePose.getHeading())
+        shortShotToEnd = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.shortShotPose, FieldLocations.endPose))
+                .setLinearHeadingInterpolation(FieldLocations.shortShotPose.getHeading(), FieldLocations.endPose.getHeading())
                 .build();
 
         gateToShortShot = follower.pathBuilder()
@@ -87,9 +88,9 @@ public class Paths {
                 .setLinearHeadingInterpolation(FieldLocations.stack1FinishPose.getHeading(), FieldLocations.longShotPose.getHeading())
                 .build();
 
-        longShotToBase = follower.pathBuilder()
-                .addPath(new BezierLine(FieldLocations.longShotPose, FieldLocations.basePose))
-                .setLinearHeadingInterpolation(FieldLocations.longShotPose.getHeading(), FieldLocations.basePose.getHeading())
+        longShotToEnd = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.longShotPose, FieldLocations.endPose))
+                .setLinearHeadingInterpolation(FieldLocations.longShotPose.getHeading(), FieldLocations.endPose.getHeading())
                 .build();
 
         longShotToHumanStackSetup = follower.pathBuilder()
@@ -118,6 +119,11 @@ public class Paths {
         shortShotToStack3Setup = follower.pathBuilder()
                 .addPath(new BezierLine(FieldLocations.shortShotPose, FieldLocations.stack3SetupPose))
                 .setLinearHeadingInterpolation(FieldLocations.shortShotPose.getHeading(), FieldLocations.stack3SetupPose.getHeading())
+                .build();
+
+        stack3FinishToShortShot = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.stack3FinishPose, FieldLocations.stack3SetupPose))
+                .setLinearHeadingInterpolation(FieldLocations.stack3FinishPose.getHeading(), FieldLocations.shortShotPose.getHeading())
                 .build();
 
 

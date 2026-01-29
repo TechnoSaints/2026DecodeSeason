@@ -1,31 +1,35 @@
 package org.firstinspires.ftc.teamcode.opmode.auto;
 
 import com.pedropathing.geometry.Pose;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints.LauncherSettings;
 import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
 import org.firstinspires.ftc.teamcode.opmode.Paths;
 
-public class FarStandardBase extends AutoOpMode {
-    private Pose launchPose = FieldLocations.longShotPose;
+public class ShortBase extends AutoOpMode {
+    private Pose launchPose = FieldLocations.shortShotPose;
     private ElapsedTime timer;
+    private final static double INTAKE_DELAY_MS = 2200;
+    private final static double SHOOT_DELAY_MS = 1750;
+    private final static double INTAKE_SPEED = 0.9;
+
+    protected int skipFromState = -1;
 
     @Override
     public void init() {
         super.init();
         timer = new ElapsedTime();
         timer.reset();
-        bot.setPosition(LauncherSettings.longShotPosition);
+        bot.setPosition(LauncherSettings.shortShotPosition);
     }
 
     protected void autonomousPathUpdate(){
         switch (pathState) {
             // Move start to short shot
             case 0:
-                bot.followPath(Paths.startToLongShot, 1);
-                bot.setLauncherSpeed(LauncherSettings.longShotVelocityFactor);
+                bot.followPath(Paths.startToShortShot, 1);
+                bot.setLauncherSpeed(LauncherSettings.shortShotVelocityFactor);
                 setPathState(1);
                 break;
 
@@ -35,16 +39,21 @@ public class FarStandardBase extends AutoOpMode {
                     bot.openGate();
                     bot.storageManualIntake();
                     timer.reset();
-                    setPathState(2);
+                    if (skipFromState == 1){
+                        setPathState(22);
+                    }
+                    else {
+                        setPathState(2);
+                    }
                 }
                 break;
 
             // Move to stack1 setup
             case 2:
-                if (timer.milliseconds() > 2000 ) {
+                if (timer.milliseconds() > SHOOT_DELAY_MS ) {
                     bot.closeGate();
                     bot.setLauncherSpeed(0);
-                    bot.followPath(Paths.longShotToStack1Setup, 1);
+                    bot.followPath(Paths.shortShotToStack1Setup, 1);
                     setPathState(3);
                 }
                 break;
@@ -54,7 +63,7 @@ public class FarStandardBase extends AutoOpMode {
                 if (!bot.followerIsBusy()) {
                     // Turn on rollers
                     bot.intakeBalls();
-                    bot.followPath(Paths.stack1SetupToStack1Finish, 0.8);
+                    bot.followPath(Paths.stack1SetupToStack1Finish, INTAKE_SPEED);
                     timer.reset();
                     setPathState(4);
                 }
@@ -62,7 +71,7 @@ public class FarStandardBase extends AutoOpMode {
 
             // Do additional stuff, if needed, after move is finished
             case 4:
-                if (!bot.followerIsBusy() && (bot.getState() == 0 || timer.milliseconds() > 3000)) {
+                if ((bot.getState() == 0 || timer.milliseconds() > INTAKE_DELAY_MS)) {
                     setPathState(5);
                 }
                 break;
@@ -81,14 +90,19 @@ public class FarStandardBase extends AutoOpMode {
                     bot.openGate();
                     bot.storageManualIntake();
                     timer.reset();
-                    setPathState(7);
+                    if (skipFromState == 6){
+                        setPathState(22);
+                    }
+                    else {
+                        setPathState(7);
+                    }
                 }
                 break;
 
 
             // Move to stack1 setup
             case 7:
-                if (timer.milliseconds() > 2000 ) {
+                if (timer.milliseconds() > SHOOT_DELAY_MS ) {
                     bot.closeGate();
                     bot.setLauncherSpeed(0);
                     bot.followPath(Paths.shortShotToStack2Setup, 1);
@@ -101,7 +115,7 @@ public class FarStandardBase extends AutoOpMode {
                 if (!bot.followerIsBusy()) {
                     // Turn on rollers
                     bot.intakeBalls();
-                    bot.followPath(Paths.stack2SetupToStack2Finish, 0.8);
+                    bot.followPath(Paths.stack2SetupToStack2Finish, INTAKE_SPEED);
                     timer.reset();
                     setPathState(9);
                 }
@@ -109,7 +123,7 @@ public class FarStandardBase extends AutoOpMode {
 
             // Do additional stuff, if needed, after move is finished
             case 9:
-                if (!bot.followerIsBusy() && (bot.getState() == 0 || timer.milliseconds() > 3000)) {
+                if ((bot.getState() == 0 || timer.milliseconds() > INTAKE_DELAY_MS)) {
                     setPathState(10);
                 }
                 break;
@@ -128,13 +142,18 @@ public class FarStandardBase extends AutoOpMode {
                     bot.openGate();
                     bot.storageManualIntake();
                     timer.reset();
-                    setPathState(12);
+                    if (skipFromState == 11){
+                        setPathState(22);
+                    }
+                    else {
+                        setPathState(12);
+                    }
                 }
                 break;
 
             // Do more stuff
             case 12:
-                if (timer.milliseconds() > 2000 ){
+                if (timer.milliseconds() > SHOOT_DELAY_MS ){
                     bot.closeGate();
                     bot.stopLauncher();
                     setPathState(13);
@@ -150,7 +169,7 @@ public class FarStandardBase extends AutoOpMode {
                 if (!bot.followerIsBusy()) {
                     // Turn on rollers
                     bot.intakeBalls();
-                    bot.followPath(Paths.stack3SetupToStack3Finish,0.8);
+                    bot.followPath(Paths.stack3SetupToStack3Finish,INTAKE_SPEED);
                     timer.reset();
                     setPathState(15);
                 }
@@ -158,18 +177,18 @@ public class FarStandardBase extends AutoOpMode {
 
             // Move to gate & open it
             case 15:
-                if (!bot.followerIsBusy() && (bot.getState() == 0 || timer.milliseconds() > 3000)){
-                    bot.followPath(Paths.stack3FinishToLongShot);
-                    bot.setLauncherSpeed(LauncherSettings.longShotVelocityFactor);
+                if ((bot.getState() == 0 || timer.milliseconds() > INTAKE_DELAY_MS)){
+                    bot.followPath(Paths.stack3FinishToShortShot);
+                    bot.setLauncherSpeed(LauncherSettings.shortShotVelocityFactor);
                     timer.reset();
                     setPathState(17);
                 }
                 break;
 
             case 16:
-                if (!bot.followerIsBusy() && timer.milliseconds() > 2000){
+                if (!bot.followerIsBusy() && timer.milliseconds() > SHOOT_DELAY_MS){
                     bot.followPath(Paths.gateToShortShot, 1);
-                    bot.setLauncherSpeed(LauncherSettings.longShotVelocityFactor);
+                    bot.setLauncherSpeed(LauncherSettings.shortShotVelocityFactor);
                     setPathState(17);
                 }
                 break;
@@ -185,9 +204,9 @@ public class FarStandardBase extends AutoOpMode {
                 }
                 break;
             case 22:
-                if (timer.milliseconds() > 2000) {
+                if (timer.milliseconds() > SHOOT_DELAY_MS) {
                     bot.closeGate();
-                    bot.followPath(Paths.longShotToBase);
+                    bot.followPath(Paths.shortShotToEnd);
                     setPathState(23);
                 }
                 break;

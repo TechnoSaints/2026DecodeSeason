@@ -13,13 +13,13 @@ public class FieldLocations {
     public final static Pose goalRightPose = new Pose(132.0, 132.0, Math.toRadians(45));
     public final static Pose goalStartRightPose = new Pose(124.0, 124.0, Math.toRadians(45));
     public final static Pose shortShotRightPose = new Pose(84.0, 84.0, Math.toRadians(45));
-    public final static Pose stack1SetupRightPose = new Pose(100.0, 84.0, Math.toRadians(0));
-    public final static Pose stack1FinishRightPose = new Pose(128.0, 84.0, Math.toRadians(0));
+    public final static Pose stack1SetupRightPose = new Pose(100.0, 83.0, Math.toRadians(0));
+    public final static Pose stack1FinishRightPose = new Pose(133.0, 83.0, Math.toRadians(0));
     public final static Pose stack2SetupRightPose = new Pose(100.0, 60.0, Math.toRadians(0));
     public final static Pose stack2FinishRightPose = new Pose(135.0, 60.0, Math.toRadians(0));
     public final static Pose stack3SetupRightPose = new Pose(100.0, 36.0, Math.toRadians(0));
     public final static Pose stack3FinishRightPose = new Pose(135.0, 36.0, Math.toRadians(0));
-    public final static Pose longShotRightPose = new Pose(84.0, 20.5, Math.toRadians(65));
+    public final static Pose longShotRightPose = new Pose(84.0, 19, Math.toRadians(65));
     public final static Pose longStartRightPose = new Pose(88.0, 8.0, Math.toRadians(90));
     public final static Pose baseRightPose = new Pose(36.0, 36.0, Math.toRadians(90));
     public final static Pose humanStackSetupRightPose = new Pose(134, 29, Math.toRadians(-60));
@@ -61,8 +61,11 @@ public class FieldLocations {
     public final static Pose humanStackSetupLeftPose = new Pose(15, 29, Math.toRadians(-120));
     public final static Pose humanStackFinishLeftPose = new Pose(15, 9, Math.toRadians(-120));
     public final static Pose gateLeftPose = new Pose(136, 70.5);
-
-    public static Pose farLeftEndPose, farRightEndPose, nearLeftEndPose, nearRightEndPose, shortEndPose, longEndPose;
+    public static Pose shortEndPose, longEndPose;
+    public final static Pose nearLeftEndPose = new Pose(38, 132, 90);
+    public final static Pose nearRightEndPose = new Pose(106, 132, 90);
+    public final static Pose resetLeftPose = new Pose();
+    public final static Pose resetRightPose = new Pose();
 
 
     public static void buildPoses(String side, String shortLong) {
@@ -78,10 +81,12 @@ public class FieldLocations {
             stack3FinishPose = stack3FinishRightPose;
             longShotPose = longShotRightPose;
             longStartPose = longStartRightPose;
-            basePose = baseLeftPose;
+            basePose = baseRightPose;
             gatePose = gateRightPose;
             humanStackSetupPose = humanStackSetupRightPose;
             humanStackFinishPose = humanStackFinishRightPose;
+            longEndPose = baseLeftPose;
+            shortEndPose = nearRightEndPose;
         } else if (side.equals("blue")) {
             goalPose = goalLeftPose;
             goalStartPose = goalStartLeftPose;
@@ -94,19 +99,22 @@ public class FieldLocations {
             stack3FinishPose = stack3FinishLeftPose;
             longShotPose = longShotLeftPose;
             longStartPose = longStartLeftPose;
-            basePose = baseRightPose;
+            basePose = baseLeftPose;
             gatePose = gateLeftPose;
             humanStackSetupPose = humanStackSetupLeftPose;
             humanStackFinishPose = humanStackFinishLeftPose;
+            longEndPose = baseRightPose;
+            shortEndPose = nearLeftEndPose;
         } else {
             throw new RuntimeException("side = " + side);
         }
-        endPose = basePose;
 
         if (shortLong.equals("short")) {
             startPose = goalStartPose;
+            endPose = shortEndPose;
         } else if (shortLong.equals("long")) {
             startPose = longStartPose;
+            endPose = longEndPose;
         } else {
             throw new RuntimeException("shortLong = " + shortLong);
         }
