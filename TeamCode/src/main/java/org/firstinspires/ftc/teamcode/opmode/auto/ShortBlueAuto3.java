@@ -20,7 +20,7 @@ public class ShortBlueAuto3 extends AutoOpMode {
             case 0:
                 bot.kickerGate();
                 bot.intakeReverse();
-                bot.setLauncherLongShot();
+                bot.setLauncherShortShot();
                 bot.followPath(Paths.goalStartToShortShot, 0.85f, true);
                 setPathState(1);
                 break;

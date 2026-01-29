@@ -62,13 +62,15 @@ public class TeleopBot extends Bot {
                 drivetrain.moveDirection(driveAxial, driveStrafe, driveYaw);
         }
 
-        if (gamepad.right_bumper) {
+        if (gamepad.right_trigger > 0.2) {
             setLauncherShortShot();
-        } else if (gamepad.right_trigger > 0.2) {
+        } else if (gamepad.right_bumper) {
             setLauncherMediumShot();
         } else if (gamepad.left_bumper) {
             setLauncherLongShot();
         } else if (gamepad.left_trigger > 0.2) {
+            setLauncherDefenseShot();
+        } else if (gamepad.left_stick_button) {
             launcherStop();
         }
 

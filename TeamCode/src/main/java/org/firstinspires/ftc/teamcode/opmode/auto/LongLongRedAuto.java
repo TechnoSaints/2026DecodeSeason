@@ -21,7 +21,7 @@ public class LongLongRedAuto extends AutoOpMode {
             case 0:
                 bot.kickerGate();
                 bot.intakeReverse();
-                bot.setLauncherShortShot();
+                bot.setLauncherLongShot();
                 bot.followPath(Paths.longStartToLongShot, 0.85f, true);
                 setPathState(1);
                 break;

@@ -23,17 +23,14 @@ public class LauncherDouble extends Component {
     private double targetVelocityFactor = 0.0;
     private int targetVelocity = 0;
     private double velocityFactorIncrement = 0.05;
-    private double targetLaunchPosition = 0.5;
-    private double launchPositionFactor = 0.05;
-    private final double maxLaunchPosition = 1.0;
-    private final double minLaunchPosition = 0.0;
-    private double shortShotVelocityFactor, longShotVelocityFactor, mediumShotVelocityFactor;
+    private double shortShotVelocityFactor, longShotVelocityFactor, mediumShotVelocityFactor, defenseShotVelocityFactor;
 
     public LauncherDouble(HardwareMap hardwareMap, Telemetry telemetry) {
         super(telemetry);
         shortShotVelocityFactor = LauncherSettings.shortShotVelocityFactor;
         longShotVelocityFactor = LauncherSettings.longShotVelocityFactor;
         mediumShotVelocityFactor = LauncherSettings.mediumShotVelocityFactor;
+        defenseShotVelocityFactor = LauncherSettings.defenseShotVelocityFactor;
 
         motorL = hardwareMap.get(DcMotorEx.class, "leftLauncher");
         motorR = hardwareMap.get(DcMotorEx.class, "rightLauncher");
@@ -55,6 +52,7 @@ public class LauncherDouble extends Component {
     {
         setVelocityFactor(longShotVelocityFactor);
     }
+    public void setDefenseShot(){setVelocityFactor(defenseShotVelocityFactor);}
 
     public void stop()
     {
