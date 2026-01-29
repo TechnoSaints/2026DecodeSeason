@@ -14,7 +14,7 @@ public class FieldLocations {
     public final static Pose stack1SetupRightPose = new Pose(98, 84, Math.toRadians(180));
     public final static Pose stack1FinishRightPose = new Pose(130, 84, Math.toRadians(180));
     public final static Pose stack2SetupRightPose = new Pose(98, 60.0, Math.toRadians(180));
-    public final static Pose stack2FinishRightPose = new Pose(125, 60.0, Math.toRadians(180));
+    public final static Pose stack2FinishRightPose = new Pose(140, 60.0, Math.toRadians(180));
     public final static Pose stack3SetupRightPose = new Pose(98, 36.0, Math.toRadians(180));
     public final static Pose stack3FinishRightPose = new Pose(125, 36.0, Math.toRadians(180));
     public final static Pose longShotRightPose = new Pose(88.0, 21.0, Math.toRadians(67.5));

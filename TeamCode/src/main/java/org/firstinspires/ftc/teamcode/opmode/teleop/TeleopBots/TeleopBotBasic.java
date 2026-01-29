@@ -137,7 +137,6 @@ public class TeleopBotBasic extends Bot {
 
         if (gamepad.y) {
             stickLaunchLoad();
-            ballPass = false;
         }
     }
 

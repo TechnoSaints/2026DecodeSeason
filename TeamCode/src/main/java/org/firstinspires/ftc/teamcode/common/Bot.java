@@ -129,6 +129,7 @@ public abstract class Bot extends Component {
         {
         }
         stick.setPositionTicks(kickerLoadPosition);
+        ballPass = false;
     }
 
     public void pusherUpdate(){

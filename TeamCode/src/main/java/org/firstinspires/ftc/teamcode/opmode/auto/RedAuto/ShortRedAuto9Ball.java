@@ -7,7 +7,6 @@ import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
 import org.firstinspires.ftc.teamcode.opmode.Paths;
 import org.firstinspires.ftc.teamcode.opmode.auto.AutoOpMode;
 
-@Disabled
 @Autonomous(name = "\uD83D\uDD34shortRedAuto9Ball", group = "Red")
 public class ShortRedAuto9Ball extends AutoOpMode {
 
@@ -21,6 +20,8 @@ public class ShortRedAuto9Ball extends AutoOpMode {
         switch (pathState) {
             // Move start to short shot
             case 0:
+                bot.setLauncherShortShot();
+                bot.stickLoad();
                 bot.followPath(Paths.startToShortShot, 0.7f, true);
                 setPathState(1);
                 break;
