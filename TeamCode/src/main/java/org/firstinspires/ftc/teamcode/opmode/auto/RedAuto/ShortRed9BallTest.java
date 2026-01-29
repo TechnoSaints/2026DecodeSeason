@@ -38,7 +38,7 @@ public class ShortRed9BallTest extends AutoOpMode {
 
             //Turning on Black Wheel and Resetting Stick
             case 2:
-                if (controlTimer.milliseconds() > 250) {
+                if (controlTimer.milliseconds() > 500) {
                     bot.stickLaunchLoad();
                     controlTimer.reset();
                     setPathState(3);
@@ -55,7 +55,7 @@ public class ShortRed9BallTest extends AutoOpMode {
 
             //Shooting Second Ball
             case 4:
-                if (controlTimer.milliseconds() > 750) {
+                if (controlTimer.milliseconds() > 1100) {
                     bot.stickLaunchLoad();
                     controlTimer.reset();
                     setPathState(5);
@@ -141,7 +141,7 @@ public class ShortRed9BallTest extends AutoOpMode {
 
             //Clear The Jam
             case 14:
-                if (controlTimer.milliseconds() > 1250) {
+                if (controlTimer.milliseconds() > 750) {
                     controlTimer.reset();
                     setPathState(15);
                 }
@@ -173,7 +173,7 @@ public class ShortRed9BallTest extends AutoOpMode {
                 break;
 
             case 18:
-                if (controlTimer.milliseconds() > 1500) {
+                if (controlTimer.milliseconds() > 800) {
                     bot.stickLaunchLoad();
                     controlTimer.reset();
                     setPathState(19);
@@ -182,8 +182,7 @@ public class ShortRed9BallTest extends AutoOpMode {
 
             //Move to Stack 1 Setup and Clear Launcher
             case 19:
-                if (controlTimer.milliseconds() > 250) {
-                    bot.stickLaunchLoad(); //Just In Case A Extra Ball Was There
+                if (controlTimer.milliseconds() > 50) {
                     bot.followPath(Paths.shortShotToStack2Setup, 1f, true);
                     bot.intakeForward();
                     telemetry.addLine("Moved to stack2 Setup");
@@ -195,7 +194,7 @@ public class ShortRed9BallTest extends AutoOpMode {
             //Turn on Intake and Move to Stack 1 Finish after Stack 1 Setup Move is Finished
             case 20:
                 if (!bot.followerIsBusy()) {
-                    bot.followPath(Paths.stack2SetupToStack2Finish, 0.6f, true);
+                    bot.followPath(Paths.stack2SetupToStack2Finish, 0.8f, true);
                     telemetry.addLine("Intaked Balls");
                     telemetry.update();
                     controlTimer.reset();
@@ -248,7 +247,7 @@ public class ShortRed9BallTest extends AutoOpMode {
 
 //            //Clear The Jam
             case 26:
-                if (controlTimer.milliseconds() > 1250) {
+                if (controlTimer.milliseconds() > 750) {
                     controlTimer.reset();
                     setPathState(27);
                 }
@@ -295,8 +294,15 @@ public class ShortRed9BallTest extends AutoOpMode {
                 }
                 break;
 
-            //Stop Opmode
+
+                // move to shortshot to stack 1 setup
             case 32:
+                bot.followPath(Paths.shortShotToStack2Setup, 1f, true);
+                setPathState(33);
+                break;
+
+            //Stop Opmode
+            case 33:
                 if (!bot.followerIsBusy()) {
                     setPathState(-1);
                     requestOpModeStop();
