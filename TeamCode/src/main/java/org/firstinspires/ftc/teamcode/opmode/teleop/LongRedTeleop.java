@@ -23,6 +23,8 @@ public class LongRedTeleop extends LinearOpMode {
         bot = new TeleopBot(this, telemetry, startPose, goalPose);
 
         waitForStart();
+        bot.setStartPosition();
+
         while (opModeIsActive() && !isStopRequested()) {
             bot.processGamepadInput(gamepad1);
             bot.update();

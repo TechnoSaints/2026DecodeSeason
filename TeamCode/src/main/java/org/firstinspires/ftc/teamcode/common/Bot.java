@@ -76,6 +76,7 @@ public abstract class Bot extends Component {
     public void kickerGate(){kicker.setPositionTicks(kickerGatePosition);}
 
 
+
     public void update() {
     }
 }

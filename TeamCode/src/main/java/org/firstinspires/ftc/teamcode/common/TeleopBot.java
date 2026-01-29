@@ -44,6 +44,7 @@ public class TeleopBot extends Bot {
         pinpoint.resetPosAndIMU();
         //start Pose
         pinpoint.setPosition(startPose);
+        pinpoint.update();
 
         buttonTimer.reset();
     }
@@ -54,6 +55,10 @@ public class TeleopBot extends Bot {
 
     public void move(double axial, double strafe, double yaw) {
         drivetrain.moveDirection(axial, strafe, yaw);
+    }
+
+    public void setStartPosition() {
+        pinpoint.setPosition(startPose);
     }
 
     public void processGamepadInput(Gamepad gamepad) {
@@ -146,6 +151,8 @@ public class TeleopBot extends Bot {
             intakeReverse();
             setLauncherShortShot();
         }
+
+
     }
 
 }
