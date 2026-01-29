@@ -45,8 +45,8 @@ public class FieldLocations {
     public final static Pose endCloseLeftPose = new Pose(144 - endCloseRightPose.getX(), endCloseRightPose.getY(), Math.toRadians(180));
     public final static Pose baseLeftPose = new Pose(144 - baseRightPose.getX(), baseRightPose.getY(), Math.toRadians(90));
     public final static Pose pointLeft = new Pose(144 - pointRight.getX(), pointRight.getY());
-    public final static Pose humanPlayerSetupLeftPose = new Pose(144 - humanPlayerSetupRightPose.getX(), humanPlayerSetupRightPose.getY(), Math.toRadians(0));
-    public final static Pose humanPlayerFinishLeftPose = new Pose(144 - humanPlayerFinishRightPose.getX(), humanPlayerFinishRightPose.getY(), Math.toRadians(0));
+    public final static Pose humanPlayerSetupLeftPose = new Pose(144 - humanPlayerSetupRightPose.getX() + 3, humanPlayerSetupRightPose.getY(), Math.toRadians(0));
+    public final static Pose humanPlayerFinishLeftPose = new Pose(144 - humanPlayerFinishRightPose.getX() + 3, humanPlayerFinishRightPose.getY() - 3, Math.toRadians(0));
 
 
     public static void buildPoses(String side, String shortLong) {
