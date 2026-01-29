@@ -6,10 +6,10 @@ import org.apache.commons.math3.fitting.WeightedObservedPoints;
 import java.util.Arrays;
 
 public class LauncherSettings {
-    public static double shortShotVelocityFactor = 0.39;
-    public static double mediumShotVelocityFactor = 0.4;
-    public static double longShotVelocityFactor = 0.52;
-    public static double defenseShotVelocityFactor = 0.43;
+    public static double shortShotVelocityFactor = 0.40;
+    public static double mediumShotVelocityFactor = 0.43;
+    public static double longShotVelocityFactor = 0.53;
+    public static double defenseShotVelocityFactor = 0.46;
 
 
     private static final WeightedObservedPoints velocityFactors = new WeightedObservedPoints();
