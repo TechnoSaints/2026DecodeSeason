@@ -60,31 +60,31 @@ public class LauncherDouble extends Component {
 
         setVelocityFactor(0.45);
 
-        if (d < 3) {
+        if (d < 36) {
             setVelocityFactor(0.4);
-        } else if ((d >= 3) && (d < 3.5)){
+        } else if ((d >= 36) && (d < 42)){
             setVelocityFactor(0.4);
-        } else if ((d >= 3.5) && (d < 4.5)) {
+        } else if ((d >= 42) && (d < 54)) {
             setVelocityFactor(0.415);
-        } else if ((d >= 4.5) && (d < 5.5)) {
+        } else if ((d >= 54) && (d < 66)) {
             setVelocityFactor(0.425);
-        } else if ((d >= 5.5) && (d < 6.5)) {
+        } else if ((d >= 66) && (d < 78)) {
             setVelocityFactor(0.44);
-        } else if ((d >= 6.5) && (d < 7.5)) {
+        } else if ((d >= 78) && (d < 90)) {
             setVelocityFactor(0.46);
-        } else if ((d >= 7.5) && (d < 8.5)) {
+        } else if ((d >= 90) && (d < 102)) {
             setVelocityFactor(0.49);
-        } else if ((d >= 8.5) && (d < 9.5)) {
+        } else if ((d >= 102) && (d < 114)) {
             setVelocityFactor(0.52);
-        } else if ((d >= 9.5) && (d < 10.5)) {
+        } else if ((d >= 114) && (d < 126)) {
             setVelocityFactor(0.55);
-        } else if ((d >= 10.5) && (d < 11.5)) {
+        } else if ((d >= 126) && (d < 138)) {
             setVelocityFactor(0.573);
-        } else if ((d >= 11.5) && (d < 12.5)) {
+        } else if ((d >= 138) && (d < 150)) {
             setVelocityFactor(0.585);
-        } else if ((d >= 12.5) && (d < 13.5)) {
+        } else if ((d >= 150) && (d < 162)) {
             setVelocityFactor(0.605);
-        } else if (d >= 13.5) {
+        } else if (d >= 162) {
             setVelocityFactor(0.61);
         }
 

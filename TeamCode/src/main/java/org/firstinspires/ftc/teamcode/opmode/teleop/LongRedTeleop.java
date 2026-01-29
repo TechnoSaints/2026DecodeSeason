@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.common.TeleopBot;
 @TeleOp(name = "\uD83D\uDD34LongRedTeleop", group = "Linear OpMode")
 public class LongRedTeleop extends LinearOpMode {
     private TeleopBot bot;
-    private final Pose2D startPose = new Pose2D(DistanceUnit.INCH, 38, 0, AngleUnit.DEGREES, 0);
+    private final Pose2D startPose = new Pose2D(DistanceUnit.INCH, 0, -38, AngleUnit.DEGREES, 0);
     private final Pose2D goalPose = new Pose2D(DistanceUnit.INCH, 72, 72, AngleUnit.DEGREES, 0);
     @Override
     public void runOpMode() {

@@ -18,11 +18,15 @@ public class TeleopBot extends Bot {
     private double driveAxial = 0.0;
     private double driveStrafe = 0.0;
     private double driveYaw = 0.0;
-    private int kickerState = 1;
+    private int manualKickerState = 1;
+    private int autoKickerState = 1;
+
     private double d = 0;
-    private ElapsedTime kickerTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
+    private ElapsedTime manualKickerTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
+    private ElapsedTime autoKickerTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     private ElapsedTime buttonTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     private int buttonDelay = 350;
+    private Pose2D startPose;
     private Pose2D goalPose;
     private Pose2D currentPose;
 
@@ -31,6 +35,7 @@ public class TeleopBot extends Bot {
         drivetrain = new Drivetrain(opMode.hardwareMap, telemetry, new DrivetrainData(), new GoBilda435DcMotorData());
         this.goalPose = goalPose;
         this.currentPose = startPose;
+        this.startPose = startPose;
         pinpoint = opMode.hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint");
         pinpoint.setOffsets(-2, -6.5, DistanceUnit.INCH);
         pinpoint.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
@@ -89,23 +94,27 @@ public class TeleopBot extends Bot {
             intakeStop();
         }
 
-        if ((gamepad.y) && (kickerState == 1)) {
+        if ((gamepad.y) && (manualKickerState == 1)) {
                 kickerLoad();
-                kickerState = 2;
-                kickerTimer.reset();
-        } else if ((gamepad.x) && (kickerState == 2) && (kickerTimer.milliseconds() > 250)) {
+                manualKickerState = 2;
+                manualKickerTimer.reset();
+        } else if ((gamepad.y) && (manualKickerState == 2) && (manualKickerTimer.milliseconds() > 250)) {
             kickerLaunch();
-            kickerTimer.reset();
-            kickerState = 3;
-        } else if ((kickerTimer.milliseconds() > 3000) && (kickerState == 3)) {
+            manualKickerTimer.reset();
+            manualKickerState = 3;
+        } else if ((manualKickerTimer.milliseconds() > 3000) && (manualKickerState == 3)) {
             kickerGate();
-            kickerState = 1;
+            manualKickerState = 1;
         }
 
-        if ((gamepad.x) && (kickerState == 1)) {
+        if ((gamepad.x) && (autoKickerState == 1)) {
             pinpoint.update();
             //get current Pose
             currentPose = pinpoint.getPosition();
+            telemetry.addData("X coordinate (IN)", currentPose.getX(DistanceUnit.INCH));
+            telemetry.addData("Y coordinate (IN)", currentPose.getY(DistanceUnit.INCH));
+            telemetry.addData("X coordinate (IN)", startPose.getX(DistanceUnit.INCH));
+            telemetry.addData("Y coordinate (IN)", startPose.getY(DistanceUnit.INCH));
             //Calculate Distance
             d = Math.sqrt(
                             (
@@ -113,19 +122,22 @@ public class TeleopBot extends Bot {
                                             + ((currentPose.getY(DistanceUnit.INCH) - goalPose.getY(DistanceUnit.INCH)) * (currentPose.getY(DistanceUnit.INCH) - goalPose.getY(DistanceUnit.INCH)))
                             )
                     );
+
+            telemetry.addData("Distance", d);
+            telemetry.update();
             launcher.setRPM(d);
-            kickerState = 2;
-        } else if ((kickerState == 2) && (!launcher.isBusy())) {
+            autoKickerState = 2;
+        } else if ((autoKickerState == 2) && (!launcher.isBusy())) {
             kickerLoad();
-            kickerState = 3;
-            kickerTimer.reset();
-        } else if ((gamepad.x) && (kickerState == 3) && (kickerTimer.milliseconds() > 1000)) {
+            autoKickerState = 3;
+            autoKickerTimer.reset();
+        } else if ((gamepad.x) && (autoKickerState == 3) && (autoKickerTimer.milliseconds() > 1000)) {
             kickerLaunch();
-            kickerTimer.reset();
-            kickerState = 4;
-        } else if ((kickerTimer.milliseconds() > 3000) && (kickerState == 4)) {
+            autoKickerTimer.reset();
+            autoKickerState = 4;
+        } else if ((autoKickerTimer.milliseconds() > 3000) && (autoKickerState == 4)) {
             kickerGate();
-            kickerState = 1;
+            autoKickerState = 1;
         }
 
 
