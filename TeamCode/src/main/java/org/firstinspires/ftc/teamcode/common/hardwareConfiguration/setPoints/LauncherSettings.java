@@ -7,8 +7,8 @@ import java.util.Arrays;
 
 public class LauncherSettings {
     public static double shortShotVelocityFactor = 0.40;
-    public static double mediumShotVelocityFactor = 0.43;
-    public static double longShotVelocityFactor = 0.53;
+    public static double mediumShotVelocityFactor = 0.41;
+    public static double longShotVelocityFactor = 0.51;
     public static double defenseShotVelocityFactor = 0.46;
 
 

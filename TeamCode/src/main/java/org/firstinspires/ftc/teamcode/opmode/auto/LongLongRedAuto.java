@@ -59,135 +59,142 @@ public class LongLongRedAuto extends AutoOpMode {
                 }
                 break;
 
-            // Do additional stuff, if needed, after move is finished
             case 5:
                 if (!bot.followerIsBusy()) {
+                    // Turn on rollers
+                    bot.followPath(Paths.stack2FinishToStack2Setup, 0.85f, true);
                     setPathState(6);
+                }
+                break;
+            // Do additional stuff, if needed, after move is finished
+            case 6:
+                if (!bot.followerIsBusy()) {
+                    setPathState(7);
                 }
                 break;
 
             // Move to short shot
-            case 6:
-                bot.followPath(Paths.stack2FinishToLongShot, 0.7f, true);
-                setPathState(7);
+            case 7:
+                bot.followPath(Paths.stack2SetupToLongShot, 0.7f, true);
+                setPathState(8);
                 break;
 
             // Shoot three balls
-            case 7:
+            case 8:
                 if (!bot.followerIsBusy()) {
                     bot.kickerLoad();
-                    controlTimer.reset();
-                    setPathState(8);
-                }
-                break;
-
-            case 8:
-                if (controlTimer.milliseconds() > 2000) {
-                    bot.kickerLaunch();
                     controlTimer.reset();
                     setPathState(9);
                 }
                 break;
 
-            // Do more stuff
             case 9:
-                if (controlTimer.milliseconds() > 1500) {
-                    bot.followPath(Paths.longShotToStack3Setup, 0.85f, true);
-                    bot.kickerGate();
+                if (controlTimer.milliseconds() > 2000) {
+                    bot.kickerLaunch();
+                    controlTimer.reset();
                     setPathState(10);
                 }
                 break;
 
+            // Do more stuff
             case 10:
-                bot.followPath(Paths.stack3SetupToStack3Finish, 0.85f, true);
-                setPathState(11);
+                if (controlTimer.milliseconds() > 1500) {
+                    bot.followPath(Paths.longShotToStack3Setup, 0.85f, true);
+                    bot.kickerGate();
+                    setPathState(11);
+                }
                 break;
 
             case 11:
-                if (!bot.followerIsBusy()) {
-                    setPathState(12);
-                }
+                bot.followPath(Paths.stack3SetupToStack3Finish, 0.85f, true);
+                setPathState(12);
                 break;
 
             case 12:
-                bot.followPath(Paths.stack3FinishToLongShot, 0.85f, true);
-                setPathState(13);
-                break;
-
-            case 13:
                 if (!bot.followerIsBusy()) {
-                    bot.kickerLoad();
-                    controlTimer.reset();
-                    setPathState(14);
+                    setPathState(13);
                 }
                 break;
 
+            case 13:
+                bot.followPath(Paths.stack3FinishToLongShot, 0.85f, true);
+                setPathState(14);
+                break;
+
             case 14:
-                if (controlTimer.milliseconds() > 2000) {
-                    bot.kickerLaunch();
+                if (!bot.followerIsBusy()) {
+                    bot.kickerLoad();
                     controlTimer.reset();
                     setPathState(15);
                 }
                 break;
 
             case 15:
+                if (controlTimer.milliseconds() > 2000) {
+                    bot.kickerLaunch();
+                    controlTimer.reset();
+                    setPathState(16);
+                }
+                break;
+
+            case 16:
                 if (controlTimer.milliseconds() > 1500) {
                     bot.followPath(Paths.longShotToHumanPlayerSetup, 0.85f, true);
                     bot.kickerGate();
-                    setPathState(16);
+                    setPathState(17);
                 }
-            case 16:
-                bot.followPath(Paths.humanPlayerSetupToHumanPlayerFinish, 0.85f, true);
-                setPathState(17);
-                break;
-
             case 17:
-                if (!bot.followerIsBusy()) {
-                    setPathState(18);
-                }
+                bot.followPath(Paths.humanPlayerSetupToHumanPlayerFinish, 0.85f, true);
+                setPathState(18);
                 break;
 
             case 18:
-                bot.followPath(Paths.humanPlayerFinishToLongShot, 0.85f, true);
-                setPathState(19);
-                break;
-
-            case 19:
                 if (!bot.followerIsBusy()) {
-                    bot.kickerLoad();
-                    controlTimer.reset();
-                    setPathState(20);
+                    setPathState(19);
                 }
                 break;
 
+            case 19:
+                bot.followPath(Paths.humanPlayerFinishToLongShot, 0.85f, true);
+                setPathState(20);
+                break;
+
             case 20:
-                if (controlTimer.milliseconds() > 2000) {
-                    bot.kickerLaunch();
+                if (!bot.followerIsBusy()) {
+                    bot.kickerLoad();
                     controlTimer.reset();
                     setPathState(21);
                 }
                 break;
 
-
-
             case 21:
+                if (controlTimer.milliseconds() > 2000) {
+                    bot.kickerLaunch();
+                    controlTimer.reset();
+                    setPathState(22);
+                }
+                break;
+
+
+
+            case 22:
                 if (controlTimer.milliseconds() > 1500) {
                     bot.followPath(Paths.longShotToEndFar, 0.85f, true);
                     bot.kickerGate();
                     bot.intakeStop();
                     bot.launcherStop();
-                    setPathState(22);
-                }
-                break;
-
-            case 22:
-                if (!bot.followerIsBusy()) {
                     setPathState(23);
                 }
                 break;
 
-            // Stop opmode
             case 23:
+                if (!bot.followerIsBusy()) {
+                    setPathState(24);
+                }
+                break;
+
+            // Stop opmode
+            case 24:
 
                 setPathState(-1);
 
