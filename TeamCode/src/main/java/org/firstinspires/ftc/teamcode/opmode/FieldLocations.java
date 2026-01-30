@@ -22,9 +22,9 @@ public class FieldLocations {
     public final static Pose baseRightPose = new Pose(36, 36, Math.toRadians(90));
 
     // Left side poses
-    public final static Pose goalLeftPose = new Pose(144 - goalRightPose.getX(), goalRightPose.getY(), Math.toRadians(135));
+    public final static Pose goalLeftPose = new Pose(60, goalRightPose.getY(), Math.toRadians(139.5));
     public final static Pose goalStartLeftPose = new Pose(144 - goalStartRightPose.getX(), goalStartRightPose.getY(), Math.toRadians(140));
-    public final static Pose shortShotLeftPose = new Pose(70, 84, Math.toRadians(130.5));
+    public final static Pose shortShotLeftPose = new Pose(60, 76, Math.toRadians(130.5));
     public final static Pose stack1SetupLeftPose = new Pose(144 - stack1SetupRightPose.getX(), stack1SetupRightPose.getY(), Math.toRadians(0));
     public final static Pose stack1FinishLeftPose = new Pose(144 - stack1FinishRightPose.getX(), stack1FinishRightPose.getY(), Math.toRadians(0));
     public final static Pose stack2SetupLeftPose = new Pose(144 - stack2SetupRightPose.getX(), stack2SetupRightPose.getY(), Math.toRadians(0));

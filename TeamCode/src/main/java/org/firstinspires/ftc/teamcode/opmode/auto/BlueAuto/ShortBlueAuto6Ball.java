@@ -6,7 +6,7 @@ import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
 import org.firstinspires.ftc.teamcode.opmode.Paths;
 import org.firstinspires.ftc.teamcode.opmode.auto.AutoOpMode;
 
-@Autonomous(name = "\uD83D\uDD34Short Blue Auto 6 Ball", group = "Blue")
+@Autonomous(name = "\uD83D\uDD35Short Blue Auto 6 Ball", group = "Blue")
 public class ShortBlueAuto6Ball extends AutoOpMode {
 
     @Override

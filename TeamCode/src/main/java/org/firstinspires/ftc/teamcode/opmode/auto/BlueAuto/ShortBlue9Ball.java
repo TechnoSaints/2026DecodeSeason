@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmode.auto.RedAuto;
+package org.firstinspires.ftc.teamcode.opmode.auto.BlueAuto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
@@ -6,12 +6,12 @@ import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
 import org.firstinspires.ftc.teamcode.opmode.Paths;
 import org.firstinspires.ftc.teamcode.opmode.auto.AutoOpMode;
 
-@Autonomous(name = "\uD83D\uDD34Short Red Auto 9 Ball Test", group = "Red")
-public class ShortRed9BallTest extends AutoOpMode {
+@Autonomous(name = "\uD83D\uDD35Short Red 9 Ball", group = "Red")
+public class ShortBlue9Ball extends AutoOpMode {
 
     @Override
     public void init() {
-        FieldLocations.buildPoses("red", "short");
+        FieldLocations.buildPoses("blue", "short");
         super.init();
     }
 
@@ -55,7 +55,7 @@ public class ShortRed9BallTest extends AutoOpMode {
 
             //Shooting Second Ball
             case 4:
-                if (controlTimer.milliseconds() > 1100) {
+                if (controlTimer.milliseconds() > 1250) {
                     bot.stickLaunchLoad();
                     controlTimer.reset();
                     setPathState(5);
@@ -92,7 +92,7 @@ public class ShortRed9BallTest extends AutoOpMode {
             //Turn on Intake and Move to Stack 1 Finish after Stack 1 Setup Move is Finished
             case 8:
                 if (!bot.followerIsBusy()) {
-                    bot.followPath(Paths.stack1SetupToStack1Finish, 0.6f, true);
+                    bot.followPath(Paths.stack1SetupToStack1Finish, 0.7f, true);
                     controlTimer.reset();
                     setPathState(9);
                 }
