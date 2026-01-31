@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.common;
 
-import com.arcrobotics.ftclib.geometry.Pose2d;
 import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -8,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -15,7 +15,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda6000DcMotorData;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints.LauncherSettings;
-import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
 
 public class Launcher extends Component {
     private DcMotorEx leftLauncher, rightLauncher;
@@ -34,6 +33,7 @@ public class Launcher extends Component {
         rightLauncher = hardwareMap.get(DcMotorEx.class, "rightLauncher");
         leftAimer = hardwareMap.get(Servo.class, "leftAimer");
         rightAimer = hardwareMap.get(Servo.class, "rightAimer");
+        rightLauncher.setDirection(DcMotorSimple.Direction.REVERSE);
         setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
         setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         PIDFCoefficients pidfCoefficients = new PIDFCoefficients(290, 0, 0, 11);
@@ -158,7 +158,7 @@ public class Launcher extends Component {
     }
 
     public boolean motorBusy(){
-        return (Math.abs(leftLauncher.getVelocity()-targetVelocity) > 50) || (Math.abs(-rightLauncher.getVelocity()-targetVelocity) > 50);
+        return (Math.abs(leftLauncher.getVelocity()-targetVelocity) > 50) || (Math.abs(rightLauncher.getVelocity()-targetVelocity) > 50);
     }
 
     public void teleopDistanceLog(Pose2D pose, boolean red){

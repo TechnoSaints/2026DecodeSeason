@@ -10,7 +10,7 @@ public class LauncherSettings {
     public static final double shortShotPosition = 0.05;
     public static final double mediumShotVelocityFactor = 0.5;
     public static final double mediumShotPosition = 0.8;
-    public static final double longShotVelocityFactor = 0.765;
+    public static final double longShotVelocityFactor = 0.77;
     public static final double longShotPosition = 0.1;
     public static final double maxPosition = 0.3;
     public static final double minPosition = 0.0;

@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
+import org.firstinspires.ftc.teamcode.common.Launcher;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda6000DcMotorData;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints.LauncherSettings;
 /*
@@ -16,9 +17,9 @@ import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.setPoints.Lau
 
 @TeleOp(name = "PIDF Test", group = "1PID")
 public class PIDFTest extends LinearOpMode {
-    DcMotorEx leftLauncher, rightLauncher;
-    double highVelocity = LauncherSettings.longShotVelocityFactor * GoBilda6000DcMotorData.maxTicksPerSec;
-    double lowVelocity = LauncherSettings.shortShotVelocityFactor * GoBilda6000DcMotorData.maxTicksPerSec;
+    Launcher launcher;
+    double highVelocity = LauncherSettings.longShotVelocityFactor;
+    double lowVelocity = LauncherSettings.shortShotVelocityFactor;
     double curTargetVelocity = highVelocity;
     double F = 0;
     double P = 0;
@@ -27,13 +28,8 @@ public class PIDFTest extends LinearOpMode {
     double[] stepSizes = {10, 1, 0.1, 0.01, 0.001, 0.0001};
     int stepIndex = 1;
     public void runOpMode(){
-        leftLauncher = hardwareMap.get(DcMotorEx.class, "leftLauncher");
-        rightLauncher = hardwareMap.get(DcMotorEx.class, "rightLauncher");
-        leftLauncher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightLauncher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        launcher = new Launcher(telemetry, hardwareMap);
         PIDFCoefficients pidfCoefficients = new PIDFCoefficients(P, I, D, F);
-        leftLauncher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfCoefficients);
-        rightLauncher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfCoefficients);
         telemetry.addLine("init complete");
         telemetry.update();
         waitForStart();
@@ -76,21 +72,10 @@ public class PIDFTest extends LinearOpMode {
                 D -= stepSizes[stepIndex];
             }
             pidfCoefficients = new PIDFCoefficients(P, I, D, F);
-            leftLauncher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfCoefficients);
-            rightLauncher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfCoefficients);
-
-            leftLauncher.setVelocity(curTargetVelocity);
-            rightLauncher.setVelocity(curTargetVelocity);
-            double curLeftVelocity = leftLauncher.getVelocity();
-            double leftError = curTargetVelocity - curLeftVelocity;
-            double curRightVelocity = rightLauncher.getVelocity();
-            double rightError = -curTargetVelocity - curRightVelocity;
+            launcher.setVelocity(curTargetVelocity);
+            launcher.log();
 
             telemetry.addData("Target Velocity", curTargetVelocity);
-            telemetry.addData("Left Current Velocity", curLeftVelocity);
-            telemetry.addData("Left Error", "%.2f", leftError);
-            telemetry.addData("Right Current Velocity", curRightVelocity);
-            telemetry.addData("Right Error", "%.2f", rightError);
             telemetry.addLine("---------------------------------------");
             telemetry.addData("Tuning P", "%.4f (D-Pad U/D)", P);
             telemetry.addData("Tuning I", "%.4f (D-Pad U/D)", I);
