@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmode.auto.BlueAuto;
+package org.firstinspires.ftc.teamcode.opmode.auto.RedAuto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
@@ -6,12 +6,12 @@ import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
 import org.firstinspires.ftc.teamcode.opmode.Paths;
 import org.firstinspires.ftc.teamcode.opmode.auto.AutoOpMode;
 
-@Autonomous(name = "\uD83D\uDD35Short Blue 9 Ball", group = "Blue")
-public class ShortBlue9Ball extends AutoOpMode {
+@Autonomous(name = "\uD83D\uDD34Long Red 6 Ball", group = "Red")
+public class LongRed6Ball extends AutoOpMode {
 
     @Override
     public void init() {
-        FieldLocations.buildPoses("blue", "short");
+        FieldLocations.buildPoses("red", "long");
         super.init();
     }
 
@@ -22,9 +22,9 @@ public class ShortBlue9Ball extends AutoOpMode {
             //Move From Start To Short Shot
 
             case 0:
-                bot.setLauncherShortShot();
+                bot.setLauncherLongShotExtraPower();
                 bot.stickLoad();
-                bot.followPath(Paths.startToShortShot, 1f, true);
+                bot.followPath(Paths.startToLongShot, 1f, true);
                 setPathState(1);
                 break;
 
@@ -83,7 +83,7 @@ public class ShortBlue9Ball extends AutoOpMode {
             case 7:
                 if (controlTimer.milliseconds() > 250) {
                     bot.stickLaunchLoad(); //Just In Case A Extra Ball Was There
-                    bot.followPath(Paths.shortShotToStack1Setup, 1f, true);
+                    bot.followPath(Paths.longShotToStack3Setup, 1f, true);
                     bot.intakeForward();
                     setPathState(8);
                 }
@@ -92,7 +92,7 @@ public class ShortBlue9Ball extends AutoOpMode {
             //Turn on Intake and Move to Stack 1 Finish after Stack 1 Setup Move is Finished
             case 8:
                 if (!bot.followerIsBusy()) {
-                    bot.followPath(Paths.stack1SetupToStack1Finish, 0.7f, true);
+                    bot.followPath(Paths.stack3SetupToStack3Finish, 0.7f, true);
                     controlTimer.reset();
                     setPathState(9);
                 }
@@ -108,7 +108,7 @@ public class ShortBlue9Ball extends AutoOpMode {
 
             //Returning To Shooting Position
             case 10:
-                bot.followPath(Paths.stack1FinishToShortShot, 1f, true);
+                bot.followPath(Paths.stack3FinishTolongShot, 1f, true);
                 setPathState(11);
                 break;
 
@@ -181,128 +181,16 @@ public class ShortBlue9Ball extends AutoOpMode {
                 break;
 
             //Move to Stack 1 Setup and Clear Launcher
-            case 19:
-                if (controlTimer.milliseconds() > 50) {
-                    bot.followPath(Paths.shortShotToStack2Setup, 1f, true);
-                    bot.intakeForward();
-                    telemetry.addLine("Moved to stack2 Setup");
-                    telemetry.update();
-                    setPathState(20);
-                }
-                break;
-
-            //Turn on Intake and Move to Stack 1 Finish after Stack 1 Setup Move is Finished
-            case 20:
-                if (!bot.followerIsBusy()) {
-                    bot.followPath(Paths.stack2SetupToStack2Finish, 0.8f, true);
-                    telemetry.addLine("Intaked Balls");
-                    telemetry.update();
-                    controlTimer.reset();
-                    setPathState(21);
-                }
-                break;
-
-            //Pause To Left the Intake Finish
-            case 21:
-                if (controlTimer.milliseconds() > 2250) {
-                    controlTimer.reset();
-                    setPathState(22);
-                }
-                break;
-
-            //Returning To Shooting Position
-            case 22:
-                bot.followPath(Paths.stack2FinishToShortShot, 1f, true);
-                telemetry.addLine("Moved to shoot.");
-                telemetry.update();
-                setPathState(23);
-                break;
-
-            //Clear Jam
-            case 23:
-                if (!bot.followerIsBusy()) {
-                    controlTimer.reset();
-                    // bot.pusherReverse();
-                    setPathState(24);
-                }
-                break;
-
-            //Launch 4th Ball
-            case 24:
-                if (controlTimer.milliseconds() > 500) {
-                    controlTimer.reset();
-                    bot.stickLaunchLoad();
-                    //  ();
-                    setPathState(25);
-                }
-                break;
-
-            //Reset Stick and Start Pusher
-            case 25:
-                if (controlTimer.milliseconds() > 250) {
-                    controlTimer.reset();
-                    setPathState(26);
-                }
-                break;
-
-//            //Clear The Jam
-            case 26:
-                if (controlTimer.milliseconds() > 750) {
-                    controlTimer.reset();
-                    setPathState(27);
-                }
-                break;
-
-            //Launch 5th Ball
-            case 27:
-                if (controlTimer.milliseconds() > 500) {
-                    bot.stickLaunchLoad();
-                    controlTimer.reset();
-                    setPathState(28);
-                }
-                break;
-
-            //Reset Stick
-            case 28:
-                if (controlTimer.milliseconds() > 250) {
-                    controlTimer.reset();
-                    setPathState(29);
-                }
-                break;
-
-            //Launch 6th Ball and Travel for Move Bonus
-            case 29:
-                if (controlTimer.milliseconds() > 1) {
-                    controlTimer.reset();
-                    setPathState(30);
-                }
-                break;
-
-            case 30:
-                if (controlTimer.milliseconds() > 500) {
-                    bot.stickLaunchLoad();
-                    controlTimer.reset();
-                    setPathState(31);
-                }
-                break;
-
-            case 31:
-                if (controlTimer.milliseconds() > 250) {
-                    controlTimer.reset();
-                   // bot.followPath(Paths.shortShotToStack2Setup, 0.8f, true);
-                    setPathState(32);
-                }
-                break;
 
 
                 // move to shortshot to stack 1 setup
-            case 32:
-                bot.followPath(Paths.shortShotToStack2Setup, 1f, true);
-                setPathState(33);
+            case 19:
+                bot.followPath(Paths.longShotToStack3Setup, 1f, true);
+                setPathState(20);
                 break;
 
             //Stop Opmode
-            case 33:
+            case 20:
                 if (!bot.followerIsBusy()) {
                     setPathState(-1);
                     requestOpModeStop();

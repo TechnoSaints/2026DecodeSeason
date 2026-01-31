@@ -27,6 +27,8 @@ public abstract class Bot extends Component {
 
     public boolean check = true;
 
+    public boolean pusherOveride = false;
+
 
     private double kickerLoadPosition = 0.16;
     private double kickerLaunchPosition = .3;
@@ -62,6 +64,10 @@ public abstract class Bot extends Component {
 
     public void setLauncherLongShot() {
         launcher.setLongShot();
+    }
+
+    public void setLauncherLongShotExtraPower() {
+        launcher.setLongShotExtraPower();
     }
 
     public void setLauncherMediumShot() {
@@ -133,29 +139,29 @@ public abstract class Bot extends Component {
     }
 
     public void pusherUpdate(){
-        if (colorSensor.ballInTop()) {
-            pusherTime.reset();
-            check = false;
-        }
+        if (pusherOveride == false) {
+            if (colorSensor.ballInTop()) {
+                pusherTime.reset();
+                check = false;
+            }
 
-        if (pusherTime.milliseconds() > 250 && check == false) {
-            ballPass = true;
-            check = true;
-        }
+            if (pusherTime.milliseconds() > 250 && check == false) {
+                ballPass = true;
+                check = true;
+            }
 
-        if(ballPass || colorSensor.ballInShot())
-        {
-            stopPusher();
-        } else {
-            pusherStart();
-        }
+            if (ballPass || colorSensor.ballInShot()) {
+                stopPusher();
+            } else {
+                pusherStart();
+            }
 
-        if((ballPass || colorSensor.ballInShot()) && (colorSensor.ballInFirstSensor()) && (!colorSensor.ballInTop()))
-        {
-            runUsingEncoder();
-            tickBlackWheel(-500);
-        } else {
-            noEncoder();
+            if ((ballPass || colorSensor.ballInShot()) && (colorSensor.ballInFirstSensor()) && (!colorSensor.ballInTop())) {
+                runUsingEncoder();
+                tickBlackWheel(-500);
+            } else {
+                noEncoder();
+            }
         }
     }
 

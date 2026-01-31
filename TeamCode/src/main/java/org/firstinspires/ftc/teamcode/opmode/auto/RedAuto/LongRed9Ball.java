@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmode.auto.BlueAuto;
+package org.firstinspires.ftc.teamcode.opmode.auto.RedAuto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
@@ -6,12 +6,12 @@ import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
 import org.firstinspires.ftc.teamcode.opmode.Paths;
 import org.firstinspires.ftc.teamcode.opmode.auto.AutoOpMode;
 
-@Autonomous(name = "\uD83D\uDD35Short Blue 9 Ball", group = "Blue")
-public class ShortBlue9Ball extends AutoOpMode {
+@Autonomous(name = "\uD83D\uDD34Long Red 9 Ball", group = "Red")
+public class LongRed9Ball extends AutoOpMode {
 
     @Override
     public void init() {
-        FieldLocations.buildPoses("blue", "short");
+        FieldLocations.buildPoses("red", "long");
         super.init();
     }
 
@@ -22,9 +22,9 @@ public class ShortBlue9Ball extends AutoOpMode {
             //Move From Start To Short Shot
 
             case 0:
-                bot.setLauncherShortShot();
+                bot.setLauncherLongShotExtraPower();
                 bot.stickLoad();
-                bot.followPath(Paths.startToShortShot, 1f, true);
+                bot.followPath(Paths.startToLongShot, 1f, true);
                 setPathState(1);
                 break;
 
@@ -83,7 +83,7 @@ public class ShortBlue9Ball extends AutoOpMode {
             case 7:
                 if (controlTimer.milliseconds() > 250) {
                     bot.stickLaunchLoad(); //Just In Case A Extra Ball Was There
-                    bot.followPath(Paths.shortShotToStack1Setup, 1f, true);
+                    bot.followPath(Paths.longShotToStack3Setup, 1f, true);
                     bot.intakeForward();
                     setPathState(8);
                 }
@@ -92,7 +92,7 @@ public class ShortBlue9Ball extends AutoOpMode {
             //Turn on Intake and Move to Stack 1 Finish after Stack 1 Setup Move is Finished
             case 8:
                 if (!bot.followerIsBusy()) {
-                    bot.followPath(Paths.stack1SetupToStack1Finish, 0.7f, true);
+                    bot.followPath(Paths.stack3SetupToStack3Finish, 0.7f, true);
                     controlTimer.reset();
                     setPathState(9);
                 }
@@ -108,7 +108,7 @@ public class ShortBlue9Ball extends AutoOpMode {
 
             //Returning To Shooting Position
             case 10:
-                bot.followPath(Paths.stack1FinishToShortShot, 1f, true);
+                bot.followPath(Paths.stack3FinishTolongShot, 1f, true);
                 setPathState(11);
                 break;
 
@@ -183,7 +183,7 @@ public class ShortBlue9Ball extends AutoOpMode {
             //Move to Stack 1 Setup and Clear Launcher
             case 19:
                 if (controlTimer.milliseconds() > 50) {
-                    bot.followPath(Paths.shortShotToStack2Setup, 1f, true);
+                    bot.followPath(Paths.longShotToStack2Setup, 1f, true);
                     bot.intakeForward();
                     telemetry.addLine("Moved to stack2 Setup");
                     telemetry.update();
@@ -212,7 +212,7 @@ public class ShortBlue9Ball extends AutoOpMode {
 
             //Returning To Shooting Position
             case 22:
-                bot.followPath(Paths.stack2FinishToShortShot, 1f, true);
+                bot.followPath(Paths.stack2FinishTolongShot, 1f, true);
                 telemetry.addLine("Moved to shoot.");
                 telemetry.update();
                 setPathState(23);
@@ -297,7 +297,7 @@ public class ShortBlue9Ball extends AutoOpMode {
 
                 // move to shortshot to stack 1 setup
             case 32:
-                bot.followPath(Paths.shortShotToStack2Setup, 1f, true);
+                bot.followPath(Paths.longShotToStack3Setup, 1f, true);
                 setPathState(33);
                 break;
 

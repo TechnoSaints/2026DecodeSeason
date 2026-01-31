@@ -1,18 +1,17 @@
-package org.firstinspires.ftc.teamcode.opmode.auto.RedAuto;
+package org.firstinspires.ftc.teamcode.opmode.auto.BlueAuto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
 import org.firstinspires.ftc.teamcode.opmode.Paths;
 import org.firstinspires.ftc.teamcode.opmode.auto.AutoOpMode;
 
-@Autonomous(name = "\uD83D\uDD34longRedAuto3Ball", group = "Red")
-public class LongRedAuto3Ball extends AutoOpMode {
+@Autonomous(name = "\uD83D\uDD35longBlueAuto3Ball", group = "Blue")
+public class LongBlueAuto3Ball extends AutoOpMode {
 
     @Override
     public void init() {
-        FieldLocations.buildPoses("red", "long");
+        FieldLocations.buildPoses("blue", "long");
         super.init();
     }
 
@@ -20,13 +19,13 @@ public class LongRedAuto3Ball extends AutoOpMode {
         bot.pusherUpdate();
 
         switch (pathState) {
-            // Move start to short shot
             case 0:
                 bot.followPath(Paths.startToLongShot, 0.6f, false);
-                bot.setLauncherLongShotExtraPower();
+                bot.setLauncherLongShot();
                 bot.stickLoad();
                 setPathState(1);
                 break;
+
             case 1:
                 if (controlTimer.milliseconds() > 1500) {
                     controlTimer.reset();
@@ -86,8 +85,8 @@ public class LongRedAuto3Ball extends AutoOpMode {
             // Move to stack1 setup
             case 8:
                 bot.stickLaunchLoad();
-                    bot.followPath(Paths.longShotToParking, 0.8f, false);
-                    setPathState(9);
+                bot.followPath(Paths.longShotToParking, 0.8f, false);
+                setPathState(9);
                 break;
 
             // Stop opmode

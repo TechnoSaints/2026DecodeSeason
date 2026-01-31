@@ -78,13 +78,11 @@ public class TeleopBotBasic extends Bot {
         }
 
 
-        if (gamepad.left_bumper)
-        {
+        if (gamepad.left_bumper) {
             setLauncherShortShot();
         }
 
-        if (gamepad.right_bumper)
-        {
+        if (gamepad.right_bumper) {
             setLauncherLongShot();
         }
 
@@ -92,10 +90,16 @@ public class TeleopBotBasic extends Bot {
             reverseLauncer();
         }
 
-        if (gamepad.right_trigger > 0.2 && buttonPushable())
-        {
+        if (gamepad.right_trigger > 0.2 && buttonPushable()) {
             launcherStop();
             buttonTimer.reset();
+        }
+
+        if (gamepad.share) {
+            pusherOveride = true;
+        }
+        if (gamepad.options) {
+            pusherOveride = false;
         }
 
         if (gamepad.x && !pusherButtonPressedLast && pusherTimer.milliseconds() > pusherDebounceMs) {
@@ -120,8 +124,10 @@ public class TeleopBotBasic extends Bot {
             pusherTimer.reset();    // Reset debounce timer
         }
 
-        pusherButtonPressedLast = gamepad.x;
-        pusherButtonPressedReverse = gamepad.b;
+        if (gamepad.b) {
+            pusherButtonPressedLast = gamepad.x;
+            pusherButtonPressedReverse = gamepad.b;
+        }
 
         if (gamepad.a && buttonPushable()) {
             if (!intakeMoving) {
@@ -134,10 +140,8 @@ public class TeleopBotBasic extends Bot {
             buttonTimer.reset();
         }
 
-
         if (gamepad.y) {
             stickLaunchLoad();
         }
     }
-
 }

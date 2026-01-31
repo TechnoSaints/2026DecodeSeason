@@ -1,102 +1,96 @@
-package org.firstinspires.ftc.teamcode.opmode.auto.RedAuto;
+package org.firstinspires.ftc.teamcode.opmode.auto.BlueAuto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.opmode.FieldLocations;
 import org.firstinspires.ftc.teamcode.opmode.Paths;
 import org.firstinspires.ftc.teamcode.opmode.auto.AutoOpMode;
 
-@Autonomous(name = "\uD83D\uDD34longRedAuto3Ball", group = "Red")
-public class LongRedAuto3Ball extends AutoOpMode {
+@Autonomous(name = "\uD83D\uDD35Short Blue 3 Ball", group = "Blue")
+public class ShortBlue3Ball extends AutoOpMode {
 
     @Override
     public void init() {
-        FieldLocations.buildPoses("red", "long");
+        FieldLocations.buildPoses("blue", "short");
         super.init();
     }
 
     protected void autonomousPathUpdate() {
         bot.pusherUpdate();
-
         switch (pathState) {
-            // Move start to short shot
+
+            //Move From Start To Short Shot
+
             case 0:
-                bot.followPath(Paths.startToLongShot, 0.6f, false);
-                bot.setLauncherLongShotExtraPower();
+                bot.setLauncherShortShot();
                 bot.stickLoad();
+                bot.followPath(Paths.startToShortShot, 1f, true);
                 setPathState(1);
                 break;
+
+            //Shooting The First Shot
             case 1:
-                if (controlTimer.milliseconds() > 1500) {
+                if (!bot.followerIsBusy()) {
                     controlTimer.reset();
                     setPathState(2);
                 }
                 break;
-            // Shoot three balls after move is finished
+
+            //Turning on Black Wheel and Resetting Stick
             case 2:
-                if (!bot.followerIsBusy()) {
-                    bot.stickLaunch();
+                if (controlTimer.milliseconds() > 500) {
+                    bot.stickLaunchLoad();
+                    controlTimer.reset();
                     setPathState(3);
                 }
                 break;
-            //Turning on Black Wheel and Resetting Stick
+
+            //Clearing Jam
             case 3:
-                if (controlTimer.milliseconds() > 500) {
-                    bot.stickLaunchLoad();
+                if (controlTimer.milliseconds() > 150) {
                     controlTimer.reset();
                     setPathState(4);
                 }
                 break;
 
-            //Clearing Jam
+            //Shooting Second Ball
             case 4:
-                if (controlTimer.milliseconds() > 150) {
+                if (controlTimer.milliseconds() > 1250) {
+                    bot.stickLaunchLoad();
                     controlTimer.reset();
                     setPathState(5);
                 }
                 break;
 
-            //Shooting Second Ball
+            //Resetting Stick
             case 5:
-                if (controlTimer.milliseconds() > 1250) {
-                    bot.stickLaunchLoad();
+                if (controlTimer.milliseconds() > 1) {
                     controlTimer.reset();
                     setPathState(6);
                 }
                 break;
 
-            //Resetting Stick
+            //Shooting Third Ball
             case 6:
-                if (controlTimer.milliseconds() > 1) {
+                if (controlTimer.milliseconds() > 1250) {
+                    bot.stickLaunchLoad();
                     controlTimer.reset();
                     setPathState(7);
                 }
                 break;
-
-            //Shooting Third Ball
+                // move to shortshot to stack 1 setup
             case 7:
-                if (controlTimer.milliseconds() > 1250) {
-                    bot.stickLaunchLoad();
-                    controlTimer.reset();
-                    setPathState(8);
-                }
+                bot.followPath(Paths.shortShotToStack2Setup, 1f, true);
+                setPathState(33);
                 break;
 
-            // Move to stack1 setup
+            //Stop Opmode
             case 8:
-                bot.stickLaunchLoad();
-                    bot.followPath(Paths.longShotToParking, 0.8f, false);
-                    setPathState(9);
-                break;
-
-            // Stop opmode
-            case 9:
                 if (!bot.followerIsBusy()) {
                     setPathState(-1);
                     requestOpModeStop();
-                    break;
                 }
+                break;
         }
     }
 }

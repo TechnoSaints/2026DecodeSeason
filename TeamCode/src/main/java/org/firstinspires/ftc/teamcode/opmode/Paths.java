@@ -12,7 +12,7 @@ import java.lang.reflect.Field;
 
 public class Paths {
 
-    public static PathChain startToShortShot, shortShotToStack1Setup, stack1SetupToStack1Finish, stack1FinishToShortShot, shortShotToStack2Setup, stack2SetupToStack2Finish, stack2FinishToShortShot, shortShotToStack3Setup, stack3SetupToStack3Finish, stack3FinishToShortShot, startToLongShot, longShotToStack3Setup, stack3FinishTolongShot, longShotToParking;
+    public static PathChain startToShortShot, shortShotToStack1Setup, stack1SetupToStack1Finish, stack1FinishToShortShot, shortShotToStack2Setup, stack2SetupToStack2Finish, stack2FinishToShortShot, shortShotToStack3Setup, stack3SetupToStack3Finish, stack3FinishToShortShot, startToLongShot, longShotToStack3Setup, stack3FinishTolongShot, longShotToParking, stack2FinishTolongShot, longShotToStack2Setup;
 
     public static void buildPaths(Follower follower) {
 
@@ -80,9 +80,19 @@ public class Paths {
                 .setLinearHeadingInterpolation(FieldLocations.longShotPose.getHeading(), FieldLocations.stack3SetupPose.getHeading())
                 .build();
 
+        longShotToStack2Setup = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.longShotPose, FieldLocations.stack2SetupPose))
+                .setLinearHeadingInterpolation(FieldLocations.longShotPose.getHeading(), FieldLocations.stack2SetupPose.getHeading())
+                .build();
+
         stack3FinishTolongShot = follower.pathBuilder()
                 .addPath(new BezierLine(FieldLocations.stack3FinishPose, FieldLocations.longShotPose))
                 .setLinearHeadingInterpolation(FieldLocations.stack3FinishPose.getHeading(), FieldLocations.longShotPose.getHeading())
+                .build();
+
+        stack2FinishTolongShot = follower.pathBuilder()
+                .addPath(new BezierLine(FieldLocations.stack2FinishPose, FieldLocations.longShotPose))
+                .setLinearHeadingInterpolation(FieldLocations.stack2FinishPose.getHeading(), FieldLocations.longShotPose.getHeading())
                 .build();
 
         longShotToParking = follower.pathBuilder()
