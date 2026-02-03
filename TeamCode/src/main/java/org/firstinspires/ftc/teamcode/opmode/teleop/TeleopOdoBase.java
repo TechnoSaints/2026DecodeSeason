@@ -92,12 +92,12 @@ public class TeleopOdoBase extends OpMode {
                 bot.resetOdo(FieldLocations.goalPose);
             }
             else if (gamepad1.triangle){
-                bot.resetOdo(FieldLocations.goalLeftPose);
+                bot.resetOdo(FieldLocations.resetLeftPose);
                 FieldLocations.buildPoses("blue", "long", true);
                 bot.buildPaths();
             }
             else if (gamepad1.square){
-                bot.resetOdo(FieldLocations.goalRightPose);
+                bot.resetOdo(FieldLocations.resetRightPose);
                 FieldLocations.buildPoses("red", "long", true);
                 bot.buildPaths();
             }
@@ -124,6 +124,7 @@ public class TeleopOdoBase extends OpMode {
 
         bot.setLauncherSpeed(targetVelocityFactor);
         bot.setPosition(targetLaunchPosition);
+        telemetry.addData("Current Position", bot.getFollower().getPose().toString());
         telemetry.addData("Target Velocity in Teleop: ", targetVelocityFactor);
         telemetry.addData("Target Velocity in Teleop: ", targetLaunchPosition);
         bot.update();
