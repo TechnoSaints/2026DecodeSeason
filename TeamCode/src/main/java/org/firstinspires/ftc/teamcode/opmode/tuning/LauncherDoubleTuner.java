@@ -7,16 +7,18 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.common.Launcher;
 import org.firstinspires.ftc.teamcode.common.LauncherDouble;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.GoBilda6000DcMotorData;
 import org.firstinspires.ftc.teamcode.common.hardwareConfiguration.data.MotorData;
+import org.firstinspires.ftc.teamcode.opmode.test.LauncherTest;
 
 @Config
 @TeleOp(name = "LauncherDoubleTuner", group = "Tuning")
 
 public class LauncherDoubleTuner extends LinearOpMode {
 
-    private LauncherDouble launcher;
+    private Launcher launcher;
     private double velocityFactorIncrement = 0.01;
     private double targetVelocityFactor = 0.0;
     private MotorData motorData = new GoBilda6000DcMotorData();
@@ -28,8 +30,8 @@ public class LauncherDoubleTuner extends LinearOpMode {
     @Override
     public void runOpMode() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        launcher = new LauncherDouble(hardwareMap, telemetry);
-        launcher.setVelocityFactor(targetVelocityFactor);
+        launcher = new Launcher(telemetry, hardwareMap);
+        launcher.setVelocity(targetVelocityFactor);
         waitForStart();
 
         while (opModeIsActive() && !isStopRequested()) {
@@ -44,10 +46,11 @@ public class LauncherDoubleTuner extends LinearOpMode {
                 targetLaunchPosition -= positionIncrement;
             }
 
-            launcher.setVelocityFactor(targetVelocityFactor);
+            launcher.setVelocity(targetVelocityFactor);
             telemetry.addData("targetVelocityFactor in launcherDoubleTest: ", targetVelocityFactor);
             telemetry.addData("targetLaunchPosition in launcherDoubleTest: ", targetLaunchPosition);
             launcher.log();
+            telemetry.update();
             sleep(100);
         }
     }

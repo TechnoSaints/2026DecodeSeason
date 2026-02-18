@@ -10,7 +10,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.common.servos.ServoSimple;
 
 public abstract class Bot extends Component {
-    protected LauncherDouble launcher;
+    protected Launcher launcher;
 
     private RollerMotor intake;
 
@@ -24,31 +24,11 @@ public abstract class Bot extends Component {
 
     public Bot(OpMode opMode, Telemetry telemetry) {
         super(telemetry);
-        launcher = new LauncherDouble(opMode.hardwareMap, telemetry);
+        launcher = new Launcher(telemetry, opMode.hardwareMap);
         intake = new RollerMotor(opMode.hardwareMap, telemetry,"intake");
         kicker = new ServoSimple(opMode.hardwareMap, telemetry,"kicker");
     }
 
-    public void setLauncherShortShot()
-    {
-        launcher.setShortShot();
-    }
-
-    public void setLauncherLongShot()
-    {
-        launcher.setLongShot();
-    }
-
-    public void setLauncherMediumShot(){
-        launcher.setMediumShot();
-    }
-
-    public void setLauncherDefenseShot(){launcher.setDefenseShot();}
-
-    public void launcherStop()
-    {
-        launcher.stop();
-    }
 
     public void intakeForward()
     {
@@ -80,5 +60,9 @@ public abstract class Bot extends Component {
 
 
     public void update() {
+    }
+
+    public void setLauncherSpeed(double i) {
+        launcher.setVelocity(i);
     }
 }
